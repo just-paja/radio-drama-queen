@@ -19,7 +19,6 @@ export default class SoundCategoryControls extends Component {
     const {
       loop,
       onLoopToggle,
-      onStop,
       playing,
     } = this.props;
     return (

@@ -1,15 +1,19 @@
-import classnames from 'classnames';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
+import Typography from '@material-ui/core/Typography';
+import classnames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 
 import GridCategory from './GridCategory';
 import SoundCategory from '../containers/SoundCategory';
+import AddCategoryButton from '../containers/AddCategoryButton';
 import SoundCategoryCreateForm from '../containers/SoundCategoryCreateForm';
-import NoCategoriesMessage from '../containers/NoCategoriesMessage';
+import NoCategoriesMessage from './NoCategoriesMessage';
 
 const styles = theme => ({
   gridStretch: {
@@ -43,10 +47,17 @@ const SoundCategoryGrid = ({
           </GridCategory>
         ))}
         {showCreateForm ? (
-          <GridCategory heading="Create Category">
-            <SoundCategoryCreateForm />
+          <GridCategory>
+            <Card>
+              <CardContent>
+                <Typography variant="headline">
+                  Create Category
+                </Typography>
+                <SoundCategoryCreateForm />
+              </CardContent>
+            </Card>
           </GridCategory>
-        ) : null}
+        ) : <AddCategoryButton />}
       </div>
     );
   }
