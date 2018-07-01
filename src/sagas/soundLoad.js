@@ -15,7 +15,13 @@ const loadFile = file => new Promise((resolve, reject) => {
 });
 
 function* loadSoundFile(uuid, file) {
-  yield put(soundList.setName(uuid, file.name));
+  yield put(soundList.setName(
+    uuid,
+    file.name
+      .split('.')
+      .filter((part, index, source) => index !== source.length - 1)
+      .join('.')
+  ));
   yield put(soundList.loadRequest(uuid));
   const fileData = yield call(loadFile, file);
   AudioManager.store(uuid, new Howl({

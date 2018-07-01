@@ -29,6 +29,15 @@ export const getCategoryLoopStatus = createSelector(
   category => category.loop
 );
 
+export const getCategorySoundPlayingUuids = createSelector(
+  [memoizeCategory, state => state.soundList],
+  (category, allSounds) => category.sounds
+    .filter((uuid) => {
+      const sound = allSounds.find(filterSound => filterSound.uuid === uuid);
+      return sound && sound.playing;
+    })
+);
+
 export const getCategoryPlayingStatus = createSelector(
   [memoizeCategory, state => state.soundList],
   (category, allSounds) => allSounds

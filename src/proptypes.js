@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 
 export const Sound = PropTypes.shape({
-  id: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
   loading: PropTypes.bool,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   playing: PropTypes.bool,
   valid: PropTypes.bool,
 });
+
+export default { Sound };

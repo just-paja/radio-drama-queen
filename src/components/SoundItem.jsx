@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -14,16 +14,29 @@ const styles = {
   },
 };
 
-const SoundItem = ({ classes, sound, onToggle }) => (
-  sound ? (
-    <div className={classes.inline}>
-      <SoundToggleButton onToggle={onToggle} playing={sound.playing} />
-      <div>
-        {sound.name || sound.uuid}
+class SoundItem extends Component {
+  constructor() {
+    super();
+    this.handleToggle = this.handleToggle.bind(this);
+  }
+
+  handleToggle() {
+    const { onToggle, sound } = this.props;
+    onToggle(sound.uuid);
+  }
+
+  render() {
+    const { classes, sound } = this.props;
+    return sound ? (
+      <div className={classes.inline}>
+        <SoundToggleButton onClick={this.handleToggle} playing={sound.playing} />
+        <div>
+          {sound.name || sound.uuid}
+        </div>
       </div>
-    </div>
-  ) : null
-);
+    ) : null;
+  }
+}
 
 SoundItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,

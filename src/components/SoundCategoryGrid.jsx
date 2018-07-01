@@ -16,7 +16,7 @@ const styles = theme => ({
     height: '100%',
   },
   gridSpacing: {
-    padding: 3 * theme.spacing.unit,
+    padding: 2 * theme.spacing.unit,
     minWidth: 320,
   },
   canDrop: {

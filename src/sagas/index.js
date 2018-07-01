@@ -4,11 +4,15 @@ import { all, call, fork } from 'redux-saga/effects';
 import { logError, logWarning } from '../clientLogger';
 
 import categoryCreate from './categoryCreate';
+import categoryStop from './categoryStop';
 import gridSoundDrop from './gridSoundDrop';
+import soundPlay from './soundPlay';
 
 const sagas = [
   ...categoryCreate,
+  ...categoryStop,
   ...gridSoundDrop,
+  ...soundPlay,
 ];
 
 function* onEachError(next, error) {

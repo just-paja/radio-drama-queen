@@ -20,6 +20,10 @@ const sound = handleActions({
     ...state,
     playing: true,
   }),
+  [soundList.FINISHED]: state => ({
+    ...state,
+    playing: false,
+  }),
   [soundList.STOP]: state => ({
     ...state,
     playing: false,
@@ -45,6 +49,7 @@ const sound = handleActions({
 }, initialState);
 
 sound.actions = [
+  soundList.FINISHED,
   soundList.LOAD_FAILURE,
   soundList.LOAD_REQUEST,
   soundList.LOAD_SUCCESS,
@@ -52,6 +57,7 @@ sound.actions = [
   soundList.PLAY,
   soundList.SET_NAME,
   soundList.STOP,
+  soundList.TOGGLE,
 ];
 
 export default sound;

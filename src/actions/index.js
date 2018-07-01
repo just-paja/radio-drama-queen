@@ -15,6 +15,7 @@ export const categoryList = createListRoutine('CATEGORY', [
 ]);
 
 export const soundList = createListRoutine('SOUND', [
+  'FINISHED',
   'LOAD_FAILURE',
   'LOAD_REQUEST',
   'LOAD_SUCCESS',

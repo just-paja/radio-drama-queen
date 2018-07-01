@@ -12,8 +12,6 @@ import { withStyles } from '@material-ui/core/styles';
 import SoundCategoryControls from '../containers/SoundCategoryControls';
 import SoundItem from '../containers/SoundItem';
 
-import { Sound } from '../proptypes';
-
 const styles = {
   removePadding: {
     paddingLeft: 0,
@@ -49,7 +47,7 @@ const SoundCategory = ({
 SoundCategory.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   name: PropTypes.string,
-  sounds: PropTypes.arrayOf(Sound).isRequired,
+  sounds: PropTypes.arrayOf(PropTypes.string).isRequired,
   uuid: PropTypes.string.isRequired,
 };
 

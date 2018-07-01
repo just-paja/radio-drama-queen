@@ -1,8 +1,13 @@
 import { createSelector } from 'reselect';
 
+const memoizeSound = (state, uuid) => state.soundList.find(sound => sound.uuid === uuid);
+
 export const getSound = createSelector(
-  (state, uuid) => state.soundList.find(sound => sound.uuid === uuid),
+  memoizeSound,
   item => item
 );
 
-export default { getSound };
+export const getSoundPlayingStatus = createSelector(
+  memoizeSound,
+  sound => sound.playing
+);

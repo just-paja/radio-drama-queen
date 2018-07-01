@@ -4,24 +4,26 @@ import Stop from '@material-ui/icons/Stop';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import IconButton from '@material-ui/core/IconButton';
 
-const SoundCategoryStopButton = ({ onClick, playing }) => (
-  <IconButton
-    onClick={onClick}
-    iconStyle={{ width: '12px', height: '12px', fontSize: '50%' }}
-    style={{ width: '24px', height: '24px', marginRight: '0.5rem' }}
-    touch
-  >
-    {playing ? <Stop /> : <PlayArrow />}
-  </IconButton>
-);
+const SoundToggleButton = ({ onClick, playing }) => {
+  const iconStyle = { width: '12px', height: '12px', fontSize: '50%' };
+  const IconComponent = playing ? Stop : PlayArrow;
+  return (
+    <IconButton
+      onClick={onClick}
+      style={{ width: '24px', height: '24px', marginRight: '0.5rem' }}
+    >
+      <IconComponent style={iconStyle} />
+    </IconButton>
+  );
+};
 
-SoundCategoryStopButton.propTypes = {
+SoundToggleButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   playing: PropTypes.bool,
 };
 
-SoundCategoryStopButton.defaultProps = {
+SoundToggleButton.defaultProps = {
   playing: false,
 };
 
-export default SoundCategoryStopButton;
+export default SoundToggleButton;

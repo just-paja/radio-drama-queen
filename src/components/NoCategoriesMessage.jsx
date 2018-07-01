@@ -6,7 +6,7 @@ import AddButton from './AddButton';
 import GridMessage from './GridMessage';
 
 const NoCategoriesMessage = ({ onAdd }) => (
-  <GridMessage heading="You have no sound categories defined yet!">
+  <GridMessage heading="You don't have any sound categories defined!">
     <Typography variant="body1" gutterBottom>
       Sound categories help you organize sounds so you can find what you
       want to play just by visual inspection.

@@ -1,3 +1,10 @@
+const noop = () => {};
+
+const clearSoundCallbacks = (sound) => {
+  sound.on('end', noop);
+  sound.on('stop', noop);
+};
+
 class AudioConnector {
   constructor(uuid, sound) {
     this.uuid = uuid;
@@ -8,6 +15,7 @@ class AudioConnector {
 class AudioManager {
   constructor() {
     this.sounds = [];
+    this.play = this.play.bind(this);
   }
 
   store(uuid, object) {
@@ -31,6 +39,31 @@ class AudioManager {
 
   find(...args) {
     return this.sounds.find(...args);
+  }
+
+  play(uuid) {
+    const audio = this.findByUuid(uuid);
+    if (audio) {
+      return new Promise((resolve) => {
+        audio.sound.on('end', () => {
+          clearSoundCallbacks(audio.sound);
+          resolve();
+        });
+        audio.sound.on('stop', () => {
+          clearSoundCallbacks(audio.sound);
+          resolve();
+        });
+        audio.sound.play();
+      });
+    }
+    return Promise.resolve();
+  }
+
+  stop(uuid) {
+    const audio = this.findByUuid(uuid);
+    if (audio) {
+      audio.sound.stop();
+    }
   }
 }
 
