@@ -4,18 +4,21 @@ import React from 'react';
 import { Field, Form } from 'redux-form';
 
 import Input from './Input';
+import CancelButton from './CancelButton';
 import SaveButton from './SaveButton';
 
-const CategoryEditForm = ({ handleSubmit }) => (
+const CategoryEditForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
     <div>
       <Field label="Category name" name="name" component={Input} />
     </div>
+    <CancelButton onClick={onCancel} />
     <SaveButton />
   </Form>
 );
 
 CategoryEditForm.propTypes = {
+  onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

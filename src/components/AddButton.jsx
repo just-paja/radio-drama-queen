@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 const AddButton = ({ children, classes, ...props }) => (
-  <Button variant="contained" size="small" {...props}>
+  <Button {...props}>
     <Save className={classnames(classes.leftIcon)} />
     {children}
   </Button>

@@ -9,6 +9,7 @@ import { FORM_CATEGORY_CREATE } from '../constants';
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
+  onCancel: categoryCreate.formHide,
   onSubmit: categoryCreate.submit,
 };
 

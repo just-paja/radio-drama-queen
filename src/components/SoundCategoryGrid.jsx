@@ -45,7 +45,7 @@ const SoundCategoryGrid = ({
         </GridCategory>
       )),
       showCreateForm ? (
-        <GridCategory>
+        <GridCategory key="form">
           <Card>
             <CardContent>
               <Typography variant="headline">

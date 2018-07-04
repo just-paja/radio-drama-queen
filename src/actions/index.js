@@ -1,8 +1,8 @@
 import { createRoutine, createListRoutine } from './routines';
 
 export const categoryCreate = createRoutine('CATEGORY_CREATE', [
-  'FORM_SHOW',
   'FORM_HIDE',
+  'FORM_SHOW',
   'SUBMIT',
 ]);
 

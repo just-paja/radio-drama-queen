@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 const SaveButton = ({ classes }) => (
-  <Button variant="contained" size="small" type="submit">
+  <Button type="submit">
     <Save className={classnames(classes.leftIcon)} />
     Save
   </Button>

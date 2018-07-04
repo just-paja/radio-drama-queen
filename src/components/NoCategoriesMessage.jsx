@@ -10,7 +10,7 @@ const NoCategoriesMessage = () => (
       Sound categories help you organize sounds so you can find what you
       want to play just by visual inspection.
     </Typography>
-    <AddCategoryButton />
+    <AddCategoryButton variant="contained" />
   </GridMessage>
 );
 
