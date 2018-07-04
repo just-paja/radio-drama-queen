@@ -10,7 +10,7 @@ import SaveButton from './SaveButton';
 const CategoryEditForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
     <div>
-      <Field label="Category name" name="name" component={Input} />
+      <Field autoFocus label="Category name" name="name" component={Input} />
     </div>
     <CancelButton onClick={onCancel} />
     <SaveButton />

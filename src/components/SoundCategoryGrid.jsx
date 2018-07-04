@@ -28,10 +28,11 @@ const styles = theme => ({
 });
 
 const SoundCategoryGrid = ({
-  connectDropTarget,
+  canDrop,
   categories,
   classes,
-  canDrop,
+  connectDropTarget,
+  isOver,
   showCreateForm,
 }) => {
   let content;
@@ -62,13 +63,13 @@ const SoundCategoryGrid = ({
     <div className={classes.gridStretch}>
       <Grid
         className={classnames(classes.gridSpacing, classes.gridStretch, {
-          [classes.canDrop]: canDrop,
+          [classes.canDrop]: isOver && canDrop,
         })}
         container
       >
         {content}
         <Snackbar
-          open={canDrop}
+          open={canDrop && isOver}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           message="Drop audio files here to create a new category"
         />
@@ -78,15 +79,17 @@ const SoundCategoryGrid = ({
 };
 
 SoundCategoryGrid.propTypes = {
-  connectDropTarget: PropTypes.func.isRequired,
+  canDrop: PropTypes.bool,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  canDrop: PropTypes.bool,
+  connectDropTarget: PropTypes.func.isRequired,
+  isOver: PropTypes.bool,
   showCreateForm: PropTypes.bool,
 };
 
 SoundCategoryGrid.defaultProps = {
   canDrop: false,
+  isOver: false,
   showCreateForm: false,
 };
 

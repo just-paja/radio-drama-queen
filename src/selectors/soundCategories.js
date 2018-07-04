@@ -14,6 +14,11 @@ export const getCategoryListUuids = createSelector(
   list => list.map(category => category.uuid)
 );
 
+export const getCategory = createSelector(
+  memoizeCategory,
+  category => category
+);
+
 export const getCategoryName = createSelector(
   memoizeCategory,
   category => category.name

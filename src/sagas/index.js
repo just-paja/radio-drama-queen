@@ -5,13 +5,13 @@ import { logError, logWarning } from '../clientLogger';
 
 import categoryCreate from './categoryCreate';
 import categoryStop from './categoryStop';
-import gridSoundDrop from './gridSoundDrop';
+import soundDrop from './soundDrop';
 import soundPlay from './soundPlay';
 
 const sagas = [
   ...categoryCreate,
   ...categoryStop,
-  ...gridSoundDrop,
+  ...soundDrop,
   ...soundPlay,
 ];
 

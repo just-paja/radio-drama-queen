@@ -18,9 +18,9 @@ const mapDispatchToProps = {
 };
 
 const boxTarget = {
-  drop(props, monitor) {
+  drop(props, monitor, component) {
     const { onDrop } = props;
-    if (onDrop) {
+    if (component && onDrop && !monitor.didDrop() && monitor.canDrop({ shallow: true })) {
       onDrop(null, monitor);
     }
   },
@@ -31,7 +31,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(DropTarget(
   boxTarget,
   (connector, monitor) => ({
     connectDropTarget: connector.dropTarget(),
-    isOver: monitor.isOver(),
+    isOver: monitor.isOver({ shallow: true }),
     canDrop: monitor.canDrop(),
   })
 )(SoundCategoryGrid));

@@ -7,15 +7,21 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects';
+import {
+  delay,
+} from 'redux-saga/lib/internal/utils';
 
 import { logWarning } from '../clientLogger';
 import { categoryList } from '../actions';
 import { loadSound } from './soundLoad';
-import { getDefaultCategory } from '../selectors';
+import { getCategory, getDefaultCategory } from '../selectors';
 
 function* soundCreateWithCategory(action) {
   const { files } = action.payload.getItem();
-  let category = yield select(getDefaultCategory);
+  const { uuid } = action.meta;
+  let category = yield uuid
+    ? select(getCategory, uuid)
+    : select(getDefaultCategory);
 
   if (!category) {
     category = {
@@ -25,7 +31,7 @@ function* soundCreateWithCategory(action) {
     };
     yield put(categoryList.add(category));
   }
-
+  yield delay(1);
   yield all(files.filter((file) => {
     if (file.type.indexOf('audio') !== 0) {
       logWarning('Not audio!', file);
