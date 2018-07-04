@@ -10,7 +10,7 @@ const styles = {
 };
 
 const GridCategory = ({ children, classes, heading }) => (
-  <Grid item className={classes.gridItem} elevation={0}>
+  <Grid xs={12} sm={6} md={4} lg={3} xl={2} item className={classes.gridItem} elevation={0}>
     {heading ? (
       <Typography variant="headline" gutterBottom>
         {heading}

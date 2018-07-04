@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import GridCategory from './GridCategory';
 import SoundCategory from '../containers/SoundCategory';
-import AddCategoryButton from '../containers/AddCategoryButton';
 import SoundCategoryCreateForm from '../containers/SoundCategoryCreateForm';
 import NoCategoriesMessage from './NoCategoriesMessage';
 
@@ -39,27 +38,25 @@ const SoundCategoryGrid = ({
   if (categories.length === 0 && !showCreateForm) {
     content = (<NoCategoriesMessage />);
   } else {
-    content = (
-      <div>
-        {categories.map(uuid => (
-          <GridCategory key={uuid}>
-            <SoundCategory uuid={uuid} />
-          </GridCategory>
-        ))}
-        {showCreateForm ? (
-          <GridCategory>
-            <Card>
-              <CardContent>
-                <Typography variant="headline">
-                  Create Category
-                </Typography>
-                <SoundCategoryCreateForm />
-              </CardContent>
-            </Card>
-          </GridCategory>
-        ) : <AddCategoryButton />}
-      </div>
-    );
+    content = [
+      categories.map(uuid => (
+        <GridCategory key={uuid}>
+          <SoundCategory uuid={uuid} />
+        </GridCategory>
+      )),
+      showCreateForm ? (
+        <GridCategory>
+          <Card>
+            <CardContent>
+              <Typography variant="headline">
+                Create Category
+              </Typography>
+              <SoundCategoryCreateForm />
+            </CardContent>
+          </Card>
+        </GridCategory>
+      ) : null,
+    ];
   }
   return connectDropTarget(
     <div className={classes.gridStretch}>

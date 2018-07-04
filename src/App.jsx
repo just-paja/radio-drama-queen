@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { DragDropContextProvider } from 'react-dnd';
 import { Provider } from 'react-redux';
 
-
+import AppMenu from './containers/AppMenu';
 import SoundCategoryGrid from './containers/SoundCategoryGrid';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -17,6 +17,7 @@ class App extends Component {
       <div className="App">
         <Provider store={store}>
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
+            <AppMenu />
             <SoundCategoryGrid />
           </DragDropContextProvider>
         </Provider>
