@@ -3,10 +3,14 @@ import React from 'react';
 import Stop from '@material-ui/icons/Stop';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const SoundToggleButton = ({ onClick, playing }) => {
+const SoundToggleButton = ({ onClick, loading, playing }) => {
   const iconStyle = { width: '12px', height: '12px', fontSize: '50%' };
-  const IconComponent = playing ? Stop : PlayArrow;
+  let IconComponent = playing ? Stop : PlayArrow;
+  if (loading) {
+    IconComponent = CircularProgress;
+  }
   return (
     <IconButton
       onClick={onClick}
@@ -18,11 +22,13 @@ const SoundToggleButton = ({ onClick, playing }) => {
 };
 
 SoundToggleButton.propTypes = {
+  loading: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   playing: PropTypes.bool,
 };
 
 SoundToggleButton.defaultProps = {
+  loading: false,
   playing: false,
 };
 

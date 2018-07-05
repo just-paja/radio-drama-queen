@@ -29,7 +29,11 @@ class SoundItem extends Component {
     const { classes, sound } = this.props;
     return sound ? (
       <div className={classes.inline}>
-        <SoundToggleButton onClick={this.handleToggle} playing={sound.playing} />
+        <SoundToggleButton
+          loading={sound.loading}
+          onClick={this.handleToggle}
+          playing={sound.playing}
+        />
         <div>
           {sound.name || sound.uuid}
         </div>
