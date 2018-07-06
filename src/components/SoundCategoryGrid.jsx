@@ -19,8 +19,9 @@ const styles = theme => ({
     height: '100%',
   },
   gridSpacing: {
-    padding: 2 * theme.spacing.unit,
+    padding: theme.spacing.unit,
     minWidth: 320,
+    alignContent: 'start',
   },
   canDrop: {
     background: 'rgba(0,0,0,.2)',

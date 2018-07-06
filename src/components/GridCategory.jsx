@@ -5,18 +5,22 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
-  gridItem: {},
-};
+const styles = theme => ({
+  gridItem: {
+    margin: theme.spacing.unit,
+  },
+});
 
 const GridCategory = ({ children, classes, heading }) => (
-  <Grid xs={12} sm={6} md={4} lg={3} xl={2} item className={classes.gridItem} elevation={0}>
-    {heading ? (
-      <Typography variant="headline" gutterBottom>
-        {heading}
-      </Typography>
-    ) : null}
-    {children}
+  <Grid xs={12} sm={6} md={4} lg={3} xl={2} item elevation={0}>
+    <div className={classes.gridItem}>
+      {heading ? (
+        <Typography variant="headline" gutterBottom>
+          {heading}
+        </Typography>
+      ) : null}
+      {children}
+    </div>
   </Grid>
 );
 
