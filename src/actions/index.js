@@ -11,6 +11,7 @@ export const categoryList = createListRoutine('CATEGORY', [
   'LOOP_TOGGLE',
   'SOUND_ADD',
   'SOUND_REMOVE',
+  'SET_VOLUME',
   'STOP',
 ]);
 

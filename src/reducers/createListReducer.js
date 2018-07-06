@@ -10,10 +10,13 @@ const handleItemAction = itemReducer => (state, action) => {
   return state;
 };
 
-export default (routine, itemReducer) => handleActions({
+export default (routine, itemReducer, itemInitialState) => handleActions({
   [routine.ADD]: (state, action) => ([
     ...state,
-    action.payload,
+    {
+      ...itemInitialState,
+      ...action.payload,
+    },
   ]),
   [routine.REMOVE]: (state, action) => {
     const index = state.findIndex(item => item.uuid === action.meta.uuid);

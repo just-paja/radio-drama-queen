@@ -2,9 +2,10 @@ import { handleActions } from 'redux-actions';
 
 import { categoryList } from '../actions';
 
-const initialState = {
+export const initialState = {
   loop: false,
   sounds: [],
+  volume: 50,
 };
 
 const category = handleActions({
@@ -31,12 +32,17 @@ const category = handleActions({
     }
     return state;
   },
+  [categoryList.SET_VOLUME]: (state, action) => ({
+    ...state,
+    volume: action.payload,
+  }),
 }, initialState);
 
 category.actions = [
   categoryList.LOOP_TOGGLE,
   categoryList.SOUND_ADD,
   categoryList.SOUND_REMOVE,
+  categoryList.SET_VOLUME,
 ];
 
 export default category;

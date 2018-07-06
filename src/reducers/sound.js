@@ -2,12 +2,11 @@ import { handleActions } from 'redux-actions';
 
 import { soundList } from '../actions';
 
-const initialState = {
+export const initialState = {
   loading: false,
   name: '',
   path: '',
   playing: false,
-  ref: null,
   valid: false,
 };
 

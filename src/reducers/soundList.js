@@ -1,6 +1,6 @@
 import createListReducer from './createListReducer';
-import sound from './sound';
+import sound, { initialState } from './sound';
 
 import { soundList } from '../actions';
 
-export default createListReducer(soundList, sound);
+export default createListReducer(soundList, sound, initialState);

@@ -29,6 +29,13 @@ export const getCategorySoundUuids = createSelector(
   category => category.sounds
 );
 
+export const getCategorySounds = createSelector(
+  [memoizeCategory, state => state.soundList],
+  (category, soundList) => soundList.filter(
+    sound => category.sounds.indexOf(sound.uuid) !== -1
+  )
+);
+
 export const getCategoryLoopStatus = createSelector(
   memoizeCategory,
   category => category.loop
@@ -48,4 +55,9 @@ export const getCategoryPlayingStatus = createSelector(
   (category, allSounds) => allSounds
     .filter(sound => category.sounds.indexOf(sound.uuid) !== -1)
     .some(sound => sound.playing)
+);
+
+export const getCategoryVolume = createSelector(
+  memoizeCategory,
+  category => category.volume
 );
