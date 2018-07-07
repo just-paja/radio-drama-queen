@@ -1,5 +1,6 @@
 import {
   call,
+  fork,
   put,
   select,
   takeLatest,
@@ -7,12 +8,22 @@ import {
 
 import AudioManager from '../AudioManager';
 
-import { getSoundPlayingStatus } from '../selectors';
+import { getSoundCategory, getSoundPlayingStatus } from '../selectors';
 import { soundList } from '../actions';
 
 function* playSound({ meta: { uuid } }) {
   yield call(AudioManager.play, uuid);
-  yield put(soundList.finished(uuid));
+  // eslint-disable-next-line no-use-before-define
+  yield fork(handleSoundFinish, uuid);
+}
+
+function* handleSoundFinish(uuid) {
+  const category = yield select(getSoundCategory, uuid);
+  if (category.loop && AudioManager.isSoundPlaying(uuid)) {
+    yield fork(playSound, { meta: { uuid } });
+  } else {
+    yield put(soundList.finished(uuid));
+  }
 }
 
 function* stopSound({ meta: { uuid } }) {

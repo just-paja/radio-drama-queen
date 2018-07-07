@@ -7,6 +7,13 @@ export const getSound = createSelector(
   item => item
 );
 
+export const getSoundCategory = createSelector(
+  [memoizeSound, state => state.categoryList],
+  (sound, categoryList) => categoryList.find(
+    category => category.sounds.indexOf(sound.uuid) !== -1
+  )
+);
+
 export const getSoundPlayingStatus = createSelector(
   memoizeSound,
   sound => sound.playing

@@ -18,6 +18,14 @@ class AudioManager {
     this.play = this.play.bind(this);
   }
 
+  isSoundPlaying(uuid) {
+    const sound = this.findByUuid(uuid);
+    if (sound) {
+      return !!sound.playing;
+    }
+    return false;
+  }
+
   store(uuid, object) {
     const connector = new AudioConnector(uuid, object);
     this.sounds.push(connector);
@@ -45,14 +53,13 @@ class AudioManager {
     const audio = this.findByUuid(uuid);
     if (audio) {
       return new Promise((resolve) => {
-        audio.sound.on('end', () => {
+        const handleSoundFinish = () => {
           clearSoundCallbacks(audio.sound);
           resolve();
-        });
-        audio.sound.on('stop', () => {
-          clearSoundCallbacks(audio.sound);
-          resolve();
-        });
+        };
+        audio.sound.on('end', handleSoundFinish);
+        audio.sound.on('stop', handleSoundFinish);
+        audio.playing = true;
         audio.sound.play();
       });
     }
@@ -62,6 +69,7 @@ class AudioManager {
   stop(uuid) {
     const audio = this.findByUuid(uuid);
     if (audio) {
+      audio.playing = false;
       audio.sound.stop();
     }
   }
