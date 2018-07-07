@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import AddCategoryButton from '../components/AddButton';
+import AddButton from '../components/AddButton';
 
 import { categoryCreate } from '../actions';
 
@@ -12,4 +12,4 @@ const mapDispatchToProps = {
   onClick: categoryCreate.formShow,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCategoryButton);
+export default connect(mapStateToProps, mapDispatchToProps)(AddButton);
