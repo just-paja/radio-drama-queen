@@ -27,3 +27,10 @@ export const soundList = createListRoutine('SOUND', [
   'STOP',
   'TOGGLE',
 ]);
+
+export const library = createRoutine('LIBRARY', [
+  'SAVE',
+  'SAVE_AS',
+  'SAVE_AS_CANCEL',
+  'SAVE_AS_SUBMIT',
+]);

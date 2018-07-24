@@ -19,7 +19,8 @@ function* playSound({ meta: { uuid } }) {
 
 function* handleSoundFinish(uuid) {
   const category = yield select(getSoundCategory, uuid);
-  if (category.loop && AudioManager.isSoundPlaying(uuid)) {
+  const playing = yield select(getSoundPlayingStatus, uuid);
+  if (category.loop && playing) {
     yield fork(playSound, { meta: { uuid } });
   } else {
     yield put(soundList.finished(uuid));

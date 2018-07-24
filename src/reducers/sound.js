@@ -7,6 +7,7 @@ export const initialState = {
   name: '',
   path: '',
   playing: false,
+  uuid: null,
   valid: false,
 };
 

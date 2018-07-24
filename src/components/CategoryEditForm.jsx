@@ -13,7 +13,9 @@ const CategoryEditForm = ({ handleSubmit, onCancel }) => (
       <Field autoFocus label="Category name" name="name" component={Input} />
     </div>
     <CancelButton onClick={onCancel} />
-    <SaveButton />
+    <SaveButton>
+      Save
+    </SaveButton>
   </Form>
 );
 

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 
 import AppMenu from './containers/AppMenu';
 import SoundCategoryGrid from './containers/SoundCategoryGrid';
+import SaveLibraryAsDialog from './containers/SaveLibraryAsDialog';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
             <AppMenu />
             <SoundCategoryGrid />
+            <SaveLibraryAsDialog />
           </DragDropContextProvider>
         </Provider>
       </div>
