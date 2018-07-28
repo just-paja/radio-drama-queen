@@ -4,6 +4,7 @@ import { categoryList } from '../actions';
 
 export const initialState = {
   loop: false,
+  muted: false,
   sounds: [],
   volume: 50,
 };
@@ -12,6 +13,14 @@ const category = handleActions({
   [categoryList.LOOP_TOGGLE]: state => ({
     ...state,
     loop: !state.loop,
+  }),
+  [categoryList.MUTE_TOGGLE]: state => ({
+    ...state,
+    muted: !state.muted,
+  }),
+  [categoryList.UNMUTE]: state => ({
+    ...state,
+    muted: false,
   }),
   [categoryList.SOUND_ADD]: (state, action) => ({
     ...state,
@@ -40,9 +49,11 @@ const category = handleActions({
 
 category.actions = [
   categoryList.LOOP_TOGGLE,
+  categoryList.MUTE_TOGGLE,
+  categoryList.SET_VOLUME,
   categoryList.SOUND_ADD,
   categoryList.SOUND_REMOVE,
-  categoryList.SET_VOLUME,
+  categoryList.UNMUTE,
 ];
 
 export default category;

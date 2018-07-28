@@ -5,6 +5,7 @@ import SoundCategoryControls from '../components/SoundCategoryControls';
 import { categoryList } from '../actions';
 import {
   getCategoryLoopStatus,
+  getCategoryMutedStatus,
   getCategoryPlayingStatus,
   getCategoryVolume,
 } from '../selectors';
@@ -12,6 +13,7 @@ import {
 
 const mapStateToProps = (state, { uuid }) => ({
   loop: getCategoryLoopStatus(state, uuid),
+  muted: getCategoryMutedStatus(state, uuid),
   playing: getCategoryPlayingStatus(state, uuid),
   volume: getCategoryVolume(state, uuid),
 });
@@ -19,6 +21,7 @@ const mapStateToProps = (state, { uuid }) => ({
 const mapDispatchToProps = {
   onLoopToggle: categoryList.loopToggle,
   onStop: categoryList.stop,
+  onMuteToggle: categoryList.muteToggle,
   onVolumeChange: categoryList.setVolume,
 };
 

@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Slider } from 'material-ui-slider';
-
 import SoundCategoryLoopButton from './SoundCategoryLoopButton';
 import SoundCategoryStopButton from './SoundCategoryStopButton';
+import VolumeControl from './VolumeControl';
 
 export default class SoundCategoryControls extends Component {
   constructor() {
     super();
     this.handleLoopToggle = this.handleLoopToggle.bind(this);
+    this.handleMuteToggle = this.handleMuteToggle.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
   }
@@ -29,19 +29,25 @@ export default class SoundCategoryControls extends Component {
     onVolumeChange(uuid, value);
   }
 
+  handleMuteToggle() {
+    const { uuid, onMuteToggle } = this.props;
+    onMuteToggle(uuid);
+  }
+
   render() {
     const {
       loop,
+      muted,
       playing,
       volume,
     } = this.props;
     return (
       <div style={{ width: '100%' }}>
-        <Slider
-          max={100}
-          min={0}
+        <VolumeControl
+          muted={muted}
           onChange={this.handleVolumeChange}
-          value={volume}
+          onMuteToggle={this.handleMuteToggle}
+          volume={volume}
         />
         <div>
           <SoundCategoryStopButton playing={playing} onClick={this.handleStop} />
@@ -54,7 +60,9 @@ export default class SoundCategoryControls extends Component {
 
 SoundCategoryControls.propTypes = {
   loop: PropTypes.bool,
+  muted: PropTypes.bool,
   onLoopToggle: PropTypes.func.isRequired,
+  onMuteToggle: PropTypes.func.isRequired,
   onStop: PropTypes.func.isRequired,
   onVolumeChange: PropTypes.func.isRequired,
   playing: PropTypes.bool,
@@ -64,5 +72,6 @@ SoundCategoryControls.propTypes = {
 
 SoundCategoryControls.defaultProps = {
   loop: false,
+  muted: false,
   playing: false,
 };

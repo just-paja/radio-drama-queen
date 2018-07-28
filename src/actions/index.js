@@ -9,10 +9,12 @@ export const categoryCreate = createRoutine('CATEGORY_CREATE', [
 export const categoryList = createListRoutine('CATEGORY', [
   'FILE_DROP',
   'LOOP_TOGGLE',
+  'MUTE_TOGGLE',
+  'SET_VOLUME',
   'SOUND_ADD',
   'SOUND_REMOVE',
-  'SET_VOLUME',
   'STOP',
+  'UNMUTE',
 ]);
 
 export const soundList = createListRoutine('SOUND', [

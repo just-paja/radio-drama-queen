@@ -41,6 +41,11 @@ export const getCategoryLoopStatus = createSelector(
   category => category.loop
 );
 
+export const getCategoryMutedStatus = createSelector(
+  memoizeCategory,
+  category => category.muted
+);
+
 export const getCategorySoundPlayingUuids = createSelector(
   [memoizeCategory, state => state.soundList],
   (category, allSounds) => category.sounds
