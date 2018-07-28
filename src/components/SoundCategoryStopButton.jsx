@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Stop from '@material-ui/icons/Stop';
-import IconButton from '@material-ui/core/IconButton';
+
+import IconButton from './IconButton';
 
 const SoundCategoryStopButton = ({ onClick, playing }) => (
-  <IconButton disabled={!playing} onClick={onClick}>
-    <Stop />
-  </IconButton>
+  <IconButton
+    disabled={!playing}
+    icon={Stop}
+    onClick={onClick}
+  />
 );
 
 SoundCategoryStopButton.propTypes = {

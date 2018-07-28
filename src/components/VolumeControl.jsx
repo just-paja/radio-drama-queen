@@ -6,14 +6,12 @@ import { Slider } from 'material-ui-slider';
 
 import VolumeToggleButton from './VolumeToggleButton';
 
-const styles = theme => ({
+const styles = {
   inline: {
     alignItems: 'center',
     display: 'flex',
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
   },
-});
+};
 
 const VolumeControl = ({
   classes,
