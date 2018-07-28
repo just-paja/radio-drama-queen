@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import SaveButton from '../components/SaveButton';
 
 import { library } from '../actions';
+import { getLibraryFsPath } from '../selectors';
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
   children: 'Save',
+  disabled: !getLibraryFsPath(state),
 });
 
 const mapDispatchToProps = {

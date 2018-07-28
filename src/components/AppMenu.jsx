@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import AddCategoryButton from '../containers/AddCategoryButton';
 import SaveLibraryAsButton from '../containers/SaveLibraryAsButton';
+import SaveLibraryButton from '../containers/SaveLibraryButton';
 
 const AppMenu = ({
   isEmpty,
@@ -13,6 +14,7 @@ const AppMenu = ({
   <AppBar position="static">
     <Toolbar>
       {(showCreateForm || isEmpty) ? null : <AddCategoryButton />}
+      <SaveLibraryButton />
       <SaveLibraryAsButton />
     </Toolbar>
   </AppBar>
