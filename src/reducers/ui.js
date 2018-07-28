@@ -15,6 +15,10 @@ const ui = handleActions({
     ...state,
     showSaveAsDialog: false,
   }),
+  [library.SAVE_AS_HIDE]: state => ({
+    ...state,
+    showSaveAsDialog: false,
+  }),
 }, initialState);
 
 export default ui;

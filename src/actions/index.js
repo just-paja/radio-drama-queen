@@ -33,6 +33,7 @@ export const soundList = createListRoutine('SOUND', [
 export const library = createRoutine('LIBRARY', [
   'SAVE',
   'SAVE_AS',
+  'SAVE_AS_HIDE',
   'SAVE_AS_CANCEL',
   'SAVE_AS_SUBMIT',
 ]);
