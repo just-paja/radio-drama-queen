@@ -37,3 +37,9 @@ export const library = createRoutine('LIBRARY', [
   'SAVE_AS_CANCEL',
   'SAVE_AS_SUBMIT',
 ]);
+
+export const notify = createRoutine('NOTIFY', [
+  'ADD',
+  'HIDE',
+  'REMOVE',
+]);

@@ -7,6 +7,7 @@ import categoryCreate from './categoryCreate';
 import categoryStop from './categoryStop';
 import categoryVolume from './categoryVolume';
 import librarySave from './librarySave';
+import notifications from './notifications';
 import soundDrop from './soundDrop';
 import soundPlay from './soundPlay';
 
@@ -15,6 +16,7 @@ const sagas = [
   ...categoryStop,
   ...categoryVolume,
   ...librarySave,
+  ...notifications,
   ...soundDrop,
   ...soundPlay,
 ];

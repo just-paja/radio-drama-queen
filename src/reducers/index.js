@@ -4,6 +4,7 @@ import { reducer as form } from 'redux-form';
 import categoryGrid from './categoryGrid';
 import categoryList from './categoryList';
 import libraryConfig from './libraryConfig';
+import notifications from './notifications';
 import soundList from './soundList';
 import ui from './ui';
 
@@ -12,6 +13,7 @@ export default combineReducers({
   categoryList,
   form,
   libraryConfig,
+  notifications,
   soundList,
   ui,
 });
