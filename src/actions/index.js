@@ -42,4 +42,5 @@ export const notify = createRoutine('NOTIFY', [
   'ADD',
   'HIDE',
   'REMOVE',
+  'TRIGGER',
 ]);
