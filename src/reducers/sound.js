@@ -18,7 +18,7 @@ const sound = handleActions({
   }),
   [soundList.PLAY_FAILURE]: state => ({
     ...state,
-    playing: true,
+    playing: false,
   }),
   [soundList.FINISHED]: state => ({
     ...state,

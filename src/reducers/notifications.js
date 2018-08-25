@@ -1,40 +1,22 @@
 import { handleActions } from 'redux-actions';
 
+import createListReducer from './createListReducer';
+
 import { notify } from '../actions';
 
-const initialState = [];
-
-const reducers = {
-  [notify.ADD]: (state, action) => state.concat([
-    {
-      uuid: action.meta.uuid,
-      visible: true,
-      data: action.payload,
-    },
-  ]),
-  [notify.HIDE]: (state, action) => {
-    const notificationIndex = state.findIndex(item => item.uuid === action.meta.uuid);
-    if (notificationIndex !== -1) {
-      const nextState = state.slice();
-      const notification = state[notificationIndex];
-      nextState[notificationIndex] = {
-        ...notification,
-        visible: false,
-      };
-      return nextState;
-    }
-    return state;
-  },
-  [notify.REMOVE]: (state, action) => {
-    const notificationIndex = state.findIndex(item => item.uuid === action.meta.uuid);
-    if (notificationIndex !== -1) {
-      const nextState = state.slice();
-      nextState.splice(notificationIndex, 1);
-      return nextState;
-    }
-
-    return state;
-  },
+const initialState = {
+  visible: true,
 };
 
-export default handleActions(reducers, initialState);
+const notification = handleActions({
+  [notify.HIDE]: state => ({
+    ...state,
+    visible: false,
+  }),
+}, initialState);
+
+notification.actions = [
+  notify.HIDE,
+];
+
+export default createListReducer(notify, notification, initialState);

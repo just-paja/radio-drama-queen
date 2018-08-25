@@ -1,7 +1,12 @@
 import { handleActions } from 'redux-actions';
 
+const identifyItem = action => item => (
+  (action.meta && item.uuid === action.meta.uuid)
+  || item.uuid === action.payload
+);
+
 const handleItemAction = itemReducer => (state, action) => {
-  const index = state.findIndex(item => item.uuid === action.meta.uuid);
+  const index = state.findIndex(identifyItem(action));
   if (index !== -1) {
     const nextState = state.slice();
     nextState[index] = itemReducer(nextState[index], action);
@@ -19,7 +24,7 @@ export default (routine, itemReducer, itemInitialState) => handleActions({
     },
   ]),
   [routine.REMOVE]: (state, action) => {
-    const index = state.findIndex(item => item.uuid === action.meta.uuid);
+    const index = state.findIndex(identifyItem(action));
     if (index !== -1) {
       const nextState = state.slice();
       nextState.splice(index, 1);
