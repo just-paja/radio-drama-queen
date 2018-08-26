@@ -33,7 +33,7 @@ function* toggleMuteCategory(action) {
   const { uuid } = action.meta;
   const muted = yield select(getCategoryMutedStatus, uuid);
   const sounds = yield select(getCategorySounds, uuid);
-  const targetVolume = muted ? yield select(getCategoryVolume, uuid) : 0;
+  const targetVolume = muted ? 0 : yield select(getCategoryVolume, uuid);
   yield call(changeSoundsVolume, sounds, targetVolume);
 }
 
