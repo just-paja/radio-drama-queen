@@ -14,7 +14,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SoundCategoryControls from '../containers/SoundCategoryControls';
 import SoundItem from '../containers/SoundItem';
 
-const styles = {
+const styles = theme => ({
   removePadding: {
     paddingLeft: 0,
     paddingRight: 0,
@@ -22,7 +22,14 @@ const styles = {
   canDrop: {
     background: 'rgba(0,0,0,0.25)',
   },
-};
+  cardPadding: {
+    padding: 0.5 * theme.spacing.unit,
+  },
+  headlinePadding: {
+    padding: theme.spacing.unit,
+    paddingBottom: 0,
+  },
+});
 
 const SoundCategory = ({
   canDrop,
@@ -41,8 +48,8 @@ const SoundCategory = ({
           [classes.canDrop]: isOver && canDrop,
         })}
       >
-        <CardContent>
-          <Typography variant="headline">
+        <CardContent className={classes.cardPadding}>
+          <Typography variant="headline" className={classes.headlinePadding}>
             {categoryName}
           </Typography>
           <List dense>
