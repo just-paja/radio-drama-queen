@@ -40,7 +40,7 @@ const sound = handleActions({
   [soundList.LOAD_FAILURE]: (state, action) => ({
     ...state,
     loading: false,
-    error: action.error,
+    error: action.payload,
   }),
   [soundList.SET_NAME]: (state, action) => ({
     ...state,

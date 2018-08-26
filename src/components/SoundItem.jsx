@@ -33,6 +33,7 @@ class SoundItem extends Component {
           loading={sound.loading}
           onClick={this.handleToggle}
           playing={sound.playing}
+          error={sound.error}
         />
         <div>
           {sound.name || sound.uuid}

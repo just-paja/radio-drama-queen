@@ -1,8 +1,6 @@
-const noop = () => {};
-
 const clearSoundCallbacks = (sound) => {
-  sound.on('end', noop);
-  sound.on('stop', noop);
+  sound.off('end');
+  sound.off('stop');
 };
 
 class AudioConnector {
@@ -54,13 +52,15 @@ class AudioManager {
     if (audio) {
       return new Promise((resolve) => {
         const handleSoundFinish = () => {
+          audio.playing = false;
           clearSoundCallbacks(audio.sound);
           resolve();
         };
-        audio.sound.on('end', handleSoundFinish);
-        audio.sound.on('stop', handleSoundFinish);
         audio.playing = true;
-        audio.sound.play();
+        const id = audio.sound.play();
+        audio.sound.on('end', handleSoundFinish, id);
+        audio.sound.on('stop', handleSoundFinish, id);
+        audio.sound.on('playerror', handleSoundFinish, id);
       });
     }
     return Promise.resolve();

@@ -1,9 +1,8 @@
 import {
   call,
-  fork,
   put,
   select,
-  takeLatest,
+  takeEvery,
 } from 'redux-saga/effects';
 
 import AudioManager from '../AudioManager';
@@ -11,20 +10,17 @@ import AudioManager from '../AudioManager';
 import { getSoundCategory, getSoundPlayingStatus } from '../selectors';
 import { soundList } from '../actions';
 
-function* playSound({ meta: { uuid } }) {
-  yield call(AudioManager.play, uuid);
-  // eslint-disable-next-line no-use-before-define
-  yield fork(handleSoundFinish, uuid);
-}
-
-function* handleSoundFinish(uuid) {
-  const category = yield select(getSoundCategory, uuid);
-  const playing = yield select(getSoundPlayingStatus, uuid);
-  if (category.loop && playing) {
-    yield fork(playSound, { meta: { uuid } });
-  } else {
-    yield put(soundList.finished(uuid));
+function* playSoundLoop({ meta: { uuid } }) {
+  let playing = true;
+  while (playing) {
+    yield call(AudioManager.play, uuid);
+    const category = yield select(getSoundCategory, uuid);
+    const soundPlaying = yield select(getSoundPlayingStatus, uuid);
+    playing = soundPlaying
+      ? category.loop
+      : false;
   }
+  yield put(soundList.finished(uuid));
 }
 
 function* stopSound({ meta: { uuid } }) {
@@ -41,15 +37,15 @@ function* toggleSound({ meta: { uuid } }) {
 }
 
 export function* handleSoundPlay() {
-  yield takeLatest(soundList.PLAY, playSound);
+  yield takeEvery(soundList.PLAY, playSoundLoop);
 }
 
 export function* handleSoundStop() {
-  yield takeLatest(soundList.STOP, stopSound);
+  yield takeEvery(soundList.STOP, stopSound);
 }
 
 export function* handleSoundToggle() {
-  yield takeLatest(soundList.TOGGLE, toggleSound);
+  yield takeEvery(soundList.TOGGLE, toggleSound);
 }
 
 export default [
