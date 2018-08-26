@@ -46,6 +46,11 @@ export const getCategoryMutedStatus = createSelector(
   category => category.muted
 );
 
+export const getCategoryExclusiveStatus = createSelector(
+  memoizeCategory,
+  category => category.exclusive
+);
+
 export const getCategorySoundPlayingUuids = createSelector(
   [memoizeCategory, state => state.soundList],
   (category, allSounds) => category.sounds

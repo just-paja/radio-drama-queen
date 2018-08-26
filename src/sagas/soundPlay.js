@@ -8,14 +8,18 @@ import {
 import AudioManager from '../AudioManager';
 
 import { getSoundCategory, getSoundPlayingStatus } from '../selectors';
-import { soundList } from '../actions';
+import { categoryList, soundList } from '../actions';
 
-function* playSoundLoop({ meta: { uuid } }) {
+function* playSound({ meta: { uuid } }) {
+  let category = yield select(getSoundCategory, uuid);
+  if (category.exclusive) {
+    yield put(categoryList.stop(category.uuid, uuid));
+  }
   let playing = true;
   while (playing) {
     yield call(AudioManager.play, uuid);
-    const category = yield select(getSoundCategory, uuid);
     const soundPlaying = yield select(getSoundPlayingStatus, uuid);
+    category = yield select(getSoundCategory, uuid);
     playing = soundPlaying
       ? category.loop
       : false;
@@ -37,7 +41,7 @@ function* toggleSound({ meta: { uuid } }) {
 }
 
 export function* handleSoundPlay() {
-  yield takeEvery(soundList.PLAY, playSoundLoop);
+  yield takeEvery(soundList.PLAY, playSound);
 }
 
 export function* handleSoundStop() {

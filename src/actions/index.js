@@ -7,6 +7,7 @@ export const categoryCreate = createRoutine('CATEGORY_CREATE', [
 ]);
 
 export const categoryList = createListRoutine('CATEGORY', [
+  'EXCLUSIVE_TOGGLE',
   'FILE_DROP',
   'LOOP_TOGGLE',
   'MUTE_TOGGLE',

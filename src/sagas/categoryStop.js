@@ -8,9 +8,10 @@ import {
 import { categoryList, soundList } from '../actions';
 import { getCategorySoundPlayingUuids } from '../selectors';
 
-function* categoryStop({ meta: { uuid } }) {
+function* categoryStop({ meta: { uuid }, payload }) {
   const playingSounds = yield select(getCategorySoundPlayingUuids, uuid);
-  yield all(playingSounds.map(soundUuid => put(soundList.stop(soundUuid))));
+  const stopSounds = playingSounds.filter(sound => !payload || sound !== payload);
+  yield all(stopSounds.map(soundUuid => put(soundList.stop(soundUuid))));
 }
 
 function* handleCategoryCreateStop() {

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import SoundCategoryExclusiveButton from './SoundCategoryExclusiveButton';
 import SoundCategoryLoopButton from './SoundCategoryLoopButton';
 import SoundCategoryStopButton from './SoundCategoryStopButton';
 import VolumeControl from './VolumeControl';
@@ -8,6 +9,7 @@ import VolumeControl from './VolumeControl';
 export default class SoundCategoryControls extends Component {
   constructor() {
     super();
+    this.handleExclusiveToggle = this.handleExclusiveToggle.bind(this);
     this.handleLoopToggle = this.handleLoopToggle.bind(this);
     this.handleMuteToggle = this.handleMuteToggle.bind(this);
     this.handleStop = this.handleStop.bind(this);
@@ -34,8 +36,14 @@ export default class SoundCategoryControls extends Component {
     onMuteToggle(uuid);
   }
 
+  handleExclusiveToggle() {
+    const { uuid, onExclusiveToggle } = this.props;
+    onExclusiveToggle(uuid);
+  }
+
   render() {
     const {
+      exclusive,
       loop,
       muted,
       playing,
@@ -52,6 +60,10 @@ export default class SoundCategoryControls extends Component {
         <div>
           <SoundCategoryStopButton playing={playing} onClick={this.handleStop} />
           <SoundCategoryLoopButton loop={loop} onClick={this.handleLoopToggle} />
+          <SoundCategoryExclusiveButton
+            exclusive={exclusive}
+            onClick={this.handleExclusiveToggle}
+          />
         </div>
       </div>
     );
@@ -59,8 +71,10 @@ export default class SoundCategoryControls extends Component {
 }
 
 SoundCategoryControls.propTypes = {
+  exclusive: PropTypes.bool,
   loop: PropTypes.bool,
   muted: PropTypes.bool,
+  onExclusiveToggle: PropTypes.func.isRequired,
   onLoopToggle: PropTypes.func.isRequired,
   onMuteToggle: PropTypes.func.isRequired,
   onStop: PropTypes.func.isRequired,
@@ -71,6 +85,7 @@ SoundCategoryControls.propTypes = {
 };
 
 SoundCategoryControls.defaultProps = {
+  exclusive: false,
   loop: false,
   muted: false,
   playing: false,

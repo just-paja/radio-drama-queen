@@ -18,6 +18,10 @@ const category = handleActions({
     ...state,
     muted: !state.muted,
   }),
+  [categoryList.EXCLUSIVE_TOGGLE]: state => ({
+    ...state,
+    exclusive: !state.exclusive,
+  }),
   [categoryList.UNMUTE]: state => ({
     ...state,
     muted: false,
@@ -48,6 +52,7 @@ const category = handleActions({
 }, initialState);
 
 category.actions = [
+  categoryList.EXCLUSIVE_TOGGLE,
   categoryList.LOOP_TOGGLE,
   categoryList.MUTE_TOGGLE,
   categoryList.SET_VOLUME,
