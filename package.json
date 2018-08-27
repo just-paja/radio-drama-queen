@@ -7,6 +7,7 @@
     "@material-ui/icons": "^2.0.3",
     "classnames": "^2.2.6",
     "fs-jetpack": "^2.1.0",
+    "hash.js": "^1.1.5",
     "howler": "^2.0.15",
     "material-ui-slider": "^0.1.0",
     "prop-types": "^15.6.2",

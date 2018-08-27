@@ -1,7 +1,9 @@
-const http = global.require('http');
+import hash from 'hash.js';
+
 const fs = global.require('fs');
 const electron = global.require('electron');
 const jetpack = global.require('fs-jetpack');
+const request = global.require('request');
 
 const splitNameFromExtension = (url) => {
   const fileParts = url.split('/');
@@ -26,9 +28,21 @@ const getFileDescriptor = (cachePath, url) => jetpack
     };
   });
 
+const cacheFile = (url, cachePath) => {
+  if (jetpack.exists(cachePath) === 'file') {
+    return Promise.resolve();
+  }
+  return new Promise((resolve, reject) => {
+    const stream = request.get(url).pipe(fs.createWriteStream(cachePath));
+    stream.on('finish', resolve);
+    stream.on('error', reject);
+  });
+};
+
 class LocalAssetsManager {
   constructor() {
     this.downloadSound = this.downloadSound.bind(this);
+    this.downloadConfig = this.downloadConfig.bind(this);
     this.home = electron.remote.app.getPath('userData');
     this.ensureCacheDirExistence();
   }
@@ -37,28 +51,31 @@ class LocalAssetsManager {
     return jetpack.path(this.home, 'cache');
   }
 
-  getSoundPath(uuid, url) {
+  getConfigPath(url) {
+    const sum = hash.sha256().update(url).digest('hex');
+    return jetpack.path(this.getCachePath(), `${sum}.json`);
+  }
+
+  getSoundPath(url) {
     const { extension } = splitNameFromExtension(url);
-    return jetpack.path(this.getCachePath(), `${uuid}.${extension || 'sound'}`);
+    const sum = hash.sha256().update(url).digest('hex');
+    return jetpack.path(this.getCachePath(), `${sum}.${extension}`);
   }
 
   ensureCacheDirExistence() {
     return jetpack.dirAsync(this.getCachePath());
   }
 
+  downloadConfig(url) {
+    const cachePath = this.getConfigPath(url);
+    return cacheFile(url, cachePath)
+      .then(() => jetpack.readAsync(cachePath, 'json'));
+  }
+
   downloadSound(uuid, url) {
-    const cachePath = this.getSoundPath(uuid, url);
-    return new Promise((resolve, reject) => {
-      if (jetpack.exists(cachePath) === 'file') {
-        resolve();
-      } else {
-        const file = fs.createWriteStream(cachePath);
-        http.get(url, (response) => {
-          response.on('end', () => resolve());
-          response.pipe(file);
-        }).on('error', error => reject(error));
-      }
-    }).then(() => getFileDescriptor(cachePath, url));
+    const cachePath = this.getSoundPath(url);
+    return cacheFile(url, cachePath)
+      .then(() => getFileDescriptor(cachePath, url));
   }
 }
 
@@ -66,4 +83,4 @@ const localAssetsManager = new LocalAssetsManager();
 
 export default localAssetsManager;
 
-export const { downloadSound } = localAssetsManager;
+export const { downloadSound, downloadConfig } = localAssetsManager;

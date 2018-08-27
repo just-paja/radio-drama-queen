@@ -7,6 +7,7 @@ export const initialState = {
   name: '',
   path: '',
   playing: false,
+  tags: [],
   uuid: null,
   valid: false,
 };
@@ -46,6 +47,29 @@ const sound = handleActions({
     ...state,
     name: action.payload,
   }),
+  [soundList.SET_TAGS]: (state, action) => ({
+    ...state,
+    tags: action.payload,
+  }),
+  [soundList.TAG_ADD]: (state, action) => ({
+    ...state,
+    tags: [
+      ...state.tags,
+      action.payload,
+    ],
+  }),
+  [soundList.TAG_REMOVE]: (state, action) => {
+    const index = state.indexOf(action.payload);
+    if (index !== -1) {
+      const tags = state.tags.slice();
+      tags.splice(index, 1);
+      return {
+        ...state,
+        tags,
+      };
+    }
+    return state;
+  },
 }, initialState);
 
 sound.actions = [

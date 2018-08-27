@@ -6,6 +6,8 @@ import { logError, logWarning } from '../clientLogger';
 import categoryCreate from './categoryCreate';
 import categoryStop from './categoryStop';
 import categoryVolume from './categoryVolume';
+import libraryModules from './libraryModules';
+import libraryOpen from './libraryOpen';
 import librarySave from './librarySave';
 import notifications from './notifications';
 import soundDrop from './soundDrop';
@@ -15,6 +17,8 @@ const sagas = [
   ...categoryCreate,
   ...categoryStop,
   ...categoryVolume,
+  ...libraryModules,
+  ...libraryOpen,
   ...librarySave,
   ...notifications,
   ...soundDrop,

@@ -5,4 +5,7 @@ export const isSaveAsDialogOpen = createSelector(
   state => state.showSaveAsDialog
 );
 
-export default { isSaveAsDialogOpen };
+export const isOpenLibraryDialogOpen = createSelector(
+  state => state.ui,
+  state => state.showOpenLibraryDialog
+);

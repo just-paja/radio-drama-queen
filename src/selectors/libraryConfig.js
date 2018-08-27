@@ -5,6 +5,11 @@ export const getLibraryFsPath = createSelector(
   config => config.fsPath
 );
 
+export const getModules = createSelector(
+  state => state.libraryConfig,
+  state => state.modules
+);
+
 export const getLibraryConfig = state => ({
   library: {
     name: state.libraryConfig.name,

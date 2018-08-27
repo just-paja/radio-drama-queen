@@ -11,7 +11,7 @@ import { categoryList, soundList } from '../actions';
 const getNameWithoutExtension = fileName => fileName
   .split('.')
   .filter((part, index, source) => index !== source.length - 1)
-  .join('.')
+  .join('.');
 
 const loadFile = file => new Promise((resolve, reject) => {
   const reader = new FileReader();

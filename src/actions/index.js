@@ -27,16 +27,26 @@ export const soundList = createListRoutine('SOUND', [
   'PLAY_FAILURE',
   'PLAY',
   'SET_NAME',
+  'SET_TAGS',
   'STOP',
+  'TAG_ADD',
+  'TAG_REMOVE',
   'TOGGLE',
 ]);
 
 export const library = createRoutine('LIBRARY', [
-  'SAVE',
-  'SAVE_AS',
-  'SAVE_AS_HIDE',
+  'OPEN_DIALOG_HIDE',
+  'OPEN_DIALOG_SHOW',
+  'OPEN_DIALOG_SUBMIT',
   'SAVE_AS_CANCEL',
+  'SAVE_AS_HIDE',
   'SAVE_AS_SUBMIT',
+  'SAVE_AS',
+  'SAVE',
+  'SET_CONFIG',
+  'MODULE_DOWNLOAD_REQUEST',
+  'MODULE_DOWNLOAD_SUCCESS',
+  'MODULE_DOWNLOAD_FAILURE',
 ]);
 
 export const notify = createRoutine('NOTIFY', [
