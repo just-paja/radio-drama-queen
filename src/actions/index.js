@@ -4,6 +4,7 @@ export const categoryCreate = createRoutine('CATEGORY_CREATE', [
   'FORM_HIDE',
   'FORM_SHOW',
   'SUBMIT',
+  'TRIGGER',
 ]);
 
 export const categoryList = createListRoutine('CATEGORY', [
@@ -19,6 +20,7 @@ export const categoryList = createListRoutine('CATEGORY', [
 ]);
 
 export const soundList = createListRoutine('SOUND', [
+  'LOAD_MANUAL',
   'FINISHED',
   'LOAD_FAILURE',
   'LOAD_REQUEST',

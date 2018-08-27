@@ -10,6 +10,11 @@ export const getModules = createSelector(
   state => state.modules
 );
 
+export const getModule = createSelector(
+  (state, moduleName) => state.libraryConfig.modules.find(module => module.name === moduleName),
+  state => state
+);
+
 export const getLibraryConfig = state => ({
   library: {
     name: state.libraryConfig.name,

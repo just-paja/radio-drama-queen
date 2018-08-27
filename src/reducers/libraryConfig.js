@@ -29,6 +29,43 @@ const libraryConfig = handleActions({
     name,
     url,
   }),
+  [library.MODULE_DOWNLOAD_REQUEST]: (state, action) => {
+    const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
+    if (moduleIndex !== -1) {
+      const nextState = { ...state };
+      nextState.modules[moduleIndex] = {
+        ...state.modules[moduleIndex],
+        loading: true,
+      };
+      return nextState;
+    }
+    return state;
+  },
+  [library.MODULE_DOWNLOAD_SUCCESS]: (state, action) => {
+    const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
+    if (moduleIndex !== -1) {
+      const nextState = { ...state };
+      nextState.modules[moduleIndex] = {
+        ...state.modules[moduleIndex],
+        ...action.meta,
+        loading: false,
+      };
+      return nextState;
+    }
+    return state;
+  },
+  [library.MODULE_DOWNLOAD_FAILURE]: (state, action) => {
+    const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
+    if (moduleIndex !== -1) {
+      const nextState = { ...state };
+      nextState.modules[moduleIndex] = {
+        ...state.modules[moduleIndex],
+        loading: false,
+      };
+      return nextState;
+    }
+    return state;
+  },
 }, initialState);
 
 export default libraryConfig;

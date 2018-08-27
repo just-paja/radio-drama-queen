@@ -1,7 +1,7 @@
 import generateUuid from 'uuid/v4';
 
 import { Howl } from 'howler';
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
 import AudioManager from '../AudioManager';
 
@@ -60,14 +60,17 @@ function* loadSoundUrl(uuid, url) {
   }
 }
 
-export function* loadSound(categoryUuid, resource) {
+export function* addSound(resource) {
   const uuid = generateUuid();
   yield put(soundList.add({
     name: null,
     path: typeof resource === 'string' ? resource : resource.path,
     uuid,
   }));
-  yield put(categoryList.soundAdd(categoryUuid, uuid));
+  return uuid;
+}
+
+export function* loadSoundResource(uuid, resource) {
   try {
     if (resource instanceof File) {
       yield call(loadSoundFile, uuid, resource);
@@ -80,5 +83,22 @@ export function* loadSound(categoryUuid, resource) {
   }
 }
 
+export function* loadSound(categoryUuid, resource) {
+  const uuid = yield call(addSound, resource);
+  if (categoryUuid) {
+    yield put(categoryList.soundAdd(categoryUuid, uuid));
+  }
+  yield call(loadSoundResource, uuid, resource);
+}
+
+function* loadSoundFromAction({ payload }) {
+  yield call(loadSound, null, payload);
+}
+
+function* handleSoundLoad() {
+  yield takeEvery(soundList.LOAD_MANUAL, loadSoundFromAction);
+}
+
 export default [
+  handleSoundLoad,
 ];

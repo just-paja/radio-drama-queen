@@ -19,6 +19,13 @@ export const getCategory = createSelector(
   category => category
 );
 
+export const getCategoryByName = createSelector(
+  (state, name) => state.categoryList.find(
+    category => category.name === name
+  ),
+  category => category
+);
+
 export const getCategoryName = createSelector(
   memoizeCategory,
   category => category.name
