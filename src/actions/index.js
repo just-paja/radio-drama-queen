@@ -19,6 +19,11 @@ export const categoryList = createListRoutine('CATEGORY', [
   'UNMUTE',
 ]);
 
+export const tagList = createListRoutine('TAG', [
+  'CREATE',
+]);
+
+
 export const soundList = createListRoutine('SOUND', [
   'LOAD_MANUAL',
   'FINISHED',
@@ -37,6 +42,9 @@ export const soundList = createListRoutine('SOUND', [
 ]);
 
 export const library = createRoutine('LIBRARY', [
+  'MODULE_DOWNLOAD_FAILURE',
+  'MODULE_DOWNLOAD_REQUEST',
+  'MODULE_DOWNLOAD_SUCCESS',
   'OPEN_DIALOG_HIDE',
   'OPEN_DIALOG_SHOW',
   'OPEN_DIALOG_SUBMIT',
@@ -46,9 +54,6 @@ export const library = createRoutine('LIBRARY', [
   'SAVE_AS',
   'SAVE',
   'SET_CONFIG',
-  'MODULE_DOWNLOAD_REQUEST',
-  'MODULE_DOWNLOAD_SUCCESS',
-  'MODULE_DOWNLOAD_FAILURE',
 ]);
 
 export const notify = createRoutine('NOTIFY', [

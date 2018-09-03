@@ -9,6 +9,7 @@ import { startSubmit, stopSubmit, formValueSelector } from 'redux-form';
 import { downloadConfig } from '../LocalAssetsManager';
 import { FORM_LIBRARY_OPEN } from '../constants';
 import { library } from '../actions';
+import { getModulesStructure } from './modulePaths';
 
 const getLibraryOpenValues = formValueSelector(FORM_LIBRARY_OPEN);
 
@@ -20,6 +21,7 @@ function* openLibrary() {
     const config = yield call(downloadConfig, url);
     yield put(library.setConfig({
       ...config,
+      modules: getModulesStructure(url, config.modules),
       url,
     }));
     yield put(library.openDialogHide());

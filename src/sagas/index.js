@@ -6,25 +6,27 @@ import { logError, logWarning } from '../clientLogger';
 import categoryCreate from './categoryCreate';
 import categoryStop from './categoryStop';
 import categoryVolume from './categoryVolume';
-import libraryModules from './libraryModules';
 import libraryOpen from './libraryOpen';
 import librarySave from './librarySave';
+import modules from './modules';
 import notifications from './notifications';
 import soundDrop from './soundDrop';
 import soundLoad from './soundLoad';
 import soundPlay from './soundPlay';
+import tags from './tags';
 
 const sagas = [
   ...categoryCreate,
   ...categoryStop,
   ...categoryVolume,
-  ...libraryModules,
   ...libraryOpen,
   ...librarySave,
+  ...modules,
   ...notifications,
   ...soundDrop,
   ...soundLoad,
   ...soundPlay,
+  ...tags,
 ];
 
 function* onEachError(next, error) {

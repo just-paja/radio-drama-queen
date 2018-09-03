@@ -2,8 +2,6 @@ import { handleActions } from 'redux-actions';
 
 import { library } from '../actions';
 
-const dirname = path => path.match(/.*\//);
-
 const initialState = {
   name: null,
   modules: [],
@@ -17,15 +15,7 @@ const libraryConfig = handleActions({
   }),
   [library.SET_CONFIG]: (state, { payload: { modules, name, url } }) => ({
     ...state,
-    modules: modules.map((module) => {
-      if (typeof module === 'string') {
-        return {
-          name: module,
-          url: `${dirname(url)}${module}/manifest.json`,
-        };
-      }
-      return module;
-    }),
+    modules,
     name,
     url,
   }),

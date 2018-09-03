@@ -1,7 +1,7 @@
 export default class JobCounter {
   constructor(total, concurrency = 3) {
-    this.total = total;
-    this.concurrency = concurrency;
+    this.setTotal(total);
+    this.setConcurrency(concurrency);
   }
 
   add() {
@@ -10,6 +10,14 @@ export default class JobCounter {
 
   prepare() {
     this.prepared += 1;
+  }
+
+  setConcurrency(concurrency) {
+    this.concurrency = concurrency;
+  }
+
+  setTotal(total) {
+    this.total = total;
   }
 }
 
