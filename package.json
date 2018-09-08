@@ -19,6 +19,7 @@
     "react-dnd-touch-backend": "^0.5.1",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
+    "react-saga-rest": "^1.1.8",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
     "redux-actions": "^2.6.1",
