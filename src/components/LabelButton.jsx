@@ -13,17 +13,19 @@ const styles = theme => ({
 
 const LabelButton = ({
   children,
+  buttonComponent: ButtonComponent,
   icon: IconComponent,
   classes,
   ...props
 }) => (
-  <Button {...props}>
+  <ButtonComponent {...props}>
     <IconComponent className={classnames(classes.leftIcon)} />
     {children}
-  </Button>
+  </ButtonComponent>
 );
 
 LabelButton.propTypes = {
+  buttonComponent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
@@ -33,6 +35,7 @@ LabelButton.propTypes = {
 };
 
 LabelButton.defaultProps = {
+  buttonComponent: Button,
   children: null,
 };
 
