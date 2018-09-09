@@ -49,8 +49,9 @@ class AppMenu extends Component {
       menuItems.push(<AddCategoryButton button buttonComponent={ListItem} key="add-button" />);
     }
 
+    menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
+
     if (!isEmpty) {
-      menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
       menuItems.push(<SaveLibraryButton button buttonComponent={ListItem} key="save" />);
       menuItems.push(<SaveLibraryAsButton button buttonComponent={ListItem} key="save-as" />);
     }
