@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundName from './SoundName';
 import SoundToggleButton from './SoundToggleButton';
 
 import { Sound } from '../proptypes';
@@ -26,7 +27,7 @@ class SoundItem extends Component {
   }
 
   render() {
-    const { classes, sound } = this.props;
+    const { classes, search, sound } = this.props;
     return sound ? (
       <div className={classes.inline}>
         <SoundToggleButton
@@ -35,9 +36,11 @@ class SoundItem extends Component {
           playing={sound.playing}
           error={sound.error}
         />
-        <div>
-          {sound.name || sound.uuid}
-        </div>
+        <SoundName
+          name={sound.name}
+          uuid={sound.uuid}
+          highlight={search}
+        />
       </div>
     ) : null;
   }
@@ -46,7 +49,12 @@ class SoundItem extends Component {
 SoundItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   onToggle: PropTypes.func.isRequired,
+  search: PropTypes.string,
   sound: Sound.isRequired,
+};
+
+SoundItem.defaultProps = {
+  search: '',
 };
 
 export default withStyles(styles)(SoundItem);
