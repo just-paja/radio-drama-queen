@@ -23,6 +23,9 @@ export const tagList = createListRoutine('TAG', [
   'CREATE',
 ]);
 
+export const ui = createRoutine('UI', [
+  'EDIT_MODE_TOGGLE',
+]);
 
 export const soundList = createListRoutine('SOUND', [
   'LOAD_MANUAL',

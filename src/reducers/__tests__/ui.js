@@ -1,6 +1,6 @@
 import ui from '../ui';
 
-import { library } from '../../actions';
+import { library, ui as uiActions } from '../../actions';
 
 describe('ui reducer', () => {
   it('sets showSaveAsDialog flag to true on library save as action', () => {
@@ -28,5 +28,23 @@ describe('ui reducer', () => {
     const result = ui(state, library.saveAsHide());
     expect(result).not.toEqual(state);
     expect(result).toHaveProperty('showSaveAsDialog', false);
+  });
+
+  it('when toggle edit mode action is triggered, then it sets editMode flag to true given edit mode is false', () => {
+    const state = {
+      editMode: false,
+    };
+    const result = ui(state, uiActions.editModeToggle());
+    expect(result).not.toEqual(state);
+    expect(result).toHaveProperty('editMode', true);
+  });
+
+  it('when toggle edit mode action is triggered, then it sets editMode flag to false given edit mode is true', () => {
+    const state = {
+      editMode: true,
+    };
+    const result = ui(state, uiActions.editModeToggle());
+    expect(result).not.toEqual(state);
+    expect(result).toHaveProperty('editMode', false);
   });
 });

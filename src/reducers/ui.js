@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
-import { turnOn, turnOff } from 'react-saga-rest';
+import { toggle, turnOn, turnOff } from 'react-saga-rest';
 
-import { library } from '../actions';
+import { library, ui as uiActions } from '../actions';
 
 const initialState = {
   showOpenLibraryDialog: false,
@@ -14,6 +14,7 @@ const ui = handleActions({
   [library.SAVE_AS_CANCEL]: turnOff('showSaveAsDialog'),
   [library.SAVE_AS_HIDE]: turnOff('showSaveAsDialog'),
   [library.SAVE_AS]: turnOn('showSaveAsDialog'),
+  [uiActions.EDIT_MODE_TOGGLE]: toggle('editMode'),
 }, initialState);
 
 export default ui;
