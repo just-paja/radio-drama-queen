@@ -1,13 +1,13 @@
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import classnames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
-import classnames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -30,6 +30,11 @@ const styles = theme => ({
     padding: theme.spacing.unit,
     paddingBottom: 0,
   },
+  headlineControls: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginRight: '-0.5rem',
+  },
 });
 
 const SoundCategory = ({
@@ -50,10 +55,12 @@ const SoundCategory = ({
         })}
       >
         <CardContent className={classes.cardPadding}>
-          <Typography variant="headline" className={classes.headlinePadding}>
-            {categoryName}
+          <div className={classnames(classes.headlinePadding, classes.headlineControls)}>
+            <Typography variant="headline">
+              {categoryName}
+            </Typography>
             <SoundCategoryRemoveButton uuid={uuid} />
-          </Typography>
+          </div>
           <List dense>
             {sounds.map(soundUuid => (
               <ListItem className={classes.removePadding} key={soundUuid}>
