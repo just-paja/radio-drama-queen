@@ -11,6 +11,7 @@ import classnames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundCategoryRemoveButton from '../containers/SoundCategoryRemoveButton';
 import SoundCategoryControls from '../containers/SoundCategoryControls';
 import SoundItem from '../containers/SoundItem';
 
@@ -51,6 +52,7 @@ const SoundCategory = ({
         <CardContent className={classes.cardPadding}>
           <Typography variant="headline" className={classes.headlinePadding}>
             {categoryName}
+            <SoundCategoryRemoveButton uuid={uuid} />
           </Typography>
           <List dense>
             {sounds.map(soundUuid => (
