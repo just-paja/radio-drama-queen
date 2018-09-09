@@ -13,12 +13,10 @@ import GridCategory from './GridCategory';
 import NoCategoriesMessage from './NoCategoriesMessage';
 import SoundCategory from '../containers/SoundCategory';
 import SoundCategoryCreateForm from '../containers/SoundCategoryCreateForm';
+import SoundCategoryGridSpeedDial from '../containers/SoundCategoryGridSpeedDial';
 import SoundSearchForm from '../containers/SoundSearchForm';
 
 const styles = theme => ({
-  gridStretch: {
-    height: '100%',
-  },
   gridSpacing: {
     padding: theme.spacing.unit,
     minWidth: 320,
@@ -63,12 +61,13 @@ const SoundCategoryGrid = ({
     }
   }
   return connectDropTarget(
-    <div className={classes.gridStretch}>
+    <div>
       {categories.length > 0
         ? <SoundSearchForm key="search" />
         : null}
+      <SoundCategoryGridSpeedDial />
       <Grid
-        className={classnames(classes.gridSpacing, classes.gridStretch, {
+        className={classnames(classes.gridSpacing, {
           [classes.canDrop]: isOver && canDrop,
         })}
         container

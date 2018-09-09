@@ -1,10 +1,10 @@
 import Button from '@material-ui/core/Button';
 import React from 'react';
 
-const AddButton = ({ ...props }) => (
+const CancelButton = ({ ...props }) => (
   <Button size="small" {...props}>
     Cancel
   </Button>
 );
 
-export default AddButton;
+export default CancelButton;

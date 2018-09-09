@@ -5,13 +5,14 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
+const styles = theme => ({
   messageSize: {
     marginLeft: 'auto',
     marginRight: 'auto',
+    marginTop: theme.spacing.unit,
     maxWidth: 600,
   },
-};
+});
 
 const GridMessage = ({ children, classes, heading }) => (
   <Paper className={classes.messageSize} elevation={0}>

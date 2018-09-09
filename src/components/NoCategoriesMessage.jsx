@@ -1,7 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
-import AddCategoryButton from '../containers/AddCategoryButton';
 import GridMessage from './GridMessage';
 
 const NoCategoriesMessage = () => (
@@ -10,7 +9,6 @@ const NoCategoriesMessage = () => (
       Sound categories help you organize sounds so you can find what you
       want to play just by visual inspection.
     </Typography>
-    <AddCategoryButton variant="contained" />
   </GridMessage>
 );
 

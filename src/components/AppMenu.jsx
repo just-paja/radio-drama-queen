@@ -10,7 +10,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import AddCategoryButton from '../containers/AddCategoryButton';
 import SaveLibraryAsButton from '../containers/SaveLibraryAsButton';
 import SaveLibraryButton from '../containers/SaveLibraryButton';
 import OpenLibraryButton from '../containers/OpenLibraryButton';
@@ -41,13 +40,9 @@ class AppMenu extends Component {
   }
 
   render() {
-    const { classes, isEmpty, showCreateForm } = this.props;
+    const { classes, isEmpty } = this.props;
     const { drawerOpen } = this.state;
     const menuItems = [];
-
-    if (!showCreateForm && !isEmpty) {
-      menuItems.push(<AddCategoryButton button buttonComponent={ListItem} key="add-button" />);
-    }
 
     menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
 
@@ -88,12 +83,10 @@ class AppMenu extends Component {
 AppMenu.propTypes = {
   classes: Classes.isRequired,
   isEmpty: PropTypes.bool,
-  showCreateForm: PropTypes.bool,
 };
 
 AppMenu.defaultProps = {
   isEmpty: false,
-  showCreateForm: false,
 };
 
 export default withStyles(styles)(AppMenu);
