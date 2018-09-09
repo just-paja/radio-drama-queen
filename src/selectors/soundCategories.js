@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
 
+import { stringSearch } from '../search';
+import { getSoundSearchValueCleared } from './soundSearch';
+
 const memoizeCategory = (state, uuid) => state.categoryList.find(
   category => category.uuid === uuid
 );
@@ -41,6 +44,18 @@ export const getCategorySounds = createSelector(
   (category, soundList) => soundList.filter(
     sound => category.sounds.indexOf(sound.uuid) !== -1
   )
+);
+
+export const getCategoryFilteredSoundUuids = createSelector(
+  [getCategorySounds, getSoundSearchValueCleared],
+  (sounds, search) => {
+    if (search) {
+      return sounds
+        .filter(sound => stringSearch(sound.name, search).relevant)
+        .map(sound => sound.uuid);
+    }
+    return sounds.map(sound => sound.uuid);
+  }
 );
 
 export const getCategoryLoopStatus = createSelector(

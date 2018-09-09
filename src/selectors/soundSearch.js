@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import { clearSearch } from '../search';
+
 const getFeatureState = state => state.soundSearch;
 
 export const getSoundSearchValue = createSelector(
@@ -7,4 +9,7 @@ export const getSoundSearchValue = createSelector(
   state => state.search
 );
 
-export default { getSoundSearchValue };
+export const getSoundSearchValueCleared = createSelector(
+  getSoundSearchValue,
+  value => clearSearch(value)
+);

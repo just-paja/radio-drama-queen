@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 
 import SoundItem from '../components/SoundItem';
 
-import { getSound, getSoundSearchValue } from '../selectors';
+import { getSound, getSoundSearchValueCleared } from '../selectors';
 import { soundList } from '../actions';
 
 const mapStateToProps = (state, { uuid }) => ({
-  search: getSoundSearchValue(state),
+  search: getSoundSearchValueCleared(state),
   sound: getSound(state, uuid),
 });
 
