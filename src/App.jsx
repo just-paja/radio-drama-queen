@@ -10,6 +10,7 @@ import AppMenu from './containers/AppMenu';
 import OpenLibraryDialog from './containers/OpenLibraryDialog';
 import SaveLibraryAsDialog from './containers/SaveLibraryAsDialog';
 import SoundCategoryGrid from './containers/SoundCategoryGrid';
+import SoundSearchForm from './containers/SoundSearchForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
         <Provider store={store}>
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
             <AppMenu />
+            <SoundSearchForm />
             <SoundCategoryGrid />
             <OpenLibraryDialog />
             <SaveLibraryAsDialog />

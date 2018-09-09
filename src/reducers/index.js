@@ -6,6 +6,7 @@ import categoryList from './categoryList';
 import libraryConfig from './libraryConfig';
 import notifications from './notifications';
 import soundList from './soundList';
+import soundSearch from './soundSearch';
 import tags from './tags';
 import ui from './ui';
 
@@ -16,6 +17,7 @@ export default combineReducers({
   libraryConfig,
   notifications,
   soundList,
+  soundSearch,
   tags,
   ui,
 });

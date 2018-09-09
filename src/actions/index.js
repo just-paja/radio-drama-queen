@@ -44,6 +44,11 @@ export const soundList = createListRoutine('SOUND', [
   'TOGGLE',
 ]);
 
+export const soundSearch = createRoutine('SOUND_SEARCH', [
+  'CHANGE',
+  'CLEAR',
+]);
+
 export const library = createRoutine('LIBRARY', [
   'MODULE_DOWNLOAD_FAILURE',
   'MODULE_DOWNLOAD_REQUEST',
