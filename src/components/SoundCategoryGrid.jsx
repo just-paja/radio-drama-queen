@@ -10,9 +10,10 @@ import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 import GridCategory from './GridCategory';
+import NoCategoriesMessage from './NoCategoriesMessage';
 import SoundCategory from '../containers/SoundCategory';
 import SoundCategoryCreateForm from '../containers/SoundCategoryCreateForm';
-import NoCategoriesMessage from './NoCategoriesMessage';
+import SoundSearchForm from '../containers/SoundSearchForm';
 
 const styles = theme => ({
   gridStretch: {
@@ -40,13 +41,14 @@ const SoundCategoryGrid = ({
   if (categories.length === 0 && !showCreateForm) {
     content = (<NoCategoriesMessage />);
   } else {
-    content = [
-      categories.map(uuid => (
-        <GridCategory key={uuid}>
-          <SoundCategory uuid={uuid} />
-        </GridCategory>
-      )),
-      showCreateForm ? (
+    content = [];
+    content.push(categories.map(uuid => (
+      <GridCategory key={uuid}>
+        <SoundCategory uuid={uuid} />
+      </GridCategory>
+    )));
+    if (showCreateForm) {
+      content.push(
         <GridCategory key="form">
           <Card>
             <CardContent>
@@ -57,11 +59,14 @@ const SoundCategoryGrid = ({
             </CardContent>
           </Card>
         </GridCategory>
-      ) : null,
-    ];
+      );
+    }
   }
   return connectDropTarget(
     <div className={classes.gridStretch}>
+      {categories.length > 0
+        ? <SoundSearchForm key="search" />
+        : null}
       <Grid
         className={classnames(classes.gridSpacing, classes.gridStretch, {
           [classes.canDrop]: isOver && canDrop,
