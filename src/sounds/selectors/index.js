@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-const getFeatureState = state => state.soundList;
+const memoizeList = state => state.sounds.list;
 
-const memoizeSound = (state, uuid) => getFeatureState(state).find(sound => sound.uuid === uuid);
+const memoizeSound = (state, uuid) => memoizeList(state).find(sound => sound.uuid === uuid);
 
 export const getSound = createSelector(
   memoizeSound,
@@ -10,7 +10,7 @@ export const getSound = createSelector(
 );
 
 export const getSoundByUrl = createSelector(
-  (state, url) => getFeatureState(state).find(sound => sound.path === url),
+  (state, url) => memoizeList(state).find(sound => sound.path === url),
   item => item
 );
 
@@ -24,4 +24,9 @@ export const getSoundCategory = createSelector(
 export const getSoundPlayingStatus = createSelector(
   memoizeSound,
   sound => sound.playing
+);
+
+export const getSoundLoopStatus = createSelector(
+  memoizeSound,
+  sound => sound.loop
 );

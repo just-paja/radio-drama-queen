@@ -4,6 +4,7 @@ import { soundList } from '../actions';
 
 export const initialState = {
   loading: false,
+  loop: false,
   name: '',
   path: '',
   playing: false,

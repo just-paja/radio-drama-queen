@@ -1,9 +1,18 @@
 import hash from 'hash.js';
 
-const fs = global.require('fs');
-const electron = global.require('electron');
-const jetpack = global.require('fs-jetpack');
-const request = global.require('request');
+let fs;
+let electron;
+let jetpack;
+let request;
+
+const loadDependencies = () => {
+  if (global.require) {
+    fs = global.require('fs');
+    electron = global.require('electron');
+    jetpack = global.require('fs-jetpack');
+    request = global.require('request');
+  }
+};
 
 const splitNameFromExtension = (url) => {
   const fileParts = url.split('/');
@@ -29,6 +38,9 @@ const getFileDescriptor = (cachePath, url) => jetpack
   });
 
 const cacheFile = (url, cachePath) => {
+  if (!fs) {
+    return Promise.reject(new Error('Not available in this environment'));
+  }
   if (jetpack.exists(cachePath) === 'file') {
     return Promise.resolve();
   }
@@ -39,12 +51,19 @@ const cacheFile = (url, cachePath) => {
   });
 };
 
+const getPath = (...args) => {
+  if (electron) {
+    return electron.remote.app.getPath(...args);
+  }
+  return null;
+};
+
 class LocalAssetsManager {
   constructor() {
     this.downloadSound = this.downloadSound.bind(this);
     this.downloadConfig = this.downloadConfig.bind(this);
-    this.home = electron.remote.app.getPath('userData');
-    this.ensureCacheDirExistence();
+    loadDependencies();
+    this.home = getPath('userData');
   }
 
   getCachePath() {
@@ -63,18 +82,23 @@ class LocalAssetsManager {
   }
 
   ensureCacheDirExistence() {
-    return jetpack.dirAsync(this.getCachePath());
+    if (fs) {
+      return jetpack.dirAsync(this.getCachePath());
+    }
+    return Promise.reject(new Error('Not available in this environment'));
   }
 
   downloadConfig(url) {
     const cachePath = this.getConfigPath(url);
-    return cacheFile(url, cachePath)
+    return this.ensureCacheDirExistence()
+      .then(() => cacheFile(url, cachePath))
       .then(() => jetpack.readAsync(cachePath, 'json'));
   }
 
   downloadSound(uuid, url) {
     const cachePath = this.getSoundPath(url);
-    return cacheFile(url, cachePath)
+    return this.ensureCacheDirExistence()
+      .then(() => cacheFile(url, cachePath))
       .then(() => getFileDescriptor(cachePath, url));
   }
 }
