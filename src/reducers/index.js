@@ -7,7 +7,7 @@ import libraryConfig from './libraryConfig';
 import notifications from './notifications';
 import sounds from '../sounds/reducers';
 import soundSearch from './soundSearch';
-import tags from './tags';
+import tags from '../tags/reducers';
 import ui from './ui';
 
 export default combineReducers({

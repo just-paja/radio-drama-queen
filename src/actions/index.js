@@ -19,10 +19,6 @@ export const categoryList = createListRoutine('CATEGORY', [
   'UNMUTE',
 ]);
 
-export const tagList = createListRoutine('TAG', [
-  'CREATE',
-]);
-
 export const ui = createRoutine('UI', [
   'EDIT_MODE_TOGGLE',
 ]);

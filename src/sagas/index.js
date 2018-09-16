@@ -12,7 +12,7 @@ import modules from './modules';
 import notifications from './notifications';
 import soundDrop from './soundDrop';
 import sounds from '../sounds/sagas';
-import tags from './tags';
+import tags from '../tags/sagas';
 
 const sagas = [
   ...categoryCreate,

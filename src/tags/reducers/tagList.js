@@ -1,5 +1,5 @@
 import tag, { initialState } from './tag';
-import createListReducer from './createListReducer';
+import createListReducer from '../../reducers/createListReducer';
 
 import { tagList } from '../actions';
 
