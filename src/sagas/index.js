@@ -3,7 +3,6 @@ import keepAlive from 'redux-saga-restart';
 import { all, call, fork } from 'redux-saga/effects';
 import { logError, logWarning } from '../clientLogger';
 
-import notifications from './notifications';
 import soundCategories from '../soundCategories/sagas';
 import soundModules from '../soundModules/sagas';
 import sounds from '../sounds/sagas';
@@ -11,7 +10,6 @@ import tags from '../tags/sagas';
 
 const sagas = [
   ...soundCategories,
-  ...notifications,
   ...soundModules,
   ...sounds,
   ...tags,

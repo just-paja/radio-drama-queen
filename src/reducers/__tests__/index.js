@@ -17,10 +17,6 @@ describe('combined reducer', () => {
     expect(reducer(undefined, {})).toHaveProperty('libraryConfig');
   });
 
-  it('provides notifications reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('notifications');
-  });
-
   it('provides soundList reducer', () => {
     expect(reducer(undefined, {})).toHaveProperty('soundList');
   });

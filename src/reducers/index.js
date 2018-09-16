@@ -1,20 +1,16 @@
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 
-import categoryGrid from './categoryGrid';
-import categoryList from './categoryList';
+import soundCategories from '../soundCategories/reducers';
 import soundModules from '../soundModules/reducers';
-import notifications from './notifications';
 import sounds from '../sounds/reducers';
 import soundSearch from './soundSearch';
 import tags from '../tags/reducers';
 import ui from './ui';
 
 export default combineReducers({
-  categoryGrid,
-  categoryList,
+  soundCategories,
   form,
-  notifications,
   soundModules,
   sounds,
   soundSearch,
