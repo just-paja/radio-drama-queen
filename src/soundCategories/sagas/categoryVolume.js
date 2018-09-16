@@ -1,40 +1,27 @@
-import {
-  call,
-  put,
-  select,
-  takeLatest,
-} from 'redux-saga/effects';
-
-import AudioManager from '../AudioManager';
+import { put, select, takeLatest } from 'redux-saga/effects';
 
 import { categoryList } from '../actions';
+import { soundList } from '../../sounds/actions';
 import {
   getCategoryMutedStatus,
-  getCategorySounds,
+  getCategorySoundUuids,
   getCategoryVolume,
 } from '../selectors';
 
-const changeSoundsVolume = (sounds, volume) => {
-  const howls = sounds.map(sound => AudioManager.findByUuid(sound.uuid));
-  howls.forEach(howl => howl.sound.volume(volume / 100));
-};
-
-function* setCategoryVolume(action) {
-  const { uuid } = action.meta;
-  const sounds = yield select(getCategorySounds, uuid);
+function* setCategoryVolume({ payload, meta: { uuid } }) {
+  const sounds = yield select(getCategorySoundUuids, uuid);
   const muted = yield select(getCategoryMutedStatus, uuid);
   if (muted) {
     yield put(categoryList.unmute(uuid));
   }
-  yield call(changeSoundsVolume, sounds, action.payload);
+  yield put(soundList.groupVolumeSet(null, { sounds, volume: payload }));
 }
 
-function* toggleMuteCategory(action) {
-  const { uuid } = action.meta;
+function* toggleMuteCategory({ meta: { uuid } }) {
   const muted = yield select(getCategoryMutedStatus, uuid);
-  const sounds = yield select(getCategorySounds, uuid);
-  const targetVolume = muted ? 0 : yield select(getCategoryVolume, uuid);
-  yield call(changeSoundsVolume, sounds, targetVolume);
+  const sounds = yield select(getCategorySoundUuids, uuid);
+  const volume = muted ? 0 : yield select(getCategoryVolume, uuid);
+  yield put(soundList.groupVolumeSet(null, { sounds, volume }));
 }
 
 function* handleCategoryMuteToggle() {

@@ -5,7 +5,8 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 
-import { categoryList, soundList } from '../actions';
+import { categoryList } from '../actions';
+import { soundList } from '../../sounds/actions';
 import { getCategorySoundPlayingUuids } from '../selectors';
 
 function* categoryStop({ meta: { uuid }, payload }) {

@@ -6,8 +6,9 @@ import {
 } from 'redux-saga/effects';
 import { createInteractiveQueue } from 'redux-saga-job-queue';
 
-import { downloadConfig } from '../LocalAssetsManager';
-import { library, tagList } from '../actions';
+import { downloadConfig } from '../../LocalAssetsManager';
+import { library } from '../actions';
+import { tagList } from '../../tags/actions';
 
 import { getModulesStructure } from './modulePaths';
 
@@ -34,7 +35,6 @@ function* downloadModules({ payload }) {
     });
     yield call(queue.run);
   } else {
-    console.log('payload', payload);
     yield call(queue.addItems, payload);
   }
 }

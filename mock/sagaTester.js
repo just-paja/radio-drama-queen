@@ -5,8 +5,9 @@ import { all, fork } from 'redux-saga/effects';
 
 import reducers from '../src/reducers';
 
-export default (initialState) => {
+export default (initialState, extraConfig = {}) => {
   const sagaTester = new SagaTester({
+    ...extraConfig,
     reducers,
     initialState,
   });

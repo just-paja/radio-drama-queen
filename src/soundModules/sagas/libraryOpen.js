@@ -6,7 +6,7 @@ import {
 } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, formValueSelector } from 'redux-form';
 
-import { downloadConfig } from '../LocalAssetsManager';
+import { downloadConfig } from '../../LocalAssetsManager';
 import { FORM_LIBRARY_OPEN } from '../constants';
 import { library } from '../actions';
 import { getModulesStructure } from './modulePaths';

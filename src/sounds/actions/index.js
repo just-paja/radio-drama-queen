@@ -1,9 +1,10 @@
 import { createListRoutine } from '../../actions/routines';
 
 export const soundList = createListRoutine('SOUND', [
-  'LOAD_MANUAL',
   'FINISHED',
+  'GROUP_VOLUME_SET',
   'LOAD_FAILURE',
+  'LOAD_MANUAL',
   'LOAD_REQUEST',
   'LOAD_SUCCESS',
   'LOAD',
@@ -15,6 +16,7 @@ export const soundList = createListRoutine('SOUND', [
   'TAG_ADD',
   'TAG_REMOVE',
   'TOGGLE',
+  'VOLUME_SET',
 ]);
 
 export default { soundList };
