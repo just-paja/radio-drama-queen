@@ -7,7 +7,7 @@ import {
 import { createInteractiveQueue } from 'redux-saga-job-queue';
 
 import { downloadConfig } from '../../LocalAssetsManager';
-import { library } from '../actions';
+import { library, soundModule } from '../actions';
 import { tagList } from '../../tags/actions';
 
 import { getModulesStructure } from './modulePaths';
@@ -15,15 +15,15 @@ import { getModulesStructure } from './modulePaths';
 let queue;
 
 function* downloadModuleConfig({ payload: { name, url } }) {
-  yield put(library.moduleDownloadRequest(name));
+  yield put(soundModule.downloadRequest(name));
   try {
     const moduleConfig = yield call(downloadConfig, url);
-    yield put(library.moduleDownloadSuccess(name, {
+    yield put(soundModule.downloadSuccess(name, {
       ...moduleConfig,
       url,
     }));
   } catch (error) {
-    yield put(library.moduleDownloadFailure(name, error));
+    yield put(soundModule.downloadFailure(name, error));
   }
 }
 
@@ -96,7 +96,7 @@ function* handleLibraryConfigSet() {
 }
 
 function* handleModuleLoad() {
-  yield takeEvery(library.MODULE_DOWNLOAD_SUCCESS, loadModuleResources);
+  yield takeEvery(soundModule.DOWNLOAD_SUCCESS, loadModuleResources);
 }
 
 export default [
