@@ -11,8 +11,7 @@ import librarySave from './librarySave';
 import modules from './modules';
 import notifications from './notifications';
 import soundDrop from './soundDrop';
-import soundLoad from './soundLoad';
-import soundPlay from './soundPlay';
+import sounds from '../sounds/sagas';
 import tags from './tags';
 
 const sagas = [
@@ -24,8 +23,7 @@ const sagas = [
   ...modules,
   ...notifications,
   ...soundDrop,
-  ...soundLoad,
-  ...soundPlay,
+  ...sounds,
   ...tags,
 ];
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Stop from '@material-ui/icons/Stop';
 
-import IconButton from './IconButton';
+import IconButton from '../../components/IconButton';
 
 const SoundToggleButton = ({
   error,

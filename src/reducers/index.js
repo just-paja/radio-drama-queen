@@ -5,7 +5,7 @@ import categoryGrid from './categoryGrid';
 import categoryList from './categoryList';
 import libraryConfig from './libraryConfig';
 import notifications from './notifications';
-import soundList from './soundList';
+import sounds from '../sounds/reducers';
 import soundSearch from './soundSearch';
 import tags from './tags';
 import ui from './ui';
@@ -16,7 +16,7 @@ export default combineReducers({
   form,
   libraryConfig,
   notifications,
-  soundList,
+  sounds,
   soundSearch,
   tags,
   ui,

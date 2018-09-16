@@ -3,8 +3,8 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { stringSearch } from '../search';
-import { Classes } from '../proptypes';
+import { stringSearch } from '../../search';
+import { Classes } from '../../proptypes';
 
 const styles = theme => ({
   dimm: {

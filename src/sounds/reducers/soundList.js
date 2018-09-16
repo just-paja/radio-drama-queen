@@ -1,4 +1,4 @@
-import createListReducer from './createListReducer';
+import createListReducer from '../../reducers/createListReducer';
 import sound, { initialState } from './sound';
 
 import { soundList } from '../actions';

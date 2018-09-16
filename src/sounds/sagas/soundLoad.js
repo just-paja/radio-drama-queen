@@ -5,8 +5,8 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 
 import AudioManager from '../AudioManager';
 
-import { downloadSound } from '../LocalAssetsManager';
-import { categoryList, soundList } from '../actions';
+import { downloadSound } from '../../LocalAssetsManager';
+import { soundList } from '../actions';
 
 const getNameWithoutExtension = fileName => fileName
   .split('.')
@@ -85,9 +85,6 @@ export function* loadSoundResource(uuid, resource) {
 
 export function* loadSound(categoryUuid, resource) {
   const uuid = yield call(addSound, resource);
-  if (categoryUuid) {
-    yield put(categoryList.soundAdd(categoryUuid, uuid));
-  }
   yield call(loadSoundResource, uuid, resource);
 }
 
