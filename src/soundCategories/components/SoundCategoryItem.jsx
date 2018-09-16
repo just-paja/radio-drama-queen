@@ -15,7 +15,7 @@ const styles = {
   },
 };
 
-class SoundItem extends Component {
+class SoundCategoryItem extends Component {
   constructor() {
     super();
     this.handleToggle = this.handleToggle.bind(this);
@@ -46,15 +46,15 @@ class SoundItem extends Component {
   }
 }
 
-SoundItem.propTypes = {
+SoundCategoryItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   onToggle: PropTypes.func.isRequired,
   search: PropTypes.string,
   sound: Sound.isRequired,
 };
 
-SoundItem.defaultProps = {
+SoundCategoryItem.defaultProps = {
   search: '',
 };
 
-export default withStyles(styles)(SoundItem);
+export default withStyles(styles)(SoundCategoryItem);

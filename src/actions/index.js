@@ -1,23 +1,4 @@
-import { createRoutine, createListRoutine } from './routines';
-
-export const categoryCreate = createRoutine('CATEGORY_CREATE', [
-  'FORM_HIDE',
-  'FORM_SHOW',
-  'SUBMIT',
-  'TRIGGER',
-]);
-
-export const categoryList = createListRoutine('CATEGORY', [
-  'EXCLUSIVE_TOGGLE',
-  'FILE_DROP',
-  'LOOP_TOGGLE',
-  'MUTE_TOGGLE',
-  'SET_VOLUME',
-  'SOUND_ADD',
-  'SOUND_REMOVE',
-  'STOP',
-  'UNMUTE',
-]);
+import { createRoutine } from './routines';
 
 export const ui = createRoutine('UI', [
   'EDIT_MODE_TOGGLE',

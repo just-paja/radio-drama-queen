@@ -3,21 +3,15 @@ import keepAlive from 'redux-saga-restart';
 import { all, call, fork } from 'redux-saga/effects';
 import { logError, logWarning } from '../clientLogger';
 
-import categoryCreate from './categoryCreate';
-import categoryStop from './categoryStop';
-import categoryVolume from './categoryVolume';
 import notifications from './notifications';
-import soundDrop from './soundDrop';
+import soundCategories from '../soundCategories/sagas';
 import soundModules from '../soundModules/sagas';
 import sounds from '../sounds/sagas';
 import tags from '../tags/sagas';
 
 const sagas = [
-  ...categoryCreate,
-  ...categoryStop,
-  ...categoryVolume,
+  ...soundCategories,
   ...notifications,
-  ...soundDrop,
   ...soundModules,
   ...sounds,
   ...tags,
