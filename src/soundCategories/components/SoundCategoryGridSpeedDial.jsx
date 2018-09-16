@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Classes } from '../proptypes';
+import { Classes } from '../../proptypes';
 
 const styles = theme => ({
   speedDial: {

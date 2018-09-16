@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Explicit from '@material-ui/icons/Explicit';
 
-import IconButton from './IconButton';
+import SoundCategoryIconButton from './SoundCategoryIconButton';
 
 const SoundCategoryExclusiveButton = ({ onClick, exclusive }) => (
-  <IconButton
+  <SoundCategoryIconButton
     color={exclusive ? 'primary' : 'default'}
     icon={Explicit}
     onClick={onClick}

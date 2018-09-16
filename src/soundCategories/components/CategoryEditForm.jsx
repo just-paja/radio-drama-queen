@@ -3,9 +3,9 @@ import React from 'react';
 
 import { Field, Form } from 'redux-form';
 
-import Input from './Input';
-import CancelButton from './CancelButton';
-import SaveButton from './SaveButton';
+import Input from '../../components/Input';
+import CancelButton from '../../components/CancelButton';
+import SaveButton from '../../components/SaveButton';
 
 const CategoryEditForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>

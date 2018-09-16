@@ -3,10 +3,10 @@ import React from 'react';
 import VolumeOff from '@material-ui/icons/VolumeOff';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 
-import IconButton from './IconButton';
+import SoundCategoryIconButton from './SoundCategoryIconButton';
 
 const VolumeToggleButton = ({ onClick, muted }) => (
-  <IconButton
+  <SoundCategoryIconButton
     icon={muted ? VolumeOff : VolumeUp}
     onClick={onClick}
   />

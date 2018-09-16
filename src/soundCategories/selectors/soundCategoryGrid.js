@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const memoizeGridState = state => state.categoryGrid;
+const memoizeGridState = state => state.soundCategories.grid;
 
 export const isCategoryCreateFormVisible = createSelector(
   memoizeGridState,

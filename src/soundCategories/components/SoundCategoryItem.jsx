@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundName from './SoundName';
 import SoundToggleButton from './SoundToggleButton';
 
-import { Sound } from '../proptypes';
+import { SoundName } from '../../sounds/components';
+import { Sound } from '../../sounds/proptypes';
 
 const styles = {
   inline: {

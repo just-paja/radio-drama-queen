@@ -3,16 +3,13 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SaveLibraryAsButton from '../containers/SaveLibraryAsButton';
-import SaveLibraryButton from '../containers/SaveLibraryButton';
-import OpenLibraryButton from '../containers/OpenLibraryButton';
+import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton';
 
 import { Classes } from '../proptypes';
 
@@ -40,16 +37,11 @@ class AppMenu extends Component {
   }
 
   render() {
-    const { classes, isEmpty } = this.props;
+    const { classes } = this.props;
     const { drawerOpen } = this.state;
     const menuItems = [];
 
     menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
-
-    if (!isEmpty) {
-      menuItems.push(<SaveLibraryButton button buttonComponent={ListItem} key="save" />);
-      menuItems.push(<SaveLibraryAsButton button buttonComponent={ListItem} key="save-as" />);
-    }
 
     return (
       <AppBar position="static">
@@ -82,11 +74,6 @@ class AppMenu extends Component {
 
 AppMenu.propTypes = {
   classes: Classes.isRequired,
-  isEmpty: PropTypes.bool,
-};
-
-AppMenu.defaultProps = {
-  isEmpty: false,
 };
 
 export default withStyles(styles)(AppMenu);

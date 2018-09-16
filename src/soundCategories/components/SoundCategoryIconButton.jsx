@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import MUIIconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 
-const IconButton = ({ icon: Icon, ...props }) => (
-  <MUIIconButton
+const SoundCategoryIconButton = ({ icon: Icon, ...props }) => (
+  <IconButton
     style={{ width: '24px', height: '24px', marginRight: '0.5rem' }}
     {...props}
   >
     <Icon style={{ width: '16px', height: '16px', fontSize: '50%' }} />
-  </MUIIconButton>
+  </IconButton>
 );
 
-IconButton.propTypes = {
+SoundCategoryIconButton.propTypes = {
   icon: PropTypes.func.isRequired,
 };
 
-export default IconButton;
+export default SoundCategoryIconButton;

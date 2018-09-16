@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Slider from '@material-ui/lab/Slider';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Slider } from 'material-ui-slider';
 
 import VolumeToggleButton from './VolumeToggleButton';
 

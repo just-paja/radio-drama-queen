@@ -48,4 +48,10 @@ const soundModule = handleActions({
   },
 }, initialState);
 
+soundModule.actions = [
+  actions.DOWNLOAD_REQUEST,
+  actions.DOWNLOAD_SUCCESS,
+  actions.DOWNLOAD_FAILURE,
+];
+
 export default soundModule;

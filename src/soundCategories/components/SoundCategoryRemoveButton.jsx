@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Delete from '@material-ui/icons/Delete';
 
-import IconButton from './IconButton';
+import SoundCategoryIconButton from './SoundCategoryIconButton';
 
 class SoundCategoryRemoveButton extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class SoundCategoryRemoveButton extends Component {
   render() {
     const { uuid, onClick, ...props } = this.props;
     return (
-      <IconButton
+      <SoundCategoryIconButton
         {...props}
         icon={Delete}
         onClick={this.handleClick}

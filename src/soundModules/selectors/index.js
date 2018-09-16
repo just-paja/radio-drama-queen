@@ -1,28 +1,25 @@
 import { createSelector } from 'reselect';
 
+const memoizeConfig = state => state.soundModules.config;
+const memoizeList = state => state.soundModules.list;
+const memoizeUi = state => state.soundModules.ui;
+
 export const getLibraryFsPath = createSelector(
-  state => state.libraryConfig,
+  memoizeConfig,
   config => config.fsPath
 );
 
 export const getModules = createSelector(
-  state => state.libraryConfig,
+  memoizeConfig,
   state => state.modules
 );
 
 export const getModule = createSelector(
-  (state, moduleName) => state.libraryConfig.modules.find(module => module.name === moduleName),
+  (state, moduleName) => memoizeList(state).find(module => module.name === moduleName),
   state => state
 );
 
-export const getLibraryConfig = state => ({
-  library: {
-    name: state.libraryConfig.name,
-  },
-  categoryList: state.categoryList,
-  soundList: state.soundList.map(({ name, path, uuid }) => ({
-    name,
-    path,
-    uuid,
-  })),
-});
+export const isOpenLibraryDialogOpen = createSelector(
+  memoizeUi,
+  state => state.showOpenLibraryDialog
+);

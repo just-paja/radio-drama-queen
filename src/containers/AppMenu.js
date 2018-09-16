@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import AppMenu from '../components/AppMenu';
 
-import { getCategoryListUuids } from '../selectors';
+import { areSoundCategoriesEmpty } from '../soundCategories/selectors';
 
 const mapStateToProps = state => ({
-  isEmpty: getCategoryListUuids(state).length === 0,
+  isEmpty: areSoundCategoriesEmpty(state),
 });
 
 export default connect(mapStateToProps)(AppMenu);

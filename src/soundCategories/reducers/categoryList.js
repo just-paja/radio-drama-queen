@@ -1,5 +1,5 @@
 import category, { initialState } from './category';
-import createListReducer from './createListReducer';
+import createListReducer from '../../reducers/createListReducer';
 
 import { categoryList } from '../actions';
 

@@ -7,9 +7,9 @@ import React from 'react';
 
 import { Field, Form } from 'redux-form';
 
-import CancelButton from './CancelButton';
-import Input from './Input';
-import SaveButton from './SaveButton';
+import CancelButton from '../../components/CancelButton';
+import Input from '../../components/Input';
+import OpenButton from '../../components/OpenButton';
 
 const OpenLibraryDialog = ({
   handleSubmit,
@@ -36,9 +36,9 @@ const OpenLibraryDialog = ({
       </DialogContent>
       <DialogActions>
         <CancelButton onClick={onClose} />
-        <SaveButton>
+        <OpenButton>
           Open
-        </SaveButton>
+        </OpenButton>
       </DialogActions>
     </Form>
   </Dialog>

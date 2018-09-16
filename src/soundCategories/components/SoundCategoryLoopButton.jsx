@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Repeat from '@material-ui/icons/Repeat';
 
-import IconButton from './IconButton';
+import SoundCategoryIconButton from './SoundCategoryIconButton';
 
 const SoundCategoryLoopButton = ({ onClick, loop }) => (
-  <IconButton
+  <SoundCategoryIconButton
     color={loop ? 'primary' : 'default'}
     icon={Repeat}
     onClick={onClick}

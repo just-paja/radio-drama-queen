@@ -1,27 +1,19 @@
 import reducer from '..';
 
 describe('combined reducer', () => {
-  it('provides categoryGrid reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('categoryGrid');
-  });
-
-  it('provides categoryList reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('categoryList');
-  });
-
   it('provides form reducer', () => {
     expect(reducer(undefined, {})).toHaveProperty('form');
   });
 
-  it('provides libraryConfig reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('libraryConfig');
+  it('provides soundCategories reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('soundCategories');
   });
 
-  it('provides soundList reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('soundList');
+  it('provides soundModules reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('soundModules');
   });
 
-  it('provides ui reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('ui');
+  it('provides sounds reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('sounds');
   });
 });

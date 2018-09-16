@@ -5,7 +5,7 @@ import Save from '@material-ui/icons/Save';
 import LabelButton from './LabelButton';
 
 const SaveButton = ({ children, ...props }) => (
-  <LabelButton icon={Save} type="submit" {...props}>
+  <LabelButton icon={Save} {...props}>
     {children}
   </LabelButton>
 );

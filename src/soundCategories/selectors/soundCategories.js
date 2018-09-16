@@ -1,19 +1,21 @@
 import { createSelector } from 'reselect';
 
-import { stringSearch } from '../search';
-import { getSoundSearchValueCleared } from './soundSearch';
+import { stringSearch } from '../../search';
+import { getSoundSearchValueCleared } from '../../selectors/soundSearch';
 
-const memoizeCategory = (state, uuid) => state.categoryList.find(
+const getFeature = state => state.soundCategories.list;
+
+const memoizeCategory = (state, uuid) => getFeature(state).find(
   category => category.uuid === uuid
 );
 
 export const getDefaultCategory = createSelector(
-  state => state.categoryList,
+  getFeature,
   categoryList => categoryList.find(category => category.name === null)
 );
 
 export const getCategoryListUuids = createSelector(
-  state => state.categoryList,
+  getFeature,
   list => list.map(category => category.uuid)
 );
 
@@ -92,4 +94,9 @@ export const getCategoryPlayingStatus = createSelector(
 export const getCategoryVolume = createSelector(
   memoizeCategory,
   category => category.volume
+);
+
+export const areSoundCategoriesEmpty = createSelector(
+  getCategoryListUuids,
+  state => state.length === 0
 );

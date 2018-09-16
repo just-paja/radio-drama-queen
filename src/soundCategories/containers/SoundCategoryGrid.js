@@ -5,11 +5,14 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import SoundCategoryGrid from '../components/SoundCategoryGrid';
 
 import { categoryCreate, categoryList } from '../actions';
-import { getCategoryListUuids } from '../selectors';
+import {
+  getCategoryListUuids,
+  isCategoryCreateFormVisible,
+} from '../selectors';
 
 const mapStateToProps = state => ({
   categories: getCategoryListUuids(state),
-  showCreateForm: state.categoryGrid.showCreateForm,
+  showCreateForm: isCategoryCreateFormVisible(state),
 });
 
 const mapDispatchToProps = {

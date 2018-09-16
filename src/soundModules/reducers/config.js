@@ -9,10 +9,6 @@ const initialState = {
 };
 
 export default handleActions({
-  [library.SAVE_AS_SUBMIT]: (state, { payload: { fsPath } }) => ({
-    ...state,
-    fsPath,
-  }),
   [library.SET_CONFIG]: (state, { payload: { modules, name, url } }) => ({
     ...state,
     modules,

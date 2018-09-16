@@ -14,7 +14,7 @@ import NoCategoriesMessage from './NoCategoriesMessage';
 import SoundCategory from '../containers/SoundCategory';
 import SoundCategoryCreateForm from '../containers/SoundCategoryCreateForm';
 import SoundCategoryGridSpeedDial from '../containers/SoundCategoryGridSpeedDial';
-import SoundSearchForm from '../containers/SoundSearchForm';
+import SoundSearchForm from '../../containers/SoundSearchForm';
 
 const styles = theme => ({
   gridSpacing: {

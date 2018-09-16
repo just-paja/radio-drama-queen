@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import SoundCategoryRemoveButton from '../containers/SoundCategoryRemoveButton';
 import SoundCategoryControls from '../containers/SoundCategoryControls';
-import SoundItem from '../containers/SoundItem';
+import SoundCategoryItem from '../containers/SoundCategoryItem';
 
 const styles = theme => ({
   removePadding: {
@@ -64,7 +64,7 @@ const SoundCategory = ({
           <List dense>
             {sounds.map(soundUuid => (
               <ListItem className={classes.removePadding} key={soundUuid}>
-                <SoundItem uuid={soundUuid} />
+                <SoundCategoryItem uuid={soundUuid} />
               </ListItem>
             ))}
           </List>

@@ -7,9 +7,8 @@ import { DragDropContextProvider } from 'react-dnd';
 import { Provider } from 'react-redux';
 
 import AppMenu from './containers/AppMenu';
-import OpenLibraryDialog from './containers/OpenLibraryDialog';
-import SaveLibraryAsDialog from './containers/SaveLibraryAsDialog';
-import SoundCategoryGrid from './containers/SoundCategoryGrid';
+import OpenLibraryDialog from './soundModules/containers/OpenLibraryDialog';
+import SoundCategoryGrid from './soundCategories/containers/SoundCategoryGrid';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -22,7 +21,6 @@ class App extends Component {
             <AppMenu />
             <SoundCategoryGrid />
             <OpenLibraryDialog />
-            <SaveLibraryAsDialog />
           </DragDropContextProvider>
         </Provider>
       </div>
