@@ -1,25 +1,15 @@
 import { handleActions } from 'redux-actions';
 
-import { library } from '../actions';
+import { soundModule as actions } from '../actions';
 
-const initialState = {
+export const initialState = {
   name: null,
-  modules: [],
-  fsPath: null,
+  url: null,
+  loading: false,
 };
 
-const libraryConfig = handleActions({
-  [library.SAVE_AS_SUBMIT]: (state, { payload: { fsPath } }) => ({
-    ...state,
-    fsPath,
-  }),
-  [library.SET_CONFIG]: (state, { payload: { modules, name, url } }) => ({
-    ...state,
-    modules,
-    name,
-    url,
-  }),
-  [library.MODULE_DOWNLOAD_REQUEST]: (state, action) => {
+const soundModule = handleActions({
+  [actions.DOWNLOAD_REQUEST]: (state, action) => {
     const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
     if (moduleIndex !== -1) {
       const nextState = { ...state };
@@ -31,7 +21,7 @@ const libraryConfig = handleActions({
     }
     return state;
   },
-  [library.MODULE_DOWNLOAD_SUCCESS]: (state, action) => {
+  [actions.DOWNLOAD_SUCCESS]: (state, action) => {
     const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
     if (moduleIndex !== -1) {
       const nextState = { ...state };
@@ -44,7 +34,7 @@ const libraryConfig = handleActions({
     }
     return state;
   },
-  [library.MODULE_DOWNLOAD_FAILURE]: (state, action) => {
+  [actions.DOWNLOAD_FAILURE]: (state, action) => {
     const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
     if (moduleIndex !== -1) {
       const nextState = { ...state };
@@ -58,4 +48,4 @@ const libraryConfig = handleActions({
   },
 }, initialState);
 
-export default libraryConfig;
+export default soundModule;

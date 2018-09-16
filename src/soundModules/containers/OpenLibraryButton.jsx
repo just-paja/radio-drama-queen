@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import OpenButton from '../components/OpenButton';
+import OpenButton from '../../components/OpenButton';
 
 import { library } from '../actions';
 
