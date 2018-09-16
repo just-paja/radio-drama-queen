@@ -2,6 +2,7 @@ import { createListRoutine } from '../../actions/routines';
 
 export const soundList = createListRoutine('SOUND', [
   'FINISHED',
+  'GROUP_STOP',
   'GROUP_VOLUME_SET',
   'LOAD_FAILURE',
   'LOAD_MANUAL',

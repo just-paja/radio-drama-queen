@@ -16,4 +16,14 @@ describe('soundStop saga', () => {
     sagaTester.dispatch(soundList.stop('foo'));
     expect(AudioManager.stop).toHaveBeenCalledWith('foo');
   });
+
+  it('calls AudioManager stop for each uuid on sound group stop', () => {
+    const sagaTester = getSagaTester();
+    sagaTester.runAll(sagas);
+    sagaTester.dispatch(soundList.groupStop(null, {
+      sounds: ['foo', 'bar'],
+    }));
+    expect(AudioManager.stop).toHaveBeenCalledWith('foo');
+    expect(AudioManager.stop).toHaveBeenCalledWith('bar');
+  });
 });

@@ -12,9 +12,9 @@ import {
   delay,
 } from 'redux-saga/lib/internal/utils';
 
-import { logWarning } from '../clientLogger';
+import { logWarning } from '../../clientLogger';
 import { categoryList } from '../actions';
-import { loadSound } from './soundLoad';
+import { loadSound } from '../../sounds/sagas/soundLoad';
 import { getCategory, getDefaultCategory } from '../selectors';
 
 function* createDefaultCategory() {

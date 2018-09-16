@@ -1,22 +1,17 @@
-import {
-  all,
-  put,
-  select,
-  takeLatest,
-} from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 
 import { categoryList } from '../actions';
 import { soundList } from '../../sounds/actions';
 import { getCategorySoundPlayingUuids } from '../selectors';
 
-function* categoryStop({ meta: { uuid }, payload }) {
+function* stopAllCategorySounds({ meta: { uuid }, payload: noStop }) {
   const playingSounds = yield select(getCategorySoundPlayingUuids, uuid);
-  const stopSounds = playingSounds.filter(sound => !payload || sound !== payload);
-  yield all(stopSounds.map(soundUuid => put(soundList.stop(soundUuid))));
+  const sounds = playingSounds.filter(sound => !noStop || sound !== noStop);
+  yield put(soundList.groupStop(null, { sounds }));
 }
 
 function* handleCategoryCreateStop() {
-  yield takeLatest(categoryList.STOP, categoryStop);
+  yield takeLatest(categoryList.STOP, stopAllCategorySounds);
 }
 
 export default [

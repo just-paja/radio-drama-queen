@@ -4,14 +4,23 @@ import AudioManager from '../AudioManager';
 
 import { soundList } from '../actions';
 
-function* stopSound({ meta: { uuid } }) {
-  yield AudioManager.stop(uuid);
-}
+const stopSound = ({ meta: { uuid } }) => {
+  AudioManager.stop(uuid);
+};
+
+const stopSoundGroup = ({ payload: { sounds } }) => {
+  sounds.map(soundUuid => AudioManager.stop(soundUuid));
+};
 
 function* handleSoundStop() {
   yield takeEvery(soundList.STOP, stopSound);
 }
 
+function* handleSoundGroupStop() {
+  yield takeEvery(soundList.GROUP_STOP, stopSoundGroup);
+}
+
 export default [
+  handleSoundGroupStop,
   handleSoundStop,
 ];

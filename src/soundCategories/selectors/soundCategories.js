@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 import { stringSearch } from '../../search';
 import { getSoundSearchValueCleared } from '../../selectors/soundSearch';
+import { memoizeSoundList } from '../../sounds/selectors';
 
 const getFeature = state => state.soundCategories.list;
 
@@ -42,7 +43,7 @@ export const getCategorySoundUuids = createSelector(
 );
 
 export const getCategorySounds = createSelector(
-  [memoizeCategory, state => state.soundList],
+  [memoizeCategory, memoizeSoundList],
   (category, soundList) => soundList.filter(
     sound => category.sounds.indexOf(sound.uuid) !== -1
   )
@@ -76,7 +77,7 @@ export const getCategoryExclusiveStatus = createSelector(
 );
 
 export const getCategorySoundPlayingUuids = createSelector(
-  [memoizeCategory, state => state.soundList],
+  [memoizeCategory, memoizeSoundList],
   (category, allSounds) => category.sounds
     .filter((uuid) => {
       const sound = allSounds.find(filterSound => filterSound.uuid === uuid);
@@ -85,7 +86,7 @@ export const getCategorySoundPlayingUuids = createSelector(
 );
 
 export const getCategoryPlayingStatus = createSelector(
-  [memoizeCategory, state => state.soundList],
+  [memoizeCategory, memoizeSoundList],
   (category, allSounds) => allSounds
     .filter(sound => category.sounds.indexOf(sound.uuid) !== -1)
     .some(sound => sound.playing)

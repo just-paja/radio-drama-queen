@@ -1,4 +1,9 @@
-import { put, select, takeLatest } from 'redux-saga/effects';
+import {
+  call,
+  put,
+  select,
+  takeLatest,
+} from 'redux-saga/effects';
 
 import { categoryList } from '../actions';
 import { soundList } from '../../sounds/actions';
@@ -8,20 +13,23 @@ import {
   getCategoryVolume,
 } from '../selectors';
 
+function* setCategorySoundsVolume(categoryUuid, volume) {
+  const sounds = yield select(getCategorySoundUuids, categoryUuid);
+  yield put(soundList.groupVolumeSet(null, { sounds, volume }));
+}
+
 function* setCategoryVolume({ payload, meta: { uuid } }) {
-  const sounds = yield select(getCategorySoundUuids, uuid);
   const muted = yield select(getCategoryMutedStatus, uuid);
   if (muted) {
     yield put(categoryList.unmute(uuid));
   }
-  yield put(soundList.groupVolumeSet(null, { sounds, volume: payload }));
+  yield call(setCategorySoundsVolume, uuid, payload);
 }
 
 function* toggleMuteCategory({ meta: { uuid } }) {
   const muted = yield select(getCategoryMutedStatus, uuid);
-  const sounds = yield select(getCategorySoundUuids, uuid);
   const volume = muted ? 0 : yield select(getCategoryVolume, uuid);
-  yield put(soundList.groupVolumeSet(null, { sounds, volume }));
+  yield call(setCategorySoundsVolume, uuid, volume);
 }
 
 function* handleCategoryMuteToggle() {

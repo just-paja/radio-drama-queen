@@ -20,13 +20,13 @@ function* categoryCreateWithUuid({ payload }) {
   yield put(categoryCreate.formHide());
 }
 
-function* categoryCreateFromForm() {
-  const values = yield select(getFormValues(FORM_CATEGORY_CREATE));
-  yield call(categoryCreateWithUuid, { payload: values });
+function* categoryCreateByFormSubmit() {
+  const payload = yield select(getFormValues(FORM_CATEGORY_CREATE));
+  yield call(categoryCreateWithUuid, { payload });
 }
 
 function* handleCategoryCreateSubmit() {
-  yield takeLatest(categoryCreate.SUBMIT, categoryCreateFromForm);
+  yield takeLatest(categoryCreate.SUBMIT, categoryCreateByFormSubmit);
 }
 
 function* handleCategoryCreate() {
