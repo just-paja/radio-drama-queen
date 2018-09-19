@@ -1,6 +1,6 @@
 import keepAlive from 'redux-saga-restart';
 
-import { all, call, fork } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 import { logError, logWarning } from '../clientLogger';
 
 import soundCategories from '../soundCategories/sagas';
@@ -21,10 +21,6 @@ function* onEachError(next, error) {
 
 function* onFail(error) {
   yield logError(error);
-}
-
-export function* serverSagas() {
-  yield all(sagas.map(saga => call(saga)));
 }
 
 export default function* rootSaga() {
