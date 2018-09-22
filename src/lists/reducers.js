@@ -47,6 +47,7 @@ export const createListReducer = (
     }
     return state;
   },
+  [routine.CLEAR]: () => [],
   ...routine[LIST_ACTIONS].reduce((aggr, itemAction) => ({
     ...aggr,
     [itemAction]: handleItemAction(itemReducer, routine[LIST_IDENTIFIER]),

@@ -74,4 +74,15 @@ describe('combined reducer', () => {
       visible: false,
     });
   });
+
+  it('resets reducer to empty array on clear', () => {
+    const routine = createListRoutine('TEST');
+    const reducer = createListReducer(routine);
+    const state = [
+      { uuid: 'foo' },
+      { uuid: 'bar' },
+    ];
+    const result = reducer(state, routine.clear('bar'));
+    expect(result).toEqual([]);
+  });
 });
