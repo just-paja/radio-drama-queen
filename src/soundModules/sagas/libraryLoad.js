@@ -6,9 +6,10 @@ import {
 } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, formValueSelector } from 'redux-form';
 
+import { getModuleShape } from '../modulePaths';
 import { downloadConfig } from '../../LocalAssetsManager';
 import { FORM_LIBRARY_OPEN } from '../constants';
-import { libraryLoad } from '../actions';
+import { libraryLoad, soundModule } from '../actions';
 
 const getLibraryOpenValues = formValueSelector(FORM_LIBRARY_OPEN);
 
@@ -19,7 +20,7 @@ function* openLibrary() {
   try {
     const config = yield call(downloadConfig, url);
     yield put(libraryLoad.success({
-      rootModule: config,
+      rootModule: getModuleShape(url, config, 'root'),
       url,
     }));
   } catch (error) {
@@ -29,8 +30,9 @@ function* openLibrary() {
   yield put(libraryLoad.fulfill());
 }
 
-function* hideDialog() {
+function* loadLibraryModules({ payload: { rootModule } }) {
   yield put(libraryLoad.dialogHide());
+  yield put(soundModule.add(rootModule));
 }
 
 function* handleLibraryOpen() {
@@ -38,7 +40,7 @@ function* handleLibraryOpen() {
 }
 
 function* handleLibraryLoadSuccess() {
-  yield takeEvery(libraryLoad.SUCCESS, hideDialog);
+  yield takeEvery(libraryLoad.SUCCESS, loadLibraryModules);
 }
 
 export default [

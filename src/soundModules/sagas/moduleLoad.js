@@ -7,10 +7,10 @@ import {
 import { createQueue } from 'redux-saga-job-queue';
 
 import { downloadConfig } from '../../LocalAssetsManager';
-import { libraryLoad, soundModule } from '../actions';
+import { soundModule } from '../actions';
 import { tagList } from '../../tags/actions';
 
-import { getModulesStructure } from './modulePaths';
+import { getModulesStructure } from '../modulePaths';
 
 let queue;
 

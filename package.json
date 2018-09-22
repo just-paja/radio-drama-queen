@@ -13,6 +13,7 @@
     "hash.js": "^1.1.5",
     "howler": "^2.0.15",
     "material-ui-slider": "^0.1.0",
+    "path-dirname": "^1.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.1",
     "react-dnd": "^5.0.0",
@@ -32,6 +33,7 @@
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.5",
+    "url-parse": "^1.4.3",
     "uuid": "^3.3.2"
   },
   "main": "src/electron-starter.js",

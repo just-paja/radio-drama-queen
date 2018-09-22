@@ -1,4 +1,4 @@
-import { initialize, startSubmit, stopSubmit } from 'redux-form';
+import { startSubmit, stopSubmit } from 'redux-form';
 
 import sagas from '..';
 
@@ -56,12 +56,10 @@ describe('libraryLoad saga', () => {
     }));
     const sagaTester = getSagaTester();
     sagaTester.runAll(sagas);
-    sagaTester.dispatch(initialize('libraryLoad', { url: 'http://example.com/module.json' }));
     sagaTester.dispatch(libraryLoad.submit());
     return sagaTester.waitFor(libraryLoad.FULFILL).then(() => {
       expect(sagaTester.getState().soundModules.config).toHaveProperty('rootModule', {
         name: 'studio-test',
-        url: 'http://example.com/module.json',
         modules: [
           'alarms',
         ],
@@ -100,13 +98,11 @@ describe('libraryLoad saga', () => {
     sagaTester.dispatch(libraryLoad.success({
       rootModule: {
         name: 'foo',
-        url: 'http://example.com/index.json',
       },
       url: 'http://example.com/index.json',
     }));
     expect(sagaTester.getCalledActions()).toContainEqual(soundModule.add({
       name: 'foo',
-      url: 'http://example.com/index.json',
     }));
   });
 });
