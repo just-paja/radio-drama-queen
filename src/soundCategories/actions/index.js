@@ -1,4 +1,5 @@
-import { createRoutine, createListRoutine } from '../../actions/routines';
+import { createRoutine } from '../../actions/routines';
+import { createListRoutine } from '../../lists';
 
 export const categoryCreate = createRoutine('CATEGORY_CREATE', [
   'FORM_HIDE',

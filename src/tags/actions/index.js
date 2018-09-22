@@ -1,4 +1,4 @@
-import { createListRoutine } from '../../actions/routines';
+import { createListRoutine } from '../../lists';
 
 export const tagList = createListRoutine('TAG', [
   'CREATE',
