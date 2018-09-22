@@ -1,6 +1,6 @@
 import { initialize, startSubmit, stopSubmit } from 'redux-form';
 
-import sagas from '..';
+import sagas from '../libraryLoad';
 
 import { getSagaTester } from '../../../../mock';
 import { libraryLoad, soundModule } from '../../actions';

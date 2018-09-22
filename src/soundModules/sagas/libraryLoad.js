@@ -20,7 +20,10 @@ function* openLibrary() {
   try {
     const config = yield call(downloadConfig, url);
     yield put(libraryLoad.success({
-      rootModule: getModuleShape(url, config, 'root'),
+      rootModule: getModuleShape(url, {
+        ...config,
+        url,
+      }, 'root'),
       url,
     }));
   } catch (error) {

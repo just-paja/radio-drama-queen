@@ -1,4 +1,4 @@
-import sagas from '..';
+import sagas from '../moduleLoad';
 
 import { getSagaTester } from '../../../../mock';
 import { soundModule } from '../../actions';
@@ -164,5 +164,21 @@ describe('moduleLoad saga', () => {
           ],
         });
       });
+  });
+
+  it('does not load non-existent modules', () => {
+    const sagaTester = getSagaTester({
+      soundModules: {
+        list: [
+          {
+            name: 'studio-test1',
+            url: 'http://example.com/tiny1.json',
+          },
+        ],
+      },
+    });
+    sagaTester.runAll(sagas);
+    sagaTester.dispatch(soundModule.loadTrigger('studio-test2'));
+    expect(localAssetsManager.downloadConfig).not.toHaveBeenCalled();
   });
 });

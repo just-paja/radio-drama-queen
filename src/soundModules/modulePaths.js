@@ -7,6 +7,12 @@ const basename = path => path
   .replace(/\\/g, '/')
   .replace(/.*\//, '');
 
+export const getHttpDirName = (path) => {
+  const url = new URL(path);
+  url.set('pathname', dirname(url.pathname));
+  return url.toString();
+};
+
 export const resolveModuleUrl = (dest, moduleName) => {
   const file = basename(dest);
   if (file.match(/\.json$/)) {
@@ -24,12 +30,6 @@ export const getModuleShape = (parentUrl, module, moduleNameFallback) => {
   return {
     ...module,
     name: moduleName,
-    url: resolveModuleUrl(module.url || parentUrl, moduleName),
+    url: resolveModuleUrl(module.url || getHttpDirName(parentUrl), moduleName),
   };
 };
-
-export const getModuleItemShape = parentUrl => module => getModuleShape(parentUrl, module);
-
-export const getModulesStructure = (parentUrl, modules) => modules.map(
-  getModuleItemShape(parentUrl)
-);

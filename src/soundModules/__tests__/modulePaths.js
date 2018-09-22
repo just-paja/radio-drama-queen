@@ -73,6 +73,6 @@ describe('sound module paths', () => {
         name: 'moduleName',
       },
       'fallbackName'
-    )).toHaveProperty('url', 'http://example.com/module.json');
+    )).toHaveProperty('url', 'http://example.com/moduleName/manifest.json');
   });
 });
