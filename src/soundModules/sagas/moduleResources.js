@@ -9,17 +9,14 @@ import {
 import { soundModule } from '../actions';
 import { getModule } from '../selectors';
 import { tagList } from '../../tags/actions';
-import { soundList } from '../../sounds/actions';
-
+import { registerSound } from '../../sounds/sagas';
 import { getHttpDirName, getModuleShape } from '../modulePaths';
 
 function* registerModuleSounds({ meta: { name: moduleName } }) {
   const module = yield select(getModule, moduleName);
   if (module && module.sounds && module.sounds.length !== 0) {
     const { sounds, url } = module;
-    yield all(sounds.map(sound => put(soundList.add({
-      url: `${getHttpDirName(url)}${sound.file}`,
-    }))));
+    yield all(sounds.map(sound => call(registerSound, `${getHttpDirName(url)}${sound.file}`)));
   }
 }
 

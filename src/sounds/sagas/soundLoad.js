@@ -1,5 +1,3 @@
-import generateUuid from 'uuid/v4';
-
 import { Howl } from 'howler';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
@@ -7,11 +5,7 @@ import AudioManager from '../AudioManager';
 
 import { downloadSound } from '../../LocalAssetsManager';
 import { soundList } from '../actions';
-
-const getNameWithoutExtension = fileName => fileName
-  .split('.')
-  .filter((part, index, source) => index !== source.length - 1)
-  .join('.');
+import { getNameWithoutExtension, registerSound } from './soundAdd';
 
 const loadFile = file => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -60,16 +54,6 @@ function* loadSoundUrl(uuid, url) {
   }
 }
 
-export function* addSound(resource) {
-  const uuid = generateUuid();
-  yield put(soundList.add({
-    name: null,
-    path: typeof resource === 'string' ? resource : resource.path,
-    uuid,
-  }));
-  return uuid;
-}
-
 export function* loadSoundResource(uuid, resource) {
   try {
     if (resource instanceof File) {
@@ -84,7 +68,7 @@ export function* loadSoundResource(uuid, resource) {
 }
 
 export function* loadSound(categoryUuid, resource) {
-  const uuid = yield call(addSound, resource);
+  const uuid = yield call(registerSound, resource);
   yield call(loadSoundResource, uuid, resource);
 }
 

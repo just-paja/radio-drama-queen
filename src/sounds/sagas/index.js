@@ -4,6 +4,8 @@ import soundStop from './soundStop';
 import soundToggle from './soundToggle';
 import soundVolumeChange from './soundVolumeChange';
 
+export * from './soundAdd';
+
 export default [
   ...soundLoad,
   ...soundPlay,
