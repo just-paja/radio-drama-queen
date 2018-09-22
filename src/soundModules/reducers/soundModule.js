@@ -8,50 +8,18 @@ export const initialState = {
   loading: false,
 };
 
-const soundModule = handleActions({
-  [actions.DOWNLOAD_REQUEST]: (state, action) => {
-    const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
-    if (moduleIndex !== -1) {
-      const nextState = { ...state };
-      nextState.modules[moduleIndex] = {
-        ...state.modules[moduleIndex],
-        loading: true,
-      };
-      return nextState;
-    }
-    return state;
-  },
-  [actions.DOWNLOAD_SUCCESS]: (state, action) => {
-    const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
-    if (moduleIndex !== -1) {
-      const nextState = { ...state };
-      nextState.modules[moduleIndex] = {
-        ...state.modules[moduleIndex],
-        ...action.meta,
-        loading: false,
-      };
-      return nextState;
-    }
-    return state;
-  },
-  [actions.DOWNLOAD_FAILURE]: (state, action) => {
-    const moduleIndex = state.modules.findIndex(module => module.name === action.payload);
-    if (moduleIndex !== -1) {
-      const nextState = { ...state };
-      nextState.modules[moduleIndex] = {
-        ...state.modules[moduleIndex],
-        loading: false,
-      };
-      return nextState;
-    }
-    return state;
-  },
+export default handleActions({
+  [actions.DOWNLOAD_REQUEST]: state => ({
+    ...state,
+    loading: true,
+  }),
+  [actions.DOWNLOAD_SUCCESS]: (state, action) => ({
+    ...state,
+    ...action.meta,
+    loading: false,
+  }),
+  [actions.DOWNLOAD_FAILURE]: state => ({
+    ...state,
+    loading: false,
+  }),
 }, initialState);
-
-soundModule.actions = [
-  actions.DOWNLOAD_REQUEST,
-  actions.DOWNLOAD_SUCCESS,
-  actions.DOWNLOAD_FAILURE,
-];
-
-export default soundModule;

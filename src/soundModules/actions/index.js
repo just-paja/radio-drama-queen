@@ -12,4 +12,4 @@ export const soundModule = createListRoutine('SOUND_MODULE', [
   'DOWNLOAD_FAILURE',
   'DOWNLOAD_REQUEST',
   'DOWNLOAD_SUCCESS',
-]);
+], 'name');
