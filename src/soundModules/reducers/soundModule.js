@@ -9,16 +9,19 @@ export const initialState = {
 };
 
 export default handleActions({
-  [actions.DOWNLOAD_REQUEST]: state => ({
+  [actions.LOAD_REQUEST]: state => ({
     ...state,
     loading: true,
   }),
-  [actions.DOWNLOAD_SUCCESS]: (state, action) => ({
+  [actions.LOAD_SUCCESS]: (state, action) => ({
     ...state,
-    ...action.meta,
-    loading: false,
+    ...action.payload,
   }),
-  [actions.DOWNLOAD_FAILURE]: state => ({
+  [actions.LOAD_FAILURE]: (state, action) => ({
+    ...state,
+    error: action.payload,
+  }),
+  [actions.LOAD_FULFILL]: state => ({
     ...state,
     loading: false,
   }),

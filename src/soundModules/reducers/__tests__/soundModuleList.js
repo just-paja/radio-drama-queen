@@ -36,14 +36,14 @@ describe('soundModuleList reducer', () => {
     }));
   });
 
-  it('sets loading flag to true on download request', () => {
+  it('sets loading flag to true on load request', () => {
     const state = [
       {
         loading: false,
         name: '13',
       },
     ];
-    const result = soundModuleList(state, actions.downloadRequest('13'));
+    const result = soundModuleList(state, actions.loadRequest('13'));
     expect(result).not.toEqual(state);
     expect(result).toContainEqual(expect.objectContaining({
       name: '13',
@@ -51,14 +51,52 @@ describe('soundModuleList reducer', () => {
     }));
   });
 
-  it('removes loading flag on download success', () => {
+  it('saves module data on load success', () => {
     const state = [
       {
         loading: true,
         name: '13',
       },
     ];
-    const result = soundModuleList(state, actions.downloadSuccess('13'));
+    const result = soundModuleList(state, actions.loadSuccess('13', {
+      tags: [
+        {
+          name: 'foo',
+        },
+      ],
+      sounds: [
+        {
+          name: 'foo.mp3',
+          tags: ['foo'],
+        },
+      ],
+    }));
+    expect(result).not.toEqual(state);
+    expect(result).toContainEqual(expect.objectContaining({
+      name: '13',
+      loading: true,
+      tags: [
+        {
+          name: 'foo',
+        },
+      ],
+      sounds: [
+        {
+          name: 'foo.mp3',
+          tags: ['foo'],
+        },
+      ],
+    }));
+  });
+
+  it('removes loading flag on load fulfill', () => {
+    const state = [
+      {
+        loading: true,
+        name: '13',
+      },
+    ];
+    const result = soundModuleList(state, actions.loadFulfill('13'));
     expect(result).not.toEqual(state);
     expect(result).toContainEqual(expect.objectContaining({
       name: '13',
@@ -66,18 +104,20 @@ describe('soundModuleList reducer', () => {
     }));
   });
 
-  it('removes loading flag on download failure', () => {
+  it('saves error on load failure', () => {
+    const testError = new Error('test!');
     const state = [
       {
         loading: true,
         name: '13',
       },
     ];
-    const result = soundModuleList(state, actions.downloadFailure('13'));
+    const result = soundModuleList(state, actions.loadFailure('13', testError));
     expect(result).not.toEqual(state);
     expect(result).toContainEqual(expect.objectContaining({
       name: '13',
-      loading: false,
+      loading: true,
+      error: testError,
     }));
   });
 });

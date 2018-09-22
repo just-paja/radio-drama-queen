@@ -33,6 +33,7 @@ function* openLibrary() {
 function* loadLibraryModules({ payload: { rootModule } }) {
   yield put(libraryLoad.dialogHide());
   yield put(soundModule.add(rootModule));
+  yield put(soundModule.loadTrigger(rootModule.name));
 }
 
 function* handleLibraryOpen() {

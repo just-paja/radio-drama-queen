@@ -1,47 +1,53 @@
 import {
-  all,
   call,
   put,
   takeEvery,
+  select,
 } from 'redux-saga/effects';
 import { createQueue } from 'redux-saga-job-queue';
 
 import { downloadConfig } from '../../LocalAssetsManager';
 import { soundModule } from '../actions';
-import { tagList } from '../../tags/actions';
+import { getModule } from '../selectors';
 
-import { getModulesStructure } from '../modulePaths';
+// import { getModulesStructure } from '../modulePaths';
 
 let queue;
 
-function* downloadModuleConfig({ payload: { name, url } }) {
-  yield put(soundModule.downloadRequest(name));
+function* loadModuleConfig({ payload: moduleName }) {
+  const { name, url } = yield select(getModule, moduleName);
+  yield put(soundModule.loadRequest(name));
+
   try {
     const moduleConfig = yield call(downloadConfig, url);
-    yield put(soundModule.downloadSuccess(name, {
+    yield put(soundModule.loadSuccess(name, {
       ...moduleConfig,
-      url,
+      name,
     }));
   } catch (error) {
-    yield put(soundModule.downloadFailure(name, error));
+    yield put(soundModule.loadFailure(name, error));
+  } finally {
+    yield put(soundModule.loadFulfill(name));
   }
 }
 
-function* downloadModules({ payload }) {
+function* loadModules({ meta: { name } }) {
+  const moduleNames = name instanceof Array ? name : [name];
+
   if (!queue || queue.isFinished()) {
     queue = createQueue({
-      jobFactory: downloadModuleConfig,
-      items: payload,
+      jobFactory: loadModuleConfig,
+      items: moduleNames,
     });
     yield call(queue.run);
   } else {
-    yield call(queue.addItems, payload);
+    yield call(queue.addItems, moduleNames);
   }
 }
 
-function* downloadConfigModules({ payload }) {
-  yield call(downloadModules, { payload: payload.modules });
-}
+// function* downloadConfigModules({ payload }) {
+//   yield call(loadModules, { payload: payload.modules });
+// }
 
 // function* addSoundToCategoryByName(categoryName, soundUuid) {
 //   const category = yield select(getCategoryByName, categoryName);
@@ -60,39 +66,39 @@ function* downloadConfigModules({ payload }) {
 //   }
 // }
 
-function* loadModuleTags(action) {
-  const module = action.meta;
-  const moduleTags = module.tags || [];
-  const tags = module.sounds
-    ? module.sounds.reduce((aggr, sound) => {
-      const newTags = sound.tags
-        .filter(tag => !aggr.find(moduleTag => moduleTag.name === tag))
-        .map(name => ({ name }));
-      return newTags.length === 0
-        ? aggr
-        : [...aggr, ...newTags];
-    }, moduleTags)
-    : moduleTags;
-  yield all(tags.map(payload => put(tagList.create(payload.name, payload))));
-}
+// function* loadModuleTags(action) {
+//   const module = action.meta;
+//   const moduleTags = module.tags || [];
+//   const tags = module.sounds
+//     ? module.sounds.reduce((aggr, sound) => {
+//       const newTags = sound.tags
+//         .filter(tag => !aggr.find(moduleTag => moduleTag.name === tag))
+//         .map(name => ({ name }));
+//       return newTags.length === 0
+//         ? aggr
+//         : [...aggr, ...newTags];
+//     }, moduleTags)
+//     : moduleTags;
+//   yield all(tags.map(payload => put(tagList.create(payload.name, payload))));
+// }
 
-function* loadModuleResources(action) {
-  const module = action.meta;
-  yield call(loadModuleTags, action);
-  console.log(module);
-  if (module.modules) {
-    console.log(getModulesStructure(module.url, module.modules));
-    yield call(downloadModules, { payload: getModulesStructure(module.url, module.modules) });
-  }
-  // const module = yield select(getModule, action.payload);
-  // yield all(module.sounds.map(sound => call(addModuleSound, {
-  //   payload: sound,
-  //   meta: { module },
-  // })));
-}
+// function* loadModuleResources(action) {
+//   const module = action.meta;
+//   yield call(loadModuleTags, action);
+//   console.log(module);
+//   if (module.modules) {
+//     console.log(getModulesStructure(module.url, module.modules));
+//     yield call(loadModules, { payload: getModulesStructure(module.url, module.modules) });
+//   }
+//   // const module = yield select(getModule, action.payload);
+//   // yield all(module.sounds.map(sound => call(addModuleSound, {
+//   //   payload: sound,
+//   //   meta: { module },
+//   // })));
+// }
 
 function* handleModuleLoad() {
-  yield takeEvery(soundModule.DOWNLOAD_SUCCESS, loadModuleResources);
+  yield takeEvery(soundModule.LOAD_TRIGGER, loadModules);
 }
 
 export default [

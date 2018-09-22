@@ -11,9 +11,9 @@ export const libraryLoad = createRoutine('LIBRARY_LOAD', [
 ]);
 
 export const soundModule = createListRoutine('SOUND_MODULE', [
-  'RELOAD',
-  'DOWNLOAD_FAILURE',
-  'DOWNLOAD_FULFILL',
-  'DOWNLOAD_REQUEST',
-  'DOWNLOAD_SUCCESS',
+  'LOAD_FAILURE',
+  'LOAD_FULFILL',
+  'LOAD_REQUEST',
+  'LOAD_SUCCESS',
+  'LOAD_TRIGGER',
 ], 'name');

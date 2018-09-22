@@ -88,7 +88,9 @@ describe('libraryLoad saga', () => {
     });
     sagaTester.runAll(sagas);
     sagaTester.dispatch(libraryLoad.success({
-      rootModule: {},
+      rootModule: {
+        name: 'root',
+      },
       url: 'http://example.com/index.json',
     }));
     expect(sagaTester.getState().soundModules.ui).toHaveProperty('showOpenLibraryDialog', false);
@@ -104,9 +106,22 @@ describe('libraryLoad saga', () => {
       },
       url: 'http://example.com/index.json',
     }));
-    expect(sagaTester.getCalledActions()).toContainEqual(soundModule.add({
+    expect(sagaTester.getState().soundModules.config).toHaveProperty('rootModule', {
       name: 'foo',
       url: 'http://example.com/index.json',
+    });
+  });
+
+  it('triggers root module load', () => {
+    const sagaTester = getSagaTester();
+    sagaTester.runAll(sagas);
+    sagaTester.dispatch(libraryLoad.success({
+      rootModule: {
+        name: 'foo',
+        url: 'http://example.com/index.json',
+      },
+      url: 'http://example.com/index.json',
     }));
+    expect(sagaTester.getCalledActions()).toContainEqual(soundModule.loadTrigger('foo'));
   });
 });
