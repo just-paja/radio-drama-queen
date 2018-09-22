@@ -4,8 +4,4 @@ export const initialState = {
   name: '',
 };
 
-const tag = handleActions({}, initialState);
-
-tag.actions = [];
-
-export default tag;
+export default handleActions({}, initialState);

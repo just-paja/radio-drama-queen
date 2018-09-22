@@ -9,7 +9,7 @@ export const initialState = {
   volume: 50,
 };
 
-const category = handleActions({
+export default handleActions({
   [categoryList.LOOP_TOGGLE]: state => ({
     ...state,
     loop: !state.loop,
@@ -50,15 +50,3 @@ const category = handleActions({
     volume: action.payload,
   }),
 }, initialState);
-
-category.actions = [
-  categoryList.EXCLUSIVE_TOGGLE,
-  categoryList.LOOP_TOGGLE,
-  categoryList.MUTE_TOGGLE,
-  categoryList.SET_VOLUME,
-  categoryList.SOUND_ADD,
-  categoryList.SOUND_REMOVE,
-  categoryList.UNMUTE,
-];
-
-export default category;

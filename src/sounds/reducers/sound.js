@@ -13,7 +13,7 @@ export const initialState = {
   valid: false,
 };
 
-const sound = handleActions({
+export default handleActions({
   [soundList.PLAY]: state => ({
     ...state,
     playing: true,
@@ -72,17 +72,3 @@ const sound = handleActions({
     return state;
   },
 }, initialState);
-
-sound.actions = [
-  soundList.FINISHED,
-  soundList.LOAD_FAILURE,
-  soundList.LOAD_REQUEST,
-  soundList.LOAD_SUCCESS,
-  soundList.PLAY_FAILURE,
-  soundList.PLAY,
-  soundList.SET_NAME,
-  soundList.STOP,
-  soundList.TOGGLE,
-];
-
-export default sound;
