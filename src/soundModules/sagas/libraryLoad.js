@@ -8,8 +8,7 @@ import { startSubmit, stopSubmit, formValueSelector } from 'redux-form';
 
 import { downloadConfig } from '../../LocalAssetsManager';
 import { FORM_LIBRARY_OPEN } from '../constants';
-import { library } from '../actions';
-import { getModulesStructure } from './modulePaths';
+import { libraryLoad } from '../actions';
 
 const getLibraryOpenValues = formValueSelector(FORM_LIBRARY_OPEN);
 
@@ -19,20 +18,20 @@ function* openLibrary() {
   const errors = {};
   try {
     const config = yield call(downloadConfig, url);
-    yield put(library.setConfig({
-      ...config,
-      modules: getModulesStructure(url, config.modules),
+    yield put(libraryLoad.success({
+      rootModule: config,
       url,
     }));
-    yield put(library.openDialogHide());
+    yield put(libraryLoad.openDialogHide());
   } catch (error) {
-    errors.url = error.message;
+    errors.url = error;
   }
   yield put(stopSubmit(FORM_LIBRARY_OPEN, errors));
+  yield put(libraryLoad.fulfill());
 }
 
 function* handleLibraryOpen() {
-  yield takeEvery(library.OPEN_DIALOG_SUBMIT, openLibrary);
+  yield takeEvery(libraryLoad.SUBMIT, openLibrary);
 }
 
 export default [

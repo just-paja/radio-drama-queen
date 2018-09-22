@@ -1,18 +1,16 @@
 import { handleActions } from 'redux-actions';
 
-import { library } from '../actions';
+import { libraryLoad } from '../actions';
 
 const initialState = {
-  name: null,
-  modules: [],
-  fsPath: null,
+  rootModule: null,
+  url: null,
 };
 
 export default handleActions({
-  [library.SET_CONFIG]: (state, { payload: { modules, name, url } }) => ({
+  [libraryLoad.SUCCESS]: (state, { payload: { rootModule, url } }) => ({
     ...state,
-    modules,
-    name,
+    rootModule,
     url,
   }),
 }, initialState);

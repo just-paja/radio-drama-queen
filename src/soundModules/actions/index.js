@@ -1,11 +1,13 @@
 import { createRoutine } from '../../actions/routines';
 import { createListRoutine } from '../../lists';
 
-export const library = createRoutine('LIBRARY', [
-  'OPEN_DIALOG_HIDE',
-  'OPEN_DIALOG_SHOW',
-  'OPEN_DIALOG_SUBMIT',
-  'SET_CONFIG',
+export const libraryLoad = createRoutine('LIBRARY_LOAD', [
+  'DIALOG_HIDE',
+  'DIALOG_SHOW',
+  'SUBMIT',
+  'SUCCESS',
+  'FAILURE',
+  'FULFILL',
 ]);
 
 export const soundModule = createListRoutine('SOUND_MODULE', [

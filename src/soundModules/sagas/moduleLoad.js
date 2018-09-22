@@ -4,10 +4,10 @@ import {
   put,
   takeEvery,
 } from 'redux-saga/effects';
-import { createInteractiveQueue } from 'redux-saga-job-queue';
+import { createQueue } from 'redux-saga-job-queue';
 
 import { downloadConfig } from '../../LocalAssetsManager';
-import { library, soundModule } from '../actions';
+import { libraryLoad, soundModule } from '../actions';
 import { tagList } from '../../tags/actions';
 
 import { getModulesStructure } from './modulePaths';
@@ -29,7 +29,7 @@ function* downloadModuleConfig({ payload: { name, url } }) {
 
 function* downloadModules({ payload }) {
   if (!queue || queue.isFinished()) {
-    queue = createInteractiveQueue({
+    queue = createQueue({
       jobFactory: downloadModuleConfig,
       items: payload,
     });
@@ -91,15 +91,10 @@ function* loadModuleResources(action) {
   // })));
 }
 
-function* handleLibraryConfigSet() {
-  yield takeEvery(library.SET_CONFIG, downloadConfigModules);
-}
-
 function* handleModuleLoad() {
   yield takeEvery(soundModule.DOWNLOAD_SUCCESS, loadModuleResources);
 }
 
 export default [
-  handleLibraryConfigSet,
   handleModuleLoad,
 ];

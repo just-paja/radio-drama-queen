@@ -1,7 +1,7 @@
-import libraryOpen from './libraryOpen';
+import libraryLoad from './libraryLoad';
 import moduleLoad from './moduleLoad';
 
 export default [
-  ...libraryOpen,
+  ...libraryLoad,
   ...moduleLoad,
 ];

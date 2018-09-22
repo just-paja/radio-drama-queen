@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import OpenLibraryDialog from '../components/OpenLibraryDialog';
 
-import { library } from '../actions';
+import { libraryLoad } from '../actions';
 import { FORM_LIBRARY_OPEN } from '../constants';
 import { isOpenLibraryDialogOpen } from '../selectors';
 
@@ -12,8 +12,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onClose: library.openDialogHide,
-  onSubmit: library.openDialogSubmit,
+  onClose: libraryLoad.dialogHide,
+  onSubmit: libraryLoad.submit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
