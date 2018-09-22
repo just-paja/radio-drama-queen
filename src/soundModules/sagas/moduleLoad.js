@@ -14,6 +14,8 @@ import { getModule } from '../selectors';
 
 let queue;
 
+const isQueueRunning = () => queue && !queue.isFinished();
+
 function* loadModuleConfig({ payload: moduleName }) {
   const { name, url } = yield select(getModule, moduleName);
   yield put(soundModule.loadRequest(name));
@@ -34,14 +36,14 @@ function* loadModuleConfig({ payload: moduleName }) {
 function* loadModules({ meta: { name } }) {
   const moduleNames = name instanceof Array ? name : [name];
 
-  if (!queue || queue.isFinished()) {
+  if (isQueueRunning()) {
+    yield call(queue.addItems, moduleNames);
+  } else {
     queue = createQueue({
       jobFactory: loadModuleConfig,
       items: moduleNames,
     });
     yield call(queue.run);
-  } else {
-    yield call(queue.addItems, moduleNames);
   }
 }
 
