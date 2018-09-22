@@ -75,4 +75,14 @@ describe('sound module paths', () => {
       'fallbackName'
     )).toHaveProperty('url', 'http://example.com/moduleName/manifest.json');
   });
+
+  it('getModuleShape sets module URL with two component path when not available', () => {
+    expect(getModuleShape(
+      'http://example.com/foo/bar/module.json',
+      {
+        name: 'moduleName',
+      },
+      'fallbackName'
+    )).toHaveProperty('url', 'http://example.com/foo/bar/moduleName/manifest.json');
+  });
 });

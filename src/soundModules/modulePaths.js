@@ -8,9 +8,14 @@ const basename = path => path
   .replace(/.*\//, '');
 
 export const getHttpDirName = (path) => {
+  if (path.match(/\/$/)) {
+    return path;
+  }
   const url = new URL(path);
   url.set('pathname', dirname(url.pathname));
-  return url.toString();
+  return url.pathname === '/'
+    ? url.toString()
+    : `${url.toString()}/`;
 };
 
 export const resolveModuleUrl = (dest, moduleName) => {
