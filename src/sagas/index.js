@@ -6,13 +6,11 @@ import { logError, logWarning } from '../clientLogger';
 import soundCategories from '../soundCategories/sagas';
 import soundModules from '../soundModules/sagas';
 import sounds from '../sounds/sagas';
-import tags from '../tags/sagas';
 
 const sagas = [
   ...soundCategories,
   ...soundModules,
   ...sounds,
-  ...tags,
 ];
 
 function* onEachError(next, error) {
