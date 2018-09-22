@@ -22,7 +22,6 @@ function* openLibrary() {
       rootModule: config,
       url,
     }));
-    yield put(libraryLoad.openDialogHide());
   } catch (error) {
     errors.url = error;
   }
@@ -30,10 +29,19 @@ function* openLibrary() {
   yield put(libraryLoad.fulfill());
 }
 
+function* hideDialog() {
+  yield put(libraryLoad.dialogHide());
+}
+
 function* handleLibraryOpen() {
   yield takeEvery(libraryLoad.SUBMIT, openLibrary);
 }
 
+function* handleLibraryLoadSuccess() {
+  yield takeEvery(libraryLoad.SUCCESS, hideDialog);
+}
+
 export default [
   handleLibraryOpen,
+  handleLibraryLoadSuccess,
 ];

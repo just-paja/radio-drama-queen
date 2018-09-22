@@ -75,4 +75,20 @@ describe('libraryLoad saga', () => {
       });
     });
   });
+
+  it('hides dialog on success', () => {
+    const sagaTester = getSagaTester({
+      soundModules: {
+        ui: {
+          showOpenLibraryDialog: true,
+        },
+      },
+    });
+    sagaTester.runAll(sagas);
+    sagaTester.dispatch(libraryLoad.success({
+      rootModule: {},
+      url: 'http://example.com/index.json',
+    }));
+    expect(sagaTester.getState().soundModules.ui).toHaveProperty('showOpenLibraryDialog', false);
+  });
 });
