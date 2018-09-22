@@ -1,4 +1,3 @@
-import camelCase from 'camelcase';
 import {
   composeActionType,
   createAction,
@@ -7,6 +6,7 @@ import {
 
 export const ADD = 'ADD';
 export const REMOVE = 'REMOVE';
+export const CLEAR = 'CLEAR';
 export const LIST_ACTIONS = 'listActions';
 export const LIST_IDENTIFIER = 'listIdentifier';
 
@@ -17,20 +17,20 @@ export const createListAction = identifierName => actionName => (identifier, pay
 });
 
 export const createListRoutine = (baseName, actions = [], identifierName = 'uuid') => {
-  const ACTION_ADD = composeActionType(baseName, ADD);
-  const ACTION_REMOVE = composeActionType(baseName, REMOVE);
   const routineActions = createRoutineActions(
+    baseName,
+    [ADD, REMOVE, CLEAR],
+    createAction
+  );
+  const listRoutineActions = createRoutineActions(
     baseName,
     actions,
     createListAction(identifierName)
   );
   return {
+    ...listRoutineActions,
     ...routineActions,
     [LIST_ACTIONS]: actions.map(extraAction => composeActionType(baseName, extraAction)),
     [LIST_IDENTIFIER]: identifierName,
-    [ADD]: ACTION_ADD,
-    [camelCase(ADD)]: createAction(ACTION_ADD),
-    [REMOVE]: ACTION_REMOVE,
-    [camelCase(REMOVE)]: createAction(ACTION_REMOVE),
   };
 };
