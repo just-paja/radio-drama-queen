@@ -10,6 +10,8 @@ import { getModuleShape } from '../modulePaths';
 import { downloadConfig } from '../../LocalAssetsManager';
 import { FORM_LIBRARY_OPEN } from '../constants';
 import { libraryLoad, soundModule } from '../actions';
+import { tagList } from '../../tags/actions';
+import { soundList } from '../../sounds/actions';
 
 const getLibraryOpenValues = formValueSelector(FORM_LIBRARY_OPEN);
 
@@ -35,6 +37,9 @@ function* openLibrary() {
 
 function* loadLibraryModules({ payload: { rootModule } }) {
   yield put(libraryLoad.dialogHide());
+  yield put(tagList.clear());
+  yield put(soundList.clear());
+  yield put(soundModule.clear());
   yield put(soundModule.add(rootModule));
   yield put(soundModule.loadTrigger(rootModule.name));
 }
