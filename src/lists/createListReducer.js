@@ -15,7 +15,7 @@ const handleItemAction = itemReducer => (state, action) => {
   return state;
 };
 
-export default (routine, itemReducer, itemInitialState) => handleActions({
+export const createListReducer = (routine, itemReducer, itemInitialState) => handleActions({
   [routine.ADD]: (state, action) => ([
     ...state,
     {
@@ -37,3 +37,5 @@ export default (routine, itemReducer, itemInitialState) => handleActions({
     [itemAction]: handleItemAction(itemReducer),
   }), {}),
 }, []);
+
+export default { createListReducer };
