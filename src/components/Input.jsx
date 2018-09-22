@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
+import AppError from './AppError';
 import InputFeedback from './InputFeedback';
 
 const Input = ({
@@ -33,7 +34,7 @@ const Input = ({
       {touched && (
         (error || warning) ? (
           <InputFeedback type={warning ? 'warning' : 'error'}>
-            {error || warning}
+            <AppError error={error || warning} />
           </InputFeedback>
         ) : null
       )}
