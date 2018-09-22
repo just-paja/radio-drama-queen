@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
-const getFeatureState = state => state.tags;
+const memoizeTagList = state => state.tags.list;
 
 export const getTagByName = createSelector(
-  (state, name) => getFeatureState(state).find(tag => tag.name === name),
+  (state, name) => memoizeTagList(state).find(tag => tag.name === name),
   tag => tag
 );
 
-export const getTags = createSelector(getFeatureState, state => state);
+export const getTags = createSelector(memoizeTagList, state => state);

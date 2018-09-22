@@ -7,6 +7,7 @@ import { DragDropContextProvider } from 'react-dnd';
 import { Provider } from 'react-redux';
 
 import AppMenu from './containers/AppMenu';
+import SoundGallery from './soundGallery/containers/SoundGallery';
 import OpenLibraryDialog from './soundModules/containers/OpenLibraryDialog';
 import SoundCategoryGrid from './soundCategories/containers/SoundCategoryGrid';
 
@@ -19,6 +20,7 @@ class App extends Component {
         <Provider store={store}>
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
             <AppMenu />
+            <SoundGallery />
             <SoundCategoryGrid />
             <OpenLibraryDialog />
           </DragDropContextProvider>

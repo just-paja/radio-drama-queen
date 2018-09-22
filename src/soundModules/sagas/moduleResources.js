@@ -16,7 +16,10 @@ function* registerModuleSounds({ meta: { name: moduleName } }) {
   const module = yield select(getModule, moduleName);
   if (module && module.sounds && module.sounds.length !== 0) {
     const { sounds, url } = module;
-    yield all(sounds.map(sound => call(registerSound, `${getHttpDirName(url)}${sound.file}`)));
+    yield all(sounds.map(sound => call(registerSound, {
+      ...sound,
+      path: `${getHttpDirName(url)}${sound.file}`,
+    })));
   }
 }
 

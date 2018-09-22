@@ -17,6 +17,7 @@ export function* registerSound(resource) {
   const path = typeof resource === 'string' ? resource : resource.path;
   yield put(soundList.add({
     name: resource.name || getNameWithoutExtension(path),
+    tags: resource.tags || [],
     path,
     uuid,
   }));
