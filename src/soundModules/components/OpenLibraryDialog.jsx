@@ -36,7 +36,7 @@ const OpenLibraryDialog = ({
       </DialogContent>
       <DialogActions>
         <CancelButton onClick={onClose} />
-        <OpenButton>
+        <OpenButton type="submit">
           Open
         </OpenButton>
       </DialogActions>
