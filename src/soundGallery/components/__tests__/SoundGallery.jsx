@@ -21,6 +21,6 @@ describe('SoundGallery component', () => {
         ]}
       />
     );
-    expect(comp.find('SoundGalleryItem')).toHaveLength(2);
+    expect(comp.find('WithStyles(SoundGalleryItem)')).toHaveLength(2);
   });
 });
