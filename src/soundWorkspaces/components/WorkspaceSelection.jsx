@@ -28,7 +28,7 @@ class WorkspaceSelection extends Component {
 
   handleViewChange(event, value) {
     const { onViewSelect } = this.props;
-    onViewSelect(value[0]);
+    onViewSelect(value);
   }
 
   render() {
@@ -54,7 +54,11 @@ class WorkspaceSelection extends Component {
 WorkspaceSelection.propTypes = {
   classes: Classes.isRequired,
   onViewSelect: PropTypes.func.isRequired,
-  view: PropTypes.string.isRequired,
+  view: PropTypes.string,
+};
+
+WorkspaceSelection.defaultProps = {
+  view: null,
 };
 
 export default withStyles(styles)(WorkspaceSelection);

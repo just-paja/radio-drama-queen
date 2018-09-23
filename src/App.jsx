@@ -7,9 +7,8 @@ import { DragDropContextProvider } from 'react-dnd';
 import { Provider } from 'react-redux';
 
 import AppMenu from './containers/AppMenu';
-import SoundGallery from './soundGallery/containers/SoundGallery';
 import OpenLibraryDialog from './soundModules/containers/OpenLibraryDialog';
-import SoundCategoryGrid from './soundCategories/containers/SoundCategoryGrid';
+import WorkspaceView from './soundWorkspaces/containers/WorkspaceView';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -20,8 +19,7 @@ class App extends Component {
         <Provider store={store}>
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
             <AppMenu />
-            <SoundGallery />
-            <SoundCategoryGrid />
+            <WorkspaceView />
             <OpenLibraryDialog />
           </DragDropContextProvider>
         </Provider>
