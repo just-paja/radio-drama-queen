@@ -3,9 +3,7 @@ import { initialize, startSubmit, stopSubmit } from 'redux-form';
 import sagas from '../libraryLoad';
 
 import { getSagaTester } from '../../../../mock';
-import { libraryLoad, soundModule } from '../../actions';
-import { tagList } from '../../../tags/actions';
-import { soundList } from '../../../sounds/actions';
+import { libraryLoad, libraryWipe, soundModule } from '../../actions';
 
 import * as localAssetsManager from '../../../LocalAssetsManager';
 
@@ -114,7 +112,7 @@ describe('libraryLoad saga', () => {
     });
   });
 
-  it('triggers soundModule clear on load', () => {
+  it('triggers library wipe on load', () => {
     const sagaTester = getSagaTester();
     sagaTester.runAll(sagas);
     sagaTester.dispatch(libraryLoad.success({
@@ -124,33 +122,7 @@ describe('libraryLoad saga', () => {
       },
       url: 'http://example.com/index.json',
     }));
-    expect(sagaTester.numCalled(soundModule.CLEAR)).toBe(1);
-  });
-
-  it('triggers tagList clear on load', () => {
-    const sagaTester = getSagaTester();
-    sagaTester.runAll(sagas);
-    sagaTester.dispatch(libraryLoad.success({
-      rootModule: {
-        name: 'foo',
-        url: 'http://example.com/index.json',
-      },
-      url: 'http://example.com/index.json',
-    }));
-    expect(sagaTester.numCalled(tagList.CLEAR)).toBe(1);
-  });
-
-  it('triggers soundList clear on load', () => {
-    const sagaTester = getSagaTester();
-    sagaTester.runAll(sagas);
-    sagaTester.dispatch(libraryLoad.success({
-      rootModule: {
-        name: 'foo',
-        url: 'http://example.com/index.json',
-      },
-      url: 'http://example.com/index.json',
-    }));
-    expect(sagaTester.numCalled(soundList.CLEAR)).toBe(1);
+    expect(sagaTester.numCalled(libraryWipe.TRIGGER)).toBe(1);
   });
 
   it('triggers root module load', () => {

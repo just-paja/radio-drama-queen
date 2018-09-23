@@ -1,6 +1,11 @@
 import { createRoutine } from '../../actions/routines';
 import { createListRoutine } from '../../lists';
 
+export const libraryWipe = createRoutine('LIBRARY_WIPE', [
+  'SUCCESS',
+  'TRIGGER',
+]);
+
 export const libraryLoad = createRoutine('LIBRARY_LOAD', [
   'DIALOG_HIDE',
   'DIALOG_SHOW',
