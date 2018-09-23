@@ -5,6 +5,7 @@ import soundCategories from '../soundCategories/reducers';
 import soundModules from '../soundModules/reducers';
 import sounds from '../sounds/reducers';
 import soundSearch from './soundSearch';
+import soundWorkspaces from '../soundWorkspaces/reducers';
 import tags from '../tags/reducers';
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   soundModules,
   sounds,
   soundSearch,
+  soundWorkspaces,
   tags,
 });

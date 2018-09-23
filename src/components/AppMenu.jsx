@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 
 import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton';
+import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection';
 
 import { Classes } from '../proptypes';
 
@@ -49,6 +50,7 @@ class AppMenu extends Component {
           <IconButton onClick={this.handleMenuOpen}>
             <MenuIcon />
           </IconButton>
+          <WorkspaceSelection />
           <SwipeableDrawer
             open={drawerOpen}
             onClose={this.handleMenuClose}
