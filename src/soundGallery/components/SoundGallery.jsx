@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundGalleryItem from './SoundGalleryItem';
+import SoundGalleryItem from '../containers/SoundGalleryItem';
 
 import { GallerySound } from '../proptypes';
 import { Classes } from '../../proptypes';
@@ -29,7 +29,7 @@ const SoundGallery = ({ classes, sounds }) => (
     <Paper className={classes.body}>
       {sounds.map(sound => (
         <SoundGalleryItem
-          sound={sound}
+          soundUuid={sound.uuid}
           key={sound.uuid}
         />
       ))}

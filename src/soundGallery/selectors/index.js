@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { memoizeSoundList } from '../../sounds/selectors';
+import { getSound, memoizeSoundList } from '../../sounds/selectors';
 
 export const getGallerySoundListPaged = createSelector(
   memoizeSoundList,
@@ -9,4 +9,7 @@ export const getGallerySoundListPaged = createSelector(
 
 export const getGallerySoundList = createSelector(getGallerySoundListPaged, state => state);
 
-export default { getGallerySoundList };
+export const getGallerySound = createSelector(
+  getSound,
+  state => state
+);

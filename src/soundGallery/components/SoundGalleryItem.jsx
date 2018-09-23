@@ -1,6 +1,8 @@
 import AddCircle from '@material-ui/icons/AddCircle';
+import IconButton from '@material-ui/core/IconButton';
 import PlayCircleFilled from '@material-ui/icons/PlayCircleFilled';
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -22,26 +24,47 @@ const styles = theme => ({
   },
 });
 
-const SoundGalleryItem = ({ classes, sound }) => (
-  <div className={classes.item}>
-    <div className={classes.controls}>
-      <AddCircle />
-      <PlayCircleFilled />
-    </div>
-    <div>
-      <span>{sound.name}</span>
-      <div className={classes.tags}>
-        {sound.tags.map(tag => (
-          <SoundTag tag={tag} key={tag.name} />
-        ))}
+class SoundGalleryItem extends Component {
+  constructor() {
+    super();
+    this.handlePlayClick = this.handlePlayClick.bind(this);
+  }
+
+  handlePlayClick() {
+    const { onPlay, soundUuid } = this.props;
+    onPlay(soundUuid);
+  }
+
+  render() {
+    const { classes, sound } = this.props;
+    return (
+      <div className={classes.item}>
+        <div className={classes.controls}>
+          <IconButton>
+            <AddCircle />
+          </IconButton>
+          <IconButton onClick={this.handlePlayClick}>
+            <PlayCircleFilled />
+          </IconButton>
+        </div>
+        <div>
+          <span>{sound.name}</span>
+          <div className={classes.tags}>
+            {sound.tags.map(tag => (
+              <SoundTag tag={tag} key={tag} />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+}
 
 SoundGalleryItem.propTypes = {
   classes: Classes.isRequired,
+  onPlay: PropTypes.func.isRequired,
   sound: GallerySound.isRequired,
+  soundUuid: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(SoundGalleryItem);
