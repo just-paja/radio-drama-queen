@@ -5,6 +5,7 @@ import { soundList } from '../../sounds/actions';
 
 function* playAndForget({ payload }) {
   yield put(soundList.loadTrigger(payload));
+  // @FIXME: This take action matcher absolutely needs to check sound UUID!
   yield take(soundList.LOAD_SUCCESS);
   yield put(soundList.play(payload));
 }
