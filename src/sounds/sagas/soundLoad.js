@@ -56,7 +56,6 @@ function* loadSoundUrl(uuid, url) {
     const soundFile = yield call(downloadSound, uuid, url);
     // Not sure about this anymore
     // yield put(soundList.setName(uuid, getNameWithoutExtension(soundFile.name)));
-    console.log(soundFile);
     yield call(loadAudio, uuid, soundFile.blob, soundFile.extension);
     yield put(soundList.loadSuccess(uuid));
   } catch (error) {
