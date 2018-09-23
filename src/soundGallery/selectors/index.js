@@ -2,6 +2,11 @@ import { createSelector } from 'reselect';
 
 import { memoizeSoundList } from '../../sounds/selectors';
 
-export const getGallerySoundList = createSelector(memoizeSoundList, state => state);
+export const getGallerySoundListPaged = createSelector(
+  memoizeSoundList,
+  state => state.slice(0, 20)
+);
+
+export const getGallerySoundList = createSelector(getGallerySoundListPaged, state => state);
 
 export default { getGallerySoundList };
