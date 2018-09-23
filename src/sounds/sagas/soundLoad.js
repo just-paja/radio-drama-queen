@@ -1,10 +1,16 @@
 import { Howl } from 'howler';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import {
+  call,
+  put,
+  takeEvery,
+  select,
+} from 'redux-saga/effects';
 
 import AudioManager from '../AudioManager';
 
 import { downloadSound } from '../../LocalAssetsManager';
 import { soundList } from '../actions';
+import { getSound } from '../selectors';
 import { getNameWithoutExtension, registerSound } from './soundAdd';
 
 const loadFile = file => new Promise((resolve, reject) => {
@@ -39,18 +45,24 @@ function* loadSoundFile(uuid, file) {
     yield put(soundList.loadSuccess(uuid));
   } catch (error) {
     yield put(soundList.loadFailure(uuid, { error }));
+  } finally {
+    yield put(soundList.loadFulfill(uuid));
   }
 }
 
 function* loadSoundUrl(uuid, url) {
-  yield put(soundList.loadRequest(uuid));
-  const soundFile = yield call(downloadSound, uuid, url);
-  yield put(soundList.setName(uuid, getNameWithoutExtension(soundFile.name)));
   try {
-    yield loadAudio(uuid, soundFile.blob, soundFile.extension);
+    yield put(soundList.loadRequest(uuid));
+    const soundFile = yield call(downloadSound, uuid, url);
+    // Not sure about this anymore
+    // yield put(soundList.setName(uuid, getNameWithoutExtension(soundFile.name)));
+    console.log(soundFile);
+    yield call(loadAudio, uuid, soundFile.blob, soundFile.extension);
     yield put(soundList.loadSuccess(uuid));
   } catch (error) {
     yield put(soundList.loadFailure(uuid, error));
+  } finally {
+    yield put(soundList.loadFulfill(uuid));
   }
 }
 
@@ -72,12 +84,15 @@ export function* loadSound(categoryUuid, resource) {
   yield call(loadSoundResource, uuid, resource);
 }
 
-function* loadSoundFromAction({ payload }) {
-  yield call(loadSound, null, payload);
+function* loadSoundFromStore({ meta: { uuid } }) {
+  const sound = yield select(getSound, uuid);
+  if (sound) {
+    yield call(loadSoundUrl, uuid, sound.path);
+  }
 }
 
 function* handleSoundLoad() {
-  yield takeEvery(soundList.LOAD_MANUAL, loadSoundFromAction);
+  yield takeEvery(soundList.LOAD_TRIGGER, loadSoundFromStore);
 }
 
 export default [
