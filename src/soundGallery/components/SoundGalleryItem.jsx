@@ -1,6 +1,7 @@
+import AddCircle from '@material-ui/icons/AddCircle';
+import PlayCircleFilled from '@material-ui/icons/PlayCircleFilled';
 import React from 'react';
 
-import { AddCircle, PlayCircleFilled } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
 import SoundTag from '../../tags/containers/SoundTag';
