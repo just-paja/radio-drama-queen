@@ -1,8 +1,9 @@
+import LibraryMusic from '@material-ui/icons/LibraryMusic';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { LibraryMusic } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Classes } from '../../proptypes';
