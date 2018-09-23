@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 
 import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton';
+import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton';
 import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection';
 
 import { Classes } from '../proptypes';
@@ -43,6 +44,7 @@ class AppMenu extends Component {
     const menuItems = [];
 
     menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
+    menuItems.push(<WipeLibraryButton button buttonComponent={ListItem} key="wipe" />);
 
     return (
       <AppBar position="static">
