@@ -13,4 +13,8 @@ const mapDispatchToProps = {
   onPlay: gallerySound.play,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SoundGalleryItem);
+const container = connect(mapStateToProps, mapDispatchToProps)(SoundGalleryItem);
+
+container.displayName = 'Connect(SoundGalleryItem)';
+
+export default container;
