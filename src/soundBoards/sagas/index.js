@@ -1,3 +1,8 @@
-export * from './createBoard';
+import soundAdd from './soundAdd';
 
-export default [];
+export * from './createBoard';
+export * from './createDefaultCategory';
+
+export default [
+  ...soundAdd,
+];

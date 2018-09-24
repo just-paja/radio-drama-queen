@@ -11,8 +11,8 @@ import {
   isCategoryCreateFormVisible,
 } from '../selectors';
 
-const mapStateToProps = state => ({
-  categories: getBoardCategoryUuids(state),
+const mapStateToProps = (state, { uuid }) => ({
+  categories: getBoardCategoryUuids(state, uuid),
   showCreateForm: isCategoryCreateFormVisible(state),
 });
 

@@ -1,5 +1,4 @@
 export { default as CategoryEditForm } from './CategoryEditForm';
-export { default as GridCategory } from './GridCategory';
 export { default as SoundCategory } from './SoundCategory';
 export { default as SoundCategoryControls } from './SoundCategoryControls';
 export { default as SoundCategoryExclusiveButton } from './SoundCategoryExclusiveButton';

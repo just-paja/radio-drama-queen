@@ -3,7 +3,7 @@ import categoryStop from './categoryStop';
 import categoryVolume from './categoryVolume';
 import soundDrop from './soundDrop';
 
-export * from './createDefaultCategory';
+export * from './categoryCreate';
 
 export default [
   ...categoryCreate,

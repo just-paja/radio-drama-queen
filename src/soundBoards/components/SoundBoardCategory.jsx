@@ -5,13 +5,20 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { SoundCategory } from '../../soundCategories/containers';
+
 const styles = theme => ({
   gridItem: {
     margin: theme.spacing.unit,
   },
 });
 
-const GridCategory = ({ children, classes, heading }) => (
+const SoundBoardCategory = ({
+  classes,
+  heading,
+  children,
+  uuid,
+}) => (
   <Grid xs={12} sm={6} md={4} lg={3} xl={2} item elevation={0}>
     <div className={classes.gridItem}>
       {heading ? (
@@ -19,22 +26,25 @@ const GridCategory = ({ children, classes, heading }) => (
           {heading}
         </Typography>
       ) : null}
-      {children}
+      {uuid ? <SoundCategory uuid={uuid} /> : children}
     </div>
   </Grid>
 );
 
-GridCategory.propTypes = {
+SoundBoardCategory.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
-  ]).isRequired,
+  ]),
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   heading: PropTypes.node,
+  uuid: PropTypes.string,
 };
 
-GridCategory.defaultProps = {
+SoundBoardCategory.defaultProps = {
+  children: null,
   heading: null,
+  uuid: null,
 };
 
-export default withStyles(styles)(GridCategory);
+export default withStyles(styles)(SoundBoardCategory);

@@ -9,12 +9,11 @@ import classnames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundBoardCategory from './SoundBoardCategory';
 import SoundBoardEmptyMessage from './SoundBoardEmptyMessage';
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
 import SoundCategoryCreateForm from '../../soundCategories/containers/SoundCategoryCreateForm';
 import SoundSearchForm from '../../containers/SoundSearchForm';
-
-import { GridCategory, SoundCategory } from '../../soundCategories/components';
 
 const styles = theme => ({
   gridSpacing: {
@@ -41,13 +40,11 @@ const SoundBoard = ({
   } else {
     content = [];
     content.push(categories.map(uuid => (
-      <GridCategory key={uuid}>
-        <SoundCategory uuid={uuid} />
-      </GridCategory>
+      <SoundBoardCategory key={uuid} uuid={uuid} />
     )));
     if (showCreateForm) {
       content.push(
-        <GridCategory key="form">
+        <SoundBoardCategory key="form">
           <Card>
             <CardContent>
               <Typography variant="headline">
@@ -56,7 +53,7 @@ const SoundBoard = ({
               <SoundCategoryCreateForm />
             </CardContent>
           </Card>
-        </GridCategory>
+        </SoundBoardCategory>
       );
     }
   }
