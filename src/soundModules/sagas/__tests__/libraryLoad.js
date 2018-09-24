@@ -135,6 +135,7 @@ describe('libraryLoad saga', () => {
       },
       url: 'http://example.com/index.json',
     }));
+    sagaTester.dispatch(libraryWipe.success());
     expect(sagaTester.getCalledActions()).toContainEqual(soundModule.loadTrigger('foo'));
   });
 });

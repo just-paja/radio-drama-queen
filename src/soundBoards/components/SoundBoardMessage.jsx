@@ -14,16 +14,18 @@ const styles = theme => ({
   },
 });
 
-const GridMessage = ({ children, classes, heading }) => (
+const SoundBoardMessage = ({ children, classes, heading }) => (
   <Paper className={classes.messageSize} elevation={0}>
     <Typography variant="headline" gutterBottom>
       {heading}
     </Typography>
-    {children}
+    <div>
+      {children}
+    </div>
   </Paper>
 );
 
-GridMessage.propTypes = {
+SoundBoardMessage.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -32,4 +34,4 @@ GridMessage.propTypes = {
   heading: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(GridMessage);
+export default withStyles(styles)(SoundBoardMessage);

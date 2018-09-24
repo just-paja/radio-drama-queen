@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import SoundCategoryGridSpeedDial from '../components/SoundCategoryGridSpeedDial';
+import SoundBoardSpeedDial from '../components/SoundBoardSpeedDial';
 
 import { categoryCreate } from '../actions';
 
@@ -10,4 +10,4 @@ const mapDispatchToProps = {
   onCategoryCreate: categoryCreate.formShow,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SoundCategoryGridSpeedDial);
+export default connect(mapStateToProps, mapDispatchToProps)(SoundBoardSpeedDial);

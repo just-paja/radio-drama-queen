@@ -9,12 +9,12 @@ import classnames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import GridCategory from './GridCategory';
-import NoCategoriesMessage from './NoCategoriesMessage';
-import SoundCategory from '../containers/SoundCategory';
-import SoundCategoryCreateForm from '../containers/SoundCategoryCreateForm';
-import SoundCategoryGridSpeedDial from '../containers/SoundCategoryGridSpeedDial';
+import SoundBoardEmptyMessage from './SoundBoardEmptyMessage';
+import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
+import SoundCategoryCreateForm from '../../soundCategories/containers/SoundCategoryCreateForm';
 import SoundSearchForm from '../../containers/SoundSearchForm';
+
+import { GridCategory, SoundCategory } from '../../soundCategories/components';
 
 const styles = theme => ({
   gridSpacing: {
@@ -27,7 +27,7 @@ const styles = theme => ({
   },
 });
 
-const SoundCategoryGrid = ({
+const SoundBoard = ({
   canDrop,
   categories,
   classes,
@@ -37,7 +37,7 @@ const SoundCategoryGrid = ({
 }) => {
   let content;
   if (categories.length === 0 && !showCreateForm) {
-    content = (<NoCategoriesMessage />);
+    content = (<SoundBoardEmptyMessage />);
   } else {
     content = [];
     content.push(categories.map(uuid => (
@@ -65,7 +65,7 @@ const SoundCategoryGrid = ({
       {categories.length > 0
         ? <SoundSearchForm key="search" />
         : null}
-      <SoundCategoryGridSpeedDial />
+      <SoundBoardSpeedDial />
       <Grid
         className={classnames(classes.gridSpacing, {
           [classes.canDrop]: isOver && canDrop,
@@ -83,7 +83,7 @@ const SoundCategoryGrid = ({
   );
 };
 
-SoundCategoryGrid.propTypes = {
+SoundBoard.propTypes = {
   canDrop: PropTypes.bool,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -92,10 +92,10 @@ SoundCategoryGrid.propTypes = {
   showCreateForm: PropTypes.bool,
 };
 
-SoundCategoryGrid.defaultProps = {
+SoundBoard.defaultProps = {
   canDrop: false,
   isOver: false,
   showCreateForm: false,
 };
 
-export default withStyles(styles)(SoundCategoryGrid);
+export default withStyles(styles)(SoundBoard);

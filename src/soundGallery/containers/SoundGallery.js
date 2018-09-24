@@ -10,4 +10,8 @@ const mapStateToProps = state => ({
   sounds: getGallerySoundList(state),
 });
 
-export default connect(mapStateToProps)(SoundGallery);
+const container = connect(mapStateToProps)(SoundGallery);
+
+container.displayName = 'Connect(SoundGallery)';
+
+export default container;

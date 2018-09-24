@@ -2,16 +2,17 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
-import SoundCategoryGrid from '../components/SoundCategoryGrid';
+import SoundBoard from '../components/SoundBoard';
 
-import { categoryCreate, categoryList } from '../actions';
+import { categoryCreate } from '../actions';
+import { categoryList } from '../../soundCategories/actions';
 import {
-  getCategoryListUuids,
+  getBoardCategoryUuids,
   isCategoryCreateFormVisible,
 } from '../selectors';
 
 const mapStateToProps = state => ({
-  categories: getCategoryListUuids(state),
+  categories: getBoardCategoryUuids(state),
   showCreateForm: isCategoryCreateFormVisible(state),
 });
 
@@ -29,7 +30,7 @@ const boxTarget = {
   },
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropTarget(
+const container = connect(mapStateToProps, mapDispatchToProps)(DropTarget(
   () => [NativeTypes.FILE, NativeTypes.URL],
   boxTarget,
   (connector, monitor) => ({
@@ -37,4 +38,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(DropTarget(
     isOver: monitor.isOver({ shallow: true }),
     canDrop: monitor.canDrop(),
   })
-)(SoundCategoryGrid));
+)(SoundBoard));
+
+container.displayName = 'Connect(SoundBoard)';
+
+export default container;

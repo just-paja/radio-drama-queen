@@ -17,7 +17,7 @@ const styles = theme => ({
   },
 });
 
-class SoundCategoryGridSpeedDial extends Component {
+class SoundBoardSpeedDial extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -67,9 +67,13 @@ class SoundCategoryGridSpeedDial extends Component {
   }
 }
 
-SoundCategoryGridSpeedDial.propTypes = {
+SoundBoardSpeedDial.propTypes = {
   classes: Classes.isRequired,
   onCategoryCreate: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(SoundCategoryGridSpeedDial);
+const comp = withStyles(styles)(SoundBoardSpeedDial);
+
+comp.displayName = 'SoundBoardSpeedDial';
+
+export default comp;

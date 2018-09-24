@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Classes } from '../../proptypes';
 import { VIEW_LIBRARY } from '../constants';
+import { SoundBoardSelection } from '../../soundBoards/containers';
 
 const styles = {
   libraryButton: {
@@ -33,7 +34,12 @@ class WorkspaceSelection extends Component {
   }
 
   render() {
-    const { classes, view } = this.props;
+    const {
+      activeBoard,
+      classes,
+      onBoardSelect,
+      view,
+    } = this.props;
     return (
       <ToggleButtonGroup
         className={classes.viewSwitcher}
@@ -41,6 +47,10 @@ class WorkspaceSelection extends Component {
         onChange={this.handleViewChange}
         value={view}
       >
+        <SoundBoardSelection
+          activeBoard={activeBoard}
+          onBoardSelect={onBoardSelect}
+        />
         <ToggleButton
           className={classes.libraryButton}
           value={VIEW_LIBRARY}
@@ -53,12 +63,15 @@ class WorkspaceSelection extends Component {
 }
 
 WorkspaceSelection.propTypes = {
+  activeBoard: PropTypes.string,
   classes: Classes.isRequired,
+  onBoardSelect: PropTypes.func.isRequired,
   onViewSelect: PropTypes.func.isRequired,
   view: PropTypes.string,
 };
 
 WorkspaceSelection.defaultProps = {
+  activeBoard: null,
   view: null,
 };
 
