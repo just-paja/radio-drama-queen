@@ -13,7 +13,7 @@ const identifyItem = (action, identifier) => item => (
 const handleItemAction = (itemReducer, identifier) => (state, action) => {
   const index = state.findIndex(identifyItem(action, identifier));
   if (index !== -1) {
-    const nextState = state.slice();
+    const nextState = state;
     nextState[index] = itemReducer(nextState[index], action);
     return nextState;
   }

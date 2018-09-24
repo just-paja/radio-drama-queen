@@ -57,6 +57,20 @@ describe('combined reducer', () => {
     });
   });
 
+  it('keeps current state when operating on existing item', () => {
+    const routine = createListRoutine('TEST', ['TOGGLE']);
+    const itemReducer = handleActions({
+      [routine.TOGGLE]: state => ({
+        ...state,
+        visible: !state.visible,
+      }),
+    }, { visible: false });
+    const reducer = createListReducer(routine, itemReducer);
+    const state = [{ uuid: 'foo', visible: false }];
+    const result = reducer(state, routine.toggle('foo'));
+    expect(result).toBe(state);
+  });
+
   it('keeps current state on routine action on non-existent item', () => {
     const routine = createListRoutine('TEST', ['TOGGLE']);
     const itemReducer = handleActions({
