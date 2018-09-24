@@ -41,13 +41,33 @@ const cacheFile = (url, cachePath) => {
   if (!fs) {
     return Promise.reject(new Error('Not available in this environment'));
   }
-  if (jetpack.exists(cachePath) === 'file') {
+  if (jetpack.exists(cachePath) === 'file' && !cachePath.match(/\.json$/)) {
     return Promise.resolve();
   }
   return new Promise((resolve, reject) => {
-    const stream = request.get(url).pipe(fs.createWriteStream(cachePath));
-    stream.on('finish', resolve);
-    stream.on('error', reject);
+    let res;
+    const stream = fs.createWriteStream(cachePath);
+    const failAndCleanUp = (error) => {
+      stream.close(failAndCleanUp);
+      return jetpack.removeAsync(cachePath)
+        .then(() => reject(error))
+        .catch(reject);
+    };
+    request(url)
+      .on('response', (response) => {
+        res = response;
+      })
+      .pipe(stream)
+      .on('finish', () => {
+        if (!res) {
+          failAndCleanUp(new Error(`Did not get any response! ${url}`));
+        } else if (res.statusCode < 200 || res.statusCode > 299) {
+          failAndCleanUp(new Error(`Server returned status code ${res.statusCode}! ${url}`));
+        } else {
+          resolve();
+        }
+      })
+      .on('error', failAndCleanUp);
   });
 };
 
