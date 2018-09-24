@@ -14,7 +14,7 @@ const styles = theme => ({
   },
 });
 
-const SoundBoardMessage = ({ children, classes, heading }) => (
+const CanvasMessage = ({ children, classes, heading }) => (
   <Paper className={classes.messageSize} elevation={0}>
     <Typography variant="headline" gutterBottom>
       {heading}
@@ -25,7 +25,7 @@ const SoundBoardMessage = ({ children, classes, heading }) => (
   </Paper>
 );
 
-SoundBoardMessage.propTypes = {
+CanvasMessage.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -34,4 +34,4 @@ SoundBoardMessage.propTypes = {
   heading: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(SoundBoardMessage);
+export default withStyles(styles)(CanvasMessage);

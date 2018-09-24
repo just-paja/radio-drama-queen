@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
 import SoundGalleryItem from '../containers/SoundGalleryItem';
+import SoundGalleryEmptyMessage from './SoundGalleryEmptyMessage';
 
 import { GallerySound } from '../proptypes';
 import { Classes } from '../../proptypes';
@@ -21,21 +21,24 @@ const styles = theme => ({
   },
 });
 
-const SoundGallery = ({ classes, sounds }) => (
-  <div className={classes.layout}>
-    <Typography align="center" paragraph variant="title">
-      Sound Gallery
-    </Typography>
-    <Paper className={classes.body}>
-      {sounds.map(sound => (
-        <SoundGalleryItem
-          soundUuid={sound.uuid}
-          key={sound.uuid}
-        />
-      ))}
-    </Paper>
-  </div>
-);
+const SoundGallery = ({ classes, sounds }) => {
+  if (sounds.length === 0) {
+    return <SoundGalleryEmptyMessage />;
+  }
+
+  return (
+    <div className={classes.layout}>
+      <Paper className={classes.body}>
+        {sounds.map(sound => (
+          <SoundGalleryItem
+            soundUuid={sound.uuid}
+            key={sound.uuid}
+          />
+        ))}
+      </Paper>
+    </div>
+  );
+};
 
 SoundGallery.propTypes = {
   classes: Classes.isRequired,

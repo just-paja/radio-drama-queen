@@ -2,14 +2,14 @@ import React from 'react';
 
 import { shallow } from 'enzyme';
 
-import { SoundBoardMessage } from '..';
+import CanvasMessage from '../CanvasMessage';
 
-describe('SoundBoardMessage component', () => {
+describe('CanvasMessage component', () => {
   it('renders the message', () => {
     const comp = shallow(
-      <SoundBoardMessage heading="The header">
+      <CanvasMessage heading="The header">
         The Message
-      </SoundBoardMessage>
+      </CanvasMessage>
     );
     expect(comp.dive().find({
       children: 'The Message',
@@ -18,9 +18,9 @@ describe('SoundBoardMessage component', () => {
 
   it('renders the heading', () => {
     const comp = shallow(
-      <SoundBoardMessage heading="The Heading">
+      <CanvasMessage heading="The Heading">
         The Message
-      </SoundBoardMessage>
+      </CanvasMessage>
     );
     expect(comp.dive().find({
       children: 'The Heading',
