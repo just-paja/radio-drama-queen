@@ -25,7 +25,7 @@ class SoundBoardSelection extends Component {
         value={activeBoard}
       >
         {boards.map(board => (
-          <ToggleButton value={board.uuid}>
+          <ToggleButton key={board.uuid} value={board.uuid}>
             {board.name}
           </ToggleButton>
         ))}

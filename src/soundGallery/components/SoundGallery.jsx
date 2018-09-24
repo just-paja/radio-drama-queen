@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-const SoundGallery = ({ classes, sounds }) => {
+const SoundGallery = ({ classes, onAddSound, sounds }) => {
   if (sounds.length === 0) {
     return <SoundGalleryEmptyMessage />;
   }
@@ -31,8 +31,9 @@ const SoundGallery = ({ classes, sounds }) => {
       <Paper className={classes.body}>
         {sounds.map(sound => (
           <SoundGalleryItem
-            soundUuid={sound.uuid}
             key={sound.uuid}
+            onAdd={onAddSound}
+            soundUuid={sound.uuid}
           />
         ))}
       </Paper>
@@ -42,6 +43,7 @@ const SoundGallery = ({ classes, sounds }) => {
 
 SoundGallery.propTypes = {
   classes: Classes.isRequired,
+  onAddSound: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(GallerySound).isRequired,
 };
 

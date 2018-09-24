@@ -11,7 +11,6 @@ const mapStateToProps = (state, { soundUuid }) => ({
 
 const mapDispatchToProps = {
   onPlay: gallerySound.play,
-  onAddToGrid: gallerySound.addToGrid,
 };
 
 const container = connect(mapStateToProps, mapDispatchToProps)(SoundGalleryItem);

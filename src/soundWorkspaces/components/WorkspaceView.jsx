@@ -6,9 +6,9 @@ import { SoundBoard } from '../../soundBoards/containers';
 
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants';
 
-const WorkspaceView = ({ board, view }) => {
+const WorkspaceView = ({ board, onAddSoundToBoard, view }) => {
   if (view === VIEW_LIBRARY) {
-    return <SoundGallery />;
+    return <SoundGallery onAddSound={onAddSoundToBoard} />;
   }
   if (view === VIEW_BOARD && board) {
     return <SoundBoard uuid={board} />;
@@ -18,6 +18,7 @@ const WorkspaceView = ({ board, view }) => {
 
 WorkspaceView.propTypes = {
   board: PropTypes.string,
+  onAddSoundToBoard: PropTypes.func.isRequired,
   view: PropTypes.string,
 };
 
