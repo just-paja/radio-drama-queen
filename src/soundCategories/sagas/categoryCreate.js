@@ -11,13 +11,15 @@ import { getFormValues } from 'redux-form';
 import { categoryCreate, categoryList } from '../actions';
 import { FORM_CATEGORY_CREATE } from '../constants';
 
-function* categoryCreateWithUuid({ payload }) {
-  yield put(categoryList.add({
+export function* categoryCreateWithUuid({ payload }) {
+  const category = {
     ...payload,
     uuid: generateUuid(),
     sounds: [],
-  }));
+  };
+  yield put(categoryList.add(category));
   yield put(categoryCreate.formHide());
+  return category;
 }
 
 function* categoryCreateByFormSubmit() {

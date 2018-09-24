@@ -3,20 +3,21 @@ import { createSelector } from 'reselect';
 import { stringSearch } from '../../search';
 import { getSoundSearchValueCleared } from '../../selectors/soundSearch';
 import { memoizeSoundList } from '../../sounds/selectors';
+import { DEFAULT_CATEGORY_NAME } from '../constants';
 
-const getFeature = state => state.soundCategories.list;
+const getCategoryList = state => state.soundCategories.list;
 
-const memoizeCategory = (state, uuid) => getFeature(state).find(
+const memoizeCategory = (state, uuid) => getCategoryList(state).find(
   category => category.uuid === uuid
 );
 
 export const getDefaultCategory = createSelector(
-  getFeature,
-  categoryList => categoryList.find(category => category.name === null)
+  getCategoryList,
+  categoryList => categoryList.find(category => category.name === DEFAULT_CATEGORY_NAME)
 );
 
 export const getCategoryListUuids = createSelector(
-  getFeature,
+  getCategoryList,
   list => list.map(category => category.uuid)
 );
 
@@ -26,7 +27,7 @@ export const getCategory = createSelector(
 );
 
 export const getCategoryByName = createSelector(
-  (state, name) => state.categoryList.find(
+  (state, name) => getCategoryList(state).find(
     category => category.name === name
   ),
   category => category

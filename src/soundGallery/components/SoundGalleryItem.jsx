@@ -28,6 +28,12 @@ class SoundGalleryItem extends Component {
   constructor() {
     super();
     this.handlePlayClick = this.handlePlayClick.bind(this);
+    this.handleAddToGrid = this.handleAddToGrid.bind(this);
+  }
+
+  handleAddToGrid() {
+    const { onAddToGrid, soundUuid } = this.props;
+    onAddToGrid(soundUuid);
   }
 
   handlePlayClick() {
@@ -40,7 +46,7 @@ class SoundGalleryItem extends Component {
     return (
       <div className={classes.item}>
         <div className={classes.controls}>
-          <IconButton>
+          <IconButton onClick={this.handleAddToGrid}>
             <AddCircle />
           </IconButton>
           <IconButton onClick={this.handlePlayClick}>
@@ -62,6 +68,7 @@ class SoundGalleryItem extends Component {
 
 SoundGalleryItem.propTypes = {
   classes: Classes.isRequired,
+  onAddToGrid: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
   sound: GallerySound.isRequired,
   soundUuid: PropTypes.string.isRequired,
