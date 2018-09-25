@@ -6,7 +6,7 @@ import { workspace } from '../actions';
 import { getActiveBoardUuid, getWorkspaceView } from '../selectors';
 
 const mapStateToProps = state => ({
-  board: getActiveBoardUuid(state),
+  activeBoard: getActiveBoardUuid(state),
   view: getWorkspaceView(state),
 });
 

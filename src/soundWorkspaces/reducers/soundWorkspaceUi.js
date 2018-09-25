@@ -16,7 +16,7 @@ const ui = handleActions({
   }),
   [workspace.SELECT_VIEW]: (state, action) => ({
     ...state,
-    view: action.payload,
+    view: action.payload === null && state.board ? VIEW_BOARD : action.payload,
   }),
 }, initialState);
 
