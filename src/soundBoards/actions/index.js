@@ -6,6 +6,7 @@ export const soundBoard = createListRoutine('BOARD', [
   'CREATE',
   'RENAME',
   'SOUND_ADD',
+  'SOUND_DROP',
 ]);
 
 export const categoryCreate = createRoutine('BOARD_CATEGORY', [

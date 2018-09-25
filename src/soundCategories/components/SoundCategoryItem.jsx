@@ -27,8 +27,13 @@ class SoundCategoryItem extends Component {
   }
 
   render() {
-    const { classes, search, sound } = this.props;
-    return sound ? (
+    const {
+      classes,
+      connectDragSource,
+      search,
+      sound,
+    } = this.props;
+    return sound && connectDragSource ? connectDragSource(
       <div className={classes.inline}>
         <SoundToggleButton
           loading={sound.loading}
@@ -47,6 +52,7 @@ class SoundCategoryItem extends Component {
 }
 
 SoundCategoryItem.propTypes = {
+  connectDragSource: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   onToggle: PropTypes.func.isRequired,
   search: PropTypes.string,
@@ -54,6 +60,7 @@ SoundCategoryItem.propTypes = {
 };
 
 SoundCategoryItem.defaultProps = {
+  connectDragSource: null,
   search: '',
 };
 

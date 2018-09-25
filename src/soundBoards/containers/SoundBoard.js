@@ -4,12 +4,12 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 
 import SoundBoard from '../components/SoundBoard';
 
-import { categoryCreate } from '../actions';
-import { categoryList } from '../../soundCategories/actions';
+import { categoryCreate, soundBoard } from '../actions';
 import {
   getBoardCategoryUuids,
   isCategoryCreateFormVisible,
 } from '../selectors';
+import { DRAG_TYPE_SOUND } from '../../soundCategories/constants';
 
 const mapStateToProps = (state, { uuid }) => ({
   categories: getBoardCategoryUuids(state, uuid),
@@ -18,20 +18,20 @@ const mapStateToProps = (state, { uuid }) => ({
 
 const mapDispatchToProps = {
   onAdd: categoryCreate.formShow,
-  onDrop: categoryList.fileDrop,
+  onDrop: soundBoard.soundDrop,
 };
 
 const boxTarget = {
   drop(props, monitor, component) {
-    const { onDrop } = props;
+    const { onDrop, uuid } = props;
     if (component && onDrop && !monitor.didDrop() && monitor.canDrop({ shallow: true })) {
-      onDrop(null, monitor);
+      onDrop(uuid, monitor);
     }
   },
 };
 
 const container = connect(mapStateToProps, mapDispatchToProps)(DropTarget(
-  () => [NativeTypes.FILE, NativeTypes.URL],
+  () => [NativeTypes.FILE, NativeTypes.URL, DRAG_TYPE_SOUND],
   boxTarget,
   (connector, monitor) => ({
     connectDropTarget: connector.dropTarget(),

@@ -82,3 +82,9 @@ export const areSoundCategoriesEmpty = createSelector(
   getCategoryListUuids,
   state => state.length === 0
 );
+
+export const getSoundCategories = createSelector(
+  (state, soundUuid) => getCategories(state)
+    .filter(category => category.sounds.indexOf(soundUuid) !== -1),
+  state => state
+);

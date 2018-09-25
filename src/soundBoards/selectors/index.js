@@ -12,7 +12,7 @@ export const getBoards = createSelector(
 
 export const getBoard = createSelector(
   (state, boardUuid) => getBoards(state)
-    .filter(board => board.uuid === boardUuid),
+    .find(board => board.uuid === boardUuid),
   board => board
 );
 
