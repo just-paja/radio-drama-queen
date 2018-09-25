@@ -44,6 +44,14 @@ export default handleActions({
     loading: false,
     error: action.payload,
   }),
+  [soundList.LOOP_ON]: state => ({
+    ...state,
+    loop: true,
+  }),
+  [soundList.LOOP_OFF]: state => ({
+    ...state,
+    loop: false,
+  }),
   [soundList.SET_NAME]: (state, action) => ({
     ...state,
     name: action.payload,

@@ -10,6 +10,8 @@ export const soundList = createListRoutine('SOUND', [
   'LOAD_SUCCESS',
   'LOAD_TRIGGER',
   'LOAD',
+  'LOOP_OFF',
+  'LOOP_ON',
   'PLAY_FAILURE',
   'PLAY',
   'SET_NAME',
