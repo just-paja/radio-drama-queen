@@ -9,4 +9,6 @@ export const workspaceSound = createRoutine('WORKSPACE_SOUND', [
   'ADD_TO_BOARD',
 ]);
 
-export default { workspace };
+export const workspaceTag = createRoutine('WORKSPACE_TAG', [
+  'ADD_TO_BOARD',
+]);

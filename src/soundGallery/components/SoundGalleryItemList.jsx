@@ -19,6 +19,7 @@ const SoundGalleryItemList = ({
   classes,
   onSoundAdd,
   onSoundPlay,
+  onTagAdd,
   sounds,
 }) => (
   <Paper className={classes.body}>
@@ -27,6 +28,7 @@ const SoundGalleryItemList = ({
         key={sound.uuid}
         onPlay={onSoundPlay}
         onAdd={onSoundAdd}
+        onAddTag={onTagAdd}
         sound={sound}
       />
     ))}
@@ -36,6 +38,7 @@ const SoundGalleryItemList = ({
 SoundGalleryItemList.propTypes = {
   classes: Classes.isRequired,
   onSoundAdd: PropTypes.func.isRequired,
+  onTagAdd: PropTypes.func.isRequired,
   onSoundPlay: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(GallerySound).isRequired,
 };

@@ -21,9 +21,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'top',
   },
-  tags: {
-    color: theme.palette.text.hint,
-  },
 });
 
 class SoundGalleryItem extends Component {
@@ -44,7 +41,7 @@ class SoundGalleryItem extends Component {
   }
 
   render() {
-    const { classes, sound } = this.props;
+    const { classes, onAddTag, sound } = this.props;
     return (
       <div className={classes.item}>
         <div className={classes.controls}>
@@ -60,7 +57,11 @@ class SoundGalleryItem extends Component {
           <div className={classes.tags}>
             {sound.tags.reduce((aggr, tag) => [
               ...aggr,
-              <SoundTag tag={tag} key={tag} />,
+              <SoundTag
+                key={tag}
+                onClick={onAddTag}
+                tag={tag}
+              />,
               ' ',
             ], [])}
           </div>
@@ -73,6 +74,7 @@ class SoundGalleryItem extends Component {
 SoundGalleryItem.propTypes = {
   classes: Classes.isRequired,
   onAdd: PropTypes.func.isRequired,
+  onAddTag: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
   sound: GallerySound.isRequired,
 };

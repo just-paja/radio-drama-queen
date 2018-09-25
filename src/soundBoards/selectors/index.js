@@ -22,6 +22,12 @@ export const getBoardCategories = createSelector(
   categories => categories
 );
 
+export const getBoardCategoryByName = createSelector(
+  (state, boardUuid, categoryName) => getBoardCategories(state, boardUuid)
+    .find(category => category.name === categoryName),
+  category => category
+);
+
 export const getBoardCategoryUuids = createSelector(
   getBoardCategories,
   categories => categories.map(category => category.uuid)

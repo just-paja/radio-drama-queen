@@ -88,3 +88,14 @@ export const getSoundCategories = createSelector(
     .filter(category => category.sounds.indexOf(soundUuid) !== -1),
   state => state
 );
+
+export const getAllUnusedSoundsByTag = createSelector(
+  [
+    (state, tag) => memoizeSoundList(state)
+      .filter(sound => sound.tags && sound.tags.indexOf(tag) !== -1),
+    getCategories,
+  ],
+  (sounds, categories) => sounds.filter(
+    sound => !categories.find(category => category.sounds.indexOf(sound.uuid) !== -1)
+  )
+);

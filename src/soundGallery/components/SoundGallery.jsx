@@ -17,7 +17,12 @@ const styles = theme => ({
   },
 });
 
-const SoundGallery = ({ classes, onAddSound, librarySize }) => {
+const SoundGallery = ({
+  classes,
+  onAddSound,
+  onAddTag,
+  librarySize,
+}) => {
   if (librarySize === 0) {
     return <SoundGalleryEmptyMessage />;
   }
@@ -25,7 +30,10 @@ const SoundGallery = ({ classes, onAddSound, librarySize }) => {
   return (
     <div className={classes.layout}>
       <SoundGallerySearch />
-      <SoundGalleryItemList onSoundAdd={onAddSound} />
+      <SoundGalleryItemList
+        onSoundAdd={onAddSound}
+        onTagAdd={onAddTag}
+      />
     </div>
   );
 };
@@ -34,6 +42,7 @@ SoundGallery.propTypes = {
   classes: Classes.isRequired,
   librarySize: PropTypes.number.isRequired,
   onAddSound: PropTypes.func.isRequired,
+  onAddTag: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SoundGallery);
