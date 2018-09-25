@@ -11,10 +11,6 @@ import { getSoundLoopStatus, getSoundPlayingStatus } from '../selectors';
 import { soundList } from '../actions';
 
 function* playSound({ meta: { uuid } }) {
-  // let category = yield select(getSoundCategory, uuid);
-  // if (category.exclusive) {
-  //   yield put(categoryList.stop(category.uuid, uuid));
-  // }
   let playing = true;
   while (playing) {
     yield call(AudioManager.play, uuid);
