@@ -5,7 +5,7 @@ import { SoundTag as SoundTagPropType } from '../proptypes';
 const SoundTag = ({ tag }) => (
   <span>
     #
-    {tag.name}
+    {(tag.title && tag.title.cs) || tag.name}
   </span>
 );
 
