@@ -1,4 +1,5 @@
-import CategoryIcon from '@material-ui/icons/Category';
+import ListIcon from '@material-ui/icons/List';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -41,7 +42,7 @@ class SoundBoardSpeedDial extends Component {
   }
 
   render() {
-    const { classes, onCategoryCreate } = this.props;
+    const { classes, onBoardCreate, onCategoryCreate } = this.props;
     const { open } = this.state;
     const isTouch = typeof document !== 'undefined' && 'ontouchstart' in document.documentElement;
     return (
@@ -58,9 +59,14 @@ class SoundBoardSpeedDial extends Component {
         open={open}
       >
         <SpeedDialAction
-          icon={<CategoryIcon />}
+          icon={<ListIcon />}
           onClick={onCategoryCreate}
           tooltipTitle="Create category"
+        />
+        <SpeedDialAction
+          icon={<DashboardIcon />}
+          onClick={onBoardCreate}
+          tooltipTitle="Create board"
         />
       </SpeedDial>
     );
@@ -69,6 +75,7 @@ class SoundBoardSpeedDial extends Component {
 
 SoundBoardSpeedDial.propTypes = {
   classes: Classes.isRequired,
+  onBoardCreate: PropTypes.func.isRequired,
   onCategoryCreate: PropTypes.func.isRequired,
 };
 

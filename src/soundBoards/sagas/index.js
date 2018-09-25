@@ -1,10 +1,12 @@
-import soundAdd from './soundAdd';
-import createBoardCategory from './createBoardCategory';
+import boardCategoryCreate from './boardCategoryCreate';
+import boardCreate from './boardCreate';
+import boardSoundAdd from './boardSoundAdd';
 
-export * from './createBoard';
-export * from './createDefaultCategory';
+export * from './boardCategoryCreateDefault';
+export * from './boardCreate';
 
 export default [
-  ...soundAdd,
-  ...createBoardCategory,
+  ...boardSoundAdd,
+  ...boardCreate,
+  ...boardCategoryCreate,
 ];

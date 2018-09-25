@@ -66,7 +66,7 @@ const SoundBoard = ({
       {categories.length > 0
         ? <SoundSearchForm key="search" />
         : null}
-      <SoundBoardSpeedDial />
+      <SoundBoardSpeedDial board={uuid} />
       <Grid
         className={classnames(classes.gridSpacing, {
           [classes.canDrop]: isOver && canDrop,

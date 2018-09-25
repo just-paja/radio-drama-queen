@@ -1,6 +1,6 @@
 import generateUuid from 'uuid/v4';
 
-import { put, select } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { soundBoard } from '../actions';
 import { getBoards } from '../selectors';
@@ -13,4 +13,10 @@ export function* createBoard() {
   }));
 }
 
-export default [];
+function* handleBoardCreate() {
+  yield takeEvery(soundBoard.CREATE, createBoard);
+}
+
+export default [
+  handleBoardCreate,
+];

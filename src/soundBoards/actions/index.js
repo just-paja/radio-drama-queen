@@ -3,6 +3,7 @@ import { createListRoutine } from '../../lists';
 
 export const soundBoard = createListRoutine('BOARD', [
   'CATEGORY_ADD',
+  'CREATE',
   'RENAME',
   'SOUND_ADD',
 ]);
