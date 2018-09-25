@@ -7,7 +7,7 @@ import Input from '../../components/Input';
 import CancelButton from '../../components/CancelButton';
 import SaveButton from '../../components/SaveButton';
 
-const CategoryEditForm = ({ handleSubmit, onCancel }) => (
+const SoundBoardCategoryCreateForm = ({ handleSubmit, onCancel }) => (
   <Form onSubmit={handleSubmit}>
     <div>
       <Field autoFocus label="Category name" name="name" component={Input} />
@@ -19,9 +19,9 @@ const CategoryEditForm = ({ handleSubmit, onCancel }) => (
   </Form>
 );
 
-CategoryEditForm.propTypes = {
+SoundBoardCategoryCreateForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
-export default CategoryEditForm;
+export default SoundBoardCategoryCreateForm;

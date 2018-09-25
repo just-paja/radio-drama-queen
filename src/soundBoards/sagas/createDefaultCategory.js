@@ -1,12 +1,12 @@
 import { call, select } from 'redux-saga/effects';
 
 import { getBoardTargetCategory } from '../selectors';
-import { categoryCreateWithUuid } from '../../soundCategories/sagas';
+import { createCategory } from '../../soundCategories/sagas';
 
 export function* createDefaultCategory(boardUuid) {
   const category = yield select(getBoardTargetCategory, boardUuid);
   if (!category) {
-    return yield call(categoryCreateWithUuid, {
+    return yield call(createCategory, {
       payload: {
         name: null,
         board: boardUuid,

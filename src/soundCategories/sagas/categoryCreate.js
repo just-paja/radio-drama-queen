@@ -1,41 +1,17 @@
 import generateUuid from 'uuid/v4';
 
-import {
-  call,
-  put,
-  select,
-  takeLatest,
-} from 'redux-saga/effects';
-import { getFormValues } from 'redux-form';
+import { put } from 'redux-saga/effects';
 
-import { categoryCreate, categoryList } from '../actions';
-import { FORM_CATEGORY_CREATE } from '../constants';
+import { categoryList } from '../actions';
 
-export function* categoryCreateWithUuid({ payload }) {
+export function* createCategory({ payload }) {
   const category = {
     ...payload,
     uuid: generateUuid(),
     sounds: [],
   };
   yield put(categoryList.add(category));
-  yield put(categoryCreate.formHide());
   return category;
 }
 
-function* categoryCreateByFormSubmit() {
-  const payload = yield select(getFormValues(FORM_CATEGORY_CREATE));
-  yield call(categoryCreateWithUuid, { payload });
-}
-
-function* handleCategoryCreateSubmit() {
-  yield takeLatest(categoryCreate.SUBMIT, categoryCreateByFormSubmit);
-}
-
-function* handleCategoryCreate() {
-  yield takeLatest(categoryCreate.TRIGGER, categoryCreateWithUuid);
-}
-
-export default [
-  handleCategoryCreate,
-  handleCategoryCreateSubmit,
-];
+export default [];

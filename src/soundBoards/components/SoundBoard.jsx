@@ -10,9 +10,9 @@ import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 import SoundBoardCategory from './SoundBoardCategory';
+import SoundBoardCategoryCreate from '../containers/SoundBoardCategoryCreate';
 import SoundBoardEmptyMessage from './SoundBoardEmptyMessage';
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
-import SoundCategoryCreateForm from '../../soundCategories/containers/SoundCategoryCreateForm';
 import SoundSearchForm from '../../containers/SoundSearchForm';
 
 const styles = theme => ({
@@ -33,14 +33,18 @@ const SoundBoard = ({
   connectDropTarget,
   isOver,
   showCreateForm,
+  uuid,
 }) => {
   let content;
   if (categories.length === 0 && !showCreateForm) {
     content = (<SoundBoardEmptyMessage />);
   } else {
     content = [];
-    content.push(categories.map(uuid => (
-      <SoundBoardCategory key={uuid} uuid={uuid} />
+    content.push(categories.map(categoryUuid => (
+      <SoundBoardCategory
+        key={categoryUuid}
+        uuid={categoryUuid}
+      />
     )));
     if (showCreateForm) {
       content.push(
@@ -50,7 +54,7 @@ const SoundBoard = ({
               <Typography variant="headline">
                 Create Category
               </Typography>
-              <SoundCategoryCreateForm />
+              <SoundBoardCategoryCreate board={uuid} />
             </CardContent>
           </Card>
         </SoundBoardCategory>
@@ -87,6 +91,7 @@ SoundBoard.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
   showCreateForm: PropTypes.bool,
+  uuid: PropTypes.string,
 };
 
 SoundBoard.defaultProps = {

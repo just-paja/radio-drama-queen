@@ -1,18 +1,18 @@
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import CategoryEditForm from '../components/CategoryEditForm';
+import SoundBoardCategoryCreateForm from '../components/SoundBoardCategoryCreateForm';
 
 import { categoryCreate } from '../actions';
 import { FORM_CATEGORY_CREATE } from '../constants';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = undefined;
 
 const mapDispatchToProps = {
   onCancel: categoryCreate.formHide,
-  onSubmit: categoryCreate.submit,
+  onSubmit: (values, dispatch, { board }) => categoryCreate.submit(values, { board }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: FORM_CATEGORY_CREATE,
-})(CategoryEditForm));
+})(SoundBoardCategoryCreateForm));
