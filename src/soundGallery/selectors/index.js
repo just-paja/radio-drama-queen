@@ -10,6 +10,11 @@ export const getSoundSearchValue = createSelector(
   state => state.search
 );
 
+export const getGallerySize = createSelector(
+  memoizeSoundList,
+  state => state.length
+);
+
 export const getSoundSearchValueCleared = createSelector(
   getSoundSearchValue,
   value => clearSearch(value)

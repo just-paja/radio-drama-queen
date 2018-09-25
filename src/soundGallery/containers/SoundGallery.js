@@ -2,12 +2,10 @@ import { connect } from 'react-redux';
 
 import SoundGallery from '../components/SoundGallery';
 
-import {
-  getGallerySoundList,
-} from '../selectors';
+import { getGallerySize } from '../selectors';
 
 const mapStateToProps = state => ({
-  sounds: getGallerySoundList(state),
+  librarySize: getGallerySize(state),
 });
 
 const container = connect(mapStateToProps)(SoundGallery);

@@ -32,13 +32,13 @@ class SoundGalleryItem extends Component {
   }
 
   handleAdd() {
-    const { onAdd, soundUuid } = this.props;
-    onAdd(soundUuid);
+    const { onAdd, sound: { uuid } } = this.props;
+    onAdd(uuid);
   }
 
   handlePlayClick() {
-    const { onPlay, soundUuid } = this.props;
-    onPlay(soundUuid);
+    const { onPlay, sound: { uuid } } = this.props;
+    onPlay(uuid);
   }
 
   render() {
@@ -71,7 +71,6 @@ SoundGalleryItem.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
   sound: GallerySound.isRequired,
-  soundUuid: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(SoundGalleryItem);
