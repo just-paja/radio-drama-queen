@@ -14,6 +14,8 @@ import { Classes } from '../../proptypes';
 const styles = theme => ({
   controls: {
     marginRight: theme.spacing.unit,
+    display: 'flex',
+    flexDirection: 'row',
   },
   item: {
     display: 'flex',
@@ -56,9 +58,11 @@ class SoundGalleryItem extends Component {
         <div>
           <span>{sound.name}</span>
           <div className={classes.tags}>
-            {sound.tags.map(tag => (
-              <SoundTag tag={tag} key={tag} />
-            ))}
+            {sound.tags.reduce((aggr, tag) => [
+              ...aggr,
+              <SoundTag tag={tag} key={tag} />,
+              ' ',
+            ], [])}
           </div>
         </div>
       </div>
