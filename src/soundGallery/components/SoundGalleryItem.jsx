@@ -46,7 +46,7 @@ class SoundGalleryItem extends Component {
     return (
       <div className={classes.item}>
         <div className={classes.controls}>
-          <IconButton onClick={this.handleAdd}>
+          <IconButton disabled={sound.isUsed} onClick={this.handleAdd}>
             <AddCircle />
           </IconButton>
           <IconButton onClick={this.handlePlayClick}>

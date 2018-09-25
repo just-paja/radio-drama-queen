@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import { clearSearch, stringSearch } from '../../search';
 import { getSound, memoizeSoundList } from '../../sounds/selectors';
 import { getTags } from '../../tags/selectors';
+import { getCategories } from '../../soundCategories/selectors';
 
 const memoizeSearch = state => state.soundGallery.search;
 
@@ -32,7 +33,7 @@ const isRelevant = (item, search) => (
 const hasRelevantTag = (sound, relevantTags) => sound.tags
   && sound.tags.some(tag => relevantTags.indexOf(tag) !== -1);
 
-export const getGallerySoundList = createSelector(
+export const getGallerySoundListFiltered = createSelector(
   [memoizeSoundList, getTags, getSoundSearchValueCleared],
   (sounds, tags, search) => {
     if (search) {
@@ -45,6 +46,14 @@ export const getGallerySoundList = createSelector(
     }
     return sounds.slice(0, 20);
   }
+);
+
+export const getGallerySoundList = createSelector(
+  [getGallerySoundListFiltered, getCategories],
+  (sounds, categories) => sounds.map(sound => ({
+    ...sound,
+    isUsed: categories.some(category => category.sounds.indexOf(sound.uuid) !== -1),
+  }))
 );
 
 export const getGallerySound = createSelector(
