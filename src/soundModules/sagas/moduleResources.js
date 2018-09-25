@@ -18,6 +18,13 @@ function* registerModuleSounds({ meta: { name: moduleName } }) {
     const { sounds, url } = module;
     yield all(sounds.map(sound => call(registerSound, {
       ...sound,
+      tags: [
+        module.baseTag,
+        ...(module.baseTags || []),
+        ...(sound.tags || []),
+      ]
+        .filter(tag => tag)
+        .filter((value, index, self) => self.indexOf(value) === index),
       path: `${getHttpDirName(url)}${sound.file}`,
     })));
   }
@@ -45,7 +52,13 @@ function* loadSubModules({ meta: { name: moduleName } }) {
   if (submodules && submodules.length !== 0) {
     yield all(submodules.map(submodule => put(soundModule.add(getModuleShape(
       module.url,
-      { name: submodule },
+      {
+        name: submodule,
+        baseTags: [
+          module.baseTag,
+          ...(module.baseTags ? module.baseTags : []),
+        ].filter(tag => tag),
+      },
       submodule
     )))));
     yield put(soundModule.loadTrigger(submodules));
