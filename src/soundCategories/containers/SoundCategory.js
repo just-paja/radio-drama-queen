@@ -6,6 +6,7 @@ import SoundCategory from '../components/SoundCategory';
 
 import { categoryList } from '../actions';
 import { getCategoryName, getCategorySoundUuids } from '../selectors';
+import { DRAG_TYPE_SOUND } from '../constants';
 
 const mapStateToProps = (state, { uuid }) => ({
   name: getCategoryName(state, uuid),
@@ -13,11 +14,12 @@ const mapStateToProps = (state, { uuid }) => ({
 });
 
 const mapDispatchToProps = {
-  onDrop: categoryList.fileDrop,
+  onDrop: categoryList.soundDrop,
 };
 
 const boxTarget = {
   drop(props, monitor, component) {
+    console.log(props);
     const { onDrop, uuid } = props;
     if (component && onDrop && !monitor.didDrop() && monitor.canDrop({ shalow: true })) {
       onDrop(uuid, monitor);
@@ -26,7 +28,7 @@ const boxTarget = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropTarget(
-  () => [NativeTypes.FILE, NativeTypes.URL],
+  () => [NativeTypes.FILE, NativeTypes.URL, DRAG_TYPE_SOUND],
   boxTarget,
   (connector, monitor) => ({
     connectDropTarget: connector.dropTarget(),

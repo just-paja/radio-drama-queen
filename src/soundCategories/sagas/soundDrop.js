@@ -1,53 +1,29 @@
-import generateUuid from 'uuid/v4';
-
 import {
   all,
-  call,
-  fork,
   put,
   select,
   takeLatest,
 } from 'redux-saga/effects';
-import {
-  delay,
-} from 'redux-saga/lib/internal/utils';
 
-// import { logWarning } from '../../clientLogger';
 import { categoryList } from '../actions';
-// import { loadSound } from '../../sounds/sagas/soundLoad';
-// import { getCategory } from '../selectors';
+import { getCategory, getSoundCategories } from '../selectors';
 
-// const filterAudioFile = (file) => {
-//   if (file.type.indexOf('audio') !== 0) {
-//     logWarning('Not audio!', file);
-//     return null;
-//   }
-//   return file;
-// };
+function* soundMoveToCategory({ payload, meta: { uuid } }) {
+  const dropItem = payload.getItem();
+  const category = yield select(getCategory, uuid);
 
-function* soundMoveToCategory(action) {
-  const dropItem = action.payload.getItem();
-  console.log(dropItem);
-  yield 'foo';
-  // const { uuid } = action.meta;
-  // let category = yield uuid
-  //   ? select(getCategory, uuid)
-  //   : select(getDefaultCategory);
-  //
-  // if (!category) {
-  //   category = yield call(createDefaultCategory);
-  // }
-  // yield delay(1);
-  // if (files) {
-  //   yield call(loadSoundFiles, category.uuid, files);
-  // }
-  // if (urls) {
-  //   yield call(loadSoundUrls, category.uuid, urls);
-  // }
+  if (category) {
+    const soundCategories = yield select(getSoundCategories, dropItem.uuid);
+    yield all(soundCategories.map(soundCategory => put(categoryList.soundRemove(
+      soundCategory.uuid,
+      dropItem.uuid
+    ))));
+    yield put(categoryList.soundAdd(category.uuid, dropItem.uuid));
+  }
 }
 
 function* handleGridSoundDrop() {
-  yield takeLatest(categoryList.FILE_DROP, soundMoveToCategory);
+  yield takeLatest(categoryList.SOUND_DROP, soundMoveToCategory);
 }
 
 export default [
