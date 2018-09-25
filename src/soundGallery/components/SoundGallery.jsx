@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundGallerySearch from '../containers/SoundGallerySearch';
 import SoundGalleryItem from '../containers/SoundGalleryItem';
 import SoundGalleryEmptyMessage from './SoundGalleryEmptyMessage';
 
@@ -28,6 +29,7 @@ const SoundGallery = ({ classes, onAddSound, sounds }) => {
 
   return (
     <div className={classes.layout}>
+      <SoundGallerySearch />
       <Paper className={classes.body}>
         {sounds.map(sound => (
           <SoundGalleryItem

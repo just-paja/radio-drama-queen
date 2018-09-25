@@ -5,11 +5,11 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import SoundCategory from '../components/SoundCategory';
 
 import { categoryList } from '../actions';
-import { getCategoryName, getCategoryFilteredSoundUuids } from '../selectors';
+import { getCategoryName, getCategorySoundUuids } from '../selectors';
 
 const mapStateToProps = (state, { uuid }) => ({
   name: getCategoryName(state, uuid),
-  sounds: getCategoryFilteredSoundUuids(state, uuid),
+  sounds: getCategorySoundUuids(state, uuid),
 });
 
 const mapDispatchToProps = {

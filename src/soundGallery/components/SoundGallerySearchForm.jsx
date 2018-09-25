@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Input from './Input';
+import Input from '../../components/Input';
 
-import { Classes } from '../proptypes';
+import { Classes } from '../../proptypes';
 
 const styles = theme => ({
   container: {

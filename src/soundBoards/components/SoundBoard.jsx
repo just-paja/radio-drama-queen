@@ -13,7 +13,6 @@ import SoundBoardCategory from './SoundBoardCategory';
 import SoundBoardCategoryCreate from '../containers/SoundBoardCategoryCreate';
 import SoundBoardEmptyMessage from './SoundBoardEmptyMessage';
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
-import SoundSearchForm from '../../containers/SoundSearchForm';
 
 const styles = theme => ({
   gridSpacing: {
@@ -63,9 +62,6 @@ const SoundBoard = ({
   }
   return connectDropTarget(
     <div>
-      {categories.length > 0
-        ? <SoundSearchForm key="search" />
-        : null}
       <SoundBoardSpeedDial board={uuid} />
       <Grid
         className={classnames(classes.gridSpacing, {

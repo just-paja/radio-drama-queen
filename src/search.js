@@ -15,6 +15,5 @@ export const stringSearch = (sample, search) => {
     results,
     searchSamples: cleanSearch,
   };
-  console.log(sample, search, cleanSearch, searchResult);
   return searchResult;
 };
