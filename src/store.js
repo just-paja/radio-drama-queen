@@ -18,7 +18,7 @@ export default function configureStore(initialState = {}) {
   if (DEVELOPMENT) {
     middlewares.push(createLogger({
       collapsed: true,
-      diff: true,
+      diff: false,
     }));
   }
 
