@@ -35,7 +35,7 @@ function* addTag({ payload, meta: { uuid } }) {
         },
       });
     }
-    yield put(soundList.loadTrigger(soundUuids));
+    yield all(soundUuids.map(soundUuid => put(soundList.loadTrigger(soundUuid))));
   }
 }
 

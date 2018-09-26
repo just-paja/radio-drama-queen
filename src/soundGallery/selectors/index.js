@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { clearSearch, stringSearch } from '../../search';
+import { clearSearch, splitSearchPatterns, stringSearch } from '../../search';
 import { getSound, memoizeSoundList } from '../../sounds/selectors';
 import { getTags } from '../../tags/selectors';
 import { getCategories } from '../../soundCategories/selectors';
@@ -25,23 +25,33 @@ export const getSoundSearchValueCleared = createSelector(
 const hasRelevantTitle = (item, search) => Boolean(item.title)
   && Object.keys(item.title).some(key => stringSearch(item.title[key], search).relevant);
 
-const isRelevant = (item, search) => (
-  stringSearch(item.name, search).relevant
+const isRelevant = (item, search, inclusive = false) => (
+  stringSearch(item.name, search, inclusive).relevant
   || hasRelevantTitle(item, search)
 );
 
-const hasRelevantTag = (sound, relevantTags) => sound.tags
-  && sound.tags.some(tag => relevantTags.indexOf(tag) !== -1);
+const hasRelevantTags = (sound, relevantTags) => relevantTags
+  && sound.tags
+  && relevantTags.every(
+    tagGroup => tagGroup.some(
+      tag => sound.tags.indexOf(tag) !== -1
+    )
+  );
+
+const getRelevantTags = (tags, search) => {
+  const searchSplit = splitSearchPatterns(search);
+  return searchSplit.map(pattern => tags
+    .filter(tag => isRelevant(tag, pattern))
+    .map(tag => tag.name));
+};
 
 export const getGallerySoundListFiltered = createSelector(
   [memoizeSoundList, getTags, getSoundSearchValueCleared],
   (sounds, tags, search) => {
+    const relevantTags = getRelevantTags(tags, search);
     if (search) {
-      const relevantTags = tags
-        .filter(tag => isRelevant(tag, search))
-        .map(tag => tag.name);
       return sounds
-        .filter(sound => isRelevant(sound, search) || hasRelevantTag(sound, relevantTags))
+        .filter(sound => isRelevant(sound, search) || hasRelevantTags(sound, relevantTags))
         .slice(0, 20);
     }
     return sounds.slice(0, 20);
