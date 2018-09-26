@@ -13,6 +13,7 @@ export const categoryList = createListRoutine('CATEGORY', [
   'FILE_DROP',
   'LOOP_TOGGLE',
   'MUTE_TOGGLE',
+  'REMOVE_STOP',
   'SET_VOLUME',
   'SOUND_ADD',
   'SOUND_DROP',

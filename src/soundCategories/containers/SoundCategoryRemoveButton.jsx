@@ -7,7 +7,7 @@ import { categoryList } from '../actions';
 const mapStateToProps = undefined;
 
 const mapDispatchToProps = {
-  onClick: categoryList.remove,
+  onClick: categoryList.removeStop,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SoundCategoryRemoveButton);

@@ -19,7 +19,6 @@ const mapDispatchToProps = {
 
 const boxTarget = {
   drop(props, monitor, component) {
-    console.log(props);
     const { onDrop, uuid } = props;
     if (component && onDrop && !monitor.didDrop() && monitor.canDrop({ shalow: true })) {
       onDrop(uuid, monitor);
