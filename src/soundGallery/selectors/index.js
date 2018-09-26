@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getFlag } from 'react-saga-rest';
 
 import { clearSearch, splitSearchPatterns, stringSearch } from '../../search';
 import { getSound, memoizeSoundList } from '../../sounds/selectors';
@@ -70,3 +71,5 @@ export const getGallerySound = createSelector(
   getSound,
   state => state
 );
+
+export const getUsedFilter = getFlag(memoizeSearch);

@@ -32,7 +32,7 @@ class SoundSearchForm extends Component {
   }
 
   render() {
-    const { classes, search } = this.props;
+    const { classes, filterUsed, search } = this.props;
     return (
       <div className={classes.container}>
         <Input
@@ -46,6 +46,17 @@ class SoundSearchForm extends Component {
           meta={{}}
           type="search"
         />
+        <Input
+          className={classes.input}
+          label="Filter used"
+          input={{
+            name: 'filterUsed',
+            onChange: this.handleFilterUsedChange,
+            value: filterUsed,
+          }}
+          meta={{}}
+          type="checkbox"
+        />
       </div>
     );
   }
@@ -53,11 +64,13 @@ class SoundSearchForm extends Component {
 
 SoundSearchForm.propTypes = {
   classes: Classes.isRequired,
+  filterUsed: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   search: PropTypes.string,
 };
 
 SoundSearchForm.defaultProps = {
+  filterUsed: false,
   search: '',
 };
 

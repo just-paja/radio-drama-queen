@@ -5,6 +5,7 @@ export const gallerySound = createRoutine('GALLERY_SOUND', [
 ]);
 
 export const gallerySearch = createRoutine('GALLERY_SEARCH', [
-  'CHANGE',
   'CLEAR',
+  'FILTER_USED_TOGGLE',
+  'CHANGE',
 ]);
