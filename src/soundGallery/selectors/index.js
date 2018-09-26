@@ -47,29 +47,38 @@ const getRelevantTags = (tags, search) => {
 };
 
 export const getGallerySoundListFiltered = createSelector(
-  [memoizeSoundList, getTags, getSoundSearchValueCleared],
-  (sounds, tags, search) => {
-    const relevantTags = getRelevantTags(tags, search);
-    if (search) {
-      return sounds
-        .filter(sound => isRelevant(sound, search) || hasRelevantTags(sound, relevantTags))
-        .slice(0, 20);
-    }
-    return sounds.slice(0, 20);
-  }
-);
-
-export const getGallerySoundList = createSelector(
-  [getGallerySoundListFiltered, getCategories],
+  [memoizeSoundList, getCategories],
   (sounds, categories) => sounds.map(sound => ({
     ...sound,
     isUsed: categories.some(category => category.sounds.indexOf(sound.uuid) !== -1),
   }))
 );
 
+export const getUsedFilter = getFlag(memoizeSearch, 'filterUsed');
+
+export const getGallerySoundList = createSelector(
+  [
+    getGallerySoundListFiltered,
+    getTags,
+    getSoundSearchValueCleared,
+    getUsedFilter,
+  ],
+  (sounds, tags, search, filterUsed) => {
+    let soundsFiltered = sounds;
+    console.log(filterUsed);
+    if (filterUsed) {
+      soundsFiltered = soundsFiltered.filter(sound => !sound.isUsed);
+    }
+    if (search) {
+      const relevantTags = getRelevantTags(tags, search);
+      soundsFiltered = soundsFiltered
+        .filter(sound => isRelevant(sound, search) || hasRelevantTags(sound, relevantTags));
+    }
+    return soundsFiltered.slice(0, 20);
+  }
+);
+
 export const getGallerySound = createSelector(
   getSound,
   state => state
 );
-
-export const getUsedFilter = getFlag(memoizeSearch);

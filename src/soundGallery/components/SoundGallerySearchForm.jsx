@@ -1,5 +1,8 @@
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -24,11 +27,17 @@ class SoundSearchForm extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.handleFilterUsedChange = this.handleFilterUsedChange.bind(this);
   }
 
   handleChange(event) {
     const { onChange } = this.props;
     onChange(event.target.value);
+  }
+
+  handleFilterUsedChange(event) {
+    const { onFilterUsedChange } = this.props;
+    onFilterUsedChange(event.target.checked);
   }
 
   render() {
@@ -46,16 +55,16 @@ class SoundSearchForm extends Component {
           meta={{}}
           type="search"
         />
-        <Input
-          className={classes.input}
+        <FormControlLabel
+          control={(
+            <Checkbox
+              className={classes.input}
+              checked={filterUsed}
+              name="filterUsed"
+              onChange={this.handleFilterUsedChange}
+            />
+          )}
           label="Filter used"
-          input={{
-            name: 'filterUsed',
-            onChange: this.handleFilterUsedChange,
-            value: filterUsed,
-          }}
-          meta={{}}
-          type="checkbox"
         />
       </div>
     );
@@ -66,6 +75,7 @@ SoundSearchForm.propTypes = {
   classes: Classes.isRequired,
   filterUsed: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  onFilterUsedChange: PropTypes.func.isRequired,
   search: PropTypes.string,
 };
 

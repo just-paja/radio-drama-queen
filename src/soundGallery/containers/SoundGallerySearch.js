@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onChange: gallerySearch.change,
-  onFilterUsedChange: gallerySearch.filterUsedToggle,
+  onFilterUsedChange: gallerySearch.filterUsedChange,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SoundGallerySearchForm);
