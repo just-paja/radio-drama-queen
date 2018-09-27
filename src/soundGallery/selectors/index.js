@@ -65,7 +65,6 @@ export const getGallerySoundList = createSelector(
   ],
   (sounds, tags, search, filterUsed) => {
     let soundsFiltered = sounds;
-    console.log(filterUsed);
     if (filterUsed) {
       soundsFiltered = soundsFiltered.filter(sound => !sound.isUsed);
     }
