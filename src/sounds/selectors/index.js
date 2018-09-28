@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getFlag } from 'react-saga-rest';
 
 export const memoizeSoundList = state => state.sounds.list;
 
@@ -9,24 +10,5 @@ export const getSound = createSelector(
   item => item
 );
 
-export const getSoundByUrl = createSelector(
-  (state, url) => memoizeSoundList(state).find(sound => sound.path === url),
-  item => item
-);
-
-export const getSoundCategory = createSelector(
-  [memoizeSound, state => state.categoryList],
-  (sound, categoryList) => categoryList.find(
-    category => category.sounds.indexOf(sound.uuid) !== -1
-  )
-);
-
-export const getSoundPlayingStatus = createSelector(
-  memoizeSound,
-  sound => sound.playing
-);
-
-export const getSoundLoopStatus = createSelector(
-  memoizeSound,
-  sound => sound.loop
-);
+export const getSoundPlayingStatus = getFlag(memoizeSound, 'playing');
+export const getSoundLoopStatus = getFlag(memoizeSound, 'loop');
