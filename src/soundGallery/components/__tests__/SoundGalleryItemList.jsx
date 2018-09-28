@@ -1,12 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SoundGallery from '../SoundGallery';
+import SoundGalleryItemList from '../SoundGalleryItemList';
 
-describe('SoundGallery component', () => {
+describe('SoundGalleryItemList component', () => {
   it('renders each sound as SoundGalleryItem', () => {
     const comp = shallow(
-      <SoundGallery
+      <SoundGalleryItemList
+        onSoundAdd={() => {}}
+        onTagAdd={() => {}}
+        onSoundPlay={() => {}}
         sounds={[
           {
             name: 'foo',
@@ -21,6 +24,6 @@ describe('SoundGallery component', () => {
         ]}
       />
     ).dive();
-    expect(comp.find('Connect(SoundGalleryItem)')).toHaveLength(2);
+    expect(comp.find('WithStyles(SoundGalleryItem)')).toHaveLength(2);
   });
 });

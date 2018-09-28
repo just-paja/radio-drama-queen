@@ -11,7 +11,7 @@ describe('SoundTag component', () => {
           name: 'foo',
         }}
       />
-    );
+    ).dive();
     expect(comp).toIncludeText('foo');
   });
 });

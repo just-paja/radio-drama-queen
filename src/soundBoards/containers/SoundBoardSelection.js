@@ -10,4 +10,6 @@ const mapStateToProps = state => ({
 
 const container = connect(mapStateToProps)(SoundBoardSelection);
 
+container.displayName = 'Connect(SoundBoardSelection)';
+
 export default container;

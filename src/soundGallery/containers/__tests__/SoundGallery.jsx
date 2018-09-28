@@ -31,6 +31,6 @@ describe('SoundGallery container', () => {
   });
 
   it('provides sounds', () => {
-    expect(comp).toHaveProp('sounds');
+    expect(comp).toHaveProp('librarySize', 1);
   });
 });

@@ -1,6 +1,6 @@
-import { getGallerySoundListFiltered } from '..';
+import { getGallerySoundList } from '..';
 
-describe('soundGallery getGallerySoundListFiltered selector', () => {
+describe('soundGallery getGallerySoundList selector', () => {
   it('returns item with multiple relevant tags', () => {
     const state = {
       sounds: {
@@ -18,6 +18,9 @@ describe('soundGallery getGallerySoundListFiltered selector', () => {
             tags: ['spaceship'],
           },
         ],
+      },
+      soundCategories: {
+        list: [],
       },
       soundGallery: {
         search: {
@@ -41,13 +44,13 @@ describe('soundGallery getGallerySoundListFiltered selector', () => {
         ],
       },
     };
-    expect(getGallerySoundListFiltered(state)).toEqual([
-      {
+    expect(getGallerySoundList(state)).toEqual([
+      expect.objectContaining({
         uuid: 'vroom1',
         file: 'vroom1',
         name: 'vroom1',
         tags: ['alien', 'spaceship'],
-      },
+      }),
     ]);
   });
 });
