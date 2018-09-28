@@ -48,7 +48,7 @@ const cacheFile = (url, cachePath) => {
     let res;
     const stream = fs.createWriteStream(cachePath);
     const failAndCleanUp = (error) => {
-      stream.close(failAndCleanUp);
+      stream.close();
       return jetpack.removeAsync(cachePath)
         .then(() => reject(error))
         .catch(reject);
