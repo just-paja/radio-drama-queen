@@ -42,7 +42,7 @@ describe('libraryWipe saga', () => {
     const sagaTester = getSagaTester();
     sagaTester.runAll(sagas);
     sagaTester.dispatch(libraryWipe.trigger());
-    expect(sagaTester.numCalled(categoryList.ClEAR)).toBe(1);
+    expect(sagaTester.numCalled(categoryList.CLEAR)).toBe(1);
   });
 
   it('triggers success on finish', () => {
