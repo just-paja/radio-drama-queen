@@ -64,7 +64,7 @@ class SoundSearchForm extends Component {
               onChange={this.handleFilterUsedChange}
             />
           )}
-          label="Filter used"
+          label="Only unused"
         />
       </div>
     );
