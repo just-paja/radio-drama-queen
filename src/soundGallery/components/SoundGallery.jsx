@@ -3,9 +3,10 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundGallerySearch from '../containers/SoundGallerySearch';
-import SoundGalleryItemList from '../containers/SoundGalleryItemList';
 import SoundGalleryEmptyMessage from './SoundGalleryEmptyMessage';
+import SoundGalleryItemList from '../containers/SoundGalleryItemList';
+import SoundGallerySearch from '../containers/SoundGallerySearch';
+import SoundGallerySpeedDial from './SoundGallerySpeedDial';
 
 import { Classes } from '../../proptypes';
 
@@ -19,21 +20,30 @@ const styles = theme => ({
 
 const SoundGallery = ({
   classes,
+  librarySize,
   onAddSound,
   onAddTag,
-  librarySize,
+  onBoardCreate,
 }) => {
+  let content;
   if (librarySize === 0) {
-    return <SoundGalleryEmptyMessage />;
+    content = <SoundGalleryEmptyMessage />;
+  } else {
+    content = (
+      <div>
+        <SoundGallerySearch />
+        <SoundGalleryItemList
+          onSoundAdd={onAddSound}
+          onTagAdd={onAddTag}
+        />
+      </div>
+    );
   }
 
   return (
     <div className={classes.layout}>
-      <SoundGallerySearch />
-      <SoundGalleryItemList
-        onSoundAdd={onAddSound}
-        onTagAdd={onAddTag}
-      />
+      {content}
+      <SoundGallerySpeedDial onBoardCreate={onBoardCreate} />
     </div>
   );
 };
@@ -43,6 +53,7 @@ SoundGallery.propTypes = {
   librarySize: PropTypes.number.isRequired,
   onAddSound: PropTypes.func.isRequired,
   onAddTag: PropTypes.func.isRequired,
+  onBoardCreate: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SoundGallery);
