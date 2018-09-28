@@ -1,2 +1,4 @@
-export { default as AudioManager } from './AudioManager';
-export * from './proptypes';
+import AudioManager from './AudioManager';
+
+export { AudioManager };
+export default { AudioManager };
