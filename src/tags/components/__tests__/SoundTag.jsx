@@ -14,4 +14,25 @@ describe('SoundTag component', () => {
     ).dive();
     expect(comp).toIncludeText('foo');
   });
+
+  it('renders empty when given null tag', () => {
+    const comp = shallow(
+      <SoundTag tag={null} />
+    ).dive();
+    expect(comp).toBeEmptyRender();
+  });
+
+  it('triggers onClick with tag name on button click', () => {
+    const onClick = jest.fn();
+    const comp = shallow(
+      <SoundTag
+        tag={{
+          name: 'foo',
+        }}
+        onClick={onClick}
+      />
+    ).dive();
+    comp.find('button').simulate('click');
+    expect(onClick).toHaveBeenCalledWith('foo');
+  });
 });
