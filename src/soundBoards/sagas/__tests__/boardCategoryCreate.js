@@ -6,26 +6,13 @@ import { initialize } from 'redux-form';
 import { categoryCreate } from '../../actions';
 
 describe('categoryCreate saga', () => {
-  it('creates category on trigger', () => {
-    const sagaTester = getSagaTester({});
-    sagaTester.runAll(sagas);
-    sagaTester.dispatch(categoryCreate.trigger({
-      name: 'foo',
-    }));
-    expect(sagaTester.getState().soundCategories.list).toContainEqual(
-      expect.objectContaining({
-        name: 'foo',
-      })
-    );
-  });
-
   it('creates category on submit', () => {
     const sagaTester = getSagaTester({});
     sagaTester.runAll(sagas);
     sagaTester.dispatch(initialize('categoryCreate', {
       name: 'foo',
     }));
-    sagaTester.dispatch(categoryCreate.submit());
+    sagaTester.dispatch(categoryCreate.submit({ name: 'foo' }, { board: '3' }));
     expect(sagaTester.getState().soundCategories.list).toContainEqual(
       expect.objectContaining({
         name: 'foo',
