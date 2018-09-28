@@ -1,7 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 
 import { libraryWipe, soundModule } from '../actions';
-import { tagList } from '../../tags/actions';
+import { tagList } from '../../soundTags/actions';
 import { soundList } from '../../sounds/actions';
 import { categoryList } from '../../soundCategories/actions';
 

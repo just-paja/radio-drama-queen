@@ -3,7 +3,7 @@ import { getTags, getTagByName } from '..';
 describe('tags selectors', () => {
   it('getTags returns tag list', () => {
     expect(getTags({
-      tags: {
+      soundTags: {
         list: [
           {
             name: 'foo',
@@ -19,7 +19,7 @@ describe('tags selectors', () => {
 
   it('getTagByName returns tag of passed name', () => {
     const state = {
-      tags: {
+      soundTags: {
         list: [
           {
             name: 'foo',

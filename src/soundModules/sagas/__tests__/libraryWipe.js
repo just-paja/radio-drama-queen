@@ -4,7 +4,7 @@ import { categoryList } from '../../../soundCategories/actions';
 import { getSagaTester } from '../../../../mock';
 import { libraryWipe, soundModule } from '../../actions';
 import { soundList } from '../../../sounds/actions';
-import { tagList } from '../../../tags/actions';
+import { tagList } from '../../../soundTags/actions';
 
 import * as localAssetsManager from '../../../LocalAssetsManager';
 

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const memoizeTagList = state => state.tags.list;
+const memoizeTagList = state => state.soundTags.list;
 
 export const getTagByName = createSelector(
   (state, name) => memoizeTagList(state).find(tag => tag.name === name),

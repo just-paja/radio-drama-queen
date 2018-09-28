@@ -6,8 +6,8 @@ import soundCategories from '../soundCategories/reducers';
 import soundGallery from '../soundGallery/reducers';
 import soundModules from '../soundModules/reducers';
 import sounds from '../sounds/reducers';
+import soundTags from '../soundTags/reducers';
 import soundWorkspaces from '../soundWorkspaces/reducers';
-import tags from '../tags/reducers';
 
 export default combineReducers({
   form,
@@ -16,6 +16,6 @@ export default combineReducers({
   soundGallery,
   soundModules,
   sounds,
+  soundTags,
   soundWorkspaces,
-  tags,
 });

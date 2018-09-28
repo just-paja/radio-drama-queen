@@ -11,7 +11,7 @@ import { soundList } from '../../sounds/actions';
 import { getBoardCategoryByName } from '../selectors';
 import { createCategory } from '../../soundCategories/sagas';
 import { categoryList } from '../../soundCategories/actions';
-import { getTagByName } from '../../tags/selectors';
+import { getTagByName } from '../../soundTags/selectors';
 import { getAllUnusedSoundsByTag } from '../../soundCategories/selectors';
 
 function* addTag({ payload, meta: { uuid } }) {

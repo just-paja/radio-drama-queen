@@ -16,4 +16,8 @@ describe('combined reducer', () => {
   it('provides sounds reducer', () => {
     expect(reducer(undefined, {})).toHaveProperty('sounds');
   });
+
+  it('provides soundTags reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('sounds');
+  });
 });

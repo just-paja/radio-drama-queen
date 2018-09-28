@@ -27,7 +27,7 @@ describe('soundGallery getGallerySoundList selector', () => {
           search: 'ALIEN SPACESHIP',
         },
       },
-      tags: {
+      soundTags: {
         list: [
           {
             name: 'alien',

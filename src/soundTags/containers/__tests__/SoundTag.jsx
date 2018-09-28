@@ -12,7 +12,7 @@ describe('SoundTag container', () => {
 
   beforeEach(() => {
     const state = {
-      tags: {
+      soundTags: {
         list: [
           {
             name: 'foo',
@@ -31,7 +31,7 @@ describe('SoundTag container', () => {
     });
   });
 
-  it('provides sounds', () => {
+  it('provides tag property', () => {
     expect(comp).toHaveProp('tag', {
       name: 'foo',
       title: {

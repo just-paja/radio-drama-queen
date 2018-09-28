@@ -3,7 +3,7 @@ import { getFlag } from 'react-saga-rest';
 
 import { clearSearch, splitSearchPatterns, stringSearch } from '../../search';
 import { getSound, memoizeSoundList } from '../../sounds/selectors';
-import { getTags } from '../../tags/selectors';
+import { getTags } from '../../soundTags/selectors';
 import { getCategories } from '../../soundCategories/selectors';
 
 const memoizeSearch = state => state.soundGallery.search;

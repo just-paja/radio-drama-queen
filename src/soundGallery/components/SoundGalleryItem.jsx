@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundTag from '../../tags/containers/SoundTag';
+import SoundTag from '../../soundTags/containers/SoundTag';
 
 import { GallerySound } from '../proptypes';
 import { Classes } from '../../proptypes';

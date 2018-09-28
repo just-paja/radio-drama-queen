@@ -8,7 +8,7 @@ import {
 
 import { soundModule } from '../actions';
 import { getModule } from '../selectors';
-import { tagList } from '../../tags/actions';
+import { tagList } from '../../soundTags/actions';
 import { registerSound } from '../../sounds/sagas';
 import { getHttpDirName, getModuleShape } from '../modulePaths';
 
