@@ -22,8 +22,9 @@ export const initialState = {
 
 export default handleActions({
   [soundList.PLAY]: turnOn('playing'),
-  [soundList.PLAY_FAILURE]: state => ({
+  [soundList.PLAY_FAILURE]: (state, action) => ({
     ...state,
+    error: action.payload,
     playing: false,
   }),
   [soundList.FINISHED]: turnOff('playing'),

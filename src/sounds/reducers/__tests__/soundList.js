@@ -66,6 +66,22 @@ describe('soundList reducer', () => {
     }));
   });
 
+  it('saves error on play failure', () => {
+    const testError = new Error('Test!');
+    const state = [
+      {
+        playing: true,
+        uuid: 13,
+      },
+    ];
+    const result = soundList(state, soundListActions.playFailure(13, testError));
+    expect(result).not.toEqual(state);
+    expect(result).toContainEqual(expect.objectContaining({
+      uuid: 13,
+      error: testError,
+    }));
+  });
+
   it('sets playing flag to false on finish', () => {
     const state = [
       {
