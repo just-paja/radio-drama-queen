@@ -1,5 +1,7 @@
 import { handleActions } from 'redux-actions';
+import { changeParam, toggle, turnOff } from 'react-saga-rest';
 
+import { idCollection } from '../../collections';
 import { categoryList } from '../actions';
 
 export const initialState = {
@@ -10,43 +12,11 @@ export const initialState = {
 };
 
 export default handleActions({
-  [categoryList.LOOP_TOGGLE]: state => ({
-    ...state,
-    loop: !state.loop,
-  }),
-  [categoryList.MUTE_TOGGLE]: state => ({
-    ...state,
-    muted: !state.muted,
-  }),
-  [categoryList.EXCLUSIVE_TOGGLE]: state => ({
-    ...state,
-    exclusive: !state.exclusive,
-  }),
-  [categoryList.UNMUTE]: state => ({
-    ...state,
-    muted: false,
-  }),
-  [categoryList.SOUND_ADD]: (state, action) => ({
-    ...state,
-    sounds: [
-      ...state.sounds,
-      action.payload,
-    ],
-  }),
-  [categoryList.SOUND_REMOVE]: (state, action) => {
-    const soundIndex = state.sounds.indexOf(action.payload);
-    if (soundIndex !== -1) {
-      const sounds = state.sounds.slice();
-      sounds.splice(soundIndex, 1);
-      return {
-        ...state,
-        sounds,
-      };
-    }
-    return state;
-  },
-  [categoryList.SET_VOLUME]: (state, action) => ({
-    ...state,
-    volume: action.payload,
-  }),
+  [categoryList.EXCLUSIVE_TOGGLE]: toggle('exclusive'),
+  [categoryList.LOOP_TOGGLE]: toggle('loop'),
+  [categoryList.MUTE_TOGGLE]: toggle('muted'),
+  [categoryList.SET_VOLUME]: changeParam('volume', 'payload'),
+  [categoryList.SOUND_ADD]: idCollection.addPayload('sounds'),
+  [categoryList.SOUND_REMOVE]: idCollection.removePayload('sounds'),
+  [categoryList.UNMUTE]: turnOff('muted'),
 }, initialState);
