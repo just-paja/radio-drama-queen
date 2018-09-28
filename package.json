@@ -53,6 +53,7 @@
     "redux-mock-store": "^1.5.3",
     "redux-saga-tester": "^1.0.379"
   },
+  "homepage": ".",
   "browserslist": [
     ">1%",
     "not dead",
