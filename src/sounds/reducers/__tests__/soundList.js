@@ -111,7 +111,7 @@ describe('soundList reducer', () => {
     }));
   });
 
-  it('sets loading flag to false on load success', () => {
+  it('sets valid flag to true on load success', () => {
     const state = [
       {
         loading: true,
@@ -122,18 +122,49 @@ describe('soundList reducer', () => {
     expect(result).not.toEqual(state);
     expect(result).toContainEqual(expect.objectContaining({
       uuid: 13,
-      loading: false,
+      valid: true,
     }));
   });
 
-  it('sets loading flag to false on load failure', () => {
+  it('sets valid flag to false on unload', () => {
     const state = [
       {
         loading: true,
         uuid: 13,
       },
     ];
-    const result = soundList(state, soundListActions.loadFailure(13));
+    const result = soundList(state, soundListActions.unload(13));
+    expect(result).not.toEqual(state);
+    expect(result).toContainEqual(expect.objectContaining({
+      uuid: 13,
+      valid: false,
+    }));
+  });
+
+  it('saves error on load failure', () => {
+    const testError = new Error('Test!');
+    const state = [
+      {
+        loading: true,
+        uuid: 13,
+      },
+    ];
+    const result = soundList(state, soundListActions.loadFailure(13, testError));
+    expect(result).not.toEqual(state);
+    expect(result).toContainEqual(expect.objectContaining({
+      uuid: 13,
+      error: testError,
+    }));
+  });
+
+  it('sets loading flag to false on load fulfill', () => {
+    const state = [
+      {
+        loading: true,
+        uuid: 13,
+      },
+    ];
+    const result = soundList(state, soundListActions.loadFulfill(13));
     expect(result).not.toEqual(state);
     expect(result).toContainEqual(expect.objectContaining({
       uuid: 13,

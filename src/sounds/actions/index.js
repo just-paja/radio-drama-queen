@@ -21,6 +21,7 @@ export const soundList = createListRoutine('SOUND', [
   'TAG_REMOVE',
   'TOGGLE',
   'VOLUME_SET',
+  'UNLOAD',
 ]);
 
 export default { soundList };
