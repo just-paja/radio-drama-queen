@@ -4,6 +4,17 @@ import { memoizeSoundList } from '../../sounds/selectors';
 
 export const getCategories = state => state.soundCategories.list;
 
+export const getCategoriesWithStatus = createSelector(
+  [getCategories, memoizeSoundList],
+  (categories, sounds) => categories.map(category => ({
+    ...category,
+    playing: category.sounds.some(soundUuid => sounds.find(sound => (
+      sound.uuid === soundUuid
+      && sound.playing
+    )))
+  }))
+);
+
 const memoizeCategory = (state, uuid) => getCategories(state).find(
   category => category.uuid === uuid
 );

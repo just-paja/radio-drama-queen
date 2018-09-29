@@ -5,6 +5,8 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundBoardLabel from './SoundBoardLabel';
+
 import { Classes } from '../../proptypes';
 import { SoundBoard } from '../proptypes';
 
@@ -39,7 +41,7 @@ class SoundBoardSelection extends Component {
       >
         {boards.map(board => (
           <ToggleButton key={board.uuid} value={board.uuid}>
-            {board.name}
+            <SoundBoardLabel board={board} />
           </ToggleButton>
         ))}
       </ToggleButtonGroup>

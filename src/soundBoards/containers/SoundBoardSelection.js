@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import SoundBoardSelection from '../components/SoundBoardSelection';
 
-import { getBoards } from '../selectors';
+import { getBoardsWithStatus } from '../selectors';
 
 const mapStateToProps = state => ({
-  boards: getBoards(state),
+  boards: getBoardsWithStatus(state),
 });
 
 const container = connect(mapStateToProps)(SoundBoardSelection);

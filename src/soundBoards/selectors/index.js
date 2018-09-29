@@ -1,6 +1,9 @@
 import { createSelector } from 'reselect';
 
-import { getCategories } from '../../soundCategories/selectors';
+import {
+  getCategories,
+  getCategoriesWithStatus,
+} from '../../soundCategories/selectors';
 
 const memoizeBoardList = state => state.soundBoards.list;
 const memoizeUi = state => state.soundBoards.ui;
@@ -8,6 +11,17 @@ const memoizeUi = state => state.soundBoards.ui;
 export const getBoards = createSelector(
   memoizeBoardList,
   list => list
+);
+
+export const getBoardsWithStatus = createSelector(
+  [getBoards, getCategoriesWithStatus],
+  (boards, categories) => boards.map(board => ({
+    ...board,
+    playing: categories.filter(category => (
+      category.board === board.uuid
+      && category.playing
+    )).length > 0
+  }))
 );
 
 export const getBoard = createSelector(
