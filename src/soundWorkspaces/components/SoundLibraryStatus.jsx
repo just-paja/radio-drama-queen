@@ -10,36 +10,33 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Classes } from '../../proptypes';
 
-const styles = (theme) => {
-  console.log(theme);
-  return ({
-    footer: {
-      background: 'rgba(0,0,0,.8)',
-      bottom: 0,
-      color: 'white',
-      fontSize: theme.typography.fontSize * 0.75,
-      left: 0,
-      paddingRight: theme.spacing.unit / 2,
-      position: 'fixed',
-      right: 0,
-      justifyContent: 'flex-end',
-      display: 'flex',
-    },
-    stat: {
-      display: 'block',
-      background: '#000',
-      padding: theme.spacing.unit / 2,
-      paddingLeft: theme.spacing.unit,
-      paddingRight: theme.spacing.unit,
-      marginLeft: theme.spacing.unit / 2
-    },
-    icon: {
-      height: theme.typography.fontSize * 0.75,
-      width: theme.typography.fontSize * 0.75,
-      verticalAlign: 'middle',
-    }
-  });
-};
+const styles = theme => ({
+  footer: {
+    background: 'rgba(0,0,0,.8)',
+    bottom: 0,
+    color: 'white',
+    fontSize: theme.typography.fontSize * 0.75,
+    left: 0,
+    paddingRight: theme.spacing.unit / 2,
+    position: 'fixed',
+    right: 0,
+    justifyContent: 'flex-end',
+    display: 'flex',
+  },
+  stat: {
+    display: 'block',
+    background: '#000',
+    padding: theme.spacing.unit / 2,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    marginLeft: theme.spacing.unit / 2
+  },
+  icon: {
+    height: theme.typography.fontSize * 0.75,
+    width: theme.typography.fontSize * 0.75,
+    verticalAlign: 'middle',
+  }
+});
 
 const SoundLibraryStatus = ({
   boardSounds,
