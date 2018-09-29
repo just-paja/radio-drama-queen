@@ -44,14 +44,14 @@ describe('moduleResources saga', () => {
     });
     sagaTester.runAll(sagas);
     sagaTester.dispatch(soundModule.loadSuccess('studio-test'));
-    expect(sagaTester.getState().tags.list).toContainEqual({
+    expect(sagaTester.getState().soundTags.list).toContainEqual({
       name: 'ambient',
       title: {
         en: 'Ambient',
         cs: 'Prostředí',
       },
     });
-    expect(sagaTester.getState().tags.list).toContainEqual({
+    expect(sagaTester.getState().soundTags.list).toContainEqual({
       name: 'horor',
       title: {
         en: 'Horror',
@@ -80,10 +80,10 @@ describe('moduleResources saga', () => {
     });
     sagaTester.runAll(sagas);
     sagaTester.dispatch(soundModule.loadSuccess('studio-test'));
-    expect(sagaTester.getState().tags.list).toContainEqual({
+    expect(sagaTester.getState().soundTags.list).toContainEqual({
       name: 'ambient',
     });
-    expect(sagaTester.getState().tags.list).toContainEqual({
+    expect(sagaTester.getState().soundTags.list).toContainEqual({
       name: 'horror',
     });
   });
@@ -112,7 +112,7 @@ describe('moduleResources saga', () => {
     });
     sagaTester.runAll(sagas);
     sagaTester.dispatch(soundModule.loadSuccess('studio-test'));
-    expect(sagaTester.getState().tags.list).toHaveLength(2);
+    expect(sagaTester.getState().soundTags.list).toHaveLength(2);
   });
 
   it('adds submodules to the database', () => {
@@ -153,7 +153,7 @@ describe('moduleResources saga', () => {
     expect(sagaTester.getCalledActions()).toContainEqual(soundModule.loadTrigger(['foo', 'bar']));
   });
 
-  it.only('loads submodules of submodules loading', () => {
+  it('loads submodules of submodules loading', () => {
     localAssetsManager.downloadConfig.mockImplementationOnce(() => Promise.resolve({
       name: 'foo',
       modules: ['bar'],
