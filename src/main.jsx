@@ -28,6 +28,7 @@ if (module.hot) {
   module.hot.accept('./App', () => {
     // eslint-disable-next-line global-require
     render(require('./App').default);
+    console.info(':: Hot reload root component');
   });
   module.hot.accept('./sagas', () => {
     // eslint-disable-next-line global-require
@@ -35,6 +36,7 @@ if (module.hot) {
     sagaTask.cancel();
     sagaTask.done.then(() => {
       sagaTask = store.runSaga(reloadSagas);
+      console.info(':: Hot reload sagas');
     });
   });
 }
