@@ -11,12 +11,12 @@ const SoundBoardSpeedDial = ({ classes, onBoardCreate, onCategoryCreate }) => (
     <SpeedDialAction
       icon={<ListIcon />}
       onClick={onCategoryCreate}
-      tooltipTitle="Create category"
+      tooltipTitle="Create Category"
     />
     <SpeedDialAction
       icon={<DashboardIcon />}
       onClick={onBoardCreate}
-      tooltipTitle="Create board"
+      tooltipTitle="Create Board"
     />
   </SceneSpeedDial>
 );
