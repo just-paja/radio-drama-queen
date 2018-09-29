@@ -38,7 +38,8 @@
     "start": "BROWSER=NONE react-scripts start",
     "build": "npm run build:react && npm run build:electron",
     "build:react": "react-scripts build",
-    "build:electron": "node electron/build.js && cd dist/electron && npm run build",
+    "build:electron": "npm run build:electron:prepare && cd dist/electron && npm run build",
+    "build:electron:prepare": "node electron/build.js && cd dist/electron && npm install",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron-forge start -p src/electron-starter.js"

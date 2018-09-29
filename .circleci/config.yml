@@ -44,6 +44,21 @@ jobs:
           paths:
             - .
 
+  build-electron-prepare:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Build react app
+          command: npm run build:electron:prepare
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
   build-electron-linux:
     <<: *defaults
     steps:
@@ -83,7 +98,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron -- -- -p mas
+          command: npm run build:electron -- -- -p win32
 
   test:
     <<: *defaults
@@ -99,28 +114,27 @@ workflows:
   version: 2
   build-n-package:
     jobs:
-      - install:
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+      - install
       - test:
           requires:
             - install
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - build-react:
           requires:
             - install
+      - build-electron-prepare
       - build-electron-linux:
           requires:
             - build-react
+            - build-electron-prepare
       - build-electron-darwin:
           requires:
             - build-react
+            - build-electron-prepare
       - build-electron-mas:
           requires:
             - build-react
+            - build-electron-prepare
       - build-electron-win32:
           requires:
             - build-react
+            - build-electron-prepare
