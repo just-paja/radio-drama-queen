@@ -44,7 +44,7 @@ jobs:
           paths:
             - .
 
-  build-electron:
+  build-electron-linux:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -52,12 +52,38 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron
+          command: npm run build:electron -- -- -p linux
 
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - .
+
+  build-electron-darwin:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Build electron app
+          command: npm run build:electron -- -- -p darwin
+
+  build-electron-mas:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Build electron app
+          command: npm run build:electron -- -- -p mas
+
+  build-electron-win32:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Build electron app
+          command: npm run build:electron -- -- -p mas
 
   test:
     <<: *defaults
@@ -86,9 +112,15 @@ workflows:
       - build-react:
           requires:
             - install
-      - build-electron:
+      - build-electron-linux:
           requires:
             - build-react
-          filters:
-            branches:
-              only: master
+      - build-electron-darwin:
+          requires:
+            - build-react
+      - build-electron-mas:
+          requires:
+            - build-react
+      - build-electron-win32:
+          requires:
+            - build-react
