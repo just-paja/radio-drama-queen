@@ -9,6 +9,7 @@ import reducers from './reducers';
 export const sagaMiddleware = createSagaMiddleware();
 
 const DEVELOPMENT = process.env.NODE_ENV !== 'production'; // eslint-disable-line no-undef
+let store;
 
 export default function configureStore(initialState = {}) {
   const middlewares = [];
@@ -26,7 +27,7 @@ export default function configureStore(initialState = {}) {
     applyMiddleware(...middlewares),
   ];
 
-  const store = createStore(
+  store = createStore(
     reducers,
     initialState,
     compose(...enhancers)
@@ -37,3 +38,11 @@ export default function configureStore(initialState = {}) {
   store.runSaga = sagaMiddleware.run;
   return store;
 }
+
+module.hot.accept('./reducers', () => {
+  if (store) {
+    // eslint-disable-next-line global-require
+    store.replaceReducer(require('./reducers').default);
+    console.info(':: Hot reload reducers');
+  }
+});
