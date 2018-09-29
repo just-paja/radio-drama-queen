@@ -5,7 +5,7 @@ import SoundCategoryItem from '../components/SoundCategoryItem';
 
 import { getSound } from '../../sounds/selectors';
 import { soundList } from '../../sounds/actions';
-import { DRAG_TYPE_SOUND } from '../constants';
+import { DRAG_TYPE_SOUND } from '../../sounds/constants';
 
 const soundItem = {
   beginDrag({ sound }) {
