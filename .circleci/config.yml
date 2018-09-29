@@ -59,7 +59,7 @@ jobs:
           paths:
             - .
 
-  build-electron-linux:
+  build-linux:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -74,7 +74,7 @@ jobs:
           command: npm run build:electron -- -- -p linux
 
 
-  build-electron-darwin:
+  build-darwin:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -84,7 +84,7 @@ jobs:
           name: Build electron app
           command: npm run build:electron -- -- -p darwin
 
-  build-electron-mas:
+  build-mas:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -94,7 +94,7 @@ jobs:
           name: Build electron app
           command: npm run build:electron -- -- -p mas
 
-  build-electron-win32:
+  build-win32:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -128,15 +128,15 @@ workflows:
       - build-electron-prepare:
           requires:
             - build-react
-      - build-electron-linux:
+      - build-linux:
           requires:
             - build-electron-prepare
-      - build-electron-darwin:
+      - build-darwin:
           requires:
             - build-electron-prepare
-      - build-electron-mas:
+      - build-mas:
           requires:
             - build-electron-prepare
-      - build-electron-win32:
+      - build-win32:
           requires:
             - build-electron-prepare
