@@ -1,3 +1,4 @@
+import { getFlag } from 'react-saga-rest';
 import { createSelector } from 'reselect';
 
 import {
@@ -62,7 +63,4 @@ export const getBoardTargetCategory = createSelector(
   (defaultCategory, oldestCategory) => defaultCategory || oldestCategory
 );
 
-export const isCategoryCreateFormVisible = createSelector(
-  memoizeUi,
-  state => state.showCreateForm
-);
+export const isCategoryCreateFormVisible = getFlag(memoizeUi, 'showCreateForm');

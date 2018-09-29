@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import { turnOff, turnOn } from 'react-saga-rest';
 
 import { categoryCreate } from '../actions';
 
@@ -7,14 +8,8 @@ const initialState = {
 };
 
 const category = handleActions({
-  [categoryCreate.FORM_SHOW]: state => ({
-    ...state,
-    showCreateForm: true,
-  }),
-  [categoryCreate.FORM_HIDE]: state => ({
-    ...state,
-    showCreateForm: false,
-  }),
+  [categoryCreate.FORM_SHOW]: turnOn('showCreateForm'),
+  [categoryCreate.FORM_HIDE]: turnOff('showCreateForm'),
 }, initialState);
 
 export default category;
