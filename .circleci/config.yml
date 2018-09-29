@@ -1,0 +1,94 @@
+workspace_root: &workspace_root
+  ~/repo
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:9-stretch
+
+version: 2
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - dependencies-{{ checksum "package.json" }}
+          - dependencies-
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
+  build-react:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Build react app
+          command: npm run build:react
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
+  build-electron:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Build electron app
+          command: npm run build:electron
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Run tests
+          command: npm test
+
+workflows:
+  version: 2
+  build-n-package:
+    jobs:
+      - install:
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
+      - build-react:
+          requires:
+            - install
+      - build-electron:
+          requires:
+            - build-react
+          filters:
+            branches:
+              only: master

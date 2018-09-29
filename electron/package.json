@@ -1,5 +1,7 @@
 {
   "name": "radio-drama-soundboard",
+  "productName": "radio-drama-soundboard",
+  "productDescription": "Tool for playing sounds during radio drama shows",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,7 +11,7 @@
   "main": "src/radio-drama-soundboard.js",
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm install && electron-forge package",
+    "build": "npm install && electron-forge make",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron-forge start -p src/electron-starter.js"
