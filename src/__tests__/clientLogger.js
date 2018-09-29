@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { logError, logWarning } from '../clientLogger';
+import { compatLogWarning, logError, logWarning } from '../clientLogger';
 
 describe('Client logger', () => {
   beforeEach(() => {
@@ -22,6 +22,13 @@ describe('Client logger', () => {
   it('logWarning logs error to the console', () => {
     const error = new Error('foo');
     logWarning(error);
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenCalledWith(error);
+  });
+
+  it('compatLogWarning logs error to the console', () => {
+    const error = new Error('foo');
+    compatLogWarning(null, error);
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenCalledWith(error);
   });
