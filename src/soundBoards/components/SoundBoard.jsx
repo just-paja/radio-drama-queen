@@ -73,7 +73,7 @@ const SoundBoard = ({
         <Snackbar
           open={canDrop && isOver}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          message="Drop audio files here to create a new category"
+          message="Drop sounds here to create a new category"
         />
       </Grid>
     </div>
