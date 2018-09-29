@@ -1,0 +1,10 @@
+---
+engines:
+  eslint:
+    enabled: true
+exclude_patterns:
+  - "**/__tests__"
+  - "**/constants"
+  - "**/locales"
+  - "mock/"
+  - "electron/"
