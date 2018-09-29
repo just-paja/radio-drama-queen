@@ -119,7 +119,7 @@ jobs:
       - run:
           name: Build electron app
           command: npm run build:electron:make -- -- -p win32
-          no_output_timeout: 20m
+          no_output_timeout: 40m
 
   test:
     <<: *defaults
