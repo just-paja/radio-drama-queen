@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 
 import { getBoards } from '../../soundBoards/selectors';
+import { getCategories } from '../../soundCategories/selectors';
+import { memoizeSoundList } from '../../sounds/selectors';
 
 const memoizeUi = state => state.soundWorkspaces.ui;
 
@@ -27,4 +29,23 @@ export const getDefaultTargetBoard = createSelector(
 export const getWorkspaceView = createSelector(
   memoizeUi,
   config => config.view
+);
+
+export const countBoardSounds = createSelector(
+  [memoizeSoundList, getCategories],
+  (sounds, categories) => sounds.filter(
+    sound => categories.some(
+      category => category.sounds.indexOf(sound.uuid) !== -1
+    )
+  ).length
+);
+
+export const countMemorySounds = createSelector(
+  [memoizeSoundList],
+  sounds => sounds.filter(sound => sound.valid).length
+);
+
+export const countErrorSounds = createSelector(
+  [memoizeSoundList],
+  sounds => sounds.filter(sound => sound.error).length
 );
