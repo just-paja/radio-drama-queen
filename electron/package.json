@@ -2,8 +2,10 @@
   "name": "radio-drama-soundboard",
   "productName": "radio-drama-soundboard",
   "productDescription": "Tool for playing sounds during radio drama shows",
+  "description": "Tool for playing sounds during radio drama shows",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "electron-compile": "^6.4.3",
     "fs-jetpack": "^2.1.1"
