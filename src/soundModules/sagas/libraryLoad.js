@@ -16,6 +16,7 @@ const getLibraryOpenValues = formValueSelector(FORM_LIBRARY_OPEN);
 
 function* openLibrary() {
   yield put(startSubmit(FORM_LIBRARY_OPEN));
+  yield put(libraryLoad.request());
   const url = yield select(getLibraryOpenValues, 'url');
   const errors = {};
   try {

@@ -9,10 +9,11 @@ export const libraryWipe = createRoutine('LIBRARY_WIPE', [
 export const libraryLoad = createRoutine('LIBRARY_LOAD', [
   'DIALOG_HIDE',
   'DIALOG_SHOW',
-  'SUBMIT',
-  'SUCCESS',
   'FAILURE',
   'FULFILL',
+  'REQUEST',
+  'SUBMIT',
+  'SUCCESS',
 ]);
 
 export const soundModule = createListRoutine('SOUND_MODULE', [
