@@ -10,6 +10,11 @@
     "electron-compile": "^6.4.3",
     "fs-jetpack": "^2.1.1"
   },
+  "author": {
+    "name": "Pavel Žák",
+    "email": "pavel@zak.global",
+    "url": "https://pavel.zak.global"
+  },
   "main": "src/radio-drama-soundboard.js",
   "scripts": {
     "start": "react-scripts start",

@@ -75,7 +75,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron -- -- -p linux
+          command: npm run build:electron:make -- -- -p linux
 
 
   build-darwin:
@@ -86,7 +86,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron -- -- -p darwin
+          command: npm run build:electron:make -- -- -p darwin
 
   build-mas:
     <<: *defaults
@@ -96,7 +96,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron -- -- -p mas
+          command: npm run build:electron:make -- -- -p mas
 
   build-win32:
     <<: *defaults
@@ -118,7 +118,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron -- -- -p win32
+          command: npm run build:electron:make -- -- -p win32
 
   test:
     <<: *defaults

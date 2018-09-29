@@ -38,7 +38,8 @@
     "start": "BROWSER=NONE react-scripts start",
     "build": "npm run build:react && npm run build:electron",
     "build:react": "react-scripts build",
-    "build:electron": "cd dist/electron && npm run build",
+    "build:electron": "npm run build:electron:prepare && npm run build:electron:make",
+    "build:electron:make": "cd dist/electron && npm run build",
     "build:electron:prepare": "node electron/build.js && cd dist/electron && npm install",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -56,6 +57,11 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
     "redux-saga-tester": "^1.0.379"
+  },
+  "author": {
+    "name": "Pavel Žák",
+    "email": "pavel@zak.global",
+    "url": "https://pavel.zak.global"
   },
   "config": {
     "forge": {
