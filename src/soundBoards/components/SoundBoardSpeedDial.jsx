@@ -41,8 +41,26 @@ class SoundBoardSpeedDial extends Component {
     this.setState({ open: false });
   }
 
+  renderOptions() {
+    const { onBoardCreate, onCategoryCreate } = this.props;
+    return [
+      <SpeedDialAction
+        icon={<ListIcon />}
+        onClick={onCategoryCreate}
+        tooltipTitle="Create category"
+        key="create-category"
+      />,
+      <SpeedDialAction
+        icon={<DashboardIcon />}
+        onClick={onBoardCreate}
+        tooltipTitle="Create board"
+        key="create-board"
+      />,
+    ];
+  }
+
   render() {
-    const { classes, onBoardCreate, onCategoryCreate } = this.props;
+    const { classes } = this.props;
     const { open } = this.state;
     const isTouch = typeof document !== 'undefined' && 'ontouchstart' in document.documentElement;
     return (
@@ -58,16 +76,7 @@ class SoundBoardSpeedDial extends Component {
         onMouseLeave={this.handleClose}
         open={open}
       >
-        <SpeedDialAction
-          icon={<ListIcon />}
-          onClick={onCategoryCreate}
-          tooltipTitle="Create category"
-        />
-        <SpeedDialAction
-          icon={<DashboardIcon />}
-          onClick={onBoardCreate}
-          tooltipTitle="Create board"
-        />
+        {this.renderOptions()}
       </SpeedDial>
     );
   }
