@@ -39,10 +39,12 @@ export default function configureStore(initialState = {}) {
   return store;
 }
 
-module.hot.accept('./reducers', () => {
-  if (store) {
-    // eslint-disable-next-line global-require
-    store.replaceReducer(require('./reducers').default);
-    console.info(':: Hot reload reducers');
-  }
-});
+if (module.hot) {
+  module.hot.accept('./reducers', () => {
+    if (store) {
+      // eslint-disable-next-line global-require
+      store.replaceReducer(require('./reducers').default);
+      console.info(':: Hot reload reducers');
+    }
+  });
+}
