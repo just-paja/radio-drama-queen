@@ -125,7 +125,9 @@ workflows:
       - build-react:
           requires:
             - install
-      - build-electron-prepare
+      - build-electron-prepare:
+          requires:
+            - install
       - build-electron-linux:
           requires:
             - build-react
