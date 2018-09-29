@@ -18,13 +18,8 @@ function createWindow() {
   });
 
   mainWindow.setMenu(null);
-
-  if (process.env.NODE_ENV === 'production') {
-    mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  } else {
-    mainWindow.loadURL('http://localhost:3000');
-    mainWindow.webContents.openDevTools();
-  }
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

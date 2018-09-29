@@ -1,0 +1,61 @@
+{
+  "name": "polocas-rozhlasu",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "electron-compile": "^6.4.3",
+    "fs-jetpack": "^2.1.1"
+  },
+  "main": "src/polocas-rozhlasu-electron.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "npm install && electron-forge package",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron-forge start -p src/electron-starter.js"
+  },
+  "devDependencies": {
+    "electron": "3.0.2",
+    "electron-forge": "^5.2.2",
+    "electron-prebuilt-compile": "3.0.0"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "npm"
+      },
+      "electronWinstallerConfig": {
+        "name": "polocas_rozhlasu"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "",
+        "name": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "polocasrozhlasu"
+      }
+    }
+  },
+  "homepage": ".",
+  "browserslist": [
+    ">1%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
