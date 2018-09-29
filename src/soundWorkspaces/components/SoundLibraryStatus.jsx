@@ -1,6 +1,6 @@
 import AllInclusiveIcon  from '@material-ui/icons/AllInclusive';
 import DashboardIcon  from '@material-ui/icons/Dashboard';
-import ErrorIcon  from '@material-ui/icons/Error';
+import WarningIcon  from '@material-ui/icons/Warning';
 import MemoryIcon from '@material-ui/icons/Memory';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PropTypes from 'prop-types';
@@ -53,7 +53,7 @@ const SoundLibraryStatus = ({
       {playingSounds}
     </span>
     <span className={classes.stat}>
-      <ErrorIcon className={classes.icon} />
+      <WarningIcon className={classes.icon} />
       {' '}
       {errorSounds}
     </span>
