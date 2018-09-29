@@ -15,4 +15,8 @@ const mapDispatchToProps = {
   onDrop: categoryList.soundDrop,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(connectSoundDropTarget(SoundCategory));
+const container = connect(mapStateToProps, mapDispatchToProps)(connectSoundDropTarget(SoundCategory));
+
+container.displayName = 'Connect(SoundCategory)';
+
+export default container;
