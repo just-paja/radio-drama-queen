@@ -1,5 +1,5 @@
 {
-  "name": "polocas-rozhlasu",
+  "name": "radio-drama-soundboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -34,12 +34,11 @@
     "url-parse": "^1.4.3",
     "uuid": "^3.3.2"
   },
-  "main": "build/polocas-rozhlasu-electron.js",
   "scripts": {
     "start": "BROWSER=NONE react-scripts start",
     "build": "npm run build:app && npm run build:electron",
     "build:app": "react-scripts build",
-    "build:electron": "node electron-build.js && cd dist/electron && npm run build",
+    "build:electron": "node electron/build.js && cd dist/electron && npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron-forge start -p src/electron-starter.js"
@@ -75,7 +74,7 @@
         "packageManager": "npm"
       },
       "electronWinstallerConfig": {
-        "name": "polocas_rozhlasu"
+        "name": "radio_drama_soundboard"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -85,7 +84,7 @@
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "polocasrozhlasu"
+        "name": "radiodramasoundboard"
       }
     }
   },

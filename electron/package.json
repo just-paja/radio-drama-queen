@@ -1,12 +1,12 @@
 {
-  "name": "polocas-rozhlasu",
+  "name": "radio-drama-soundboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "electron-compile": "^6.4.3",
     "fs-jetpack": "^2.1.1"
   },
-  "main": "src/polocas-rozhlasu-electron.js",
+  "main": "src/radio-drama-soundboard.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "npm install && electron-forge package",
@@ -37,7 +37,7 @@
         "packageManager": "npm"
       },
       "electronWinstallerConfig": {
-        "name": "polocas_rozhlasu"
+        "name": "radio_drama_soundboard"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -47,7 +47,7 @@
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "polocasrozhlasu"
+        "name": "radiodramasoundboard"
       }
     }
   },
