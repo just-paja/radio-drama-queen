@@ -66,6 +66,10 @@ jobs:
           at: *workspace_root
 
       - run:
+          name: Update apt package list
+          command: sudo apt-get update
+
+      - run:
           name: Install build deps
           command: sudo apt-get install fakeroot rpm
 
@@ -99,6 +103,10 @@ jobs:
     steps:
       - attach_workspace:
           at: *workspace_root
+
+      - run:
+          name: Update apt package list
+          command: sudo apt-get update
 
       - run:
           name: Install wine
