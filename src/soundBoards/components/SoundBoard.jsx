@@ -25,6 +25,34 @@ const styles = theme => ({
   },
 });
 
+const renderCategories = categories => categories.map(categoryUuid => (
+  <SoundBoardCategory
+    key={categoryUuid}
+    uuid={categoryUuid}
+  />
+));
+
+const renderCreateForm = uuid => (
+  <SoundBoardCategory key="form">
+    <Card>
+      <CardContent>
+        <Typography variant="headline">
+          Create Category
+        </Typography>
+        <SoundBoardCategoryCreate board={uuid} />
+      </CardContent>
+    </Card>
+  </SoundBoardCategory>
+);
+
+const renderSnackbar = (isOver, canDrop) => (
+  <Snackbar
+    open={canDrop && isOver}
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+    message="Drop sounds here to create a new category"
+  />
+);
+
 const SoundBoard = ({
   canDrop,
   categories,
@@ -34,49 +62,25 @@ const SoundBoard = ({
   showCreateForm,
   uuid,
 }) => {
+  const gridClasses = classnames(classes.gridSpacing, {
+    [classes.canDrop]: isOver && canDrop,
+  });
   let content;
   if (categories.length === 0 && !showCreateForm) {
     content = (<SoundBoardEmptyMessage />);
   } else {
     content = [];
-    content.push(categories.map(categoryUuid => (
-      <SoundBoardCategory
-        key={categoryUuid}
-        uuid={categoryUuid}
-      />
-    )));
+    content.push(renderCategories(categories));
     if (showCreateForm) {
-      content.push(
-        <SoundBoardCategory key="form">
-          <Card>
-            <CardContent>
-              <Typography variant="headline">
-                Create Category
-              </Typography>
-              <SoundBoardCategoryCreate board={uuid} />
-            </CardContent>
-          </Card>
-        </SoundBoardCategory>
-      );
+      content.push(renderCreateForm(uuid));
     }
   }
   return connectDropTarget(
-    <div>
+    <Grid className={gridClasses} container>
+      {content}
       <SoundBoardSpeedDial board={uuid} />
-      <Grid
-        className={classnames(classes.gridSpacing, {
-          [classes.canDrop]: isOver && canDrop,
-        })}
-        container
-      >
-        {content}
-        <Snackbar
-          open={canDrop && isOver}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          message="Drop sounds here to create a new category"
-        />
-      </Grid>
-    </div>
+      {renderSnackbar(isOver, canDrop)}
+    </Grid>
   );
 };
 

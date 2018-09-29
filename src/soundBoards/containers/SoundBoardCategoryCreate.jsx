@@ -13,6 +13,10 @@ const mapDispatchToProps = {
   onSubmit: (values, dispatch, { board }) => categoryCreate.submit(values, { board }),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
+const container = connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: FORM_CATEGORY_CREATE,
 })(SoundBoardCategoryCreateForm));
+
+container.displayName = 'Connect(ReduxForm(SoundBoardCategoryCreate))';
+
+export default container;

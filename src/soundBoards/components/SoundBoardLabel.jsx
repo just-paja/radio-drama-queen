@@ -20,7 +20,7 @@ const SoundBoardLabel = ({ board, classes }) => (
         {' '}
       </span>
     ) : null}
-    {board.name}
+    <span>{board.name}</span>
   </span>
 );
 
