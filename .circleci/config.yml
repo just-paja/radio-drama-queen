@@ -51,7 +51,7 @@ jobs:
           at: *workspace_root
 
       - run:
-          name: Build react app
+          name: Prepare for electron build
           command: npm run build:electron:prepare
 
       - persist_to_workspace:
@@ -127,20 +127,16 @@ workflows:
             - install
       - build-electron-prepare:
           requires:
-            - install
+            - build-react
       - build-electron-linux:
           requires:
-            - build-react
             - build-electron-prepare
       - build-electron-darwin:
           requires:
-            - build-react
             - build-electron-prepare
       - build-electron-mas:
           requires:
-            - build-react
             - build-electron-prepare
       - build-electron-win32:
           requires:
-            - build-react
             - build-electron-prepare
