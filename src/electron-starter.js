@@ -18,6 +18,7 @@ function createWindow() {
   });
 
   mainWindow.setMenu(null);
+  mainWindow.setFullScreenable(true);
 
   if (process.env.NODE_ENV === 'production') {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
