@@ -7,12 +7,14 @@ import {
   countBoardSounds,
   countErrorSounds,
   countMemorySounds,
+  countPlayingSounds,
 } from '../selectors';
 
 const mapStateToProps = state => ({
   boardSounds: countBoardSounds(state),
   errorSounds: countErrorSounds(state),
   inMemorySounds: countMemorySounds(state),
+  playingSounds: countPlayingSounds(state),
   registeredSounds: getGallerySize(state),
 });
 

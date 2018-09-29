@@ -2,6 +2,7 @@ import AllInclusiveIcon  from '@material-ui/icons/AllInclusive';
 import DashboardIcon  from '@material-ui/icons/Dashboard';
 import ErrorIcon  from '@material-ui/icons/Error';
 import MemoryIcon from '@material-ui/icons/Memory';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -45,9 +46,15 @@ const SoundLibraryStatus = ({
   classes,
   errorSounds,
   inMemorySounds,
+  playingSounds,
   registeredSounds,
 }) => (
   <footer className={classes.footer}>
+    <span className={classes.stat}>
+      <PlayArrowIcon className={classes.icon} />
+      {' '}
+      {playingSounds}
+    </span>
     <span className={classes.stat}>
       <ErrorIcon className={classes.icon} />
       {' '}
@@ -76,6 +83,7 @@ SoundLibraryStatus.propTypes = {
   classes: Classes.isRequired,
   errorSounds: PropTypes.number.isRequired,
   inMemorySounds: PropTypes.number.isRequired,
+  playingSounds: PropTypes.number.isRequired,
   registeredSounds: PropTypes.number.isRequired,
 };
 

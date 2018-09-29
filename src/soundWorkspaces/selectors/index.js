@@ -49,3 +49,8 @@ export const countErrorSounds = createSelector(
   [memoizeSoundList],
   sounds => sounds.filter(sound => sound.error).length
 );
+
+export const countPlayingSounds = createSelector(
+  [memoizeSoundList],
+  sounds => sounds.filter(sound => sound.playing).length
+);
