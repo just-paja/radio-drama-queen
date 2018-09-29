@@ -66,6 +66,10 @@ jobs:
           at: *workspace_root
 
       - run:
+          name: Install build deps
+          command: sudo apt-get install fakeroot
+
+      - run:
           name: Build electron app
           command: npm run build:electron -- -- -p linux
 
