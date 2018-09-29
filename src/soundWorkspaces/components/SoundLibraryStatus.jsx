@@ -38,6 +38,14 @@ const styles = theme => ({
   }
 });
 
+const renderNumberWithIcon = (classes, number, IconComponent) => (
+  <span className={classes.stat}>
+    <IconComponent className={classes.icon} />
+    {' '}
+    {number}
+  </span>
+);
+
 const SoundLibraryStatus = ({
   boardSounds,
   classes,
@@ -47,31 +55,11 @@ const SoundLibraryStatus = ({
   registeredSounds,
 }) => (
   <footer className={classes.footer}>
-    <span className={classes.stat}>
-      <PlayArrowIcon className={classes.icon} />
-      {' '}
-      {playingSounds}
-    </span>
-    <span className={classes.stat}>
-      <WarningIcon className={classes.icon} />
-      {' '}
-      {errorSounds}
-    </span>
-    <span className={classes.stat}>
-      <MemoryIcon className={classes.icon} />
-      {' '}
-      {inMemorySounds}
-    </span>
-    <span className={classes.stat}>
-      <DashboardIcon className={classes.icon} />
-      {' '}
-      {boardSounds}
-    </span>
-    <span className={classes.stat}>
-      <AllInclusiveIcon className={classes.icon} />
-      {' '}
-      {registeredSounds}
-    </span>
+    {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon)}
+    {renderNumberWithIcon(classes, errorSounds, WarningIcon)}
+    {renderNumberWithIcon(classes, inMemorySounds, MemoryIcon)}
+    {renderNumberWithIcon(classes, boardSounds, DashboardIcon)}
+    {renderNumberWithIcon(classes, registeredSounds, AllInclusiveIcon)}
   </footer>
 );
 
