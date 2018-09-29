@@ -5,18 +5,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Stop from '@material-ui/icons/Stop';
 
-import SoundCategoryIconButton from './SoundCategoryIconButton';
-
-const SoundToggleButton = ({
+const SoundStatusIcon = ({
   error,
   loading,
   onClick,
   playing,
+  ...props
 }) => {
   let IconComponent;
 
   if (error) {
-    IconComponent = ErrorIcon;
+    return <ErrorIcon {...props} color="error" />;
   } else {
     IconComponent = playing ? Stop : PlayArrow;
     if (loading) {
@@ -24,16 +23,10 @@ const SoundToggleButton = ({
     }
   }
 
-  return (
-    <SoundCategoryIconButton
-      disabled={!!error}
-      icon={IconComponent}
-      onClick={onClick}
-    />
-  );
+  return <IconComponent {...props} />;
 };
 
-SoundToggleButton.propTypes = {
+SoundStatusIcon.propTypes = {
   error: PropTypes.shape({
     message: PropTypes.string,
   }),
@@ -42,10 +35,10 @@ SoundToggleButton.propTypes = {
   playing: PropTypes.bool,
 };
 
-SoundToggleButton.defaultProps = {
+SoundStatusIcon.defaultProps = {
   error: null,
   loading: false,
   playing: false,
 };
 
-export default SoundToggleButton;
+export default SoundStatusIcon;

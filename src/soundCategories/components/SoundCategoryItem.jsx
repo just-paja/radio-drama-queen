@@ -3,16 +3,33 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundToggleButton from './SoundToggleButton';
+import SoundStatusIcon from './SoundStatusIcon';
 
 import { SoundName } from '../../sounds/components';
 import { Sound } from '../../sounds/proptypes';
 
-const styles = {
-  inline: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+const styles = (theme) => {
+  console.log(theme);
+  return ({
+    button: {
+      alignItems: 'center',
+      background: 'none',
+      border: 'none',
+      display: 'flex',
+      margin: 0,
+      padding: theme.spacing.unit,
+      width: '100%',
+      '&:hover': {
+        background: theme.palette.action.hover,
+      },
+    },
+    icon: {
+      height: theme.typography.fontSize * 3/2,
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: theme.typography.fontSize * 3/2,
+    }
+  });
 };
 
 class SoundCategoryItem extends Component {
@@ -34,19 +51,23 @@ class SoundCategoryItem extends Component {
       sound,
     } = this.props;
     return sound && connectDragSource ? connectDragSource(
-      <div className={classes.inline}>
-        <SoundToggleButton
-          loading={sound.loading}
-          onClick={this.handleToggle}
-          playing={sound.playing}
+      <button
+        className={classes.button}
+        disabled={sound.error}
+        onClick={this.handleToggle}
+      >
+        <SoundStatusIcon
+          className={classes.icon}
           error={sound.error}
+          loading={sound.loading}
+          playing={sound.playing}
         />
         <SoundName
           name={sound.name}
           uuid={sound.uuid}
           highlight={search}
         />
-      </div>
+    </button>
     ) : null;
   }
 }

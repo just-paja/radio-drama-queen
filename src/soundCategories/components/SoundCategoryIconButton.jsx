@@ -4,10 +4,10 @@ import IconButton from '@material-ui/core/IconButton';
 
 const SoundCategoryIconButton = ({ icon: Icon, ...props }) => (
   <IconButton
-    style={{ width: '24px', height: '24px', marginRight: '0.5rem', padding: '0.25rem' }}
+    style={{ width: '32px', height: '32px', marginRight: '0.5rem', padding: '0.25rem' }}
     {...props}
   >
-    <Icon style={{ width: '16px', height: '16px', fontSize: '50%' }} />
+    <Icon style={{ width: '20px', height: '20px', fontSize: '50%' }} />
   </IconButton>
 );
 

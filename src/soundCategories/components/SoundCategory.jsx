@@ -17,8 +17,13 @@ import SoundCategoryItem from '../containers/SoundCategoryItem';
 
 const styles = theme => ({
   removePadding: {
-    paddingLeft: 0,
-    paddingRight: 0,
+    marginBottom: 0,
+    marginTop: 0,
+    padding: 0,
+  },
+  soundList: {
+    marginLeft: theme.spacing.unit * (-1/2),
+    marginRight: theme.spacing.unit * (-1/2),
   },
   canDrop: {
     background: 'rgba(0,0,0,0.25)',
@@ -61,7 +66,7 @@ const SoundCategory = ({
             </Typography>
             <SoundCategoryRemoveButton uuid={uuid} />
           </div>
-          <List dense>
+          <List className={classes.soundList} dense>
             {sounds.map(soundUuid => (
               <ListItem className={classes.removePadding} key={soundUuid}>
                 <SoundCategoryItem uuid={soundUuid} />
