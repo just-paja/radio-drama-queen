@@ -105,12 +105,16 @@ jobs:
           at: *workspace_root
 
       - run:
+        name: Use 32-bit arch
+        command: sudo dpkg --add-architecture i386
+
+      - run:
           name: Update apt package list
           command: sudo apt-get update
 
       - run:
           name: Install wine
-          command: sudo apt-get install wine
+          command: sudo apt-get install wine32
 
       - run:
           name: Build electron app
