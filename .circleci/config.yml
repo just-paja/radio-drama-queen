@@ -24,6 +24,7 @@ jobs:
           paths:
             - node_modules
           key: dependencies-{{ checksum "package.json" }}
+
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -77,7 +78,6 @@ jobs:
           name: Build electron app
           command: npm run build:electron:make -- -- -p linux
 
-
   build-darwin:
     <<: *defaults
     steps:
@@ -129,7 +129,29 @@ jobs:
 
       - run:
           name: Run tests
-          command: npm test
+          command: npm test -- --coverage
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./coverage
+
+  publish-test-coverage:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Install code climate reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build
+
+      - run:
+          name: Publish coverage
+          command: ./cc-test-reporter after-build
 
 workflows:
   version: 2
@@ -139,6 +161,12 @@ workflows:
       - test:
           requires:
             - install
+      - publish-test-coverage:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
       - build-react:
           requires:
             - install
