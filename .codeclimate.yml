@@ -6,5 +6,6 @@ exclude_patterns:
   - "**/__tests__"
   - "**/constants"
   - "**/locales"
+  - "**/proptypes.js"
   - "mock/"
   - "electron/"
