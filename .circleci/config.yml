@@ -43,7 +43,7 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - .
+            - ./build
 
   build-electron-prepare:
     <<: *defaults
@@ -58,7 +58,7 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - .
+            - ./dist
 
   build-linux:
     <<: *defaults
