@@ -18,7 +18,7 @@ const render = (RootComponent) => {
 let sagaTask;
 
 const startUp = () => {
-  store.runSaga(sagas);
+  sagaTask = store.runSaga(sagas);
   render(App);
 };
 
