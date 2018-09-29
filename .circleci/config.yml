@@ -67,7 +67,7 @@ jobs:
 
       - run:
           name: Install build deps
-          command: sudo apt-get install fakeroot
+          command: sudo apt-get install fakeroot rpm
 
       - run:
           name: Build electron app
@@ -99,6 +99,10 @@ jobs:
     steps:
       - attach_workspace:
           at: *workspace_root
+
+      - run:
+          name: Install wine
+          command: sudo apt-get install wine
 
       - run:
           name: Build electron app
