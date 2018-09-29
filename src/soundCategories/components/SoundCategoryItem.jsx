@@ -8,29 +8,26 @@ import SoundStatusIcon from './SoundStatusIcon';
 import { SoundName } from '../../sounds/components';
 import { Sound } from '../../sounds/proptypes';
 
-const styles = (theme) => {
-  console.log(theme);
-  return ({
-    button: {
-      alignItems: 'center',
-      background: 'none',
-      border: 'none',
-      display: 'flex',
-      margin: 0,
-      padding: theme.spacing.unit,
-      width: '100%',
-      '&:hover': {
-        background: theme.palette.action.hover,
-      },
+const styles = theme => ({
+  button: {
+    alignItems: 'center',
+    background: 'none',
+    border: 'none',
+    display: 'flex',
+    margin: 0,
+    padding: theme.spacing.unit,
+    width: '100%',
+    '&:hover': {
+      background: theme.palette.action.hover,
     },
-    icon: {
-      height: theme.typography.fontSize * 3/2,
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: theme.typography.fontSize * 3/2,
-    }
-  });
-};
+  },
+  icon: {
+    height: theme.typography.fontSize * 3/2,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: theme.typography.fontSize * 3/2,
+  }
+});
 
 class SoundCategoryItem extends Component {
   constructor() {
