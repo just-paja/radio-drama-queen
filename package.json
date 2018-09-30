@@ -44,7 +44,8 @@
     "build:electron:prepare": "node electron/build.js && cd dist/electron && npm install",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron": "electron-forge start -p src/electron-starter.js"
+    "electron": "electron-forge start -p src/electron-starter.js",
+    "publish:binaries": "cd dist/electron && npm run publish"
   },
   "devDependencies": {
     "electron": "3.0.2",

@@ -18,7 +18,8 @@
   },
   "main": "src/radio-drama-soundboard.js",
   "scripts": {
-    "build": "npm install && electron-forge make"
+    "build": "npm install && electron-forge make",
+    "publish": "electron-forge publish"
   },
   "devDependencies": {
     "electron": "3.0.2",
@@ -49,8 +50,8 @@
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "just-paja",
+        "name": "radio-drama-soundboard"
       },
       "windowsStoreConfig": {
         "packageName": "",

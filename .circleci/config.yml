@@ -78,6 +78,11 @@ jobs:
           name: Build electron app
           command: npm run build:electron:make -- -- -p linux
 
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./dist/electron/out/make
+
   build-darwin:
     <<: *defaults
     steps:
@@ -88,6 +93,11 @@ jobs:
           name: Build electron app
           command: npm run build:electron:make -- -- -p darwin
 
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./dist/electron/out/make
+
   build-mas:
     <<: *defaults
     steps:
@@ -97,6 +107,11 @@ jobs:
       - run:
           name: Build electron app
           command: npm run build:electron:make -- -- -p mas
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./dist/electron/out/make
 
   build-win32:
     <<: *defaults
@@ -127,6 +142,11 @@ jobs:
       - run:
           name: Build electron app
           command: npm run build:electron:make -- -- -p win32
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./dist/electron/out/make
 
   test:
     <<: *defaults
@@ -160,6 +180,16 @@ jobs:
           name: Publish coverage
           command: ./cc-test-reporter after-build
 
+  publish-binaries:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: *workspace_root
+
+      - run:
+          name: Publish using electron-forge
+          command: npm publish:binaries -- --auth-token $GIGHUB_ACCESS_TOKEN
+
 workflows:
   version: 2
   build-n-package:
@@ -192,3 +222,14 @@ workflows:
       - build-win32:
           requires:
             - build-electron-prepare
+      - publish-binaries:
+          requires:
+            - build-darwin
+            - build-linux
+            - build-mas
+            - build-win32
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
