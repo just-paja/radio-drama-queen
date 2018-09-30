@@ -118,11 +118,11 @@ jobs:
 
       - run:
           name: Create 32bit wine prefix
-          command: WINEARCH=win32 /home/circleci/.wine32 wineboot
+          command: WINEARCH=win32 WINEPREFIX=/home/circleci/.wine32 wineboot
 
       - run:
           name: Create 64bit wine prefix
-          command: WINEARCH=win64 /home/circleci/.wine wineboot
+          command: WINEARCH=win64 WINEPREFIX=/home/circleci/.wine wineboot
 
       - run:
           name: Build electron app
