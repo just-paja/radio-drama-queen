@@ -18,11 +18,7 @@
   },
   "main": "src/radio-drama-soundboard.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "npm install && electron-forge make",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "electron": "electron-forge start -p src/electron-starter.js"
+    "build": "npm install && electron-forge make"
   },
   "devDependencies": {
     "electron": "3.0.2",
