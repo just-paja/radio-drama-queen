@@ -6,7 +6,7 @@ defaults: &defaults
   docker:
     - image: circleci/node:9-stretch
 
-onMaster:
+onMaster: &onMaster
   branches:
     only: master
 
@@ -14,14 +14,20 @@ onTag: &onTag
   tags:
     only: /[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta)(\-[0-9]+)?)?/
 
-onTagOnly:
+onTagOnly: &onTagOnly
   <<: *onTag
   branches:
     ignore: /.*/
 
-onTagAndEveryBranch:
+onTagAndEveryBranch: &onTagAndEveryBranch
   filters:
     <<: *onTag
+
+persistElectronArtifact: &persistElectronArtifact
+  root: *workspace_root
+  paths:
+    - ./dist/electron/out/make
+    - ./dist/electron/out/publish-dry-run
 
 version: 2
 jobs:
@@ -96,9 +102,7 @@ jobs:
           command: npm run build:electron:make -- -- -p linux
 
       - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./dist/electron/out/make
+          <<: *persistElectronArtifact
 
   build-darwin:
     <<: *defaults
@@ -111,9 +115,7 @@ jobs:
           command: npm run build:electron:make -- -- -p darwin
 
       - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./dist/electron/out/make
+          <<: *persistElectronArtifact
 
   build-mas:
     <<: *defaults
@@ -126,9 +128,7 @@ jobs:
           command: npm run build:electron:make -- -- -p mas
 
       - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./dist/electron/out/make
+          <<: *persistElectronArtifact
 
   build-win32:
     <<: *defaults
@@ -161,9 +161,7 @@ jobs:
           command: npm run build:electron:make -- -- -p win32
 
       - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./dist/electron/out/make
+          <<: *persistElectronArtifact
 
   test:
     <<: *defaults
@@ -205,7 +203,7 @@ jobs:
 
       - run:
           name: Publish using electron-forge
-          command: npm run publish:binaries -- -- --from-dry-run --auth-token $GIGHUB_ACCESS_TOKEN
+          command: npm run publish:binaries
 
 workflows:
   version: 2
