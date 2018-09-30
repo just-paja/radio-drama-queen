@@ -194,10 +194,16 @@ workflows:
   version: 2
   build-n-package:
     jobs:
-      - install
+      - install:
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - test:
           requires:
             - install
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - publish-test-coverage:
           requires:
             - test
@@ -207,21 +213,39 @@ workflows:
       - build-react:
           requires:
             - install
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - build-electron-prepare:
           requires:
             - build-react
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - build-linux:
           requires:
             - build-electron-prepare
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - build-darwin:
           requires:
             - build-electron-prepare
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - build-mas:
           requires:
             - build-electron-prepare
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - build-win32:
           requires:
             - build-electron-prepare
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
       - publish-binaries:
           requires:
             - build-darwin
