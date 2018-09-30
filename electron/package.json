@@ -18,8 +18,8 @@
   },
   "main": "src/radio-drama-soundboard.js",
   "scripts": {
-    "build": "npm install && electron-forge make",
-    "publish": "electron-forge publish"
+    "build": "npm install && electron-forge publish --dry-run",
+    "publish": "electron-forge publish --from-dry-run"
   },
   "devDependencies": {
     "electron": "3.0.2",
