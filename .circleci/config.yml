@@ -6,6 +6,23 @@ defaults: &defaults
   docker:
     - image: circleci/node:9-stretch
 
+onMaster:
+  branches:
+    only: master
+
+onTag: &onTag
+  tags:
+    only: /[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta)(\-[0-9]+)?)?/
+
+onTagOnly:
+  <<: *onTag
+  branches:
+    ignore: /.*/
+
+onTagAndEveryBranch:
+  filters:
+    <<: *onTag
+
 version: 2
 jobs:
   install:
@@ -188,64 +205,47 @@ jobs:
 
       - run:
           name: Publish using electron-forge
-          command: npm publish:binaries -- --auth-token $GIGHUB_ACCESS_TOKEN
+          command: npm run publish:binaries -- -- --from-dry-run --auth-token $GIGHUB_ACCESS_TOKEN
 
 workflows:
   version: 2
   build-n-package:
     jobs:
       - install:
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - test:
           requires:
             - install
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - publish-test-coverage:
           requires:
             - test
           filters:
-            branches:
-              only: master
+            <<: *onMaster
       - build-react:
           requires:
             - install
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - build-electron-prepare:
           requires:
             - build-react
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - build-linux:
           requires:
             - build-electron-prepare
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - build-darwin:
           requires:
             - build-electron-prepare
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - build-mas:
           requires:
             - build-electron-prepare
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - build-win32:
           requires:
             - build-electron-prepare
-          filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
+          <<: *onTagAndEveryBranch
       - publish-binaries:
           requires:
             - build-darwin
@@ -253,7 +253,4 @@ workflows:
             - build-mas
             - build-win32
           filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
+            <<: *onTagOnly
