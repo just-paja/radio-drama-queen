@@ -12,7 +12,7 @@ onMaster: &onMaster
 
 onTag: &onTag
   tags:
-    only: /[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta)(\-[0-9]+)?)?/
+    only: /v[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta)(\-[0-9]+)?)?/
 
 onTagOnly: &onTagOnly
   <<: *onTag
