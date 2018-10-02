@@ -10,10 +10,13 @@ import { soundList } from '../../sounds/actions';
 import { getCategory } from '../selectors';
 
 function* toggleCategoryLoop({ meta: { uuid } }) {
-  const { loop, sounds } = yield select(getCategory, uuid);
-  yield all(sounds.map(sound => put(loop
-    ? soundList.loopOn(sound)
-    : soundList.loopOff(sound))));
+  const category = yield select(getCategory, uuid);
+  if (category) {
+    const { loop, sounds } = category;
+    yield all(sounds.map(sound => put(loop
+      ? soundList.loopOn(sound)
+      : soundList.loopOff(sound))));
+  }
 }
 
 export function* handleCategoryLoopToggle() {
