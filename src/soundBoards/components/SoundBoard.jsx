@@ -75,12 +75,15 @@ const SoundBoard = ({
       content.push(renderCreateForm(uuid));
     }
   }
+  // Wrapping div is necessary for react-dnd
   return connectDropTarget(
-    <Grid className={gridClasses} container>
-      {content}
-      <SoundBoardSpeedDial board={uuid} />
-      {renderSnackbar(isOver, canDrop)}
-    </Grid>
+    <div>
+      <Grid className={gridClasses} container>
+        {content}
+        <SoundBoardSpeedDial board={uuid} />
+        {renderSnackbar(isOver, canDrop)}
+      </Grid>
+    </div>
   );
 };
 
