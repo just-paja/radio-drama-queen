@@ -7,7 +7,7 @@ import {
 } from 'redux-saga/effects';
 import { soundBoard } from '../actions';
 import { getBoard } from '../selectors';
-import { createCategory } from '../../soundCategories/sagas';
+import { createDefaultCategory } from './boardCategoryCreateDefault';
 import { categoryList } from '../../soundCategories/actions';
 import { getSoundCategories } from '../../soundCategories/selectors';
 
@@ -16,12 +16,7 @@ function* soundMoveToCategory({ payload, meta: { uuid } }) {
   const board = yield select(getBoard, uuid);
 
   if (board) {
-    const category = yield call(createCategory, {
-      payload: {
-        name: 'Default',
-        board: board.uuid,
-      },
-    });
+    const category = yield call(createDefaultCategory, uuid);
     const soundCategories = yield select(getSoundCategories, dropItem.uuid);
     yield all(soundCategories
       .filter(soundCategory => soundCategory.board === uuid)
