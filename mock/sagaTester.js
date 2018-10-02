@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import SagaTester from 'redux-saga-tester';
 
-import { all, fork } from 'redux-saga/effects';
+import { all, call } from 'redux-saga/effects';
 
 import reducers from '../src/reducers';
 
@@ -13,7 +13,15 @@ export default (initialState, extraConfig = {}) => {
   });
   sagaTester.runAll = (sagas) => {
     function* combinedSaga() {
-      yield all(sagas.map(saga => fork(saga)));
+      try {
+        yield all(sagas.map(saga => call(saga)));
+      } catch (e) {
+        if (extraConfig.options && extraConfig.options.onError) {
+          extraConfig.options.onError(e);
+        } else {
+          throw e;
+        }
+      }
     }
     sagaTester.run(combinedSaga);
   };
