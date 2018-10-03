@@ -76,6 +76,7 @@ function* loadSoundInQueue(uuid, url) {
     yield call(queue.addItems, items);
   } else {
     queue = createQueue({
+      concurrency: 10,
       jobFactory: loadSoundUrl,
       items,
     });

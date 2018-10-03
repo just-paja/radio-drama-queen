@@ -28,7 +28,7 @@
     "redux-actions": "^2.6.1",
     "redux-form": "^7.4.2",
     "redux-saga": "^0.16.0",
-    "redux-saga-job-queue": "^0.1.3",
+    "redux-saga-job-queue": "^0.1.4",
     "redux-saga-restart": "^1.0.0",
     "request": "^2.88.0",
     "reselect": "^3.0.1",
