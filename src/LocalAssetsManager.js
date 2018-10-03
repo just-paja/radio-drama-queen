@@ -2,6 +2,8 @@ import hash from 'hash.js';
 
 let fs;
 let electron;
+let soundParseWorker;
+let WorkerNodes;
 let jetpack;
 let request;
 
@@ -11,6 +13,8 @@ const loadDependencies = () => {
     electron = global.require('electron');
     jetpack = global.require('fs-jetpack');
     request = global.require('request');
+    WorkerNodes = global.require('worker-nodes');
+    soundParseWorker = new WorkerNodes(jetpack.path('src', 'workers', 'soundToDataUrl.js'));
   }
 };
 
@@ -24,18 +28,7 @@ const splitNameFromExtension = (url) => {
   };
 };
 
-const getFileDescriptor = (cachePath, url) => jetpack
-  .readAsync(cachePath, 'buffer')
-  .then((fileBuffer) => {
-    const encoded = fileBuffer.toString('base64');
-    const { name, extension } = splitNameFromExtension(url);
-    return {
-      blob: `data:audio/${extension};base64,${encoded}`,
-      cachePath,
-      name,
-      extension,
-    };
-  });
+const getFileDescriptor = filePaths => soundParseWorker.call(filePaths);
 
 const cacheFile = (url, cachePath) => {
   if (!fs) {
@@ -119,7 +112,10 @@ class LocalAssetsManager {
     const cachePath = this.getSoundPath(url);
     return this.ensureCacheDirExistence()
       .then(() => cacheFile(url, cachePath))
-      .then(() => getFileDescriptor(cachePath, url));
+      .then(() => getFileDescriptor({
+        filePath: cachePath,
+        url,
+      }));
   }
 }
 
