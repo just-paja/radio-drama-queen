@@ -27,8 +27,12 @@ const mapDispatchToProps = {
   onToggle: soundList.toggle,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DragSource(
+const container = connect(mapStateToProps, mapDispatchToProps)(DragSource(
   DRAG_TYPE_SOUND,
   soundItem,
   collect
 )(SoundCategoryItem));
+
+container.displayName = 'Connect(SoundCategoryItem)';
+
+export default container;
