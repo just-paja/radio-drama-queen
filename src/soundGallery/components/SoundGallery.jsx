@@ -24,10 +24,11 @@ const SoundGallery = ({
   onAddSound,
   onAddTag,
   onBoardCreate,
+  onLibraryOpen,
 }) => {
   let content;
   if (librarySize === 0) {
-    content = <SoundGalleryEmptyMessage />;
+    content = <SoundGalleryEmptyMessage onLibraryOpen={onLibraryOpen} />;
   } else {
     content = (
       <div>
@@ -54,6 +55,7 @@ SoundGallery.propTypes = {
   onAddSound: PropTypes.func.isRequired,
   onAddTag: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
+  onLibraryOpen: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SoundGallery);

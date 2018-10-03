@@ -11,6 +11,7 @@ describe('WorkspaceView component', () => {
         onAddSoundToBoard={() => {}}
         onAddTagToBoard={() => {}}
         onBoardCreate={() => {}}
+        onLibraryOpen={() => {}}
         view="VIEW_LIBRARY"
       />
     );
@@ -24,6 +25,7 @@ describe('WorkspaceView component', () => {
         onAddSoundToBoard={() => {}}
         onAddTagToBoard={() => {}}
         onBoardCreate={() => {}}
+        onLibraryOpen={() => {}}
         view="VIEW_BOARD"
       />
     );
@@ -36,6 +38,7 @@ describe('WorkspaceView component', () => {
         onAddSoundToBoard={() => {}}
         onAddTagToBoard={() => {}}
         onBoardCreate={() => {}}
+        onLibraryOpen={() => {}}
         view="VIEW_BOARD"
       />
     );
@@ -48,6 +51,7 @@ describe('WorkspaceView component', () => {
         onAddSoundToBoard={() => {}}
         onAddTagToBoard={() => {}}
         onBoardCreate={() => {}}
+        onLibraryOpen={() => {}}
       />
     );
     expect(comp).toBeEmptyRender();

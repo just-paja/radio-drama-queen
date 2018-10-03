@@ -11,6 +11,7 @@ const WorkspaceView = ({
   onAddSoundToBoard,
   onAddTagToBoard,
   onBoardCreate,
+  onLibraryOpen,
   view,
 }) => {
   if (view === VIEW_LIBRARY) {
@@ -19,6 +20,7 @@ const WorkspaceView = ({
         onAddSound={onAddSoundToBoard}
         onAddTag={onAddTagToBoard}
         onBoardCreate={onBoardCreate}
+        onLibraryOpen={onLibraryOpen}
       />
     );
   }
@@ -33,6 +35,7 @@ WorkspaceView.propTypes = {
   onAddSoundToBoard: PropTypes.func.isRequired,
   onAddTagToBoard: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
+  onLibraryOpen: PropTypes.func.isRequired,
   view: PropTypes.string,
 };
 
