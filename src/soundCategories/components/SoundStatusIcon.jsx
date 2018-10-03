@@ -8,7 +8,6 @@ import Stop from '@material-ui/icons/Stop';
 const SoundStatusIcon = ({
   error,
   loading,
-  onClick,
   playing,
   ...props
 }) => {
@@ -31,7 +30,6 @@ SoundStatusIcon.propTypes = {
     message: PropTypes.string,
   }),
   loading: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
   playing: PropTypes.bool,
 };
 
