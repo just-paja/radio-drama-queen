@@ -7,6 +7,7 @@ import SoundCategoryIconButton from './SoundCategoryIconButton';
 const SoundCategoryStopButton = ({ onClick, playing }) => (
   <SoundCategoryIconButton
     disabled={!playing}
+    color={playing ? 'primary' : 'default'}
     icon={Stop}
     onClick={onClick}
   />

@@ -1,0 +1,47 @@
+import React from 'react';
+
+import { shallow } from 'enzyme';
+
+import { SoundCategoryStopButton } from '..';
+
+describe('SoundCategoryStopButton component', () => {
+  it('renders in primary color given it is playing', () => {
+    const comp = shallow(
+      <SoundCategoryStopButton
+        onClick={() => {}}
+        playing
+      />
+    );
+    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'primary');
+  });
+
+  it('renders in default color given it is not playing', () => {
+    const comp = shallow(
+      <SoundCategoryStopButton
+        onClick={() => {}}
+        playing={false}
+      />
+    );
+    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'default');
+  });
+
+  it('renders enabled given it is playing', () => {
+    const comp = shallow(
+      <SoundCategoryStopButton
+        onClick={() => {}}
+        playing
+      />
+    );
+    expect(comp.find('SoundCategoryIconButton')).toHaveProp('disabled', false);
+  });
+
+  it('renders disabled given it is not playing', () => {
+    const comp = shallow(
+      <SoundCategoryStopButton
+        onClick={() => {}}
+        playing={false}
+      />
+    );
+    expect(comp.find('SoundCategoryIconButton')).toHaveProp('disabled', true);
+  });
+});
