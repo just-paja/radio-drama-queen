@@ -5,3 +5,4 @@ export { default as SoundCategoryItem } from './SoundCategoryItem';
 export { default as SoundCategoryLoopButton } from './SoundCategoryLoopButton';
 export { default as SoundCategoryRemoveButton } from './SoundCategoryRemoveButton';
 export { default as SoundCategoryStopButton } from './SoundCategoryStopButton';
+export { default as VolumeToggleButton } from './VolumeToggleButton';

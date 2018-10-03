@@ -8,6 +8,7 @@ import SoundCategoryIconButton from './SoundCategoryIconButton';
 const VolumeToggleButton = ({ onClick, muted }) => (
   <SoundCategoryIconButton
     icon={muted ? VolumeOff : VolumeUp}
+    color={muted ? 'primary' : 'default'}
     onClick={onClick}
   />
 );
