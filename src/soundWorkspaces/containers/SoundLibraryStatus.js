@@ -8,6 +8,7 @@ import {
   countErrorSounds,
   countMemorySounds,
   countPlayingSounds,
+  countTags,
 } from '../selectors';
 
 const mapStateToProps = state => ({
@@ -16,6 +17,7 @@ const mapStateToProps = state => ({
   inMemorySounds: countMemorySounds(state),
   playingSounds: countPlayingSounds(state),
   registeredSounds: getGallerySize(state),
+  tags: countTags(state),
 });
 
 const container = connect(mapStateToProps)(SoundLibraryStatus);

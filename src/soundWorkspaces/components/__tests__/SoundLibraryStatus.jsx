@@ -13,6 +13,7 @@ describe('SoundLibraryStatus component', () => {
         inMemorySounds={0}
         playingSounds={10}
         registeredSounds={0}
+        tags={0}
       />
     );
     expect(comp.dive()).toIncludeText('10');
@@ -26,6 +27,7 @@ describe('SoundLibraryStatus component', () => {
         inMemorySounds={0}
         playingSounds={0}
         registeredSounds={11}
+        tags={11}
       />
     );
     expect(comp.dive()).toIncludeText('11');
@@ -39,6 +41,7 @@ describe('SoundLibraryStatus component', () => {
         inMemorySounds={0}
         playingSounds={0}
         registeredSounds={0}
+        tags={0}
       />
     );
     expect(comp.dive()).toIncludeText('12');
@@ -52,6 +55,7 @@ describe('SoundLibraryStatus component', () => {
         inMemorySounds={0}
         playingSounds={0}
         registeredSounds={0}
+        tags={0}
       />
     );
     expect(comp.dive()).toIncludeText('13');
@@ -65,8 +69,23 @@ describe('SoundLibraryStatus component', () => {
         inMemorySounds={0}
         playingSounds={0}
         registeredSounds={0}
+        tags={0}
       />
     );
     expect(comp.dive()).toIncludeText('14');
+  });
+
+  it('renders tag count', () => {
+    const comp = shallow(
+      <SoundLibraryStatus
+        boardSounds={0}
+        errorSounds={14}
+        inMemorySounds={0}
+        playingSounds={0}
+        registeredSounds={0}
+        tags={15}
+      />
+    );
+    expect(comp.dive()).toIncludeText('15');
   });
 });

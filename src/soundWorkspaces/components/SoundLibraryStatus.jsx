@@ -1,10 +1,11 @@
 import AllInclusiveIcon  from '@material-ui/icons/AllInclusive';
 import DashboardIcon  from '@material-ui/icons/Dashboard';
-import WarningIcon  from '@material-ui/icons/Warning';
+import LabelIcon  from '@material-ui/icons/Label';
 import MemoryIcon from '@material-ui/icons/Memory';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PropTypes from 'prop-types';
 import React from 'react';
+import WarningIcon  from '@material-ui/icons/Warning';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -53,9 +54,11 @@ const SoundLibraryStatus = ({
   inMemorySounds,
   playingSounds,
   registeredSounds,
+  tags,
 }) => (
   <footer className={classes.footer}>
     {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon)}
+    {renderNumberWithIcon(classes, tags, LabelIcon)}
     {renderNumberWithIcon(classes, errorSounds, WarningIcon)}
     {renderNumberWithIcon(classes, inMemorySounds, MemoryIcon)}
     {renderNumberWithIcon(classes, boardSounds, DashboardIcon)}
@@ -70,6 +73,7 @@ SoundLibraryStatus.propTypes = {
   inMemorySounds: PropTypes.number.isRequired,
   playingSounds: PropTypes.number.isRequired,
   registeredSounds: PropTypes.number.isRequired,
+  tags: PropTypes.number.isRequired,
 };
 
 export default withStyles(styles)(SoundLibraryStatus);

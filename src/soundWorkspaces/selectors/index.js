@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 import { getBoards } from '../../soundBoards/selectors';
 import { getCategories } from '../../soundCategories/selectors';
+import { getTags } from '../../soundTags/selectors';
 import { memoizeSoundList } from '../../sounds/selectors';
 
 const memoizeUi = state => state.soundWorkspaces.ui;
@@ -53,4 +54,9 @@ export const countErrorSounds = createSelector(
 export const countPlayingSounds = createSelector(
   [memoizeSoundList],
   sounds => sounds.filter(sound => sound.playing).length
+);
+
+export const countTags = createSelector(
+  getTags,
+  tags => tags.length
 );
