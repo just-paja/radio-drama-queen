@@ -8,10 +8,15 @@ import {
 
 import AudioManager from '../AudioManager';
 
+import { createQueue } from 'redux-saga-job-queue';
 import { downloadSound } from '../../LocalAssetsManager';
 import { soundList } from '../actions';
 import { getSound } from '../selectors';
 import { getNameWithoutExtension, registerSound } from './soundAdd';
+
+let queue;
+
+const isQueueRunning = () => Boolean(queue && !queue.isFinished());
 
 const loadFile = file => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -50,7 +55,7 @@ function* loadSoundFile(uuid, file) {
   }
 }
 
-function* loadSoundUrl(uuid, url) {
+function* loadSoundUrl({ payload: { uuid, url } }) {
   try {
     yield put(soundList.loadRequest(uuid));
     const soundFile = yield call(downloadSound, uuid, url);
@@ -65,12 +70,25 @@ function* loadSoundUrl(uuid, url) {
   }
 }
 
+function* loadSoundInQueue(uuid, url) {
+  const items = [{ uuid, url }];
+  if (isQueueRunning()) {
+    yield call(queue.addItems, items);
+  } else {
+    queue = createQueue({
+      jobFactory: loadSoundUrl,
+      items,
+    });
+    yield call(queue.run);
+  }
+}
+
 export function* loadSoundResource(uuid, resource) {
   try {
     if (resource instanceof File) {
       yield call(loadSoundFile, uuid, resource);
     } else if (typeof resource === 'string') {
-      yield call(loadSoundUrl, uuid, resource);
+      yield call(loadSoundInQueue, uuid, resource);
     }
   } catch (e) {
     // FIXME: Cannot just swallow errors like this
@@ -86,7 +104,7 @@ export function* loadSound(categoryUuid, resource) {
 function* loadSoundFromStore({ meta: { uuid } }) {
   const sound = yield select(getSound, uuid);
   if (sound) {
-    yield call(loadSoundUrl, uuid, sound.path);
+    yield call(loadSoundInQueue, uuid, sound.path);
   }
 }
 
