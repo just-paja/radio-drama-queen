@@ -50,7 +50,7 @@ class SoundCategoryItem extends Component {
     return sound && connectDragSource ? connectDragSource(
       <button
         className={classes.button}
-        disabled={sound.error}
+        disabled={Boolean(sound.error)}
         onClick={this.handleToggle}
       >
         <SoundStatusIcon
