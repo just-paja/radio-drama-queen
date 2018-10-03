@@ -50,12 +50,11 @@ VolumeControl.propTypes = {
   muted: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onMuteToggle: PropTypes.func.isRequired,
-  volume: PropTypes.number,
+  volume: PropTypes.number.isRequired,
 };
 
 VolumeControl.defaultProps = {
   muted: false,
-  volume: null,
 };
 
 export default withStyles(styles)(VolumeControl);
