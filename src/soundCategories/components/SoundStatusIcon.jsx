@@ -1,5 +1,6 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorIcon from '@material-ui/icons/Error';
+import NotInterested from '@material-ui/icons/NotInterested';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -9,6 +10,7 @@ const SoundStatusIcon = ({
   error,
   loading,
   playing,
+  valid,
   ...props
 }) => {
   let IconComponent;
@@ -17,6 +19,9 @@ const SoundStatusIcon = ({
     return <ErrorIcon {...props} color="error" />;
   } else {
     IconComponent = playing ? Stop : PlayArrow;
+    if (!valid) {
+      IconComponent = NotInterested;
+    }
     if (loading) {
       IconComponent = CircularProgress;
     }
@@ -31,6 +36,7 @@ SoundStatusIcon.propTypes = {
   }),
   loading: PropTypes.bool,
   playing: PropTypes.bool,
+  valid: PropTypes.bool,
 };
 
 SoundStatusIcon.defaultProps = {

@@ -18,14 +18,25 @@ describe('SoundStatusIcon component', () => {
     const comp = shallow(
       <SoundStatusIcon
         playing
+        valid
       />
     );
     expect(comp.find('pure(StopIcon)')).toHaveLength(1);
   });
 
+  it('renders disabled icon given the sound is not valid', () => {
+    const comp = shallow(
+      <SoundStatusIcon
+        playing
+        valid={false}
+      />
+    );
+    expect(comp.find('pure(NotInterestedIcon)')).toHaveLength(1);
+  });
+
   it('renders play arrow icon given the sound is not playing and has no error', () => {
     const comp = shallow(
-      <SoundStatusIcon />
+      <SoundStatusIcon valid />
     );
     expect(comp.find('pure(PlayArrowIcon)')).toHaveLength(1);
   });
