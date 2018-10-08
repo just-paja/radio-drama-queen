@@ -9,6 +9,8 @@ import WarningIcon  from '@material-ui/icons/Warning';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundStopAllButton from '../../sounds/containers/SoundStopAllButton';
+
 import { Classes } from '../../proptypes';
 
 const styles = theme => ({
@@ -57,6 +59,7 @@ const SoundLibraryStatus = ({
   tags,
 }) => (
   <footer className={classes.footer}>
+    <SoundStopAllButton />
     {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon)}
     {renderNumberWithIcon(classes, tags, LabelIcon)}
     {renderNumberWithIcon(classes, errorSounds, WarningIcon)}

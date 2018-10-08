@@ -17,6 +17,7 @@ export const soundList = createListRoutine('SOUND', [
   'SET_NAME',
   'SET_TAGS',
   'STOP',
+  'STOP_ALL',
   'TAG_ADD',
   'TAG_REMOVE',
   'TOGGLE',

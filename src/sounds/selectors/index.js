@@ -12,3 +12,13 @@ export const getSound = createSelector(
 
 export const getSoundPlayingStatus = getFlag(memoizeSound, 'playing');
 export const getSoundLoopStatus = getFlag(memoizeSound, 'loop');
+
+export const getPlayingSounds = createSelector(
+  memoizeSoundList,
+  sounds => sounds.filter(sound => sound.playing)
+);
+
+export const isAnySoundPlaying = createSelector(
+  getPlayingSounds,
+  sounds => sounds.length > 0
+);

@@ -8,7 +8,7 @@ const stopSound = ({ meta: { uuid } }) => {
   AudioManager.stop(uuid);
 };
 
-const stopSoundGroup = ({ payload: { sounds } }) => {
+export const stopSoundGroup = ({ payload: { sounds } }) => {
   sounds.map(soundUuid => AudioManager.stop(soundUuid));
 };
 
