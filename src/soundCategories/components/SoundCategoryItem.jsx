@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundStatusIcon from './SoundStatusIcon';
-
-import { SoundName } from '../../sounds/components';
+import { SoundName, SoundStatusIcon } from '../../sounds/components';
 import { Sound } from '../../sounds/proptypes';
 
 const styles = theme => ({

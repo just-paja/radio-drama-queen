@@ -1,5 +1,3 @@
-import SoundName from './SoundName';
-
-export { SoundName };
-
-export default { SoundName };
+export { default as SoundName } from './SoundName';
+export { default as SoundStatusIcon } from './SoundStatusIcon';
+export { default as SoundStopButton } from './SoundStopButton';
