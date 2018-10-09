@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import SoundTag from '../../soundTags/containers/SoundTag';
 
+import { SoundStatusIcon } from '../../sounds/components';
 import { GallerySound } from '../proptypes';
 import { Classes } from '../../proptypes';
 
@@ -49,7 +50,12 @@ class SoundGalleryItem extends Component {
             <AddCircle />
           </IconButton>
           <IconButton onClick={this.handlePlayClick}>
-            <PlayCircleFilled />
+            <SoundStatusIcon
+              error={sound.error}
+              playing={sound.playing}
+              loading={sound.loading}
+              valid
+            />
           </IconButton>
         </div>
         <div>
