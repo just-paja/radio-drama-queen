@@ -1,11 +1,11 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import classnames from 'classnames';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
-import classnames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -25,12 +25,14 @@ const styles = theme => ({
   },
 });
 
-const renderCategories = categories => categories.map(categoryUuid => (
-  <SoundBoardCategory
-    key={categoryUuid}
-    uuid={categoryUuid}
-  />
-));
+const renderCategories = (categories, onSoundPickerOpen) =>
+  categories.map(categoryUuid => (
+    <SoundBoardCategory
+      key={categoryUuid}
+      onSoundPickerOpen={onSoundPickerOpen}
+      uuid={categoryUuid}
+    />
+  ));
 
 const renderCreateForm = uuid => (
   <SoundBoardCategory key="form">
@@ -53,38 +55,57 @@ const renderSnackbar = (isOver, canDrop) => (
   />
 );
 
-const SoundBoard = ({
-  canDrop,
-  categories,
-  classes,
-  connectDropTarget,
-  isOver,
-  showCreateForm,
-  uuid,
-}) => {
-  const gridClasses = classnames(classes.gridSpacing, {
-    [classes.canDrop]: isOver && canDrop,
-  });
-  let content;
-  if (categories.length === 0 && !showCreateForm) {
-    content = (<SoundBoardEmptyMessage />);
-  } else {
-    content = [];
-    content.push(renderCategories(categories));
-    if (showCreateForm) {
-      content.push(renderCreateForm(uuid));
-    }
+class SoundBoard extends Component {
+  constructor() {
+    super();
+    this.handleSoundPickerOpen = this.handleSoundPickerOpen.bind(this);
   }
-  // Wrapping div is necessary for react-dnd
-  return connectDropTarget(
-    <div>
-      <Grid className={gridClasses} container>
-        {content}
-        <SoundBoardSpeedDial board={uuid} />
-        {renderSnackbar(isOver, canDrop)}
-      </Grid>
-    </div>
-  );
+
+  handleSoundPickerOpen() {
+    const { uuid, onSoundPickerOpen } = this.props;
+    onSoundPickerOpen({
+      board: uuid,
+    });
+  }
+
+  render() {
+    const {
+      canDrop,
+      categories,
+      classes,
+      connectDropTarget,
+      isOver,
+      onSoundPickerOpen,
+      showCreateForm,
+      uuid,
+    } = this.props;
+    const gridClasses = classnames(classes.gridSpacing, {
+      [classes.canDrop]: isOver && canDrop,
+    });
+    let content;
+    if (categories.length === 0 && !showCreateForm) {
+      content = (<SoundBoardEmptyMessage />);
+    } else {
+      content = [];
+      content.push(renderCategories(categories, onSoundPickerOpen));
+      if (showCreateForm) {
+        content.push(renderCreateForm(uuid));
+      }
+    }
+    // Wrapping div is necessary for react-dnd
+    return connectDropTarget(
+      <div>
+        <Grid className={gridClasses} container>
+          {content}
+          <SoundBoardSpeedDial
+            board={uuid}
+            onSoundAdd={this.handleSoundPickerOpen}
+          />
+          {renderSnackbar(isOver, canDrop)}
+        </Grid>
+      </div>
+    );
+  };
 };
 
 SoundBoard.propTypes = {
@@ -93,6 +114,7 @@ SoundBoard.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
+  onSoundPickerOpen: PropTypes.func.isRequired,
   showCreateForm: PropTypes.bool,
   uuid: PropTypes.string,
 };

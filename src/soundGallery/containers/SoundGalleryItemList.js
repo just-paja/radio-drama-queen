@@ -4,10 +4,11 @@ import SoundGalleryItemList from '../components/SoundGalleryItemList';
 
 import { gallerySound } from '../actions';
 
-import { getGallerySoundList } from '../selectors';
+import { getGallerySoundList, getGalleryTarget } from '../selectors';
 
 const mapStateToProps = state => ({
   sounds: getGallerySoundList(state),
+  target: getGalleryTarget(state),
 });
 
 const mapDispatchToProps = {

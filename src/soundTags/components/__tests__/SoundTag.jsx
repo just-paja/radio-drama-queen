@@ -35,4 +35,17 @@ describe('SoundTag component', () => {
     comp.find('button').simulate('click');
     expect(onClick).toHaveBeenCalledWith('foo');
   });
+
+  it('given onClick is not passed, does not fail, when clicked', () => {
+    const comp = shallow(
+      <SoundTag
+        tag={{
+          name: 'foo',
+        }}
+      />
+    ).dive();
+    expect(() => {
+      comp.find('button').simulate('click');
+    }).not.toThrow();
+  });
 });

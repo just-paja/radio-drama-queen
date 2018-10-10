@@ -9,3 +9,8 @@ export const gallerySearch = createRoutine('GALLERY_SEARCH', [
   'FILTER_USED_CHANGE',
   'CHANGE',
 ]);
+
+export const galleryTarget = createRoutine('GALLERY_TARGET', [
+  'CLEAR',
+  'SET',
+]);

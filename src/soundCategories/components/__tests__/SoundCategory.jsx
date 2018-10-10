@@ -8,6 +8,8 @@ describe('SoundCategory component', () => {
   it('renders category name', () => {
     const comp = shallow(
       <SoundCategory
+        boardUuid="board1"
+        onSoundPickerOpen={() => {}}
         connectDropTarget={children => children}
         name="Test category"
         sounds={[]}
@@ -20,6 +22,8 @@ describe('SoundCategory component', () => {
   it('renders string default when category does not have a name', () => {
     const comp = shallow(
       <SoundCategory
+        boardUuid="board1"
+        onSoundPickerOpen={() => {}}
         connectDropTarget={children => children}
         sounds={[]}
         uuid="category-1"
@@ -31,6 +35,8 @@ describe('SoundCategory component', () => {
   it('renders category sounds', () => {
     const comp = shallow(
       <SoundCategory
+        boardUuid="board1"
+        onSoundPickerOpen={() => {}}
         connectDropTarget={children => children}
         sounds={['sound-1']}
         uuid="category-1"
@@ -42,6 +48,8 @@ describe('SoundCategory component', () => {
   it('renders controls with category uuid', () => {
     const comp = shallow(
       <SoundCategory
+        boardUuid="board1"
+        onSoundPickerOpen={() => {}}
         connectDropTarget={children => children}
         sounds={['sound-1']}
         uuid="category-1"
@@ -53,6 +61,8 @@ describe('SoundCategory component', () => {
   it('renders open snackbar when drag is over and can be dropped', () => {
     const comp = shallow(
       <SoundCategory
+        boardUuid="board1"
+        onSoundPickerOpen={() => {}}
         canDrop
         isOver
         connectDropTarget={children => children}

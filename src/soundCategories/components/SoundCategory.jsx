@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import SoundCategoryRemoveButton from '../containers/SoundCategoryRemoveButton';
+import SoundCategoryMenu from '../containers/SoundCategoryMenu';
 import SoundCategoryControls from '../containers/SoundCategoryControls';
 import SoundCategoryItem from '../containers/SoundCategoryItem';
 
@@ -43,11 +43,13 @@ const styles = theme => ({
 });
 
 const SoundCategory = ({
+  boardUuid,
   canDrop,
   classes,
   connectDropTarget,
   isOver,
   name,
+  onSoundPickerOpen,
   sounds,
   uuid,
 }) => {
@@ -64,7 +66,11 @@ const SoundCategory = ({
             <Typography variant="headline">
               {categoryName}
             </Typography>
-            <SoundCategoryRemoveButton uuid={uuid} />
+            <SoundCategoryMenu
+              boardUuid={boardUuid}
+              uuid={uuid}
+              onSoundPickerOpen={onSoundPickerOpen}
+            />
           </div>
           <List className={classes.soundList} dense>
             {sounds.map(soundUuid => (
@@ -88,11 +94,13 @@ const SoundCategory = ({
 };
 
 SoundCategory.propTypes = {
+  boardUuid: PropTypes.string.isRequired,
   canDrop: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
   name: PropTypes.string,
+  onSoundPickerOpen: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.string).isRequired,
   uuid: PropTypes.string.isRequired,
 };

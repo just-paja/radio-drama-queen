@@ -14,6 +14,7 @@ const styles = theme => ({
     display: 'flex',
     margin: 0,
     padding: theme.spacing.unit,
+    userSelect: 'none',
     width: '100%',
     '&:hover': {
       background: theme.palette.action.hover,
@@ -56,6 +57,7 @@ class SoundCategoryItem extends Component {
           error={sound.error}
           loading={sound.loading}
           playing={sound.playing}
+          valid={sound.valid}
         />
         <SoundName
           name={sound.name}

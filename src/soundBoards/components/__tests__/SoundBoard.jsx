@@ -8,6 +8,7 @@ describe('SoundBoard component', () => {
   it('renders empty message when there are no categories', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         categories={[]}
         connectDropTarget={nodes => nodes}
       />
@@ -18,6 +19,7 @@ describe('SoundBoard component', () => {
   it('renders board speed dial', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         categories={[]}
         connectDropTarget={nodes => nodes}
       />
@@ -28,6 +30,7 @@ describe('SoundBoard component', () => {
   it('renders snackbar open when touch is over and can drop', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         canDrop
         isOver
         categories={[]}
@@ -40,6 +43,7 @@ describe('SoundBoard component', () => {
   it('renders snackbar closed when touch is not over and can drop', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         canDrop
         isOver={false}
         categories={[]}
@@ -52,6 +56,7 @@ describe('SoundBoard component', () => {
   it('renders snackbar closed when touch is over and can not drop', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         canDrop={false}
         isOver
         categories={[]}
@@ -64,6 +69,7 @@ describe('SoundBoard component', () => {
   it('renders create form when given showCreateForm flag', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         showCreateForm
         categories={[]}
         connectDropTarget={nodes => nodes}
@@ -75,6 +81,7 @@ describe('SoundBoard component', () => {
   it('does not render create form when not given showCreateForm flag', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         categories={[]}
         connectDropTarget={nodes => nodes}
       />
@@ -85,6 +92,7 @@ describe('SoundBoard component', () => {
   it('renders category container for category', () => {
     const comp = shallow(
       <SoundBoard
+        onSoundPickerOpen={() => {}}
         categories={['foo-uuid']}
         connectDropTarget={nodes => nodes}
       />

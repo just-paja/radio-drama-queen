@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import SoundGalleryItem from './SoundGalleryItem';
 
-import { GallerySound } from '../proptypes';
+import { GallerySound, GalleryTarget } from '../proptypes';
 import { Classes } from '../../proptypes';
 
 const styles = theme => ({
@@ -21,6 +21,7 @@ const SoundGalleryItemList = ({
   onSoundPlay,
   onTagAdd,
   sounds,
+  target,
 }) => (
   <Paper className={classes.body}>
     {sounds.map(sound => (
@@ -30,6 +31,7 @@ const SoundGalleryItemList = ({
         onAdd={onSoundAdd}
         onAddTag={onTagAdd}
         sound={sound}
+        target={target}
       />
     ))}
   </Paper>
@@ -41,6 +43,11 @@ SoundGalleryItemList.propTypes = {
   onTagAdd: PropTypes.func.isRequired,
   onSoundPlay: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(GallerySound).isRequired,
+  target: GalleryTarget,
+};
+
+SoundGalleryItemList.defaultProps = {
+  target: null,
 };
 
 export default withStyles(styles)(SoundGalleryItemList);

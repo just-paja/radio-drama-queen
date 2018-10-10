@@ -24,4 +24,16 @@ describe('WorkspaceSelection component', () => {
     );
     expect(comp.dive()).toContainMatchingElements(1, 'Connect(SoundBoardSelection)');
   });
+
+  it('triggers view change on toggle button group change', () => {
+    const onViewSelect = jest.fn();
+    const comp = shallow(
+      <WorkspaceSelection
+        onBoardSelect={() => {}}
+        onViewSelect={onViewSelect}
+      />
+    ).dive();
+    comp.find('WithStyles(ToggleButtonGroup)').simulate('change', null, 'VIEW_LIBRARY');
+    expect(onViewSelect).toHaveBeenCalledWith('VIEW_LIBRARY');
+  });
 });

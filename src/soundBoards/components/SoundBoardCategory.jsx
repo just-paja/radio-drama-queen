@@ -15,11 +15,15 @@ const styles = theme => ({
 const SoundBoardCategory = ({
   classes,
   children,
+  onSoundPickerOpen,
   uuid,
 }) => (
   <Grid xs={12} sm={6} md={4} lg={3} xl={2} item elevation={0}>
     <div className={classes.gridItem}>
-      {uuid ? <SoundCategory uuid={uuid} /> : children}
+      {uuid
+        ? <SoundCategory onSoundPickerOpen={onSoundPickerOpen} uuid={uuid} />
+        : children
+      }
     </div>
   </Grid>
 );
@@ -29,6 +33,7 @@ SoundBoardCategory.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
+  onSoundPickerOpen: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   uuid: PropTypes.string,
 };

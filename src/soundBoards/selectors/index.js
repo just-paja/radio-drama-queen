@@ -25,9 +25,12 @@ export const getBoardsWithStatus = createSelector(
   }))
 );
 
+export const findBoard = (boards, boardUuid) => boards.find(
+  board => board.uuid === boardUuid
+);
+
 export const getBoard = createSelector(
-  (state, boardUuid) => getBoards(state)
-    .find(board => board.uuid === boardUuid),
+  (state, boardUuid) => findBoard(getBoards(state), boardUuid),
   board => board
 );
 

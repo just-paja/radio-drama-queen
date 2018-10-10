@@ -6,4 +6,7 @@ export const GallerySound = PropTypes.shape({
   uuid: PropTypes.string.isRequired,
 });
 
-export default { GallerySound };
+export const GalleryTarget = PropTypes.shape({
+  board: PropTypes.string,
+  category: PropTypes.string,
+});

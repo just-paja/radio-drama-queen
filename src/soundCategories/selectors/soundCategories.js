@@ -41,6 +41,11 @@ export const getCategoryName = createSelector(
   category => category.name
 );
 
+export const getCategoryBoardUuid = createSelector(
+  memoizeCategory,
+  category => category.board
+);
+
 export const getCategorySoundUuids = createSelector(
   memoizeCategory,
   category => category.sounds

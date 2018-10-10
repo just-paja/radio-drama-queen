@@ -45,6 +45,7 @@ class SoundSearchForm extends Component {
     return (
       <div className={classes.container}>
         <Input
+          autoFocus
           className={classes.input}
           label="Sound search"
           input={{

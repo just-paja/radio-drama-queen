@@ -7,8 +7,10 @@ import SoundGalleryEmptyMessage from './SoundGalleryEmptyMessage';
 import SoundGalleryItemList from '../containers/SoundGalleryItemList';
 import SoundGallerySearch from '../containers/SoundGallerySearch';
 import SoundGallerySpeedDial from './SoundGallerySpeedDial';
+import SoundGalleryTarget from '../containers/SoundGalleryTarget';
 
 import { Classes } from '../../proptypes';
+import { GalleryTarget } from '../proptypes';
 
 const styles = theme => ({
   layout: {
@@ -24,7 +26,9 @@ const SoundGallery = ({
   onAddSound,
   onAddTag,
   onBoardCreate,
+  onGoBack,
   onLibraryOpen,
+  target,
 }) => {
   let content;
   if (librarySize === 0) {
@@ -42,9 +46,16 @@ const SoundGallery = ({
   }
 
   return (
-    <div className={classes.layout}>
-      {content}
-      <SoundGallerySpeedDial onBoardCreate={onBoardCreate} />
+    <div>
+      <SoundGalleryTarget
+        board={target.board}
+        category={target.category}
+        onGoBack={onGoBack}
+      />
+      <div className={classes.layout}>
+        {content}
+        <SoundGallerySpeedDial onBoardCreate={onBoardCreate} />
+      </div>
     </div>
   );
 };
@@ -55,7 +66,13 @@ SoundGallery.propTypes = {
   onAddSound: PropTypes.func.isRequired,
   onAddTag: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
+  onGoBack: PropTypes.func.isRequired,
   onLibraryOpen: PropTypes.func.isRequired,
+  target: GalleryTarget,
 };
+
+SoundGallery.defaultProps = {
+  GalleryTarget: null,
+}
 
 export default withStyles(styles)(SoundGallery);

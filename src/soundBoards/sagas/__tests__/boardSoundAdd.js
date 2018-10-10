@@ -2,7 +2,6 @@ import sagas from '..';
 import getSagaTester from '../../../../mock/sagaTester';
 
 import { soundBoard } from '../../actions';
-import { soundList } from '../../../sounds/actions';
 
 describe('boardSoundAdd saga', () => {
   it('creates default board category with the sound given it does not exist', () => {
@@ -70,27 +69,5 @@ describe('boardSoundAdd saga', () => {
         sounds: ['sound-1'],
       })
     );
-  });
-
-  it('triggers sound load', () => {
-    const sagaTester = getSagaTester({
-      soundBoards: {
-        list: [
-          {
-            uuid: 'board-1',
-          },
-        ],
-      },
-      sounds: {
-        list: [
-          {
-            uuid: 'sound-1',
-          },
-        ],
-      },
-    });
-    sagaTester.runAll(sagas);
-    sagaTester.dispatch(soundBoard.soundAdd('board-1', 'sound-1'));
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.loadTrigger('sound-1'));
   });
 });

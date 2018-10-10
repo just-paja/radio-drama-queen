@@ -7,6 +7,7 @@ import { getTags } from '../../soundTags/selectors';
 import { getCategories } from '../../soundCategories/selectors';
 
 const memoizeSearch = state => state.soundGallery.search;
+const memoizeTarget = state => state.soundGallery.target;
 
 export const getSoundSearchValue = createSelector(
   memoizeSearch,
@@ -79,5 +80,10 @@ export const getGallerySoundList = createSelector(
 
 export const getGallerySound = createSelector(
   getSound,
+  state => state
+);
+
+export const getGalleryTarget = createSelector(
+  memoizeTarget,
   state => state
 );

@@ -1,41 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { SoundGallery } from '../../soundGallery/containers';
-import { SoundBoard } from '../../soundBoards/containers';
+import SoundBoardView from '../containers/SoundBoardView';
+import SoundGalleryView from '../containers/SoundGalleryView';
 
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants';
 
-const WorkspaceView = ({
-  board,
-  onAddSoundToBoard,
-  onAddTagToBoard,
-  onBoardCreate,
-  onLibraryOpen,
-  view,
-}) => {
+const WorkspaceView = ({ board, view }) => {
   if (view === VIEW_LIBRARY) {
-    return (
-      <SoundGallery
-        onAddSound={onAddSoundToBoard}
-        onAddTag={onAddTagToBoard}
-        onBoardCreate={onBoardCreate}
-        onLibraryOpen={onLibraryOpen}
-      />
-    );
+    return <SoundGalleryView />;
   }
   if (view === VIEW_BOARD && board) {
-    return <SoundBoard uuid={board} />;
+    return <SoundBoardView board={board} />;
   }
   return null;
 };
 
 WorkspaceView.propTypes = {
   board: PropTypes.string,
-  onAddSoundToBoard: PropTypes.func.isRequired,
-  onAddTagToBoard: PropTypes.func.isRequired,
-  onBoardCreate: PropTypes.func.isRequired,
-  onLibraryOpen: PropTypes.func.isRequired,
   view: PropTypes.string,
 };
 

@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import SoundGalleryItem from '../components/SoundGalleryItem';
 
 import { gallerySound } from '../actions';
-import { getGallerySound } from '../selectors';
+import { getGallerySound, getGalleryTarget } from '../selectors';
 
 const mapStateToProps = (state, { soundUuid }) => ({
   sound: getGallerySound(state, soundUuid),
+  target: getGalleryTarget(state),
 });
 
 const mapDispatchToProps = {

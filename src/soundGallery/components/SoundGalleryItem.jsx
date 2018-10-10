@@ -1,6 +1,5 @@
 import AddCircle from '@material-ui/icons/AddCircle';
 import IconButton from '@material-ui/core/IconButton';
-import PlayCircleFilled from '@material-ui/icons/PlayCircleFilled';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -29,11 +28,17 @@ class SoundGalleryItem extends Component {
     super();
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
   }
 
   handleAdd() {
-    const { onAdd, sound: { uuid } } = this.props;
-    onAdd(uuid);
+    const { onAdd, sound: { uuid }, target } = this.props;
+    onAdd(uuid, { target });
+  }
+
+  handleAddTag(tag) {
+    const { onAddTag, target } = this.props;
+    onAddTag(tag, { target });
   }
 
   handlePlayClick() {
@@ -42,7 +47,7 @@ class SoundGalleryItem extends Component {
   }
 
   render() {
-    const { classes, onAddTag, sound } = this.props;
+    const { classes, sound } = this.props;
     return (
       <div className={classes.item}>
         <div className={classes.controls}>
@@ -65,7 +70,7 @@ class SoundGalleryItem extends Component {
               ...aggr,
               <SoundTag
                 key={tag}
-                onClick={onAddTag}
+                onClick={this.handleAddTag}
                 tag={tag}
               />,
               ' ',
