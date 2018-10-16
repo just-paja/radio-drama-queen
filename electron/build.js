@@ -2,6 +2,7 @@ const jetpack = require('fs-jetpack');
 
 const distRoot = jetpack.path('dist');
 const reactRoot = jetpack.path('build');
+const srcRoot = jetpack.path('src');
 
 const electronDistRoot = jetpack.path(distRoot, 'electron');
 const electronSrcRoot = jetpack.path('electron');
@@ -13,6 +14,10 @@ jetpack.copy(reactRoot, electronDistBundleRoot);
 jetpack.copy(
   jetpack.path(electronSrcRoot, 'electron-starter.js'),
   jetpack.path(electronDistBundleRoot, 'radio-drama-soundboard.js')
+);
+jetpack.copy(
+  jetpack.path(srcRoot, 'workers'),
+  jetpack.path(electronDistBundleRoot, 'workers')
 );
 jetpack.copy(
   jetpack.path(electronSrcRoot, 'package.json'),

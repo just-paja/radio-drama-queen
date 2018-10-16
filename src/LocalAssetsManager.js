@@ -14,7 +14,9 @@ const loadDependencies = () => {
     jetpack = global.require('fs-jetpack');
     request = global.require('request');
     WorkerNodes = global.require('worker-nodes');
-    soundParseWorker = new WorkerNodes(jetpack.path('src', 'workers', 'soundToDataUrl.js'));
+    const exePath = electron.remote.app.getAppPath('exe');
+    const workerPath = jetpack.path(exePath, 'src', 'workers', 'soundToDataUrl.js');
+    soundParseWorker = new WorkerNodes(workerPath);
   }
 };
 
