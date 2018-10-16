@@ -3,7 +3,7 @@
   "productName": "radio-drama-soundboard",
   "productDescription": "Tool for playing sounds during radio drama shows",
   "description": "Tool for playing sounds during radio drama shows",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "license": "MIT",
   "dependencies": {
