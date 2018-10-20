@@ -1,10 +1,12 @@
+import { compose } from 'redux';
 import { handleActions } from 'redux-actions';
-import { changeParam, toggle, turnOff } from 'react-saga-rest';
+import { changeParam, toggle, turnOff, turnOn } from 'react-saga-rest';
 
 import { idCollection } from '../../collections';
-import { categoryList } from '../actions';
+import { categoryList, categoryRename } from '../actions';
 
 export const initialState = {
+  edit: false,
   loop: false,
   muted: false,
   sounds: [],
@@ -19,4 +21,10 @@ export default handleActions({
   [categoryList.SOUND_ADD]: idCollection.addPayload('sounds'),
   [categoryList.SOUND_REMOVE]: idCollection.removePayload('sounds'),
   [categoryList.UNMUTE]: turnOff('muted'),
+  [categoryRename.SUBMIT]: compose(
+    turnOff('edit'),
+    changeParam('name', 'payload')
+  ),
+  [categoryRename.CLOSE]: turnOff('edit'),
+  [categoryRename.OPEN]: turnOn('edit'),
 }, initialState);

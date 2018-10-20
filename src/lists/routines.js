@@ -16,12 +16,7 @@ export const createListAction = identifierName => actionName => (identifier, pay
   payload,
 });
 
-export const createListRoutine = (baseName, actions = [], identifierName = 'uuid') => {
-  const routineActions = createRoutineActions(
-    baseName,
-    [ADD, REMOVE, CLEAR],
-    createAction
-  );
+export const createListActionsRoutine = (baseName, actions = [], identifierName = 'uuid') => {
   const listRoutineActions = createRoutineActions(
     baseName,
     actions,
@@ -29,8 +24,19 @@ export const createListRoutine = (baseName, actions = [], identifierName = 'uuid
   );
   return {
     ...listRoutineActions,
-    ...routineActions,
     [LIST_ACTIONS]: actions.map(extraAction => composeActionType(baseName, extraAction)),
     [LIST_IDENTIFIER]: identifierName,
+  };
+};
+
+export const createListRoutine = (baseName, actions = [], identifierName = 'uuid') => {
+  const routineActions = createRoutineActions(
+    baseName,
+    [ADD, REMOVE, CLEAR],
+    createAction
+  );
+  return {
+    ...routineActions,
+    ...createListActionsRoutine(baseName, actions, identifierName),
   };
 };

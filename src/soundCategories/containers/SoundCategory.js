@@ -6,12 +6,14 @@ import { categoryList } from '../actions';
 import { connectSoundDropTarget } from '../../sounds/containers';
 import {
   getCategoryBoardUuid,
+  getCategoryEditStatus,
   getCategoryName,
   getCategorySoundUuids,
 } from '../selectors';
 
 const mapStateToProps = (state, { uuid }) => ({
   boardUuid: getCategoryBoardUuid(state, uuid),
+  edit: getCategoryEditStatus(state, uuid),
   name: getCategoryName(state, uuid),
   sounds: getCategorySoundUuids(state, uuid),
 });

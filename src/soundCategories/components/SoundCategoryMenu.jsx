@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Delete from '@material-ui/icons/Delete';
+import TextFields from '@material-ui/icons/TextFields';
 import Add from '@material-ui/icons/Add';
 import Menu from '@material-ui/core/Menu';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,6 +17,7 @@ class SoundCategoryMenu extends Component {
     this.handleMenuClose = this.handleMenuClose.bind(this);
     this.handleMenuOpen = this.handleMenuOpen.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleRename = this.handleRename.bind(this);
     this.state = {
       menuAnchor: null,
     };
@@ -23,6 +25,7 @@ class SoundCategoryMenu extends Component {
 
   handleAddSound() {
     const { onSoundPickerOpen, boardUuid, uuid } = this.props;
+    this.handleMenuClose();
     onSoundPickerOpen({
       board: boardUuid,
       category: uuid,
@@ -39,7 +42,14 @@ class SoundCategoryMenu extends Component {
 
   handleRemove() {
     const { onRemove, uuid } = this.props;
+    this.handleMenuClose();
     onRemove(uuid);
+  }
+
+  handleRename() {
+    const { onRename, uuid } = this.props;
+    this.handleMenuClose();
+    onRename(uuid);
   }
 
   render() {
@@ -59,6 +69,10 @@ class SoundCategoryMenu extends Component {
             <Add />
             <ListItemText primary="Add sounds" />
           </MenuItem>
+          <MenuItem onClick={this.handleRename}>
+            <TextFields />
+            <ListItemText primary="Rename" />
+          </MenuItem>
           <MenuItem onClick={this.handleRemove}>
             <Delete />
             <ListItemText primary="Remove" />
@@ -72,6 +86,7 @@ class SoundCategoryMenu extends Component {
 SoundCategoryMenu.propTypes = {
   boardUuid: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
+  onRename: PropTypes.func.isRequired,
   onSoundPickerOpen: PropTypes.func.isRequired,
   uuid: PropTypes.string.isRequired,
 };

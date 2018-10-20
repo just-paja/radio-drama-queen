@@ -7,10 +7,10 @@ import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import SoundCategoryName from './SoundCategoryName';
 import SoundCategoryMenu from '../containers/SoundCategoryMenu';
 import SoundCategoryControls from '../containers/SoundCategoryControls';
 import SoundCategoryItem from '../containers/SoundCategoryItem';
@@ -47,6 +47,7 @@ const SoundCategory = ({
   canDrop,
   classes,
   connectDropTarget,
+  edit,
   isOver,
   name,
   onSoundPickerOpen,
@@ -63,9 +64,11 @@ const SoundCategory = ({
       >
         <CardContent className={classes.cardPadding}>
           <div className={classnames(classes.headlinePadding, classes.headlineControls)}>
-            <Typography variant="headline">
-              {categoryName}
-            </Typography>
+            <SoundCategoryName
+              edit={edit}
+              name={name}
+              uuid={uuid}
+            />
             <SoundCategoryMenu
               boardUuid={boardUuid}
               uuid={uuid}
@@ -98,6 +101,7 @@ SoundCategory.propTypes = {
   canDrop: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   connectDropTarget: PropTypes.func.isRequired,
+  edit: PropTypes.bool,
   isOver: PropTypes.bool,
   name: PropTypes.string,
   onSoundPickerOpen: PropTypes.func.isRequired,
@@ -107,6 +111,7 @@ SoundCategory.propTypes = {
 
 SoundCategory.defaultProps = {
   canDrop: null,
+  edit: false,
   isOver: null,
   name: null,
 };

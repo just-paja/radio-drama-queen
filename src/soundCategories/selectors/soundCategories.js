@@ -58,6 +58,11 @@ export const getCategorySounds = createSelector(
   )
 );
 
+export const getCategoryEditStatus = createSelector(
+  memoizeCategory,
+  category => category.edit
+);
+
 export const getCategoryLoopStatus = createSelector(
   memoizeCategory,
   category => category.loop

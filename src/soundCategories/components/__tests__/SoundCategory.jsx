@@ -16,20 +16,7 @@ describe('SoundCategory component', () => {
         uuid="category-1"
       />
     ).dive();
-    expect(comp.find('[children="Test category"]')).toHaveLength(1);
-  });
-
-  it('renders string default when category does not have a name', () => {
-    const comp = shallow(
-      <SoundCategory
-        boardUuid="board1"
-        onSoundPickerOpen={() => {}}
-        connectDropTarget={children => children}
-        sounds={[]}
-        uuid="category-1"
-      />
-    ).dive();
-    expect(comp.find('[children="Default"]')).toHaveLength(1);
+    expect(comp.find('SoundCategoryName')).toHaveProp('name', 'Test category');
   });
 
   it('renders category sounds', () => {

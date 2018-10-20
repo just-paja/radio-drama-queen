@@ -20,38 +20,52 @@ const handleItemAction = (itemReducer, identifier) => (state, action) => {
   return state;
 };
 
+const flattenRoutineActions = (itemReducer, routines) => {
+  if (routines instanceof Array) {
+    return routines.reduce((flatAggr, routine) => ({
+      ...flatAggr,
+      ...routine[LIST_ACTIONS].reduce((aggr, itemAction) => ({
+        ...aggr,
+        [itemAction]: handleItemAction(itemReducer, routine[LIST_IDENTIFIER]),
+      }), {})
+    }), {});
+  }
+  return flattenRoutineActions(itemReducer, [routines]);
+};
+
 export const createListReducer = (
-  routine,
+  routines,
   itemReducer,
   itemInitialState,
-) => handleActions({
-  [routine.ADD]: (state, action) => {
-    const index = state.findIndex(identifyItem(action, routine[LIST_IDENTIFIER]));
-    if (index === -1) {
-      return [
-        ...state,
-        {
-          ...itemInitialState,
-          ...action.payload,
-        },
-      ];
-    }
-    return state;
-  },
-  [routine.REMOVE]: (state, action) => {
-    const index = state.findIndex(identifyItem(action, routine[LIST_IDENTIFIER]));
-    if (index !== -1) {
-      const nextState = state.slice();
-      nextState.splice(index, 1);
-      return nextState;
-    }
-    return state;
-  },
-  [routine.CLEAR]: () => [],
-  ...routine[LIST_ACTIONS].reduce((aggr, itemAction) => ({
-    ...aggr,
-    [itemAction]: handleItemAction(itemReducer, routine[LIST_IDENTIFIER]),
-  }), {}),
-}, []);
+) => {
+  const mainRoutine = routines instanceof Array ? routines[0] : routines;
+
+  return handleActions({
+    [mainRoutine.ADD]: (state, action) => {
+      const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
+      if (index === -1) {
+        return [
+          ...state,
+          {
+            ...itemInitialState,
+            ...action.payload,
+          },
+        ];
+      }
+      return state;
+    },
+    [mainRoutine.REMOVE]: (state, action) => {
+      const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
+      if (index !== -1) {
+        const nextState = state.slice();
+        nextState.splice(index, 1);
+        return nextState;
+      }
+      return state;
+    },
+    [mainRoutine.CLEAR]: () => [],
+    ...flattenRoutineActions(itemReducer, routines),
+  }, []);
+};
 
 export default { createListReducer };
