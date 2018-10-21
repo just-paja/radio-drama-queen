@@ -13,7 +13,7 @@ describe('SoundCategoryRemoveButton component', () => {
         uuid="category-1"
       />
     );
-    comp.find('SoundCategoryIconButton').simulate('click');
+    comp.find('WithStyles(SoundCategoryIconButton)').simulate('click');
     expect(onClick).toHaveBeenCalledWith('category-1');
   });
 });

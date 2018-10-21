@@ -11,7 +11,7 @@ describe('SoundCategoryIconButton component', () => {
       <SoundCategoryIconButton
         icon={icon}
       />
-    );
+    ).dive();
     expect(comp.find(icon)).toHaveLength(1);
   });
 });

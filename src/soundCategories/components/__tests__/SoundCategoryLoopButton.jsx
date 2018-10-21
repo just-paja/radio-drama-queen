@@ -12,7 +12,7 @@ describe('SoundCategoryLoopButton component', () => {
         loop
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'primary');
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'primary');
   });
 
   it('renders in default color given it is off', () => {
@@ -22,6 +22,6 @@ describe('SoundCategoryLoopButton component', () => {
         loop={false}
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'default');
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'default');
   });
 });

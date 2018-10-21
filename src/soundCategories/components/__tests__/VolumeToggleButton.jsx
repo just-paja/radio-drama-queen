@@ -12,7 +12,7 @@ describe('VolumeToggleButton component', () => {
         muted
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'primary');
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'primary');
   });
 
   it('renders in default color given it is not muted', () => {
@@ -22,6 +22,6 @@ describe('VolumeToggleButton component', () => {
         muted={false}
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'default');
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'default');
   });
 });

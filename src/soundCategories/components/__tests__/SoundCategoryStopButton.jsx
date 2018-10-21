@@ -12,7 +12,7 @@ describe('SoundCategoryStopButton component', () => {
         playing
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'primary');
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'primary');
   });
 
   it('renders in default color given it is not playing', () => {
@@ -22,7 +22,7 @@ describe('SoundCategoryStopButton component', () => {
         playing={false}
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('color', 'default');
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'default');
   });
 
   it('renders enabled given it is playing', () => {
@@ -32,7 +32,7 @@ describe('SoundCategoryStopButton component', () => {
         playing
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('disabled', false);
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('disabled', false);
   });
 
   it('renders disabled given it is not playing', () => {
@@ -42,6 +42,6 @@ describe('SoundCategoryStopButton component', () => {
         playing={false}
       />
     );
-    expect(comp.find('SoundCategoryIconButton')).toHaveProp('disabled', true);
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('disabled', true);
   });
 });
