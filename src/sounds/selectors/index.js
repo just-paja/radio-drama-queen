@@ -18,6 +18,11 @@ export const getPlayingSounds = createSelector(
   sounds => sounds.filter(sound => sound.playing)
 );
 
+export const getPlayingSoundsUuids = createSelector(
+  getPlayingSounds,
+  sounds => sounds.map(sound => sound.uuid)
+);
+
 export const isAnySoundPlaying = createSelector(
   getPlayingSounds,
   sounds => sounds.length > 0
