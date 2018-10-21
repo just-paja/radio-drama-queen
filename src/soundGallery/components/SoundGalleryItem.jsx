@@ -57,8 +57,9 @@ class SoundGalleryItem extends Component {
           <IconButton onClick={this.handlePlayClick}>
             <SoundStatusIcon
               error={sound.error}
-              playing={sound.playing}
               loading={sound.loading}
+              playing={sound.playing}
+              size={22}
               valid
             />
           </IconButton>

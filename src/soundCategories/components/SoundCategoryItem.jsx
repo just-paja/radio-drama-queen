@@ -22,8 +22,8 @@ const styles = theme => ({
   },
   icon: {
     height: theme.typography.fontSize * 3/2,
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing.unit / 2,
+    marginRight: theme.spacing.unit * 1.5,
     width: theme.typography.fontSize * 3/2,
   }
 });
@@ -57,6 +57,7 @@ class SoundCategoryItem extends Component {
           error={sound.error}
           loading={sound.loading}
           playing={sound.playing}
+          size={21}
           valid={sound.valid}
         />
         <SoundName
