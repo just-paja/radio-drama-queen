@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Stop from '@material-ui/icons/Stop';
@@ -5,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Classes } from '../../proptypes';
+import { Classes, ClassName } from '../../proptypes';
 
 const styles = theme => ({
   button: {
@@ -18,9 +19,9 @@ const styles = theme => ({
   }
 });
 
-const SoundStopButton = ({ classes, onClick, playing }) => (
+const SoundStopButton = ({ className, classes, onClick, playing }) => (
   <IconButton
-    className={classes.button}
+    className={classnames(classes.button, className)}
     color={playing ? 'primary' : 'default'}
     disabled={!playing}
     onClick={onClick}
@@ -30,12 +31,14 @@ const SoundStopButton = ({ classes, onClick, playing }) => (
 );
 
 SoundStopButton.propTypes = {
+  className: ClassName,
   classes: Classes.isRequired,
   onClick: PropTypes.func.isRequired,
   playing: PropTypes.bool,
 };
 
 SoundStopButton.defaultProps = {
+  className: null,
   playing: false,
 };
 

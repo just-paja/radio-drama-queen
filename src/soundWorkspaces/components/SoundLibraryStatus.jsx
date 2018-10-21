@@ -25,6 +25,7 @@ const styles = theme => ({
     right: 0,
     justifyContent: 'flex-end',
     display: 'flex',
+    zIndex: 1200,
   },
   stat: {
     display: 'block',
@@ -33,6 +34,10 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     marginLeft: theme.spacing.unit / 2
+  },
+  stopAllButton: {
+    marginRight: 'auto',
+    marginLeft: theme.spacing.unit,
   },
   icon: {
     height: theme.typography.fontSize * 0.75,
@@ -59,7 +64,7 @@ const SoundLibraryStatus = ({
   tags,
 }) => (
   <footer className={classes.footer}>
-    <SoundStopAllButton />
+    <SoundStopAllButton className={classes.stopAllButton}/>
     {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon)}
     {renderNumberWithIcon(classes, tags, LabelIcon)}
     {renderNumberWithIcon(classes, errorSounds, WarningIcon)}
