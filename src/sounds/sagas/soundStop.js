@@ -1,4 +1,4 @@
-import { takeEvery } from 'redux-saga/effects';
+import { all, put, takeEvery } from 'redux-saga/effects';
 
 import AudioManager from '../AudioManager';
 
@@ -8,8 +8,8 @@ const stopSound = ({ meta: { uuid } }) => {
   AudioManager.stop(uuid);
 };
 
-export const stopSoundGroup = ({ payload: { sounds } }) => {
-  sounds.map(soundUuid => AudioManager.stop(soundUuid));
+export function* stopSoundGroup({ payload: { sounds } }) {
+  yield all(sounds.map(soundUuid => put(soundList.stop(soundUuid))));
 };
 
 function* handleSoundStop() {
