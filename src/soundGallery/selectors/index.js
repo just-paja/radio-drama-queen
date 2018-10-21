@@ -55,6 +55,7 @@ export const getGallerySoundListFiltered = createSelector(
   }))
 );
 
+export const getErrorsFilter = getFlag(memoizeSearch, 'filterErrors');
 export const getUsedFilter = getFlag(memoizeSearch, 'filterUsed');
 
 export const getGallerySoundList = createSelector(
@@ -62,12 +63,16 @@ export const getGallerySoundList = createSelector(
     getGallerySoundListFiltered,
     getTags,
     getSoundSearchValueCleared,
+    getErrorsFilter,
     getUsedFilter,
   ],
-  (sounds, tags, search, filterUsed) => {
+  (sounds, tags, search, filterErrors, filterUsed) => {
     let soundsFiltered = sounds;
     if (filterUsed) {
       soundsFiltered = soundsFiltered.filter(sound => !sound.isUsed);
+    }
+    if (filterErrors) {
+      soundsFiltered = soundsFiltered.filter(sound => !sound.error);
     }
     if (search) {
       const relevantTags = getRelevantTags(tags, search);

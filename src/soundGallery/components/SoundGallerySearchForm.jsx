@@ -26,13 +26,19 @@ const styles = theme => ({
 class SoundSearchForm extends Component {
   constructor() {
     super();
-    this.handleChange = this.handleChange.bind(this);
+    this.handleFilterErrorsChange = this.handleFilterErrorsChange.bind(this);
     this.handleFilterUsedChange = this.handleFilterUsedChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
     const { onChange } = this.props;
     onChange(event.target.value);
+  }
+
+  handleFilterErrorsChange(event) {
+    const { onFilterErrorsChange } = this.props;
+    onFilterErrorsChange(event.target.checked);
   }
 
   handleFilterUsedChange(event) {
@@ -41,7 +47,7 @@ class SoundSearchForm extends Component {
   }
 
   render() {
-    const { classes, filterUsed, search } = this.props;
+    const { classes, filterErrors, filterUsed, search } = this.props;
     return (
       <div className={classes.container}>
         <Input
@@ -67,6 +73,17 @@ class SoundSearchForm extends Component {
           )}
           label="Only unused"
         />
+        <FormControlLabel
+          control={(
+            <Checkbox
+              className={classes.input}
+              checked={filterErrors}
+              name="filterErrors"
+              onChange={this.handleFilterErrorsChange}
+            />
+          )}
+          label="No errors"
+        />
       </div>
     );
   }
@@ -74,13 +91,16 @@ class SoundSearchForm extends Component {
 
 SoundSearchForm.propTypes = {
   classes: Classes.isRequired,
+  filterErrors: PropTypes.bool,
   filterUsed: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  onFilterErrorsChange: PropTypes.func.isRequired,
   onFilterUsedChange: PropTypes.func.isRequired,
   search: PropTypes.string,
 };
 
 SoundSearchForm.defaultProps = {
+  filterErrors: false,
   filterUsed: false,
   search: '',
 };
