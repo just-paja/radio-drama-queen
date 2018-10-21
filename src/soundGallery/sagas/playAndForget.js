@@ -1,13 +1,20 @@
-import { put, take, takeEvery } from 'redux-saga/effects';
+import { put, select, take, takeEvery } from 'redux-saga/effects';
 
 import { gallerySound } from '../actions';
 import { soundList } from '../../sounds/actions';
+import { getSound } from '../../sounds/selectors';
 
 function* playAndForget({ payload }) {
-  yield put(soundList.loadTrigger(payload));
-  // @FIXME: This take action matcher absolutely needs to check sound UUID!
-  yield take(soundList.LOAD_SUCCESS);
-  yield put(soundList.play(payload));
+  const sound = yield select(getSound, payload);
+  if (sound) {
+    if (sound.playing) {
+      yield put(soundList.stop(payload));
+    } else {
+      yield put(soundList.loadTrigger(payload));
+      yield take(action => action.type === soundList.LOAD_SUCCESS && action.meta.uuid === payload);
+      yield put(soundList.play(payload));
+    }
+  }
 }
 
 function* handleSoundPlay() {
