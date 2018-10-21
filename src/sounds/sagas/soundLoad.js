@@ -104,7 +104,7 @@ export function* loadSound(categoryUuid, resource) {
 
 function* loadSoundFromStore({ meta: { uuid } }) {
   const sound = yield select(getSound, uuid);
-  if (sound) {
+  if (sound && !sound.valid) {
     yield call(loadSoundInQueue, uuid, sound.path);
   }
 }
