@@ -26,13 +26,19 @@ const SoundGallery = ({
   onAddSound,
   onAddTag,
   onBoardCreate,
+  onConfigOpen,
   onGoBack,
   onLibraryOpen,
   target,
 }) => {
   let content;
   if (librarySize === 0) {
-    content = <SoundGalleryEmptyMessage onLibraryOpen={onLibraryOpen} />;
+    content = (
+      <SoundGalleryEmptyMessage
+        onConfigOpen={onConfigOpen}
+        onLibraryOpen={onLibraryOpen}
+      />
+    );
   } else {
     content = (
       <div>
@@ -66,6 +72,7 @@ SoundGallery.propTypes = {
   onAddSound: PropTypes.func.isRequired,
   onAddTag: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
+  onConfigOpen: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onLibraryOpen: PropTypes.func.isRequired,
   target: GalleryTarget,

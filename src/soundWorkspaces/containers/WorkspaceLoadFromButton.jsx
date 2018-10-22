@@ -1,18 +1,18 @@
-import CloudDownload from '@material-ui/icons/CloudDownload';
+import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
 
 import { connect } from 'react-redux';
 
 import LabelButton from '../../components/LabelButton';
 
-import { libraryLoad } from '../actions';
+import { workspaceLoad } from '../actions';
 
 const mapStateToProps = () => ({
-  children: 'Download Library',
-  icon: CloudDownload,
+  children: 'Open Configuration',
+  icon: OpenInBrowser,
 });
 
 const mapDispatchToProps = {
-  onClick: libraryLoad.dialogShow,
+  onClick: workspaceLoad.dialogOpen,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LabelButton);

@@ -96,6 +96,14 @@ class LocalAssetsManager {
     return jetpack.path(this.getCachePath(), `${sum}.${extension}`);
   }
 
+  readFile(path) {
+    return jetpack.readAsync(path);
+  }
+
+  writeFile(path, content) {
+    return jetpack.writeAsync(path, content);
+  }
+
   ensureCacheDirExistence() {
     if (fs) {
       return jetpack.dirAsync(this.getCachePath());
@@ -125,4 +133,9 @@ const localAssetsManager = new LocalAssetsManager();
 
 export default localAssetsManager;
 
-export const { downloadSound, downloadConfig } = localAssetsManager;
+export const {
+  downloadConfig,
+  downloadSound,
+  readFile,
+  writeFile,
+} = localAssetsManager;

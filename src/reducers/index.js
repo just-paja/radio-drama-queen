@@ -9,7 +9,9 @@ import sounds from '../sounds/reducers';
 import soundTags from '../soundTags/reducers';
 import soundWorkspaces from '../soundWorkspaces/reducers';
 
-export default combineReducers({
+import { workspaceLoad } from '../soundWorkspaces/actions';
+
+const appReducer = combineReducers({
   form,
   soundBoards,
   soundCategories,
@@ -19,3 +21,10 @@ export default combineReducers({
   soundTags,
   soundWorkspaces,
 });
+
+export default (state, action) => {
+  if (action.type === workspaceLoad.RESET) {
+    return action.payload;
+  }
+  return appReducer(state, action);
+};

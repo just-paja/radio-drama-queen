@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import AppMenu from './containers/AppMenu';
 import OpenLibraryDialog from './soundModules/containers/OpenLibraryDialog';
 import SoundLibraryStatus from './soundWorkspaces/containers/SoundLibraryStatus';
+import WorkspaceLoadDialog from './soundWorkspaces/containers/WorkspaceLoadDialog';
+import WorkspaceSaveDialog from './soundWorkspaces/containers/WorkspaceSaveDialog';
 import WorkspaceView from './soundWorkspaces/containers/WorkspaceView';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -23,6 +25,8 @@ class App extends Component {
             <WorkspaceView />
             <OpenLibraryDialog />
             <SoundLibraryStatus />
+            <WorkspaceLoadDialog />
+            <WorkspaceSaveDialog />
           </DragDropContextProvider>
         </Provider>
       </div>

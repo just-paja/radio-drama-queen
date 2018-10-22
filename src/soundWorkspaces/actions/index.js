@@ -13,3 +13,28 @@ export const workspaceSound = createRoutine('WORKSPACE_SOUND', [
 export const workspaceTag = createRoutine('WORKSPACE_TAG', [
   'ADD_TO_BOARD',
 ]);
+
+export const workspaceSave = createRoutine('WORKSPACE_SAVE', [
+  'DESTINATION_CHANGE',
+  'DIALOG_HIDE',
+  'DIALOG_OPEN',
+  'FAILURE',
+  'FULFILL',
+  'REQUEST',
+  'SAVE_AS',
+  'SUCCESS',
+  'TRIGGER',
+]);
+
+export const workspaceLoad = createRoutine('WORKSPACE_LOAD', [
+  'DESTINATION_CHANGE',
+  'DIALOG_HIDE',
+  'DIALOG_OPEN',
+  'FAILURE',
+  'FULFILL',
+  'LOAD_FROM',
+  'REQUEST',
+  'RESET',
+  'SUCCESS',
+  'TRIGGER',
+]);

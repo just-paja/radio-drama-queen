@@ -47,7 +47,7 @@ const getRelevantTags = (tags, search) => {
     .map(tag => tag.name));
 };
 
-export const getGallerySoundListFiltered = createSelector(
+export const getGallerySoundsWithFlags = createSelector(
   [memoizeSoundList, getCategories],
   (sounds, categories) => sounds.map(sound => ({
     ...sound,
@@ -60,7 +60,7 @@ export const getUsedFilter = getFlag(memoizeSearch, 'filterUsed');
 
 export const getGallerySoundList = createSelector(
   [
-    getGallerySoundListFiltered,
+    getGallerySoundsWithFlags,
     getTags,
     getSoundSearchValueCleared,
     getErrorsFilter,

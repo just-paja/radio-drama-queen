@@ -1,4 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,6 +12,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton';
 import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton';
+import WorkspaceSaveAsButton from '../soundWorkspaces/containers/WorkspaceSaveAsButton';
+import WorkspaceLoadFromButton from '../soundWorkspaces/containers/WorkspaceLoadFromButton';
 import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection';
 
 import { Classes } from '../proptypes';
@@ -44,6 +47,9 @@ class AppMenu extends Component {
     const menuItems = [];
 
     menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
+    menuItems.push(<WorkspaceLoadFromButton button buttonComponent={ListItem} key="loadFrom" />);
+    menuItems.push(<WorkspaceSaveAsButton button buttonComponent={ListItem} key="saveAs" />);
+    menuItems.push(<Divider key="dividerOps" />);
     menuItems.push(<WipeLibraryButton button buttonComponent={ListItem} key="wipe" />);
 
     return (
