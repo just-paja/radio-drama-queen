@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "electron-compile": "^6.4.3",
-    "fs-jetpack": "^2.1.1",
+    "fs-jetpack": "^2.2.0",
     "request": "^2.88.0",
     "worker-nodes": "^1.6.1"
   },

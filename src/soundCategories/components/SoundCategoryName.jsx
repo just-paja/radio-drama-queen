@@ -13,7 +13,7 @@ const SoundCategoryName = ({
     return <SoundCategoryRename categoryUuid={uuid} />;
   }
   return (
-  <Typography variant="headline">
+  <Typography variant="h5">
     {name || 'Default'}
   </Typography>
   );

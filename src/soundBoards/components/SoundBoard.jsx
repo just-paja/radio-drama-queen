@@ -38,7 +38,7 @@ const renderCreateForm = uuid => (
   <SoundBoardCategory key="form">
     <Card>
       <CardContent>
-        <Typography variant="headline">
+        <Typography variant="h5">
           Create Category
         </Typography>
         <SoundBoardCategoryCreate board={uuid} />
