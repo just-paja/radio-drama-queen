@@ -14,6 +14,7 @@ function createWindow() {
     height: 600,
     minHeight: 320,
     minWidth: 320,
+    title: 'Radio Drama Queen',
     width: 960,
   });
 

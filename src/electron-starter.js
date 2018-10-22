@@ -12,8 +12,10 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 600,
+    icon: path.join(__dirname, '..', 'public', 'favicon.png'),
     minHeight: 320,
     minWidth: 320,
+    title: 'Radio Drama Queen',
     width: 960,
   });
 
