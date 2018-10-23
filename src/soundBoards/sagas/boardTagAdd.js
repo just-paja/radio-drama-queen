@@ -7,7 +7,7 @@ import {
 } from 'redux-saga/effects';
 
 import { soundBoard } from '../actions';
-import { soundList } from '../../sounds/actions';
+import { soundLoad } from '../../sounds/actions';
 import { getBoardCategoryByName } from '../selectors';
 import { createCategory } from '../../soundCategories/sagas';
 import { categoryList } from '../../soundCategories/actions';
@@ -35,7 +35,7 @@ function* addTag({ payload, meta: { uuid } }) {
         },
       });
     }
-    yield all(soundUuids.map(soundUuid => put(soundList.loadTrigger(soundUuid))));
+    yield all(soundUuids.map(soundUuid => put(soundLoad.trigger(soundUuid))));
   }
 }
 

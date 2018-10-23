@@ -8,3 +8,11 @@ export const getTagByName = createSelector(
 );
 
 export const getTags = createSelector(memoizeTagList, state => state);
+
+export const getLanguages = createSelector(
+  memoizeTagList,
+  list => list.reduce((aggr, item) => (
+    aggr.indexOf(item.language) === -1 ? [...aggr, item.langugage] : aggr),
+    []
+  )
+);

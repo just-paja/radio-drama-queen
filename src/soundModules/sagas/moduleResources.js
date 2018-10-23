@@ -8,42 +8,17 @@ import {
 
 import { soundModule } from '../actions';
 import { getModule } from '../selectors';
-import { tagList } from '../../soundTags/actions';
-import { registerSound } from '../../sounds/sagas';
+import { soundRegister } from '../../sounds/actions';
 import { getHttpDirName, getModuleShape } from '../modulePaths';
 
 function* registerModuleSounds({ meta: { name: moduleName } }) {
   const module = yield select(getModule, moduleName);
   if (module && module.sounds && module.sounds.length !== 0) {
     const { sounds, url } = module;
-    yield all(sounds.map(sound => call(registerSound, {
-      ...sound,
-      tags: [
-        module.baseTag,
-        ...(module.baseTags || []),
-        ...(sound.tags || []),
-      ]
-        .filter(tag => tag)
-        .filter((value, index, self) => self.indexOf(value) === index),
-      path: `${getHttpDirName(url)}${sound.file}`,
-    })));
+    yield all(sounds.map(soundPath => put(soundRegister.trigger(null, {
+      path: `${getHttpDirName(url)}${soundPath}`,
+    }))));
   }
-}
-
-function* registerModuleTags({ meta: { name: moduleName } }) {
-  const module = yield select(getModule, moduleName);
-  const moduleTags = module.tags || [];
-  const tags = module.sounds
-    ? module.sounds.reduce((aggr, sound) => {
-      const newTags = sound.tags
-        .filter(tag => !aggr.find(moduleTag => moduleTag.name === tag))
-        .map(name => ({ name }));
-      return newTags.length === 0
-        ? aggr
-        : [...aggr, ...newTags];
-    }, moduleTags)
-    : moduleTags;
-  yield all(tags.map(payload => put(tagList.add(payload))));
 }
 
 function* loadSubModules({ meta: { name: moduleName } }) {
@@ -66,7 +41,7 @@ function* loadSubModules({ meta: { name: moduleName } }) {
 }
 
 function* integrateModuleResources(action) {
-  yield call(registerModuleTags, action);
+  // yield call(registerModuleTags, action);
   yield call(loadSubModules, action);
   yield call(registerModuleSounds, action);
 }

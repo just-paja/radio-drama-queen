@@ -1,10 +1,10 @@
 import { put, takeLatest } from '@redux-saga/core/effects';
 
 import { categoryList } from '../actions';
-import { soundList } from '../../sounds/actions';
+import { soundLoad } from '../../sounds/actions';
 
 function* loadSound({ payload }) {
-  yield put(soundList.loadTrigger(payload));
+  yield put(soundLoad.trigger(payload));
 }
 
 function* handleSoundAdd() {

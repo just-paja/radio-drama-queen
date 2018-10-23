@@ -9,7 +9,8 @@ import {
 
 import { workspaceLoad } from '../actions';
 import { getUsedSounds, getWorkspaceFilePath } from '../selectors';
-import { soundList } from '../../sounds/actions';
+import { soundRegister, soundLoad } from '../../sounds/actions';
+import { matchSoundLoadFinish } from '../../sounds/sagas';
 
 import { readFile } from '../../LocalAssetsManager';
 
@@ -34,10 +35,15 @@ function* loadFromDestination({ payload: { path } }) {
   yield put(workspaceLoad.dialogHide());
 }
 
+function* reloadSound(sound) {
+  yield put(soundRegister.trigger(sound.uuid, sound));
+  yield take(matchSoundLoadFinish(soundRegister, sound.uuid));
+  yield put(soundLoad.trigger(sound.uuid));
+}
+
 function* loadSounds() {
   const sounds = yield select(getUsedSounds);
-  console.log(sounds);
-  yield all(sounds.map(sound => put(soundList.loadTrigger(sound.uuid))));
+  yield all(sounds.map(sound => call(reloadSound, sound)));
 }
 
 function* handleLoad() {

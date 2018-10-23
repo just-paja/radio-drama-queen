@@ -44,7 +44,7 @@ class SoundTag extends Component {
         type="button"
       >
         #
-        {(tag.title && tag.title.cs) || tag.name}
+        {tag.title || tag.name}
       </button>
     );
   }

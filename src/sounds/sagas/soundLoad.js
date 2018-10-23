@@ -2,6 +2,7 @@ import { Howl } from 'howler';
 import {
   call,
   put,
+  take,
   takeEvery,
   select,
 } from 'redux-saga/effects';
@@ -9,14 +10,22 @@ import {
 import AudioManager from '../AudioManager';
 
 import { createQueue } from 'redux-saga-job-queue';
-import { downloadSound } from '../../LocalAssetsManager';
-import { soundList } from '../actions';
+import { soundList, soundLoad, soundRead } from '../actions';
 import { getSound } from '../selectors';
-import { getNameWithoutExtension, registerSound } from './soundAdd';
+
+const ipcRenderer = global.require('electron').ipcRenderer;
 
 let queue;
 
 const isQueueRunning = () => Boolean(queue && !queue.isFinished());
+
+const getNameWithoutExtension = filePath => filePath
+  .split('/')
+  .filter((part, index, source) => index === source.length - 1)
+  .join('/')
+  .split('.')
+  .filter((part, index, source) => index !== source.length - 1)
+  .join('.');
 
 const loadFile = file => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -55,23 +64,42 @@ function* loadSoundFile(uuid, file) {
   }
 }
 
-function* loadSoundUrl({ payload: { uuid, url } }) {
+export const matchSoundLoadFinish = (routine, uuid) => action => (
+  action
+  && (
+    action.type === routine.SUCCESS
+    || action.type === routine.FAILURE
+  )
+  && action.meta
+  && (
+    !uuid ||
+    action.meta.uuid === uuid
+  )
+);
+
+function* readSoundDataUrl({ payload }) {
+  yield put(soundRead.request(payload.uuid, payload));
+  ipcRenderer.send('frontendSays', soundRead.request(payload.uuid, payload));
+  const result = yield take(matchSoundLoadFinish(soundRead, payload.uuid));
+  yield put(soundRead.fulfill(payload.uuid));
+  return result.payload;
+}
+
+function* loadSoundUrl({ payload, payload: { format, uuid } }) {
   try {
-    yield put(soundList.loadRequest(uuid));
-    const soundFile = yield call(downloadSound, uuid, url);
-    // Not sure about this anymore
-    // yield put(soundList.setName(uuid, getNameWithoutExtension(soundFile.name)));
-    yield call(loadAudio, uuid, soundFile.blob, soundFile.extension);
-    yield put(soundList.loadSuccess(uuid));
+    yield put(soundLoad.request(uuid, payload));
+    const dataUrl = yield call(readSoundDataUrl, { payload });
+    yield call(loadAudio, uuid, dataUrl, format);
+    yield put(soundLoad.success(uuid));
   } catch (error) {
-    yield put(soundList.loadFailure(uuid, error));
+    yield put(soundLoad.failure(uuid, error));
   } finally {
-    yield put(soundList.loadFulfill(uuid));
+    yield put(soundLoad.fulfill(uuid));
   }
 }
 
-function* loadSoundInQueue(uuid, url) {
-  const items = [{ uuid, url }];
+function* loadSoundInQueue(uuid, sound) {
+  const items = [sound];
   if (isQueueRunning()) {
     yield call(queue.addItems, items);
   } else {
@@ -88,7 +116,7 @@ export function* loadSoundResource(uuid, resource) {
   try {
     if (resource instanceof File) {
       yield call(loadSoundFile, uuid, resource);
-    } else if (typeof resource === 'string') {
+    } else if (typeof resource === 'object' && resource.cachePath) {
       yield call(loadSoundInQueue, uuid, resource);
     }
   } catch (e) {
@@ -97,24 +125,19 @@ export function* loadSoundResource(uuid, resource) {
   }
 }
 
-export function* loadSound(categoryUuid, resource) {
-  const uuid = yield call(registerSound, resource);
-  yield call(loadSoundResource, uuid, resource);
-}
-
 function* loadSoundFromStore({ meta: { uuid } }) {
   const sound = yield select(getSound, uuid);
   if (sound) {
     if (sound.valid) {
       yield put(soundList.loadSuccess(uuid));
     } else {
-      yield call(loadSoundInQueue, uuid, sound.path);
+      yield call(loadSoundInQueue, uuid, sound);
     }
   }
 }
 
 function* handleSoundLoad() {
-  yield takeEvery(soundList.LOAD_TRIGGER, loadSoundFromStore);
+  yield takeEvery(soundLoad.TRIGGER, loadSoundFromStore);
 }
 
 export default [

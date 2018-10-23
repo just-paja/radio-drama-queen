@@ -5,6 +5,7 @@ import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import reducers from './reducers';
+import ipcActionPipe from './ipcActionPipe';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -32,6 +33,8 @@ export default function configureStore(initialState = {}) {
     initialState,
     compose(...enhancers)
   );
+
+  ipcActionPipe(store);
 
   // Create hook for async sagas
   store.sagaMiddleware = sagaMiddleware;

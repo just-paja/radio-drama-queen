@@ -1,7 +1,7 @@
 import { put, select, take, takeEvery } from 'redux-saga/effects';
 
 import { gallerySound } from '../actions';
-import { soundList } from '../../sounds/actions';
+import { soundLoad, soundList } from '../../sounds/actions';
 import { getSound } from '../../sounds/selectors';
 
 function* playAndForget({ payload }) {
@@ -10,8 +10,8 @@ function* playAndForget({ payload }) {
     if (sound.playing) {
       yield put(soundList.stop(payload));
     } else {
-      yield put(soundList.loadTrigger(payload));
-      yield take(action => action.type === soundList.LOAD_SUCCESS && action.meta.uuid === payload);
+      yield put(soundLoad.trigger(payload));
+      yield take(action => action.type === soundLoad.FULFILL && action.meta.uuid === payload);
       yield put(soundList.play(payload));
     }
   }

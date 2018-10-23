@@ -33,6 +33,20 @@ const flattenRoutineActions = (itemReducer, routines) => {
   return flattenRoutineActions(itemReducer, [routines]);
 };
 
+const addItem = (mainRoutine, itemInitialState, state, action) => {
+  const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
+  if (index === -1) {
+    return [
+      ...state,
+      {
+        ...itemInitialState,
+        ...action.payload,
+      },
+    ];
+  }
+  return state;
+};
+
 export const createListReducer = (
   routines,
   itemReducer,
@@ -41,18 +55,19 @@ export const createListReducer = (
   const mainRoutine = routines instanceof Array ? routines[0] : routines;
 
   return handleActions({
-    [mainRoutine.ADD]: (state, action) => {
+    [mainRoutine.ADD]: (state, action) => addItem(mainRoutine, itemInitialState, state, action),
+    [mainRoutine.ADD_GROUP]: (state, action) => action.payload.reduce(
+      (aggr, payload) => addItem(mainRoutine, itemInitialState, aggr, { payload }),
+      state
+    ),
+    [mainRoutine.PUT]: (state, action) => {
       const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
       if (index === -1) {
-        return [
-          ...state,
-          {
-            ...itemInitialState,
-            ...action.payload,
-          },
-        ];
+        return addItem(mainRoutine, itemInitialState, state, action);
       }
-      return state;
+      const nextState = state.slice();
+      nextState[index] = action.payload;
+      return nextState;
     },
     [mainRoutine.REMOVE]: (state, action) => {
       const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));

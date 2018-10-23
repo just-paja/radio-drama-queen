@@ -11,15 +11,13 @@ import { getWorkspaceFilePath } from '../selectors';
 
 import { writeFile } from '../../LocalAssetsManager';
 
-const stripMemoryState = (state) => ({
+const stripMemoryState = ({ form, soundGallery, ...state }) => ({
   ...state,
   sounds: {
     ...state.sounds,
     list: state.sounds.list.map(sound => ({
-      ...sound,
-      playing: false,
-      loading: false,
-      valid: false,
+      path: sound.path,
+      uuid: sound.uuid,
     })),
   },
   soundWorkspaces: {

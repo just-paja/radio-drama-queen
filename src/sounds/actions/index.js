@@ -1,4 +1,4 @@
-import { createListRoutine } from '../../lists';
+import { createListActionsRoutine, createListRoutine } from '../../lists';
 
 export const soundList = createListRoutine('SOUND', [
   'FINISHED',
@@ -25,4 +25,26 @@ export const soundList = createListRoutine('SOUND', [
   'UNLOAD',
 ]);
 
-export default { soundList };
+export const soundRegister = createListActionsRoutine('SOUND_REGISTER', [
+  'TRIGGER',
+  'REQUEST',
+  'SUCCESS',
+  'FAILURE',
+  'FULFILL',
+]);
+
+export const soundRead = createListActionsRoutine('SOUND_READ', [
+  'TRIGGER',
+  'REQUEST',
+  'SUCCESS',
+  'FAILURE',
+  'FULFILL',
+]);
+
+export const soundLoad = createListActionsRoutine('SOUND_LOAD', [
+  'TRIGGER',
+  'REQUEST',
+  'SUCCESS',
+  'FAILURE',
+  'FULFILL',
+]);

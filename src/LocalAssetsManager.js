@@ -2,8 +2,6 @@ import hash from 'hash.js';
 
 let fs;
 let electron;
-let soundParseWorker;
-let WorkerNodes;
 let jetpack;
 let request;
 
@@ -13,10 +11,6 @@ const loadDependencies = () => {
     electron = global.require('electron');
     jetpack = global.require('fs-jetpack');
     request = global.require('request');
-    WorkerNodes = global.require('worker-nodes');
-    const exePath = electron.remote.app.getAppPath('exe');
-    const workerPath = jetpack.path(exePath, 'src', 'workers', 'soundToDataUrl.js');
-    soundParseWorker = new WorkerNodes(workerPath);
   }
 };
 
@@ -29,8 +23,6 @@ const splitNameFromExtension = (url) => {
     extension: fileNameParts.length > 1 ? fileNameParts.pop() : null,
   };
 };
-
-const getFileDescriptor = filePaths => soundParseWorker.call(filePaths);
 
 const cacheFile = (url, cachePath) => {
   if (!fs) {
@@ -75,7 +67,6 @@ const getPath = (...args) => {
 
 class LocalAssetsManager {
   constructor() {
-    this.downloadSound = this.downloadSound.bind(this);
     this.downloadConfig = this.downloadConfig.bind(this);
     loadDependencies();
     this.home = getPath('userData');
@@ -117,16 +108,6 @@ class LocalAssetsManager {
       .then(() => cacheFile(url, cachePath))
       .then(() => jetpack.readAsync(cachePath, 'json'));
   }
-
-  downloadSound(uuid, url) {
-    const cachePath = this.getSoundPath(url);
-    return this.ensureCacheDirExistence()
-      .then(() => cacheFile(url, cachePath))
-      .then(() => getFileDescriptor({
-        filePath: cachePath,
-        url,
-      }));
-  }
 }
 
 const localAssetsManager = new LocalAssetsManager();
@@ -135,7 +116,6 @@ export default localAssetsManager;
 
 export const {
   downloadConfig,
-  downloadSound,
   readFile,
   writeFile,
 } = localAssetsManager;
