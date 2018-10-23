@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton';
 import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton';
+import WorkspaceSaveButton from '../soundWorkspaces/containers/WorkspaceSaveButton';
 import WorkspaceSaveAsButton from '../soundWorkspaces/containers/WorkspaceSaveAsButton';
 import WorkspaceLoadFromButton from '../soundWorkspaces/containers/WorkspaceLoadFromButton';
 import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection';
@@ -48,6 +49,7 @@ class AppMenu extends Component {
 
     menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
     menuItems.push(<WorkspaceLoadFromButton button buttonComponent={ListItem} key="loadFrom" />);
+    menuItems.push(<WorkspaceSaveButton button buttonComponent={ListItem} key="save" />);
     menuItems.push(<WorkspaceSaveAsButton button buttonComponent={ListItem} key="saveAs" />);
     menuItems.push(<Divider key="dividerOps" />);
     menuItems.push(<WipeLibraryButton button buttonComponent={ListItem} key="wipe" />);
