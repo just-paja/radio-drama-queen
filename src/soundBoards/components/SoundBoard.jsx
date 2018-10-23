@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SoundBoardCategory from './SoundBoardCategory';
 import SoundBoardCategoryCreate from '../containers/SoundBoardCategoryCreate';
 import SoundBoardEmptyMessage from './SoundBoardEmptyMessage';
+import SoundBoardRenameDialog from '../containers/SoundBoardRenameDialog';
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
 
 const styles = theme => ({
@@ -95,10 +96,11 @@ class SoundBoard extends Component {
     // Wrapping div is necessary for react-dnd
     return connectDropTarget(
       <div>
+        <SoundBoardRenameDialog boardUuid={uuid} />
         <Grid className={gridClasses} container>
           {content}
           <SoundBoardSpeedDial
-            board={uuid}
+            boardUuid={uuid}
             onSoundAdd={this.handleSoundPickerOpen}
           />
           {renderSnackbar(isOver, canDrop)}

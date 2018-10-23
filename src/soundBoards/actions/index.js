@@ -10,6 +10,13 @@ export const soundBoard = createListRoutine('BOARD', [
   'TAG_ADD',
 ]);
 
+export const boardRename = createListRoutine('BOARD_RENAME', [
+  'CLOSE',
+  'OPEN',
+  'SUBMIT',
+]);
+
+
 export const categoryCreate = createRoutine('BOARD_CATEGORY', [
   'FORM_HIDE',
   'FORM_SHOW',

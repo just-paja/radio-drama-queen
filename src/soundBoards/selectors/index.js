@@ -34,6 +34,11 @@ export const getBoard = createSelector(
   board => board
 );
 
+export const getBoardName = createSelector(
+  getBoard,
+  board => board.name
+);
+
 export const getBoardCategories = createSelector(
   (state, boardUuid) => getCategories(state)
     .filter(category => category.board === boardUuid),
@@ -67,3 +72,5 @@ export const getBoardTargetCategory = createSelector(
 );
 
 export const isCategoryCreateFormVisible = getFlag(memoizeUi, 'showCreateForm');
+
+export const isBoardRenameDialogVisible = getFlag(memoizeUi, 'showBoardRenameDialog');
