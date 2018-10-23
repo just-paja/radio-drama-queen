@@ -47,8 +47,8 @@ class AppMenu extends Component {
     const { drawerOpen } = this.state;
     const menuItems = [];
 
-    menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
     menuItems.push(<WorkspaceLoadFromButton button buttonComponent={ListItem} key="loadFrom" />);
+    menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key="open" />);
     menuItems.push(<WorkspaceSaveButton button buttonComponent={ListItem} key="save" />);
     menuItems.push(<WorkspaceSaveAsButton button buttonComponent={ListItem} key="saveAs" />);
     menuItems.push(<Divider key="dividerOps" />);
