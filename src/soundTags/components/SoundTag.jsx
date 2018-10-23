@@ -13,6 +13,9 @@ const styles = theme => ({
     color: theme.palette.text.hint,
     margin: 0,
     padding: 0,
+    '&:hover': {
+      color: theme.palette.text.primary,
+    },
   },
 });
 
