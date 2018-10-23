@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import LabelButton from '../../components/LabelButton';
 
 import { workspaceSave } from '../actions';
+import { isWorkspaceEmpty } from '../selectors';
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
   children: 'Save As',
+  disabled: isWorkspaceEmpty(state),
   icon: SaveAlt,
 });
 
