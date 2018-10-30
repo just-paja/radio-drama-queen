@@ -120,3 +120,8 @@ export const getAllUnusedSoundsByTag = createSelector(
     sound => !categories.find(category => category.sounds.indexOf(sound.uuid) !== -1)
   )
 );
+
+export const isSoundUsed = createSelector(
+  [getCategories, (state, soundUuid) => soundUuid],
+  (categories, soundUuid) => categories.some(category => category.sounds.indexOf(soundUuid) !== -1)
+);

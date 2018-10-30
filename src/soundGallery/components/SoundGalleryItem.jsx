@@ -68,7 +68,7 @@ class SoundGalleryItem extends Component {
         <div>
           <span>{sound.name}</span>
           <div className={classes.tags}>
-            {sound.tags.reduce((aggr, tag) => [
+            {sound.tags && sound.tags.reduce((aggr, tag) => [
               ...aggr,
               <SoundTag
                 key={tag}

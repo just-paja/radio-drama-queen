@@ -8,9 +8,11 @@ import {
 } from 'redux-saga/effects';
 
 import { workspaceLoad } from '../actions';
-import { getUsedSounds, getWorkspaceFilePath } from '../selectors';
+import { getWorkspaceFilePath } from '../selectors';
 import { soundRegister, soundLoad } from '../../sounds/actions';
 import { matchSoundLoadFinish } from '../../sounds/sagas';
+import { memoizeSoundList } from '../../sounds/selectors';
+import { isSoundUsed } from '../../soundCategories/selectors';
 
 import { readFile } from '../../LocalAssetsManager';
 
@@ -19,7 +21,11 @@ function* load() {
   try {
     const path = yield select(getWorkspaceFilePath);
     const content = yield call(readFile, path);
-    yield put(workspaceLoad.reset(JSON.parse(content)));
+    const state = yield select(state => state);
+    yield put(workspaceLoad.reset({
+      ...state,
+      ...JSON.parse(content),
+    }));
     yield put(workspaceLoad.success());
   } catch (error) {
     yield put(workspaceLoad.failure(error));
@@ -38,11 +44,15 @@ function* loadFromDestination({ payload: { path } }) {
 function* reloadSound(sound) {
   yield put(soundRegister.trigger(sound.uuid, sound));
   yield take(matchSoundLoadFinish(soundRegister, sound.uuid));
-  yield put(soundLoad.trigger(sound.uuid));
+  const isUsed = yield select(isSoundUsed, sound.uuid);
+  if (isUsed) {
+    yield put(soundLoad.trigger(sound.uuid));
+    yield take(matchSoundLoadFinish(soundLoad, sound.uuid));
+  }
 }
 
 function* loadSounds() {
-  const sounds = yield select(getUsedSounds);
+  const sounds = yield select(memoizeSoundList);
   yield all(sounds.map(sound => call(reloadSound, sound)));
 }
 
