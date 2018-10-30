@@ -19,7 +19,7 @@ function* addTag({ payload, meta: { uuid } }) {
   if (tag) {
     const sounds = yield select(getAllUnusedSoundsByTag, payload);
     const soundUuids = sounds.map(sound => sound.uuid);
-    const categoryName = (tag.title && tag.title.cs) || tag.name;
+    const categoryName = tag.title || tag.name;
     const category = yield select(getBoardCategoryByName, uuid, categoryName);
     if (category) {
       yield all(soundUuids.map(soundUuid => put(categoryList.soundAdd(
