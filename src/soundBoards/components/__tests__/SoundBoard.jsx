@@ -37,7 +37,7 @@ describe('SoundBoard component', () => {
         connectDropTarget={nodes => nodes}
       />
     );
-    expect(comp.dive().find('WithStyles(Snackbar)')).toHaveProp('open', true);
+    expect(comp.dive().find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', true);
   });
 
   it('renders snackbar closed when touch is not over and can drop', () => {
@@ -50,7 +50,7 @@ describe('SoundBoard component', () => {
         connectDropTarget={nodes => nodes}
       />
     );
-    expect(comp.dive().find('WithStyles(Snackbar)')).toHaveProp('open', false);
+    expect(comp.dive().find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', false);
   });
 
   it('renders snackbar closed when touch is over and can not drop', () => {
@@ -63,7 +63,7 @@ describe('SoundBoard component', () => {
         connectDropTarget={nodes => nodes}
       />
     );
-    expect(comp.dive().find('WithStyles(Snackbar)')).toHaveProp('open', false);
+    expect(comp.dive().find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', false);
   });
 
   it('renders create form when given showCreateForm flag', () => {

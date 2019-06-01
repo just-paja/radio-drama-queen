@@ -3,15 +3,21 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { SoundBoardView } from '..';
-import { mockStore } from '../../../../mock';
+import { renderWithDnd } from '../../../../mock';
 import { workspace } from '../../actions';
 
 describe('SoundBoardView container', () => {
-  let store;
   let comp;
 
   beforeEach(() => {
     const state = {
+      soundBoards: {
+        list: [
+          {
+            uuid: 'sd6f4sd6f4',
+          },
+        ],
+      },
       sounds: {
         list: [
           {
@@ -22,20 +28,15 @@ describe('SoundBoardView container', () => {
         ],
       },
     };
-    store = mockStore(state);
-    comp = shallow(<SoundBoardView />, {
-      context: {
-        store,
-      },
-    });
+    comp = renderWithDnd(<SoundBoardView board="sd6f4sd6f4" />, state);
   });
 
   it('dispatches select view with target on sound picker open', () => {
-    comp.dive().simulate('soundPickerOpen', {
+    comp.find('SoundBoardView').props().onSoundPickerOpen({
       board: 'board-1',
       category: 'category-1',
     });
-    expect(store.getActions()).toContainEqual(workspace.selectView('VIEW_LIBRARY', {
+    expect(comp.store.getActions()).toContainEqual(workspace.selectView('VIEW_LIBRARY', {
       target: {
         board: 'board-1',
         category: 'category-1',

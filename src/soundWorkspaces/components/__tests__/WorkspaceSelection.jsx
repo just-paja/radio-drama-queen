@@ -33,7 +33,7 @@ describe('WorkspaceSelection component', () => {
         onViewSelect={onViewSelect}
       />
     ).dive();
-    comp.find('WithStyles(ToggleButtonGroup)').simulate('change', null, 'VIEW_LIBRARY');
+    comp.find('WithStyles(ForwardRef(ToggleButton))').first().simulate('change', null, 'VIEW_LIBRARY');
     expect(onViewSelect).toHaveBeenCalledWith('VIEW_LIBRARY');
   });
 });

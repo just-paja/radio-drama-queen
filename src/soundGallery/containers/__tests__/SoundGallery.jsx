@@ -4,13 +4,10 @@ import { shallow } from 'enzyme';
 
 import SoundGallery from '../SoundGallery';
 
-import { mockStore } from '../../../../mock';
+import { renderWithContainers } from '../../../../mock';
 
 describe('SoundGallery container', () => {
-  let store;
-  let comp;
-
-  beforeEach(() => {
+  it('provides sounds', () => {
     const state = {
       sounds: {
         list: [
@@ -22,15 +19,18 @@ describe('SoundGallery container', () => {
         ],
       },
     };
-    store = mockStore(state);
-    comp = shallow(<SoundGallery />, {
-      context: {
-        store,
-      },
-    });
-  });
-
-  it('provides sounds', () => {
-    expect(comp).toHaveProp('librarySize', 1);
+    const comp = renderWithContainers(
+      <SoundGallery
+        onAddSound={() => {}}
+        onAddTag={() => {}}
+        onBoardCreate={() => {}}
+        onConfigOpen={() => {}}
+        onGoBack={() => {}}
+        onLibraryOpen={() => {}}
+        onSoundAdd={() => {}}
+      />,
+      state
+    );
+    expect(comp.find('SoundGallery')).toHaveProp('librarySize', 1);
   });
 });

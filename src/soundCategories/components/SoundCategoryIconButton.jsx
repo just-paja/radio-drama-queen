@@ -34,7 +34,10 @@ const SoundCategoryIconButton = ({ className, classes, icon: Icon, ...props }) =
 SoundCategoryIconButton.propTypes = {
   classes: Classes.isRequired,
   className: ClassName,
-  icon: PropTypes.func.isRequired,
+  icon: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+  ]).isRequired,
 };
 
 SoundCategoryIconButton.defaultProps = {

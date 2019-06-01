@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { shallow } from 'enzyme';
-
 import { SoundBoardSelection } from '..';
+import { renderWithContainers } from '../../../../mock';
 
 describe('SoundBoardSelection component', () => {
   it('renders sound board label', () => {
     const onBoardSelect = jest.fn();
-    const comp = shallow(
+    const comp = renderWithContainers(
       <SoundBoardSelection
         activeBoard={null}
         boards={[
@@ -19,7 +18,7 @@ describe('SoundBoardSelection component', () => {
         onBoardSelect={onBoardSelect}
       />
     );
-    expect(comp.dive().find('WithStyles(SoundBoardLabel)')).toHaveProp('board', {
+    expect(comp.find('SoundBoardLabel')).toHaveProp('board', {
       uuid: 'foo',
       name: 'xxx',
     });
@@ -27,7 +26,7 @@ describe('SoundBoardSelection component', () => {
 
   it('triggers onBoardSelect board button click with board uuid', () => {
     const onBoardSelect = jest.fn();
-    const comp = shallow(
+    const comp = renderWithContainers(
       <SoundBoardSelection
         activeBoard={null}
         boards={[
@@ -43,13 +42,13 @@ describe('SoundBoardSelection component', () => {
         onBoardSelect={onBoardSelect}
       />
     );
-    comp.dive().find('WithStyles(ToggleButtonGroup)').simulate('change', {}, 'foo');
+    comp.find('ForwardRef(ToggleButton)').first().props().onChange({}, 'foo');
     expect(onBoardSelect).toHaveBeenCalledWith('foo');
   });
 
   it('triggers onBoardSelect board button click with active board uuid when value is null', () => {
     const onBoardSelect = jest.fn();
-    const comp = shallow(
+    const comp = renderWithContainers(
       <SoundBoardSelection
         activeBoard="foo"
         boards={[
@@ -65,7 +64,7 @@ describe('SoundBoardSelection component', () => {
         onBoardSelect={onBoardSelect}
       />
     );
-    comp.dive().find('WithStyles(ToggleButtonGroup)').simulate('change', {}, null);
+    comp.find('ForwardRef(ToggleButton)').first().props().onChange({}, null);
     expect(onBoardSelect).toHaveBeenCalledWith('foo');
   });
 });
