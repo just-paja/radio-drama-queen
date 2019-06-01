@@ -4,7 +4,7 @@ workspace_root: &workspace_root
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:9-stretch
+    - image: circleci/node:10-stretch
 
 onMaster: &onMaster
   branches:
@@ -41,7 +41,7 @@ jobs:
           - dependencies-
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm ci
 
       - save_cache:
           paths:
