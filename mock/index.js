@@ -1,2 +1,2 @@
-export { default as mockStore } from './store';
+export * from './store';
 export { default as getSagaTester } from './sagaTester';

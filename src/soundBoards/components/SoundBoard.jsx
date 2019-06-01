@@ -17,7 +17,7 @@ import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
 
 const styles = theme => ({
   gridSpacing: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     minWidth: 320,
     alignContent: 'start',
   },

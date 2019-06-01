@@ -22,17 +22,17 @@ const styles = theme => ({
     padding: 0,
   },
   soundList: {
-    marginLeft: theme.spacing.unit * (-1/2),
-    marginRight: theme.spacing.unit * (-1/2),
+    marginLeft: theme.spacing(-1/2),
+    marginRight: theme.spacing(-1/2),
   },
   canDrop: {
     background: 'rgba(0,0,0,0.25)',
   },
   cardPadding: {
-    padding: 0.5 * theme.spacing.unit,
+    padding: 0.5 * theme.spacing(1),
   },
   headlinePadding: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     paddingBottom: 0,
   },
   headlineControls: {

@@ -20,7 +20,7 @@ const styles = theme => ({
     color: 'white',
     fontSize: theme.typography.fontSize * 0.75,
     left: 0,
-    paddingRight: theme.spacing.unit / 2,
+    paddingRight: theme.spacing(1/2),
     position: 'fixed',
     right: 0,
     justifyContent: 'flex-end',
@@ -30,14 +30,14 @@ const styles = theme => ({
   stat: {
     display: 'block',
     background: '#000',
-    padding: theme.spacing.unit / 2,
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    marginLeft: theme.spacing.unit / 2
+    padding: theme.spacing(1/2),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    marginLeft: theme.spacing(1/2)
   },
   stopAllButton: {
     marginRight: 'auto',
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   icon: {
     height: theme.typography.fontSize * 0.75,

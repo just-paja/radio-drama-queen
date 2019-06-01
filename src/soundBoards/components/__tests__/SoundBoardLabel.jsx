@@ -25,7 +25,7 @@ describe('SoundBoardLabel component', () => {
         }}
       />
     ).dive();
-    expect(comp).toContainMatchingElements(1, 'pure(AudiotrackIcon)');
+    expect(comp).toContainMatchingElements(1, 'AudiotrackIcon');
   });
 
   it('does not render audiotrack icon when not playing', () => {

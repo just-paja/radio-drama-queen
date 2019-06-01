@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import { SoundStatusIcon } from '..';
 
 describe('SoundStatusIcon component', () => {
   it('renders error icon given the sound has an error', () => {
-    const comp = shallow(
+    const comp = mount(
       <SoundStatusIcon
         error={new Error('Test!')}
       />
@@ -15,7 +15,7 @@ describe('SoundStatusIcon component', () => {
   });
 
   it('renders stop icon given the sound is playing', () => {
-    const comp = shallow(
+    const comp = mount(
       <SoundStatusIcon
         playing
         valid
@@ -25,7 +25,7 @@ describe('SoundStatusIcon component', () => {
   });
 
   it('renders disabled icon given the sound is not valid', () => {
-    const comp = shallow(
+    const comp = mount(
       <SoundStatusIcon
         playing
         valid={false}
@@ -35,16 +35,16 @@ describe('SoundStatusIcon component', () => {
   });
 
   it('renders play arrow icon given the sound is not playing and has no error', () => {
-    const comp = shallow(
+    const comp = mount(
       <SoundStatusIcon valid />
     );
-    expect(comp.find('pure(PlayArrowIcon)')).toHaveLength(1);
+    expect(comp).toBe('PlayArrowIcon');
   });
 
   it('renders loader given the sound is loading', () => {
-    const comp = shallow(
+    const comp = mount(
       <SoundStatusIcon loading />
     );
-    expect(comp.find('WithStyles(CircularProgress)')).toHaveLength(1);
+    expect(comp).toContainMatchingElement('ForwardRef(CircularProgress)');
   });
 });

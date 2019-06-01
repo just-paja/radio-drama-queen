@@ -9,9 +9,9 @@ import { Classes } from '../proptypes';
 
 const styles = theme => ({
   speedDial: {
-    bottom: theme.spacing.unit * 5,
+    bottom: theme.spacing(5),
     position: 'fixed',
-    right: theme.spacing.unit * 2,
+    right: theme.spacing(2),
   },
 });
 

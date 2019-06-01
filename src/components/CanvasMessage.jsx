@@ -9,7 +9,7 @@ const styles = theme => ({
   messageSize: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     maxWidth: 600,
   },
 });

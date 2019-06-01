@@ -14,12 +14,12 @@ const styles = theme => ({
   container: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     maxWidth: theme.breakpoints.values.sm,
   },
   input: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
 });
 

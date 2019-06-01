@@ -11,6 +11,7 @@ describe('SoundGalleryView component', () => {
         onAddSoundToBoard={() => {}}
         onAddTagToBoard={() => {}}
         onBoardCreate={() => {}}
+        onConfigOpen={() => {}}
         onGalleryGoBack={() => {}}
         onLibraryOpen={() => {}}
       />

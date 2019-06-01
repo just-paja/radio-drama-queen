@@ -1,13 +1,9 @@
 import React from 'react';
-
-import { shallow } from 'enzyme';
-
 import SoundBoard from '../SoundBoard';
 
-import { mockStore } from '../../../../mock';
+import { renderWithDnd } from '../../../../mock';
 
 describe('SoundBoard container', () => {
-  let store;
   let comp;
 
   beforeEach(() => {
@@ -29,36 +25,40 @@ describe('SoundBoard container', () => {
             name: 'foo',
             uuid: 'category-1',
             board: 'board-1',
+            sounds: [],
+            volume: 1,
           },
           {
             name: 'foo',
             uuid: 'category-2',
             board: 'board-1',
+            sounds: [],
+            volume: 1,
           },
           {
             name: 'foo',
             uuid: 'category-3',
             board: 'board-2',
+            sounds: [],
+            volume: 1,
           },
         ],
       },
+      sounds: {
+        list: [],
+      }
     };
-    store = mockStore(state);
-    comp = shallow(<SoundBoard uuid="board-1" />, {
-      context: {
-        store,
-      },
-    });
+    comp = renderWithDnd(<SoundBoard onSoundPickerOpen={() => {}} uuid="board-1" />, state);
   });
 
   it('provides category uuid list', () => {
-    expect(comp).toHaveProp('categories', [
+    expect(comp.find('SoundBoard')).toHaveProp('categories', [
       'category-1',
       'category-2',
     ]);
   });
 
   it('provides showCreateForm flag', () => {
-    expect(comp).toHaveProp('showCreateForm', true);
+    expect(comp.find('SoundBoard')).toHaveProp('showCreateForm', true);
   });
 });

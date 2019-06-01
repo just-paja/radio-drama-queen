@@ -13,7 +13,7 @@ const styles = theme => ({
     border: 'none',
     display: 'flex',
     margin: 0,
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     userSelect: 'none',
     width: '100%',
     '&:hover': {
@@ -22,8 +22,8 @@ const styles = theme => ({
   },
   icon: {
     height: theme.typography.fontSize * 3/2,
-    marginLeft: theme.spacing.unit / 2,
-    marginRight: theme.spacing.unit * 1.5,
+    marginLeft: theme.spacing(1/2),
+    marginRight: theme.spacing(1.5),
     width: theme.typography.fontSize * 3/2,
   }
 });

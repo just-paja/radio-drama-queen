@@ -11,7 +11,7 @@ import { Classes } from '../../proptypes';
 
 const styles = theme => ({
   body: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(),
   },
 });
 

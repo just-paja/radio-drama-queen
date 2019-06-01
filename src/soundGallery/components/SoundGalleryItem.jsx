@@ -13,7 +13,7 @@ import { Classes } from '../../proptypes';
 
 const styles = theme => ({
   controls: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     display: 'flex',
     flexDirection: 'row',
   },

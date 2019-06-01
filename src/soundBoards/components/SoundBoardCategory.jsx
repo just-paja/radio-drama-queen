@@ -8,7 +8,7 @@ import { SoundCategory } from '../../soundCategories/containers';
 
 const styles = theme => ({
   gridItem: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 });
 
