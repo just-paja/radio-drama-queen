@@ -25,13 +25,19 @@ const LabelButton = ({
 );
 
 LabelButton.propTypes = {
-  buttonComponent: PropTypes.func,
+  buttonComponent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+  ]),
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  icon: PropTypes.func.isRequired,
+  icon: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+  ]).isRequired,
 };
 
 LabelButton.defaultProps = {

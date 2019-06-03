@@ -1,13 +1,9 @@
 import React from 'react';
-
-import { shallow } from 'enzyme';
-
 import SoundTag from '../SoundTag';
 
-import { mockStore } from '../../../../mock';
+import { renderWithContainers } from '../../../../mock';
 
 describe('SoundTag container', () => {
-  let store;
   let comp;
 
   beforeEach(() => {
@@ -23,16 +19,11 @@ describe('SoundTag container', () => {
         ],
       },
     };
-    store = mockStore(state);
-    comp = shallow(<SoundTag tag="foo" />, {
-      context: {
-        store,
-      },
-    });
+    comp = renderWithContainers(<SoundTag tag="foo" />, state);
   });
 
   it('provides tag property', () => {
-    expect(comp).toHaveProp('tag', {
+    expect(comp.find('SoundTag')).toHaveProp('tag', {
       name: 'foo',
       title: {
         en: 'Test tag',

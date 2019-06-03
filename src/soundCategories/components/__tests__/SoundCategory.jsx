@@ -57,6 +57,6 @@ describe('SoundCategory component', () => {
         uuid="category-1"
       />
     ).dive();
-    expect(comp.find('WithStyles(Snackbar)')).toHaveProp('open', true);
+    expect(comp.find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', true);
   });
 });
