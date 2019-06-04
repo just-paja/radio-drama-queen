@@ -1,4 +1,4 @@
-# Contributing radio-drama-soundboard
+# Contributing radio-drama-queen
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
@@ -7,13 +7,13 @@ When contributing to this repository, please first discuss the change you wish t
 ### Clone this repository
 
 ```bash
-git clone git@github.com:just-paja/radio-drama-soundboard.git
+git clone git@github.com:just-paja/radio-drama-queen.git
 ```
 
 ### Install dependencies
 
 ```bash
-npm install
+npm ci
 ```
 
 ### Start webpack dev server

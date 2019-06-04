@@ -1,6 +1,6 @@
 {
-  "name": "radio-drama-soundboard",
-  "productName": "radio-drama-soundboard",
+  "name": "radio-drama-queen",
+  "productName": "radio-drama-queen",
   "productDescription": "Tool for playing sounds during radio drama shows",
   "description": "Tool for playing sounds during radio drama shows",
   "version": "0.1.5",
@@ -17,7 +17,7 @@
     "email": "pavel@zak.global",
     "url": "https://pavel.zak.global"
   },
-  "main": "src/radio-drama-soundboard.js",
+  "main": "src/radio-drama-queen.js",
   "scripts": {
     "build": "npm install && electron-forge publish --dry-run",
     "publish": "electron-forge publish --from-dry-run"
@@ -46,17 +46,17 @@
         "asar": true
       },
       "electronWinstallerConfig": {
-        "name": "radio_drama_soundboard"
+        "name": "radio_drama_queen"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
         "owner": "just-paja",
-        "name": "radio-drama-soundboard"
+        "name": "radio-drama-queen"
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "radiodramasoundboard"
+        "name": "radiodramaqueen"
       }
     }
   },

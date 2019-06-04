@@ -1,5 +1,5 @@
 {
-  "name": "radio-drama-soundboard",
+  "name": "radio-drama-queen",
   "version": "0.1.5",
   "private": true,
   "dependencies": {
@@ -88,7 +88,7 @@
         "packageManager": "npm"
       },
       "electronWinstallerConfig": {
-        "name": "radio_drama_soundboard"
+        "name": "radio_drama_queen"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -98,7 +98,7 @@
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "radiodramasoundboard"
+        "name": "radiodramaqueen"
       }
     }
   },

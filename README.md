@@ -1,10 +1,10 @@
-[![CircleCI](https://circleci.com/gh/just-paja/radio-drama-soundboard.svg?style=shield)](https://circleci.com/gh/just-paja/radio-drama-soundboard)
-[![Code Climate](https://codeclimate.com/github/just-paja/radio-drama-soundboard/badges/gpa.svg)](https://codeclimate.com/github/just-paja/radio-drama-soundboard)
-[![Test Coverage](https://codeclimate.com/github/just-paja/radio-drama-soundboard/badges/coverage.svg)](https://codeclimate.com/github/just-paja/radio-drama-soundboard/coverage)
-[![Issue Count](https://codeclimate.com/github/just-paja/radio-drama-soundboard/badges/issue_count.svg)](https://codeclimate.com/github/just-paja/radio-drama-soundboard)
-[![dependencies Status](https://david-dm.org/just-paja/radio-drama-soundboard/status.svg)](https://david-dm.org/just-paja/radio-drama-soundboard)
-[![devDependencies Status](https://david-dm.org/just-paja/radio-drama-soundboard/dev-status.svg)](https://david-dm.org/just-paja/radio-drama-soundboard?type=dev)
-[![Known Vulnerabilities](https://snyk.io/test/github/just-paja/radio-drama-soundboard/badge.svg)](https://snyk.io/test/github/just-paja/radio-drama-soundboard)
+[![CircleCI](https://circleci.com/gh/just-paja/radio-drama-queen.svg?style=shield)](https://circleci.com/gh/just-paja/radio-drama-queen)
+[![Code Climate](https://codeclimate.com/github/just-paja/radio-drama-queen/badges/gpa.svg)](https://codeclimate.com/github/just-paja/radio-drama-queen)
+[![Test Coverage](https://codeclimate.com/github/just-paja/radio-drama-queen/badges/coverage.svg)](https://codeclimate.com/github/just-paja/radio-drama-queen/coverage)
+[![Issue Count](https://codeclimate.com/github/just-paja/radio-drama-queen/badges/issue_count.svg)](https://codeclimate.com/github/just-paja/radio-drama-queen)
+[![dependencies Status](https://david-dm.org/just-paja/radio-drama-queen/status.svg)](https://david-dm.org/just-paja/radio-drama-queen)
+[![devDependencies Status](https://david-dm.org/just-paja/radio-drama-queen/dev-status.svg)](https://david-dm.org/just-paja/radio-drama-queen?type=dev)
+[![Known Vulnerabilities](https://snyk.io/test/github/just-paja/radio-drama-queen/badge.svg)](https://snyk.io/test/github/just-paja/radio-drama-queen)
 
 # radio-drama-queen
 

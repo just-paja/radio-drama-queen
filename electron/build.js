@@ -13,7 +13,7 @@ jetpack.dir(distRoot);
 jetpack.copy(reactRoot, electronDistBundleRoot);
 jetpack.copy(
   jetpack.path(electronSrcRoot, 'electron-starter.js'),
-  jetpack.path(electronDistBundleRoot, 'radio-drama-soundboard.js')
+  jetpack.path(electronDistBundleRoot, 'radio-drama-queen.js')
 );
 jetpack.copy(
   jetpack.path(srcRoot, 'workers'),
