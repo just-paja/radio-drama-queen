@@ -104,9 +104,6 @@
   },
   "homepage": ".",
   "browserslist": [
-    ">1%",
-    "not dead",
-    "not ie",
-    "not op_mini all"
+    "last 5 chrome versions"
   ]
 }
