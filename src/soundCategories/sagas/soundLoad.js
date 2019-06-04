@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from '@redux-saga/core/effects';
 
 import { categoryList } from '../actions';
 import { soundList } from '../../sounds/actions';

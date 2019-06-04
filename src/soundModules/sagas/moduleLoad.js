@@ -3,7 +3,7 @@ import {
   put,
   takeEvery,
   select,
-} from 'redux-saga/effects';
+} from '@redux-saga/core/effects';
 import { createQueue } from 'redux-saga-job-queue';
 
 import { downloadConfig } from '../../LocalAssetsManager';
