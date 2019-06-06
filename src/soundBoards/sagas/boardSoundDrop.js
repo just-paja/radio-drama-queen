@@ -10,6 +10,7 @@ import { getBoard } from '../selectors';
 import { createDefaultCategory } from './boardCategoryCreateDefault';
 import { categoryList } from '../../soundCategories/actions';
 import { getSoundCategories } from '../../soundCategories/selectors';
+import { registerSound } from '../../sounds/sagas';
 
 function* soundMoveToCategory({ payload, meta: { uuid } }) {
   const dropItem = payload.getItem();
@@ -24,7 +25,10 @@ function* soundMoveToCategory({ payload, meta: { uuid } }) {
         soundCategory.uuid,
         dropItem.uuid
       ))));
-    yield put(categoryList.soundAdd(category.uuid, dropItem.uuid));
+    for (let file of dropItem.files) {
+      const soundUuid = yield call(registerSound, file);
+      yield put(categoryList.soundAdd(category.uuid, soundUuid));
+    }
   }
 }
 

@@ -13,7 +13,7 @@ export const addPayload = collectionName => (state, action) => {
 
 export const removePayload = collectionName => (state, action) => {
   const index = state[collectionName].indexOf(action.payload);
-  if (index !== -1) {
+  if (action.payload && index !== -1) {
     const items = state[collectionName].slice();
     items.splice(index, 1);
     return {
