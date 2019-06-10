@@ -16,6 +16,13 @@ const reduceTags = (aggr, item) => {
   ];
 };
 
+const normalizeTags = (tags) => {
+  const tagArray = tags instanceof Array
+    ? tags
+    : [tags];
+  return tagArray.reduce(reduceTags, [])
+}
+
 workerpool.worker({
   readSoundMetaData: (soundData) => {
     if (!soundData) {
@@ -31,7 +38,7 @@ workerpool.worker({
             resolve(Object.assign({}, soundData, {
               format: format,
               name: data.tags.title || path.basename(soundData.path),
-              tags: data.tags.COMM instanceof Array ? data.tags.COMM.reduce(reduceTags, []) : [],
+              tags: normalizeTags(data.tags.COMM),
             }));
           },
         });
