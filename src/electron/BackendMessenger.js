@@ -40,7 +40,9 @@ class BackendMessenger {
   }
 
   sendMessage(action) {
-    console.log('out', action.type, JSON.stringify(action));
+    if (this.debug) {
+      console.log('out', action.type, JSON.stringify(action));
+    }
     this.window.webContents.send('backendSays', action);
   }
 

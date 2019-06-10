@@ -1,18 +1,18 @@
 const electron = require('electron');
 const generateUuid = require('uuid/v4');
 const path = require('path');
-const WorkerNodes = require('worker-nodes');
+const workerpool = require('workerpool');
 
 const exePath = electron.app.getAppPath('exe');
 
-const readSoundMetaData = new WorkerNodes(path.join(
+const readSoundMetaData = workerpool.pool(path.join(
   exePath,
   'src',
   'workers',
   'readSoundMetaData.js'
 ));
 
-const readSoundDataUrl = new WorkerNodes(path.join(
+const readSoundDataUrl = workerpool.pool(path.join(
   exePath,
   'src',
   'workers',
@@ -34,7 +34,7 @@ class SoundManager {
   }
 
   readSoundMetaData(soundData) {
-    return readSoundMetaData.call(soundData);
+    return readSoundMetaData.exec('readSoundMetaData', [soundData]);
   }
 
   /**
@@ -64,7 +64,7 @@ class SoundManager {
   }
 
   getSoundDataUrl(soundData) {
-    return readSoundDataUrl.call(soundData);
+    return readSoundDataUrl.exec('readSoundDataUrl', [soundData]);
   }
 }
 
