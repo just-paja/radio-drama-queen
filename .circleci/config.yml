@@ -226,6 +226,7 @@ workflows:
       - build-electron-prepare:
           requires:
             - build-react
+            - test
           <<: *onTagAndEveryBranch
       - build-linux:
           requires:
