@@ -1,7 +1,9 @@
-const ipcRenderer = global.require('electron').ipcRenderer;
+const ipcRenderer = global.require && global.require('electron').ipcRenderer;
 
 export default (store) => {
-  ipcRenderer.on('backendSays', (event, data) => {
-    store.dispatch(data);
-  });
+  if (ipcRenderer) {
+    ipcRenderer.on('backendSays', (event, data) => {
+      store.dispatch(data);
+    });
+  }
 };

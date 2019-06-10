@@ -9,8 +9,10 @@ describe('SoundBoardSpeedDial component', () => {
     const onBoardCreate = jest.fn();
     const comp = shallow(
       <SoundBoardSpeedDial
+        boardUuid="x32"
         categories={[]}
         onBoardCreate={onBoardCreate}
+        onBoardRename={() => {}}
         onCategoryCreate={() => {}}
       />
     );
@@ -22,8 +24,10 @@ describe('SoundBoardSpeedDial component', () => {
     const onCategoryCreate = jest.fn();
     const comp = shallow(
       <SoundBoardSpeedDial
+        boardUuid="x32"
         categories={[]}
         onBoardCreate={() => {}}
+        onBoardRename={() => {}}
         onCategoryCreate={onCategoryCreate}
       />
     );

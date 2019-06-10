@@ -13,7 +13,7 @@ import { createQueue } from 'redux-saga-job-queue';
 import { soundList, soundLoad, soundRead } from '../actions';
 import { getSound } from '../selectors';
 
-const ipcRenderer = global.require('electron').ipcRenderer;
+const ipcRenderer = global.require && global.require('electron').ipcRenderer;
 
 let queue;
 

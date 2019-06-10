@@ -12,9 +12,7 @@ describe('SoundTag container', () => {
         list: [
           {
             name: 'foo',
-            title: {
-              en: 'Test tag',
-            },
+            title: 'Test tag',
           },
         ],
       },
@@ -25,9 +23,7 @@ describe('SoundTag container', () => {
   it('provides tag property', () => {
     expect(comp.find('SoundTag')).toHaveProp('tag', {
       name: 'foo',
-      title: {
-        en: 'Test tag',
-      },
+      title: 'Test tag',
     });
   });
 });

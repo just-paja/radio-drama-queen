@@ -5,7 +5,7 @@ import { soundList, soundRegister } from '../actions';
 import { tagList } from '../../soundTags/actions';
 import { matchSoundLoadFinish } from './soundLoad';
 
-const ipcRenderer = global.require('electron').ipcRenderer;
+const ipcRenderer = global.require && global.require('electron').ipcRenderer;
 
 let queue;
 
