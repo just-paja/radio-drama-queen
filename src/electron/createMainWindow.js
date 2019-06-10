@@ -16,6 +16,9 @@ module.exports = (development) => {
     minWidth: 320,
     title: 'Radio Drama Queen',
     width: 960,
+    webPreferences: {
+      nodeIntegration: true,
+    }
   });
 
   const messenger = new BackendMessenger(mainWindow, development);
@@ -32,7 +35,8 @@ module.exports = (development) => {
   // TODO: Handle sound mute
   // TODO: Handle sound unmute
 
-  mainWindow.setMenu(null);
+  mainWindow.removeMenu();
+  mainWindow.setMenuBarVisibility(false);
   mainWindow.setFullScreenable(true);
 
   if (development) {

@@ -6,7 +6,7 @@ let jetpack;
 let request;
 
 const loadDependencies = () => {
-  if (global.require) {
+  if (global && global.require) {
     fs = global.require('fs');
     electron = global.require('electron');
     jetpack = global.require('fs-jetpack');

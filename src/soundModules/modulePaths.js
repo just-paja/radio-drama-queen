@@ -1,7 +1,7 @@
 import dirname from 'path-dirname';
 import URL from 'url-parse';
 
-const MANIFEST_FILE = 'index.json';
+const MANIFEST_FILE = 'manifest.json';
 
 const basename = path => path
   .replace(/\\/g, '/')
