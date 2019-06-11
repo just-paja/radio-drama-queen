@@ -190,6 +190,7 @@ workflows:
           <<: *onTagAndEveryBranch
       - publish-binaries:
           requires:
+            - test
             - build-darwin
             - build-linux
             - build-win32
