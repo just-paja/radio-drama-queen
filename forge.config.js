@@ -1,3 +1,33 @@
+const allowedPatterns = [
+  /package.json/,
+  /[/\\]\.webpack($|[/\\]).*$/,
+  /[/\\]src($|[/\\]workers($|[/\\].+))/,
+];
+
+function allowModule(moduleName) {
+  allowedPatterns.push(new RegExp(`[/\\\\]node_modules($|[/\\\\]${moduleName}($|[/\\\\].+))`));
+  const packageInfo = require(`${moduleName}/package.json`);
+  if (packageInfo.dependencies) {
+    Object.keys(packageInfo.dependencies).forEach(allowModule);
+  }
+}
+
+function ignoreFile(file) {
+  if (!file) {
+    return false;
+  }
+  const ignore = !allowedPatterns.some(pattern => pattern.test(file));
+  if (!ignore) {
+    console.log(file)
+  } else {
+    console.log('IGNORED:', file)
+  }
+  return ignore;
+}
+
+allowModule('fs-jetpack');
+allowModule('request');
+
 module.exports = {
   makers: [
     {
@@ -21,6 +51,10 @@ module.exports = {
     //   config: {}
     // }
   ],
+  packagerConfig: {
+    prune: false,
+    ignore: ignoreFile,
+  },
   plugins: [
     [
       '@electron-forge/plugin-webpack',
@@ -36,7 +70,8 @@ module.exports = {
             }
           ]
         }
-      }
+      },
+      '@electron-forge/plugin-auto-unpack-natives'
     ]
   ]
 };

@@ -15,10 +15,4 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx'],
   },
   devtool: 'source-map',
-  node: {
-    global: true,
-    path: true,
-    electron: true,
-    process: true,
-  },
 };
