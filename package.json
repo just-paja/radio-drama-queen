@@ -12,7 +12,7 @@
     "package": "electron-forge package -p linux,win32,darwin",
     "test": "react-scripts test --env=jsdom",
     "postinstall": "sudo chown root node_modules/electron/dist/chrome-sandbox; sudo chmod 4755 node_modules/electron/dist/chrome-sandbox",
-    "publish:binaries": "cd dist/electron && npm run publish"
+    "publish": "electron-forge publish"
   },
   "main": ".webpack/main",
   "dependencies": {
@@ -65,6 +65,7 @@
     "@electron-forge/maker-zip": "^6.0.0-beta.39",
     "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.39",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.39",
+    "@electron-forge/publisher-github": "^6.0.0-beta.39",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-loader": "8.0.5",
     "electron": "^5.0.3",

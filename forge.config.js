@@ -56,6 +56,18 @@ module.exports = {
     prune: false,
     ignore: ignoreFile,
   },
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        prerelease: true,
+        repository: {
+          owner: 'just-paja',
+          name: 'radio-drama-queen',
+        },
+      },
+    },
+  ],
   plugins: [
     [
       '@electron-forge/plugin-webpack',
