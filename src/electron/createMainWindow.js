@@ -11,7 +11,7 @@ const { soundRead, soundRegister } = require('../sounds/actions');
 module.exports = (development) => {
   const mainWindow = new BrowserWindow({
     height: 600,
-    icon: path.join(__dirname, '..', 'public', 'favicon.png'),
+    // icon: path.join(__dirname, '..', 'public', 'favicon.png'),
     minHeight: 320,
     minWidth: 320,
     title: 'Radio Drama Queen',
@@ -40,11 +40,9 @@ module.exports = (development) => {
   mainWindow.setFullScreenable(true);
 
   if (development) {
-    mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools();
-  } else {
-    mainWindow.loadFile(path.join(__dirname, 'index.html'));
   }
 
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   return mainWindow;
 }

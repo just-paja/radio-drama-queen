@@ -1,16 +1,16 @@
 {
   "name": "radio-drama-queen",
+  "productName": "radio-drama-queen",
+  "productDescription": "Audio tool for storytelling, including radio drama",
+  "summary": "Audio tool for storytelling, including radio drama",
   "version": "0.1.5",
   "private": true,
   "scripts": {
     "start": "electron-forge start",
-    "build": "npm run build:react && npm run build:electron",
-    "build:react": "react-scripts build",
-    "build:electron": "npm run build:electron:prepare && npm run build:electron:make",
-    "build:electron:make": "cd dist/electron && npm run build",
-    "build:electron:prepare": "node electron/build.js && cd dist/electron && npm install",
+    "build": "npm run package && npm run make",
+    "make": "electron-forge make --skip-package",
+    "package": "electron-forge package",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "postinstall": "sudo chown root node_modules/electron/dist/chrome-sandbox; sudo chmod 4755 node_modules/electron/dist/chrome-sandbox",
     "publish:binaries": "cd dist/electron && npm run publish"
   },
@@ -49,7 +49,6 @@
     "reselect": "^4.0.0",
     "url-parse": "^1.4.7",
     "uuid": "^3.3.2",
-    "worker-nodes": "^1.6.1",
     "workerpool": "^3.1.2"
   },
   "devDependencies": {
@@ -68,6 +67,8 @@
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-loader": "8.0.5",
     "electron": "^5.0.3",
+    "electron-installer-debian": "^1.2.0",
+    "electron-installer-redhat": "^1.1.0",
     "electron-react-devtools": "^0.5.3",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -86,48 +87,7 @@
     "url": "https://pavel.zak.global"
   },
   "config": {
-    "forge": {
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "radio_drama_queen"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
-            "mainConfig": "./webpack.main.config.js",
-            "renderer": {
-              "config": "./webpack.renderer.config.js",
-              "entryPoints": [
-                {
-                  "html": "./src/index.html",
-                  "js": "./src/index.js",
-                  "name": "main_window"
-                }
-              ]
-            }
-          }
-        ]
-      ]
-    }
+    "forge": "forge.config.js"
   },
   "homepage": ".",
   "browserslist": [

@@ -26,8 +26,8 @@ onTagAndEveryBranch: &onTagAndEveryBranch
 persistElectronArtifact: &persistElectronArtifact
   root: *workspace_root
   paths:
-    - ./dist/electron/out/make
-    - ./dist/electron/out/publish-dry-run
+    - ./out/make
+    - ./out/publish-dry-run
 
 version: 2
 jobs:
@@ -52,22 +52,7 @@ jobs:
           paths:
             - .
 
-  build-react:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: *workspace_root
-
-      - run:
-          name: Build react app
-          command: npm run build:react
-
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./build
-
-  build-electron-prepare:
+  build-electron-package:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -75,12 +60,12 @@ jobs:
 
       - run:
           name: Prepare for electron build
-          command: npm run build:electron:prepare
+          command: npm run package
 
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - ./dist
+            - ./out
 
   build-linux:
     <<: *defaults
@@ -98,7 +83,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron:make -- -- -p linux
+          command: npm run make -- -p linux
 
       - persist_to_workspace:
           <<: *persistElectronArtifact
@@ -111,7 +96,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron:make -- -- -p darwin
+          command: npm run make -- -p darwin
 
       - persist_to_workspace:
           <<: *persistElectronArtifact
@@ -124,7 +109,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron:make -- -- -p mas
+          command: npm run make -- -p mas
 
       - persist_to_workspace:
           <<: *persistElectronArtifact
@@ -157,7 +142,7 @@ jobs:
 
       - run:
           name: Build electron app
-          command: npm run build:electron:make -- -- -p win32
+          command: npm run make -- -p win32
 
       - persist_to_workspace:
           <<: *persistElectronArtifact
@@ -219,30 +204,25 @@ workflows:
             - test
           filters:
             <<: *onMaster
-      - build-react:
+      - build-electron-package:
           requires:
-            - install
-          <<: *onTagAndEveryBranch
-      - build-electron-prepare:
-          requires:
-            - build-react
             - test
           <<: *onTagAndEveryBranch
       - build-linux:
           requires:
-            - build-electron-prepare
+            - build-electron-package
           <<: *onTagAndEveryBranch
       - build-darwin:
           requires:
-            - build-electron-prepare
+            - build-electron-package
           <<: *onTagAndEveryBranch
       - build-mas:
           requires:
-            - build-electron-prepare
+            - build-electron-package
           <<: *onTagAndEveryBranch
       - build-win32:
           requires:
-            - build-electron-prepare
+            - build-electron-package
           <<: *onTagAndEveryBranch
       - publish-binaries:
           requires:

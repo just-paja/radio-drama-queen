@@ -7,6 +7,10 @@ module.exports = (development) => {
   // be closed automatically when the JavaScript object is garbage collected.
   let mainWindow;
 
+  if (require('electron-squirrel-startup')) {
+    app.quit();
+  }
+
   app.disableHardwareAcceleration();
 
   function createWindow() {
