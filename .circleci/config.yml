@@ -52,41 +52,6 @@ jobs:
           paths:
             - .
 
-  build-electron-package:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: *workspace_root
-
-      - run:
-          name: Use 32-bit arch
-          command: sudo dpkg --add-architecture i386
-
-      - run:
-          name: Update apt package list
-          command: sudo apt-get update
-
-      - run:
-          name: Install wine
-          command: sudo apt-get install wine32 wine64 mono-devel
-
-      - run:
-          name: Create 32bit wine prefix
-          command: WINEARCH=win32 WINEPREFIX=/home/circleci/.wine32 wineboot
-
-      - run:
-          name: Create 64bit wine prefix
-          command: WINEARCH=win64 WINEPREFIX=/home/circleci/.wine wineboot
-
-      - run:
-          name: Prepare for electron build
-          command: npm run package
-
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./out
-
   build-linux:
     <<: *defaults
     steps:
@@ -211,24 +176,17 @@ workflows:
             - test
           filters:
             <<: *onMaster
-      - build-electron-package:
+      - build-linux:
           requires:
             - install
           <<: *onTagAndEveryBranch
-      - build-linux:
-          requires:
-            - build-electron-package
-            - test
-          <<: *onTagAndEveryBranch
       - build-darwin:
           requires:
-            - build-electron-package
-            - test
+            - install
           <<: *onTagAndEveryBranch
       - build-win32:
           requires:
-            - build-electron-package
-            - test
+            - install
           <<: *onTagAndEveryBranch
       - publish-binaries:
           requires:
