@@ -1,3 +1,5 @@
+const packageInfo = require('./package.json');
+
 const allowedPatterns = [
   /package.json/,
   /[/\\]\.webpack($|[/\\]).*$/,
@@ -19,8 +21,6 @@ function ignoreFile(file) {
   const ignore = !allowedPatterns.some(pattern => pattern.test(file));
   if (!ignore) {
     console.log(file)
-  } else {
-    console.log('IGNORED:', file)
   }
   return ignore;
 }
@@ -33,7 +33,8 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'radio_drama_queen'
+        name: 'radio_drama_queen',
+        description: packageInfo.summary,
       }
     },
     {

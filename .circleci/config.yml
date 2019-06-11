@@ -59,6 +59,26 @@ jobs:
           at: *workspace_root
 
       - run:
+          name: Use 32-bit arch
+          command: sudo dpkg --add-architecture i386
+
+      - run:
+          name: Update apt package list
+          command: sudo apt-get update
+
+      - run:
+          name: Install wine
+          command: sudo apt-get install wine32 wine64 mono-devel
+
+      - run:
+          name: Create 32bit wine prefix
+          command: WINEARCH=win32 WINEPREFIX=/home/circleci/.wine32 wineboot
+
+      - run:
+          name: Create 64bit wine prefix
+          command: WINEARCH=win64 WINEPREFIX=/home/circleci/.wine wineboot
+
+      - run:
           name: Prepare for electron build
           command: npm run package
 
@@ -97,19 +117,6 @@ jobs:
       - run:
           name: Build electron app
           command: npm run make -- -p darwin
-
-      - persist_to_workspace:
-          <<: *persistElectronArtifact
-
-  build-mas:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: *workspace_root
-
-      - run:
-          name: Build electron app
-          command: npm run make -- -p mas
 
       - persist_to_workspace:
           <<: *persistElectronArtifact
@@ -206,29 +213,27 @@ workflows:
             <<: *onMaster
       - build-electron-package:
           requires:
-            - test
+            - install
           <<: *onTagAndEveryBranch
       - build-linux:
           requires:
             - build-electron-package
+            - test
           <<: *onTagAndEveryBranch
       - build-darwin:
           requires:
             - build-electron-package
-          <<: *onTagAndEveryBranch
-      - build-mas:
-          requires:
-            - build-electron-package
+            - test
           <<: *onTagAndEveryBranch
       - build-win32:
           requires:
             - build-electron-package
+            - test
           <<: *onTagAndEveryBranch
       - publish-binaries:
           requires:
             - build-darwin
             - build-linux
-            - build-mas
             - build-win32
           filters:
             <<: *onTagOnly

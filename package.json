@@ -9,7 +9,7 @@
     "start": "electron-forge start",
     "build": "npm run package && npm run make",
     "make": "electron-forge make --skip-package",
-    "package": "electron-forge package",
+    "package": "electron-forge package -p linux,win32,darwin",
     "test": "react-scripts test --env=jsdom",
     "postinstall": "sudo chown root node_modules/electron/dist/chrome-sandbox; sudo chmod 4755 node_modules/electron/dist/chrome-sandbox",
     "publish:binaries": "cd dist/electron && npm run publish"
@@ -71,6 +71,7 @@
     "electron-installer-debian": "^1.2.0",
     "electron-installer-redhat": "^1.1.0",
     "electron-react-devtools": "^0.5.3",
+    "electron-winstaller": "^3.0.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jest-enzyme": "^7.0.2",
