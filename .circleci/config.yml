@@ -194,7 +194,7 @@ jobs:
 
       - run:
           name: Publish using electron-forge
-          command: npm run publish:binaries
+          command: npm run publish
 
 workflows:
   version: 2
