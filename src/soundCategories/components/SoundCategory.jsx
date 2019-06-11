@@ -42,59 +42,62 @@ const styles = theme => ({
   },
 });
 
-const SoundCategory = ({
-  boardUuid,
-  canDrop,
-  classes,
-  connectDropTarget,
-  edit,
-  isOver,
-  name,
-  onSoundPickerOpen,
-  sounds,
-  uuid,
-}) => {
-  const categoryName = name || 'Default';
-  return connectDropTarget(
-    <div>
-      <Card
-        className={classnames({
-          [classes.canDrop]: isOver && canDrop,
-        })}
-      >
-        <CardContent className={classes.cardPadding}>
-          <div className={classnames(classes.headlinePadding, classes.headlineControls)}>
-            <SoundCategoryName
-              edit={edit}
-              name={name}
-              uuid={uuid}
-            />
-            <SoundCategoryMenu
-              boardUuid={boardUuid}
-              uuid={uuid}
-              onSoundPickerOpen={onSoundPickerOpen}
-            />
-          </div>
-          <List className={classes.soundList} dense>
-            {sounds.map(soundUuid => (
-              <ListItem className={classes.removePadding} key={soundUuid}>
-                <SoundCategoryItem uuid={soundUuid} />
-              </ListItem>
-            ))}
-          </List>
-        </CardContent>
-        <CardActions>
-          <SoundCategoryControls uuid={uuid} />
-        </CardActions>
-      </Card>
-      <Snackbar
-        open={canDrop && isOver}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        message={`Drop audio files here to add to category ${categoryName}`}
-      />
-    </div>
-  );
-};
+class SoundCategory extends React.Component {
+  render() {
+    const {
+      boardUuid,
+      canDrop,
+      classes,
+      connectDropTarget,
+      edit,
+      isOver,
+      name,
+      onSoundPickerOpen,
+      sounds,
+      uuid,
+    } = this.props;
+    const categoryName = name || 'Default';
+    return connectDropTarget(
+      <div>
+        <Card
+          className={classnames({
+            [classes.canDrop]: isOver && canDrop,
+          })}
+        >
+          <CardContent className={classes.cardPadding}>
+            <div className={classnames(classes.headlinePadding, classes.headlineControls)}>
+              <SoundCategoryName
+                edit={edit}
+                name={name}
+                uuid={uuid}
+              />
+              <SoundCategoryMenu
+                boardUuid={boardUuid}
+                uuid={uuid}
+                onSoundPickerOpen={onSoundPickerOpen}
+              />
+            </div>
+            <List className={classes.soundList} dense>
+              {sounds.map(soundUuid => (
+                <ListItem className={classes.removePadding} key={soundUuid}>
+                  <SoundCategoryItem uuid={soundUuid} />
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+          <CardActions>
+            <SoundCategoryControls uuid={uuid} />
+          </CardActions>
+        </Card>
+        <Snackbar
+          open={canDrop && isOver}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          message={`Drop audio files here to add to category ${categoryName}`}
+        />
+      </div>
+    );
+  }
+}
 
 SoundCategory.propTypes = {
   boardUuid: PropTypes.string.isRequired,

@@ -32,10 +32,10 @@ if (module.hot) {
   module.hot.accept('./sagas', () => {
     // eslint-disable-next-line global-require
     const reloadSagas = require('./sagas').default;
-    sagaTask.cancel();
-    sagaTask.done.then(() => {
+    sagaTask.toPromise().then(() => {
       sagaTask = store.runSaga(reloadSagas);
       console.info(':: Hot reload sagas');
     });
+    sagaTask.cancel();
   });
 }

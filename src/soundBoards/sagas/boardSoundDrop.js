@@ -6,7 +6,6 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 import { soundBoard } from '../actions';
-import { soundRegister } from '../../sounds/actions';
 import { getBoard } from '../selectors';
 import { createDefaultCategory } from './boardCategoryCreateDefault';
 import { categoryList } from '../../soundCategories/actions';
@@ -17,7 +16,7 @@ function* soundMoveToCategory({ payload, meta: { uuid } }) {
   const board = yield select(getBoard, uuid);
 
   if (board) {
-    const category = yield call(createDefaultCategory, uuid);
+    const defaultCategory = yield call(createDefaultCategory, uuid);
     const soundCategories = yield select(getSoundCategories, dropItem.uuid);
     yield all(soundCategories
       .filter(soundCategory => soundCategory.board === uuid)
@@ -25,10 +24,7 @@ function* soundMoveToCategory({ payload, meta: { uuid } }) {
         soundCategory.uuid,
         dropItem.uuid
       ))));
-    for (let file of dropItem.files) {
-      const soundUuid = yield put(soundRegister, file);
-      yield put(categoryList.soundAdd(category.uuid, soundUuid));
-    }
+    yield put(categoryList.soundAdd(defaultCategory.uuid, dropItem.uuid));
   }
 }
 

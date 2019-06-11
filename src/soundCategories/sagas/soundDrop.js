@@ -22,10 +22,10 @@ function* soundMoveToCategory({ payload, meta: { uuid } }) {
   }
 }
 
-function* handleGridSoundDrop() {
+function* handleCategorySoundDrop() {
   yield takeLatest(categoryList.SOUND_DROP, soundMoveToCategory);
 }
 
 export default [
-  handleGridSoundDrop,
+  handleCategorySoundDrop,
 ];
