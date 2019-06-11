@@ -16,4 +16,13 @@ export function* createDefaultCategory(boardUuid) {
   return category;
 }
 
+export function* createUnnamedCategory(boardUuid) {
+  return yield call(createCategory, {
+    payload: {
+      name: 'Unnamed',
+      board: boardUuid,
+    },
+  });
+}
+
 export default [];

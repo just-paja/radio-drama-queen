@@ -7,9 +7,13 @@ import {
 } from 'redux-saga/effects';
 import { soundBoard } from '../actions';
 import { getBoard } from '../selectors';
-import { createDefaultCategory } from './boardCategoryCreateDefault';
+import { createDefaultCategory, createUnnamedCategory } from './boardCategoryCreateDefault';
 import { categoryList } from '../../soundCategories/actions';
 import { getSoundCategories } from '../../soundCategories/selectors';
+
+function isInDefault(defaultCategory, soundCategories) {
+  return soundCategories.some(category => category.uuid === defaultCategory.uuid);
+}
 
 function* soundMoveToCategory({ payload, meta: { uuid } }) {
   const dropItem = payload.getItem();
@@ -18,13 +22,17 @@ function* soundMoveToCategory({ payload, meta: { uuid } }) {
   if (board) {
     const defaultCategory = yield call(createDefaultCategory, uuid);
     const soundCategories = yield select(getSoundCategories, dropItem.uuid);
+    const targetCategory = isInDefault(defaultCategory, soundCategories)
+      ? yield call(createUnnamedCategory, uuid)
+      : defaultCategory;
+
     yield all(soundCategories
       .filter(soundCategory => soundCategory.board === uuid)
       .map(soundCategory => put(categoryList.soundRemove(
         soundCategory.uuid,
         dropItem.uuid
       ))));
-    yield put(categoryList.soundAdd(defaultCategory.uuid, dropItem.uuid));
+    yield put(categoryList.soundAdd(targetCategory.uuid, dropItem.uuid));
   }
 }
 
