@@ -3,7 +3,7 @@
   "productName": "radio-drama-queen",
   "productDescription": "Audio tool for storytelling, including radio drama",
   "summary": "Audio tool for storytelling, including radio drama",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "start": "electron-forge start",
