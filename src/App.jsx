@@ -21,18 +21,27 @@ const styles = {
       padding: 0,
       fontFamily: 'sans-serif',
     },
-    'body, #root, .App': {
-      height: '100%',
-    }
+    'html, body, #root, #wrapper': {
+      minHeight: '100%',
+      display: 'flex',
+      flexGrow: 1,
+      flexDirection: 'column',
+    },
   },
+  app: {
+    minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  }
 };
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
   render() {
-    const { store } = this.props;
+    const { classes, store } = this.props;
     return (
-      <div className="App">
+      <div className={classes.app}>
         <Provider store={store}>
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
             <AppMenu />

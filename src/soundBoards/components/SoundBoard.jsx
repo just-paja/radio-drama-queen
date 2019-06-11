@@ -16,6 +16,14 @@ import SoundBoardRenameDialog from '../containers/SoundBoardRenameDialog';
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial';
 
 const styles = theme => ({
+  board: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
   gridSpacing: {
     padding: theme.spacing(1),
     minWidth: 320,
@@ -80,7 +88,7 @@ class SoundBoard extends Component {
       showCreateForm,
       uuid,
     } = this.props;
-    const gridClasses = classnames(classes.gridSpacing, {
+    const gridClasses = classnames(classes.grow, classes.gridSpacing, {
       [classes.canDrop]: isOver && canDrop,
     });
     let content;
@@ -95,7 +103,7 @@ class SoundBoard extends Component {
     }
     // Wrapping div is necessary for react-dnd
     return connectDropTarget(
-      <div>
+      <div className={classes.board}>
         <SoundBoardRenameDialog boardUuid={uuid} />
         <Grid className={gridClasses} container>
           {content}
