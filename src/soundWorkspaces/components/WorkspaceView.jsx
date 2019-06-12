@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import SoundGalleryView from '../containers/SoundGalleryView'
 
 import { connect } from 'react-redux'
 import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
 import { SoundBoardView } from './SoundBoardView'
+import { SoundGalleryView } from './SoundGalleryView'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 
 function WorkspaceViewComponent ({ board, view }) {
