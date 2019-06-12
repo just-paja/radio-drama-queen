@@ -1,91 +1,155 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
-
+import { renderWithContainers } from '../../../../mock'
 import { SoundLibraryStatus } from '..'
 
 describe('SoundLibraryStatus component', () => {
   it('renders playing sounds count', () => {
-    const comp = shallow(
-      <SoundLibraryStatus
-        boardSounds={0}
-        errorSounds={0}
-        inMemorySounds={0}
-        playingSounds={10}
-        registeredSounds={0}
-        tags={0}
-      />
-    )
-    expect(comp.dive()).toIncludeText('10')
+    const state = {
+      sounds: {
+        list: [
+          {
+            uuid: '1',
+            playing: true
+          },
+          {
+            uuid: '2',
+            playing: true
+          },
+          {
+            uuid: '3',
+            playing: false
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<SoundLibraryStatus />, state)
+    expect(comp.find('.SoundLibraryStatus-stat-2').first()).toIncludeText('2')
   })
 
   it('renders registered sounds count', () => {
-    const comp = shallow(
-      <SoundLibraryStatus
-        boardSounds={0}
-        errorSounds={0}
-        inMemorySounds={0}
-        playingSounds={0}
-        registeredSounds={11}
-        tags={11}
-      />
-    )
-    expect(comp.dive()).toIncludeText('11')
+    const state = {
+      sounds: {
+        list: [
+          {
+            uuid: '1',
+            playing: true
+          },
+          {
+            uuid: '2',
+            playing: true
+          },
+          {
+            uuid: '3',
+            playing: false
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<SoundLibraryStatus />, state)
+    expect(comp.find('.SoundLibraryStatus-stat-2').at(5)).toIncludeText('3')
   })
 
   it('renders board sounds count', () => {
-    const comp = shallow(
-      <SoundLibraryStatus
-        boardSounds={12}
-        errorSounds={0}
-        inMemorySounds={0}
-        playingSounds={0}
-        registeredSounds={0}
-        tags={0}
-      />
-    )
-    expect(comp.dive()).toIncludeText('12')
+    const state = {
+      sounds: {
+        list: [
+          {
+            uuid: '1',
+            playing: true
+          },
+          {
+            uuid: '2',
+            playing: true
+          },
+          {
+            uuid: '3',
+            playing: false
+          }
+        ]
+      },
+      soundBoards: {
+        list: [
+          {
+            uuid: 'xxx',
+            categories: ['x1']
+          }
+        ]
+      },
+      soundCategories: {
+        list: [
+          {
+            uuid: 'x1',
+            sounds: ['1', '3']
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<SoundLibraryStatus />, state)
+    expect(comp.find('.SoundLibraryStatus-stat-2').at(4)).toIncludeText('2')
   })
 
   it('renders error sounds count', () => {
-    const comp = shallow(
-      <SoundLibraryStatus
-        boardSounds={0}
-        errorSounds={13}
-        inMemorySounds={0}
-        playingSounds={0}
-        registeredSounds={0}
-        tags={0}
-      />
-    )
-    expect(comp.dive()).toIncludeText('13')
+    const state = {
+      sounds: {
+        list: [
+          {
+            uuid: '1',
+            playing: false,
+            error: new Error('foo')
+          },
+          {
+            uuid: '2',
+            playing: true
+          },
+          {
+            uuid: '3',
+            playing: false,
+            error: new Error('foo')
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<SoundLibraryStatus />, state)
+    expect(comp.find('.SoundLibraryStatus-stat-2').at(2)).toIncludeText('2')
   })
 
   it('renders in memory sounds count', () => {
-    const comp = shallow(
-      <SoundLibraryStatus
-        boardSounds={0}
-        errorSounds={14}
-        inMemorySounds={0}
-        playingSounds={0}
-        registeredSounds={0}
-        tags={0}
-      />
-    )
-    expect(comp.dive()).toIncludeText('14')
+    const state = {
+      sounds: {
+        list: [
+          {
+            uuid: '1',
+            playing: false,
+            valid: true
+          },
+          {
+            uuid: '2',
+            playing: true
+          },
+          {
+            uuid: '3',
+            playing: false,
+            valid: true
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<SoundLibraryStatus />, state)
+    expect(comp.find('.SoundLibraryStatus-stat-2').at(3)).toIncludeText('2')
   })
 
   it('renders tag count', () => {
-    const comp = shallow(
-      <SoundLibraryStatus
-        boardSounds={0}
-        errorSounds={14}
-        inMemorySounds={0}
-        playingSounds={0}
-        registeredSounds={0}
-        tags={15}
-      />
-    )
-    expect(comp.dive()).toIncludeText('15')
+    const state = {
+      soundTags: {
+        list: [
+          { name: '1' },
+          { name: '2' },
+          { name: '3' }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<SoundLibraryStatus />, state)
+    expect(comp.find('.SoundLibraryStatus-stat-2').at(1)).toIncludeText('3')
   })
 })

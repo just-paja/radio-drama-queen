@@ -5,13 +5,29 @@ import MemoryIcon from '@material-ui/icons/Memory'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import PropTypes from 'prop-types'
 import React from 'react'
+import SoundStopAllButton from '../../sounds/containers/SoundStopAllButton'
 import WarningIcon from '@material-ui/icons/Warning'
 
-import { withStyles } from '@material-ui/core/styles'
-
-import SoundStopAllButton from '../../sounds/containers/SoundStopAllButton'
-
 import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
+import { getGallerySize } from '../../soundGallery/selectors'
+import { withStyles } from '@material-ui/core/styles'
+import {
+  countBoardSounds,
+  countErrorSounds,
+  countMemorySounds,
+  countPlayingSounds,
+  countTags
+} from '../selectors'
+
+const mapStateToProps = state => ({
+  boardSounds: countBoardSounds(state),
+  errorSounds: countErrorSounds(state),
+  inMemorySounds: countMemorySounds(state),
+  playingSounds: countPlayingSounds(state),
+  registeredSounds: getGallerySize(state),
+  tags: countTags(state)
+})
 
 const styles = theme => ({
   footer: {
@@ -54,7 +70,7 @@ const renderNumberWithIcon = (classes, number, IconComponent) => (
   </span>
 )
 
-const SoundLibraryStatus = ({
+const SoundLibraryStatusComponent = ({
   boardSounds,
   classes,
   errorSounds,
@@ -74,7 +90,9 @@ const SoundLibraryStatus = ({
   </footer>
 )
 
-SoundLibraryStatus.propTypes = {
+SoundLibraryStatusComponent.displayName = 'SoundLibraryStatus'
+
+SoundLibraryStatusComponent.propTypes = {
   boardSounds: PropTypes.number.isRequired,
   classes: Classes.isRequired,
   errorSounds: PropTypes.number.isRequired,
@@ -84,4 +102,6 @@ SoundLibraryStatus.propTypes = {
   tags: PropTypes.number.isRequired
 }
 
-export default withStyles(styles)(SoundLibraryStatus)
+export const SoundLibraryStatus = connect(mapStateToProps)(
+  withStyles(styles)(SoundLibraryStatusComponent)
+)

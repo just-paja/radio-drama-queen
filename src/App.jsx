@@ -9,10 +9,12 @@ import { withStyles } from '@material-ui/styles'
 
 import AppMenu from './containers/AppMenu'
 import OpenLibraryDialog from './soundModules/containers/OpenLibraryDialog'
-import SoundLibraryStatus from './soundWorkspaces/containers/SoundLibraryStatus'
 import WorkspaceLoadDialog from './soundWorkspaces/containers/WorkspaceLoadDialog'
 import WorkspaceSaveDialog from './soundWorkspaces/containers/WorkspaceSaveDialog'
-import { WorkspaceView } from './soundWorkspaces/components'
+import {
+  SoundLibraryStatus,
+  WorkspaceView
+} from './soundWorkspaces/components'
 
 const styles = {
   '@global': {

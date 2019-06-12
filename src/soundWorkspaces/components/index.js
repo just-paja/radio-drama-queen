@@ -1,5 +1,5 @@
-export { default as SoundLibraryStatus } from './SoundLibraryStatus'
 export { default as WorkspaceSelection } from './WorkspaceSelection'
 export * from './SoundBoardView'
 export * from './SoundGalleryView'
+export * from './SoundLibraryStatus'
 export * from './WorkspaceView'
