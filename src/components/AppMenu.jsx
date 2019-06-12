@@ -2,22 +2,20 @@ import AppBar from '@material-ui/core/AppBar'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
-import MenuIcon from '@material-ui/icons/Menu'
 import ListItem from '@material-ui/core/ListItem'
-import React, { Component } from 'react'
+import MenuIcon from '@material-ui/icons/Menu'
+import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton'
+import React from 'react'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
-
-import { withStyles } from '@material-ui/core/styles'
-
-import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton'
 import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton'
-import WorkspaceSaveButton from '../soundWorkspaces/containers/WorkspaceSaveButton'
 import WorkspaceSaveAsButton from '../soundWorkspaces/containers/WorkspaceSaveAsButton'
-import WorkspaceLoadFromButton from '../soundWorkspaces/containers/WorkspaceLoadFromButton'
+import WorkspaceSaveButton from '../soundWorkspaces/containers/WorkspaceSaveButton'
 import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection'
 
 import { Classes } from '../proptypes'
+import { withStyles } from '@material-ui/core/styles'
+import { WorkspaceLoadFromButton } from '../soundWorkspaces/components'
 
 const styles = {
   list: {
@@ -25,12 +23,19 @@ const styles = {
   }
 }
 
-class AppMenu extends Component {
+class AppMenu extends React.Component {
+  static propTypes = {
+    classes: Classes.isRequired
+  }
+
+  state = {
+    drawerOpen: false
+  }
+
   constructor () {
     super()
     this.handleMenuOpen = this.handleMenuOpen.bind(this)
     this.handleMenuClose = this.handleMenuClose.bind(this)
-    this.state = { drawerOpen: false }
   }
 
   handleMenuOpen () {
@@ -81,10 +86,6 @@ class AppMenu extends Component {
       </AppBar>
     )
   }
-}
-
-AppMenu.propTypes = {
-  classes: Classes.isRequired
 }
 
 export default withStyles(styles)(AppMenu)

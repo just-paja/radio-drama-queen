@@ -1,9 +1,7 @@
+import LabelButton from '../../components/LabelButton'
 import OpenInBrowser from '@material-ui/icons/OpenInBrowser'
 
 import { connect } from 'react-redux'
-
-import LabelButton from '../../components/LabelButton'
-
 import { workspaceLoad } from '../actions'
 
 const mapStateToProps = () => ({
@@ -15,4 +13,7 @@ const mapDispatchToProps = {
   onClick: workspaceLoad.dialogOpen
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LabelButton)
+export const WorkspaceLoadFromButton = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LabelButton)
