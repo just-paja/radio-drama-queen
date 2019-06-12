@@ -9,13 +9,15 @@ import React from 'react'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton'
-import WorkspaceSaveAsButton from '../soundWorkspaces/containers/WorkspaceSaveAsButton'
 import WorkspaceSaveButton from '../soundWorkspaces/containers/WorkspaceSaveButton'
 import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection'
 
 import { Classes } from '../proptypes'
 import { withStyles } from '@material-ui/core/styles'
-import { WorkspaceLoadFromButton } from '../soundWorkspaces/components'
+import {
+  WorkspaceSaveAsButton,
+  WorkspaceLoadFromButton
+} from '../soundWorkspaces/components'
 
 const styles = {
   list: {

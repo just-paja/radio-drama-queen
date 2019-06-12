@@ -1,11 +1,9 @@
+import LabelButton from '../../components/LabelButton'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 
 import { connect } from 'react-redux'
-
-import LabelButton from '../../components/LabelButton'
-
-import { workspaceSave } from '../actions'
 import { isWorkspaceEmpty } from '../selectors'
+import { workspaceSave } from '../actions'
 
 const mapStateToProps = (state) => ({
   children: 'Save As',
@@ -17,4 +15,7 @@ const mapDispatchToProps = {
   onClick: workspaceSave.dialogOpen
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LabelButton)
+export const WorkspaceSaveAsButton = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LabelButton)
