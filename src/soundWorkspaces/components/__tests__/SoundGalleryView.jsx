@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import { SoundGalleryView } from '..';
+import { SoundGalleryView } from '..'
 
 describe('SoundGalleryView component', () => {
   it('renders sound gallery', () => {
@@ -15,7 +15,7 @@ describe('SoundGalleryView component', () => {
         onGalleryGoBack={() => {}}
         onLibraryOpen={() => {}}
       />
-    );
-    expect(comp).toContainMatchingElements(1, 'Connect(SoundGallery)');
-  });
-});
+    )
+    expect(comp).toContainMatchingElements(1, 'Connect(SoundGallery)')
+  })
+})

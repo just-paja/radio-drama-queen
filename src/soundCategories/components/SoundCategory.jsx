@@ -1,49 +1,49 @@
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import classnames from 'classnames';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import PropTypes from 'prop-types';
-import React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import classnames from 'classnames'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Snackbar from '@material-ui/core/Snackbar'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import SoundCategoryName from './SoundCategoryName';
-import SoundCategoryMenu from '../containers/SoundCategoryMenu';
-import SoundCategoryControls from '../containers/SoundCategoryControls';
-import SoundCategoryItem from '../containers/SoundCategoryItem';
+import SoundCategoryName from './SoundCategoryName'
+import SoundCategoryMenu from '../containers/SoundCategoryMenu'
+import SoundCategoryControls from '../containers/SoundCategoryControls'
+import SoundCategoryItem from '../containers/SoundCategoryItem'
 
 const styles = theme => ({
   removePadding: {
     marginBottom: 0,
     marginTop: 0,
-    padding: 0,
+    padding: 0
   },
   soundList: {
-    marginLeft: theme.spacing(-1/2),
-    marginRight: theme.spacing(-1/2),
+    marginLeft: theme.spacing(-1 / 2),
+    marginRight: theme.spacing(-1 / 2)
   },
   canDrop: {
-    background: 'rgba(0,0,0,0.25)',
+    background: 'rgba(0,0,0,0.25)'
   },
   cardPadding: {
-    padding: 0.5 * theme.spacing(1),
+    padding: 0.5 * theme.spacing(1)
   },
   headlinePadding: {
     padding: theme.spacing(1),
-    paddingBottom: 0,
+    paddingBottom: 0
   },
   headlineControls: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginRight: '-0.5rem',
-  },
-});
+    marginRight: '-0.5rem'
+  }
+})
 
 class SoundCategory extends React.Component {
-  render() {
+  render () {
     const {
       boardUuid,
       canDrop,
@@ -54,14 +54,14 @@ class SoundCategory extends React.Component {
       name,
       onSoundPickerOpen,
       sounds,
-      uuid,
-    } = this.props;
-    const categoryName = name || 'Default';
+      uuid
+    } = this.props
+    const categoryName = name || 'Default'
     return connectDropTarget(
       <div>
         <Card
           className={classnames({
-            [classes.canDrop]: isOver && canDrop,
+            [classes.canDrop]: isOver && canDrop
           })}
         >
           <CardContent className={classes.cardPadding}>
@@ -95,7 +95,7 @@ class SoundCategory extends React.Component {
           message={`Drop audio files here to add to category ${categoryName}`}
         />
       </div>
-    );
+    )
   }
 }
 
@@ -109,14 +109,14 @@ SoundCategory.propTypes = {
   name: PropTypes.string,
   onSoundPickerOpen: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  uuid: PropTypes.string.isRequired,
-};
+  uuid: PropTypes.string.isRequired
+}
 
 SoundCategory.defaultProps = {
   canDrop: null,
   edit: false,
   isOver: null,
-  name: null,
-};
+  name: null
+}
 
-export default withStyles(styles)(SoundCategory);
+export default withStyles(styles)(SoundCategory)

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import VolumeOff from '@material-ui/icons/VolumeOff';
-import VolumeUp from '@material-ui/icons/VolumeUp';
+import PropTypes from 'prop-types'
+import React from 'react'
+import VolumeOff from '@material-ui/icons/VolumeOff'
+import VolumeUp from '@material-ui/icons/VolumeUp'
 
-import SoundCategoryIconButton from './SoundCategoryIconButton';
+import SoundCategoryIconButton from './SoundCategoryIconButton'
 
 const VolumeToggleButton = ({ onClick, muted }) => (
   <SoundCategoryIconButton
@@ -11,15 +11,15 @@ const VolumeToggleButton = ({ onClick, muted }) => (
     color={muted ? 'primary' : 'default'}
     onClick={onClick}
   />
-);
+)
 
 VolumeToggleButton.propTypes = {
   muted: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
-};
+  onClick: PropTypes.func.isRequired
+}
 
 VolumeToggleButton.defaultProps = {
-  muted: false,
-};
+  muted: false
+}
 
-export default VolumeToggleButton;
+export default VolumeToggleButton

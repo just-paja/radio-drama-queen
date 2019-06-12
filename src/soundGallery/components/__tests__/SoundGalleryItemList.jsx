@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-import SoundGalleryItemList from '../SoundGalleryItemList';
+import SoundGalleryItemList from '../SoundGalleryItemList'
 
 describe('SoundGalleryItemList component', () => {
   it('renders each sound as SoundGalleryItem', () => {
@@ -14,16 +14,16 @@ describe('SoundGalleryItemList component', () => {
           {
             name: 'foo',
             uuid: 'foo',
-            tags: [],
+            tags: []
           },
           {
             name: 'bar',
             uuid: 'bar',
-            tags: [],
-          },
+            tags: []
+          }
         ]}
       />
-    ).dive();
-    expect(comp.find('WithStyles(SoundGalleryItem)')).toHaveLength(2);
-  });
-});
+    ).dive()
+    expect(comp.find('WithStyles(SoundGalleryItem)')).toHaveLength(2)
+  })
+})

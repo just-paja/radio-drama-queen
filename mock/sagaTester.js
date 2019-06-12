@@ -1,29 +1,29 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import SagaTester from 'redux-saga-tester';
+import SagaTester from 'redux-saga-tester'
 
-import { all, call } from 'redux-saga/effects';
+import { all, call } from 'redux-saga/effects'
 
-import reducers from '../src/reducers';
+import reducers from '../src/reducers'
 
 export default (initialState, extraConfig = {}) => {
   const sagaTester = new SagaTester({
     ...extraConfig,
     reducers,
-    initialState,
-  });
+    initialState
+  })
   sagaTester.runAll = (sagas) => {
-    function* combinedSaga() {
+    function * combinedSaga () {
       try {
-        yield all(sagas.map(saga => call(saga)));
+        yield all(sagas.map(saga => call(saga)))
       } catch (e) {
         if (extraConfig.options && extraConfig.options.onError) {
-          extraConfig.options.onError(e);
+          extraConfig.options.onError(e)
         } else {
-          throw e;
+          throw e
         }
       }
     }
-    sagaTester.run(combinedSaga);
-  };
-  return sagaTester;
-};
+    sagaTester.run(combinedSaga)
+  }
+  return sagaTester
+}

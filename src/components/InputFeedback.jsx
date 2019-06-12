@@ -1,24 +1,24 @@
-import FormHelperText from '@material-ui/core/FormHelperText';
-import PropTypes from 'prop-types';
-import React from 'react';
+import FormHelperText from '@material-ui/core/FormHelperText'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const SemanticFormField = ({
-  children,
+  children
 }) => (
   <FormHelperText>
     {children}
   </FormHelperText>
-);
+)
 
 SemanticFormField.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
-};
+    PropTypes.arrayOf(PropTypes.node)
+  ])
+}
 
 SemanticFormField.defaultProps = {
-  children: null,
-};
+  children: null
+}
 
-export default SemanticFormField;
+export default SemanticFormField

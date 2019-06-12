@@ -1,4 +1,4 @@
-import * as idCollection from './idCollection';
+import * as idCollection from './idCollection'
 
-export { idCollection };
-export default { idCollection };
+export { idCollection }
+export default { idCollection }

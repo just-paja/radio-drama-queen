@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 
 export const initialState = {
-  name: '',
-};
+  name: ''
+}
 
-export default handleActions({}, initialState);
+export default handleActions({}, initialState)

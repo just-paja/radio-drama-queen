@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import { SoundCategoryLoopButton } from '..';
+import { SoundCategoryLoopButton } from '..'
 
 describe('SoundCategoryLoopButton component', () => {
   it('renders in primary color given it is on', () => {
@@ -11,9 +11,9 @@ describe('SoundCategoryLoopButton component', () => {
         onClick={() => {}}
         loop
       />
-    );
-    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'primary');
-  });
+    )
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'primary')
+  })
 
   it('renders in default color given it is off', () => {
     const comp = shallow(
@@ -21,7 +21,7 @@ describe('SoundCategoryLoopButton component', () => {
         onClick={() => {}}
         loop={false}
       />
-    );
-    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'default');
-  });
-});
+    )
+    expect(comp.find('WithStyles(SoundCategoryIconButton)')).toHaveProp('color', 'default')
+  })
+})

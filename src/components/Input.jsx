@@ -1,11 +1,11 @@
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import PropTypes from 'prop-types';
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import PropTypes from 'prop-types'
+import React from 'react'
+import TextField from '@material-ui/core/TextField'
 
-import AppError from './AppError';
-import InputFeedback from './InputFeedback';
+import AppError from './AppError'
+import InputFeedback from './InputFeedback'
 
 const Input = ({
   input,
@@ -15,7 +15,7 @@ const Input = ({
   meta: {
     touched,
     error,
-    warning,
+    warning
   },
   as: As = TextField,
   ...props
@@ -40,13 +40,13 @@ const Input = ({
       )}
     </FormControl>
   </FormGroup>
-);
+)
 
 Input.propTypes = {
   as: PropTypes.func,
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.any,
+    value: PropTypes.any
   }).isRequired,
   type: PropTypes.string,
   label: PropTypes.string,
@@ -54,15 +54,15 @@ Input.propTypes = {
   meta: PropTypes.shape({
     touched: PropTypes.bool,
     error: PropTypes.any,
-    warning: PropTypes.any,
-  }).isRequired,
-};
+    warning: PropTypes.any
+  }).isRequired
+}
 
 Input.defaultProps = {
   as: undefined,
   label: '',
   placeholder: '',
-  type: '',
-};
+  type: ''
+}
 
-export default Input;
+export default Input

@@ -1,15 +1,15 @@
-import Button from '@material-ui/core/Button';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import React from 'react';
+import Button from '@material-ui/core/Button'
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   leftIcon: {
-    marginRight: theme.spacing(1),
-  },
-});
+    marginRight: theme.spacing(1)
+  }
+})
 
 const LabelButton = ({
   children,
@@ -22,27 +22,27 @@ const LabelButton = ({
     <IconComponent className={classnames(classes.leftIcon)} />
     {children}
   </ButtonComponent>
-);
+)
 
 LabelButton.propTypes = {
   buttonComponent: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.object,
+    PropTypes.object
   ]),
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.arrayOf(PropTypes.node)
   ]),
   icon: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.object,
-  ]).isRequired,
-};
+    PropTypes.object
+  ]).isRequired
+}
 
 LabelButton.defaultProps = {
   buttonComponent: Button,
-  children: null,
-};
+  children: null
+}
 
-export default withStyles(styles)(LabelButton);
+export default withStyles(styles)(LabelButton)

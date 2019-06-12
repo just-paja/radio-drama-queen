@@ -1,17 +1,17 @@
-import { compose } from 'redux';
-import { handleActions } from 'redux-actions';
-import { changeParam, toggle, turnOff, turnOn } from 'react-saga-rest';
+import { compose } from 'redux'
+import { handleActions } from 'redux-actions'
+import { changeParam, toggle, turnOff, turnOn } from 'react-saga-rest'
 
-import { idCollection } from '../../collections';
-import { categoryList, categoryRename } from '../actions';
+import { idCollection } from '../../collections'
+import { categoryList, categoryRename } from '../actions'
 
 export const initialState = {
   edit: false,
   loop: false,
   muted: false,
   sounds: [],
-  volume: 50,
-};
+  volume: 50
+}
 
 export default handleActions({
   [categoryList.EXCLUSIVE_TOGGLE]: toggle('exclusive'),
@@ -26,5 +26,5 @@ export default handleActions({
     changeParam('name', 'payload')
   ),
   [categoryRename.CLOSE]: turnOff('edit'),
-  [categoryRename.OPEN]: turnOn('edit'),
-}, initialState);
+  [categoryRename.OPEN]: turnOn('edit')
+}, initialState)

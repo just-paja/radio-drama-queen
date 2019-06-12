@@ -1,3 +1,3 @@
-export const FORM_LIBRARY_OPEN = 'libraryLoad';
+export const FORM_LIBRARY_OPEN = 'libraryLoad'
 
-export default { FORM_LIBRARY_OPEN };
+export default { FORM_LIBRARY_OPEN }

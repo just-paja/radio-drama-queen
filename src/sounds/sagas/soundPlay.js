@@ -2,31 +2,31 @@ import {
   call,
   put,
   select,
-  takeEvery,
-} from 'redux-saga/effects';
+  takeEvery
+} from 'redux-saga/effects'
 
-import AudioManager from '../AudioManager';
+import AudioManager from '../AudioManager'
 
-import { getSoundLoopStatus, getSoundPlayingStatus } from '../selectors';
-import { soundList } from '../actions';
+import { getSoundLoopStatus, getSoundPlayingStatus } from '../selectors'
+import { soundList } from '../actions'
 
-function* playSound({ meta: { uuid } }) {
-  let playing = true;
+function * playSound ({ meta: { uuid } }) {
+  let playing = true
   while (playing) {
-    yield call(AudioManager.play, uuid);
-    const soundPlaying = yield select(getSoundPlayingStatus, uuid);
-    const soundLoop = yield select(getSoundLoopStatus, uuid);
+    yield call(AudioManager.play, uuid)
+    const soundPlaying = yield select(getSoundPlayingStatus, uuid)
+    const soundLoop = yield select(getSoundLoopStatus, uuid)
     playing = soundPlaying
       ? soundLoop
-      : false;
+      : false
   }
-  yield put(soundList.finished(uuid));
+  yield put(soundList.finished(uuid))
 }
 
-export function* handleSoundPlay() {
-  yield takeEvery(soundList.PLAY, playSound);
+export function * handleSoundPlay () {
+  yield takeEvery(soundList.PLAY, playSound)
 }
 
 export default [
-  handleSoundPlay,
-];
+  handleSoundPlay
+]

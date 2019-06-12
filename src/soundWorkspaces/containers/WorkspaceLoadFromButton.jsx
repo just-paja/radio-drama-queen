@@ -1,18 +1,18 @@
-import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
+import OpenInBrowser from '@material-ui/icons/OpenInBrowser'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import LabelButton from '../../components/LabelButton';
+import LabelButton from '../../components/LabelButton'
 
-import { workspaceLoad } from '../actions';
+import { workspaceLoad } from '../actions'
 
 const mapStateToProps = () => ({
   children: 'Open Configuration',
-  icon: OpenInBrowser,
-});
+  icon: OpenInBrowser
+})
 
 const mapDispatchToProps = {
-  onClick: workspaceLoad.dialogOpen,
-};
+  onClick: workspaceLoad.dialogOpen
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LabelButton);
+export default connect(mapStateToProps, mapDispatchToProps)(LabelButton)

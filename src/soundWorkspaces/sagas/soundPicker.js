@@ -1,39 +1,39 @@
 import {
   put,
   select,
-  takeEvery,
-} from 'redux-saga/effects';
+  takeEvery
+} from 'redux-saga/effects'
 
-import { workspace } from '../actions';
-import { VIEW_LIBRARY } from '../constants';
-import { galleryTarget } from '../../soundGallery/actions';
-import { getGalleryTarget } from '../../soundGallery/selectors';
+import { workspace } from '../actions'
+import { VIEW_LIBRARY } from '../constants'
+import { galleryTarget } from '../../soundGallery/actions'
+import { getGalleryTarget } from '../../soundGallery/selectors'
 
-function* setTarget({ payload, meta }) {
+function * setTarget ({ payload, meta }) {
   if (meta && payload === VIEW_LIBRARY && meta.target) {
-    yield put(galleryTarget.set(meta.target));
+    yield put(galleryTarget.set(meta.target))
   } else {
-    yield put(galleryTarget.clear());
+    yield put(galleryTarget.clear())
   }
 }
 
-function* goBack() {
-  const target = yield select(getGalleryTarget);
-  yield put(workspace.selectBoard(target.board));
+function * goBack () {
+  const target = yield select(getGalleryTarget)
+  yield put(workspace.selectBoard(target.board))
 }
 
-function* handleGoBack() {
-  yield takeEvery(workspace.GO_BACK, goBack);
+function * handleGoBack () {
+  yield takeEvery(workspace.GO_BACK, goBack)
 }
 
-function* handleViewChange() {
+function * handleViewChange () {
   yield takeEvery([
     workspace.SELECT_VIEW,
-    workspace.SELECT_BOARD,
-  ], setTarget);
+    workspace.SELECT_BOARD
+  ], setTarget)
 }
 
 export default [
   handleViewChange,
-  handleGoBack,
-];
+  handleGoBack
+]

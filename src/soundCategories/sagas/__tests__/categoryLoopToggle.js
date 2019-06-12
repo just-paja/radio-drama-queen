@@ -1,7 +1,7 @@
-import sagas from '..';
-import getSagaTester from '../../../../mock/sagaTester';
+import sagas from '..'
+import getSagaTester from '../../../../mock/sagaTester'
 
-import { categoryList } from '../../actions';
+import { categoryList } from '../../actions'
 
 describe('categoryLoopToggle saga', () => {
   it('given loop is off, switches all sounds loop to on', () => {
@@ -12,36 +12,36 @@ describe('categoryLoopToggle saga', () => {
             uuid: 'category-1',
             sounds: ['sound-1', 'sound-2'],
             loop: false,
-            volume: 1,
-          },
-        ],
+            volume: 1
+          }
+        ]
       },
       sounds: {
         list: [
           {
             uuid: 'sound-1',
-            loop: false,
+            loop: false
           },
           {
             uuid: 'sound-2',
-            loop: true,
-          },
-        ],
+            loop: true
+          }
+        ]
       }
-    });
-    sagaTester.runAll(sagas);
-    sagaTester.dispatch(categoryList.loopToggle('category-1'));
+    })
+    sagaTester.runAll(sagas)
+    sagaTester.dispatch(categoryList.loopToggle('category-1'))
     expect(sagaTester.getState().sounds.list).toEqual([
       {
         uuid: 'sound-1',
-        loop: true,
+        loop: true
       },
       {
         uuid: 'sound-2',
-        loop: true,
-      },
-    ]);
-  });
+        loop: true
+      }
+    ])
+  })
 
   it('given loop is on, switches all sounds loop to off', () => {
     const sagaTester = getSagaTester({
@@ -52,50 +52,50 @@ describe('categoryLoopToggle saga', () => {
             sounds: ['sound-1', 'sound-2'],
             exclusive: false,
             loop: true,
-            volume: 1,
-          },
-        ],
+            volume: 1
+          }
+        ]
       },
       sounds: {
         list: [
           {
             uuid: 'sound-1',
-            loop: false,
+            loop: false
           },
           {
             uuid: 'sound-2',
-            loop: true,
-          },
-        ],
+            loop: true
+          }
+        ]
       }
-    });
-    sagaTester.runAll(sagas);
-    sagaTester.dispatch(categoryList.loopToggle('category-1'));
+    })
+    sagaTester.runAll(sagas)
+    sagaTester.dispatch(categoryList.loopToggle('category-1'))
     expect(sagaTester.getState().sounds.list).toEqual([
       {
         uuid: 'sound-1',
-        loop: false,
+        loop: false
       },
       {
         uuid: 'sound-2',
-        loop: false,
-      },
-    ]);
-  });
+        loop: false
+      }
+    ])
+  })
 
   it('does not fail when given non-existent category', () => {
-    const onError = jest.fn();
+    const onError = jest.fn()
     const sagaTester = getSagaTester({
       soundCategories: {
-        list: [],
-      },
+        list: []
+      }
     }, {
-      options: { onError },
-    });
+      options: { onError }
+    })
     expect(() => {
-      sagaTester.runAll(sagas);
-      sagaTester.dispatch(categoryList.loopToggle('category-1'));
-    }).not.toThrow();
-    expect(onError).not.toHaveBeenCalled();
-  });
-});
+      sagaTester.runAll(sagas)
+      sagaTester.dispatch(categoryList.loopToggle('category-1'))
+    }).not.toThrow()
+    expect(onError).not.toHaveBeenCalled()
+  })
+})

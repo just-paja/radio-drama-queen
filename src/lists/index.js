@@ -1,2 +1,2 @@
-export * from './reducers';
-export * from './routines';
+export * from './reducers'
+export * from './routines'

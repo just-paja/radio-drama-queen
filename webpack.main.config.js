@@ -6,16 +6,16 @@ module.exports = {
   entry: './src/electron-starter.js',
   // Put your normal webpack config below here
   module: {
-    rules: require('./webpack.rules'),
+    rules: require('./webpack.rules')
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx'],
+    extensions: ['.js', '.json', '.jsx']
   },
   devtool: 'source-map',
   node: {
     global: true,
     path: true,
     electron: true,
-    process: true,
-  },
-};
+    process: true
+  }
+}

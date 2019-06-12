@@ -1,15 +1,15 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import SoundBoardSelection from '../components/SoundBoardSelection';
+import SoundBoardSelection from '../components/SoundBoardSelection'
 
-import { getBoardsWithStatus } from '../selectors';
+import { getBoardsWithStatus } from '../selectors'
 
 const mapStateToProps = state => ({
-  boards: getBoardsWithStatus(state),
-});
+  boards: getBoardsWithStatus(state)
+})
 
-const container = connect(mapStateToProps)(SoundBoardSelection);
+const container = connect(mapStateToProps)(SoundBoardSelection)
 
-container.displayName = 'Connect(SoundBoardSelection)';
+container.displayName = 'Connect(SoundBoardSelection)'
 
-export default container;
+export default container

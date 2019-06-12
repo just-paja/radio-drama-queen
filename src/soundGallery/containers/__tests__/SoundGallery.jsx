@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import SoundGallery from '../SoundGallery';
+import SoundGallery from '../SoundGallery'
 
-import { renderWithContainers } from '../../../../mock';
+import { renderWithContainers } from '../../../../mock'
 
 describe('SoundGallery container', () => {
   it('provides sounds', () => {
@@ -14,11 +14,11 @@ describe('SoundGallery container', () => {
           {
             name: 'foo',
             uuid: 'foo',
-            tags: [],
-          },
-        ],
-      },
-    };
+            tags: []
+          }
+        ]
+      }
+    }
     const comp = renderWithContainers(
       <SoundGallery
         onAddSound={() => {}}
@@ -30,7 +30,7 @@ describe('SoundGallery container', () => {
         onSoundAdd={() => {}}
       />,
       state
-    );
-    expect(comp.find('SoundGallery')).toHaveProp('librarySize', 1);
-  });
-});
+    )
+    expect(comp.find('SoundGallery')).toHaveProp('librarySize', 1)
+  })
+})

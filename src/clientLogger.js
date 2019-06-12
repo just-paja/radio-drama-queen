@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 export const logError = (error) => {
-  console.error(error);
-};
+  console.error(error)
+}
 
 export const logWarning = (error) => {
-  console.warn(error);
-};
+  console.warn(error)
+}
 
 export const compatLogWarning = (next, error) => {
-  logWarning(error);
-};
+  logWarning(error)
+}

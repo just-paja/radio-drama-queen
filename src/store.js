@@ -1,53 +1,53 @@
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware from 'redux-saga'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { createLogger } from 'redux-logger';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createLogger } from 'redux-logger'
+import { createStore, applyMiddleware, compose } from 'redux'
 
-import reducers from './reducers';
-import ipcActionPipe from './ipcActionPipe';
+import reducers from './reducers'
+import ipcActionPipe from './ipcActionPipe'
 
-export const sagaMiddleware = createSagaMiddleware();
+export const sagaMiddleware = createSagaMiddleware()
 
-const DEVELOPMENT = process.env.NODE_ENV !== 'production'; // eslint-disable-line no-undef
-let store;
+const DEVELOPMENT = process.env.NODE_ENV !== 'production' // eslint-disable-line no-undef
+let store
 
-export default function configureStore(initialState = {}) {
-  const middlewares = [];
+export default function configureStore (initialState = {}) {
+  const middlewares = []
 
-  middlewares.push(sagaMiddleware);
+  middlewares.push(sagaMiddleware)
 
   if (DEVELOPMENT) {
     middlewares.push(createLogger({
       collapsed: true,
-      diff: false,
-    }));
+      diff: false
+    }))
   }
 
   const enhancers = [
-    applyMiddleware(...middlewares),
-  ];
+    applyMiddleware(...middlewares)
+  ]
 
   store = createStore(
     reducers,
     initialState,
     compose(...enhancers)
-  );
+  )
 
-  ipcActionPipe(store);
+  ipcActionPipe(store)
 
   // Create hook for async sagas
-  store.sagaMiddleware = sagaMiddleware;
-  store.runSaga = sagaMiddleware.run;
-  return store;
+  store.sagaMiddleware = sagaMiddleware
+  store.runSaga = sagaMiddleware.run
+  return store
 }
 
 if (module.hot) {
   module.hot.accept('./reducers', () => {
     if (store) {
       // eslint-disable-next-line global-require
-      store.replaceReducer(require('./reducers').default);
-      console.info(':: Hot reload reducers');
+      store.replaceReducer(require('./reducers').default)
+      console.info(':: Hot reload reducers')
     }
-  });
+  })
 }

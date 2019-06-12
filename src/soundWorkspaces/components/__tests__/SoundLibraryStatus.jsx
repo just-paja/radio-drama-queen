@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import { SoundLibraryStatus } from '..';
+import { SoundLibraryStatus } from '..'
 
 describe('SoundLibraryStatus component', () => {
   it('renders playing sounds count', () => {
@@ -15,9 +15,9 @@ describe('SoundLibraryStatus component', () => {
         registeredSounds={0}
         tags={0}
       />
-    );
-    expect(comp.dive()).toIncludeText('10');
-  });
+    )
+    expect(comp.dive()).toIncludeText('10')
+  })
 
   it('renders registered sounds count', () => {
     const comp = shallow(
@@ -29,9 +29,9 @@ describe('SoundLibraryStatus component', () => {
         registeredSounds={11}
         tags={11}
       />
-    );
-    expect(comp.dive()).toIncludeText('11');
-  });
+    )
+    expect(comp.dive()).toIncludeText('11')
+  })
 
   it('renders board sounds count', () => {
     const comp = shallow(
@@ -43,9 +43,9 @@ describe('SoundLibraryStatus component', () => {
         registeredSounds={0}
         tags={0}
       />
-    );
-    expect(comp.dive()).toIncludeText('12');
-  });
+    )
+    expect(comp.dive()).toIncludeText('12')
+  })
 
   it('renders error sounds count', () => {
     const comp = shallow(
@@ -57,9 +57,9 @@ describe('SoundLibraryStatus component', () => {
         registeredSounds={0}
         tags={0}
       />
-    );
-    expect(comp.dive()).toIncludeText('13');
-  });
+    )
+    expect(comp.dive()).toIncludeText('13')
+  })
 
   it('renders in memory sounds count', () => {
     const comp = shallow(
@@ -71,9 +71,9 @@ describe('SoundLibraryStatus component', () => {
         registeredSounds={0}
         tags={0}
       />
-    );
-    expect(comp.dive()).toIncludeText('14');
-  });
+    )
+    expect(comp.dive()).toIncludeText('14')
+  })
 
   it('renders tag count', () => {
     const comp = shallow(
@@ -85,7 +85,7 @@ describe('SoundLibraryStatus component', () => {
         registeredSounds={0}
         tags={15}
       />
-    );
-    expect(comp.dive()).toIncludeText('15');
-  });
-});
+    )
+    expect(comp.dive()).toIncludeText('15')
+  })
+})

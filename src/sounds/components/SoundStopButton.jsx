@@ -1,23 +1,23 @@
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import React from 'react';
-import Stop from '@material-ui/icons/Stop';
-import IconButton from '@material-ui/core/IconButton';
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Stop from '@material-ui/icons/Stop'
+import IconButton from '@material-ui/core/IconButton'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import { Classes, ClassName } from '../../proptypes';
+import { Classes, ClassName } from '../../proptypes'
 
 const styles = theme => ({
   button: {
     padding: 0,
-    margin: 0,
+    margin: 0
   },
   icon: {
     height: 14,
-    width: 14,
+    width: 14
   }
-});
+})
 
 const SoundStopButton = ({ className, classes, onClick, playing }) => (
   <IconButton
@@ -28,18 +28,18 @@ const SoundStopButton = ({ className, classes, onClick, playing }) => (
   >
     <Stop className={classes.icon} />
   </IconButton>
-);
+)
 
 SoundStopButton.propTypes = {
   className: ClassName,
   classes: Classes.isRequired,
   onClick: PropTypes.func.isRequired,
-  playing: PropTypes.bool,
-};
+  playing: PropTypes.bool
+}
 
 SoundStopButton.defaultProps = {
   className: null,
-  playing: false,
-};
+  playing: false
+}
 
-export default withStyles(styles)(SoundStopButton);
+export default withStyles(styles)(SoundStopButton)

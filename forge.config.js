@@ -1,32 +1,32 @@
-const packageInfo = require('./package.json');
+const packageInfo = require('./package.json')
 
 const allowedPatterns = [
   /package.json/,
   /[/\\]\.webpack($|[/\\]).*$/,
-  /[/\\]src($|[/\\]workers($|[/\\].+))/,
-];
+  /[/\\]src($|[/\\]workers($|[/\\].+))/
+]
 
-function allowModule(moduleName) {
-  allowedPatterns.push(new RegExp(`[/\\\\]node_modules($|[/\\\\]${moduleName}($|[/\\\\].+))`));
-  const packageInfo = require(`${moduleName}/package.json`);
+function allowModule (moduleName) {
+  allowedPatterns.push(new RegExp(`[/\\\\]node_modules($|[/\\\\]${moduleName}($|[/\\\\].+))`))
+  const packageInfo = require(`${moduleName}/package.json`)
   if (packageInfo.dependencies) {
-    Object.keys(packageInfo.dependencies).forEach(allowModule);
+    Object.keys(packageInfo.dependencies).forEach(allowModule)
   }
 }
 
-function ignoreFile(file) {
+function ignoreFile (file) {
   if (!file) {
-    return false;
+    return false
   }
-  const ignore = !allowedPatterns.some(pattern => pattern.test(file));
+  const ignore = !allowedPatterns.some(pattern => pattern.test(file))
   if (!ignore) {
     console.log(file)
   }
-  return ignore;
+  return ignore
 }
 
-allowModule('fs-jetpack');
-allowModule('request');
+allowModule('fs-jetpack')
+allowModule('request')
 
 module.exports = {
   makers: [
@@ -34,7 +34,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         name: 'radio_drama_queen',
-        description: packageInfo.summary,
+        description: packageInfo.summary
       }
     },
     {
@@ -46,7 +46,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-deb',
       config: {}
-    },
+    }
     // {
     //   name: '@electron-forge/maker-rpm',
     //   config: {}
@@ -54,7 +54,7 @@ module.exports = {
   ],
   packagerConfig: {
     prune: false,
-    ignore: ignoreFile,
+    ignore: ignoreFile
   },
   publishers: [
     {
@@ -63,10 +63,10 @@ module.exports = {
         prerelease: true,
         repository: {
           owner: 'just-paja',
-          name: 'radio-drama-queen',
-        },
-      },
-    },
+          name: 'radio-drama-queen'
+        }
+      }
+    }
   ],
   plugins: [
     [
@@ -87,4 +87,4 @@ module.exports = {
       '@electron-forge/plugin-auto-unpack-natives'
     ]
   ]
-};
+}

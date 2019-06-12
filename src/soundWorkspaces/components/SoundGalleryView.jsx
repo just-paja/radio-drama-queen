@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import { SoundGallery } from '../../soundGallery/containers';
+import { SoundGallery } from '../../soundGallery/containers'
 
 const SoundGalleryView = ({
   onAddSoundToBoard,
@@ -9,7 +9,7 @@ const SoundGalleryView = ({
   onBoardCreate,
   onConfigOpen,
   onGalleryGoBack,
-  onLibraryOpen,
+  onLibraryOpen
 }) => (
   <SoundGallery
     onAddSound={onAddSoundToBoard}
@@ -19,7 +19,7 @@ const SoundGalleryView = ({
     onGoBack={onGalleryGoBack}
     onLibraryOpen={onLibraryOpen}
   />
-);
+)
 
 SoundGalleryView.propTypes = {
   onAddSoundToBoard: PropTypes.func.isRequired,
@@ -27,11 +27,11 @@ SoundGalleryView.propTypes = {
   onBoardCreate: PropTypes.func.isRequired,
   onConfigOpen: PropTypes.func.isRequired,
   onGalleryGoBack: PropTypes.func.isRequired,
-  onLibraryOpen: PropTypes.func.isRequired,
-};
+  onLibraryOpen: PropTypes.func.isRequired
+}
 
 SoundGalleryView.defaultProps = {
-  target: null,
-};
+  target: null
+}
 
-export default SoundGalleryView;
+export default SoundGalleryView

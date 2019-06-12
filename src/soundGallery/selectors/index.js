@@ -1,62 +1,62 @@
-import { createSelector } from 'reselect';
-import { getFlag } from 'react-saga-rest';
+import { createSelector } from 'reselect'
+import { getFlag } from 'react-saga-rest'
 
-import { clearSearch, splitSearchPatterns, stringSearch } from '../../search';
-import { getSound, memoizeSoundList } from '../../sounds/selectors';
-import { getTags } from '../../soundTags/selectors';
-import { getCategories } from '../../soundCategories/selectors';
+import { clearSearch, splitSearchPatterns, stringSearch } from '../../search'
+import { getSound, memoizeSoundList } from '../../sounds/selectors'
+import { getTags } from '../../soundTags/selectors'
+import { getCategories } from '../../soundCategories/selectors'
 
-const memoizeSearch = state => state.soundGallery.search;
-const memoizeTarget = state => state.soundGallery.target;
+const memoizeSearch = state => state.soundGallery.search
+const memoizeTarget = state => state.soundGallery.target
 
 export const getSoundSearchValue = createSelector(
   memoizeSearch,
   state => state.search
-);
+)
 
 export const getGallerySize = createSelector(
   memoizeSoundList,
   state => state.length
-);
+)
 
 export const getSoundSearchValueCleared = createSelector(
   getSoundSearchValue,
   value => clearSearch(value)
-);
+)
 
-const hasRelevantTitle = (item, search) => Boolean(item.title)
-  && Object.keys(item.title).some(key => stringSearch(item.title[key], search).relevant);
+const hasRelevantTitle = (item, search) => Boolean(item.title) &&
+  Object.keys(item.title).some(key => stringSearch(item.title[key], search).relevant)
 
 const isRelevant = (item, search, inclusive = false) => (
-  stringSearch(item.name, search, inclusive).relevant
-  || hasRelevantTitle(item, search)
-);
+  stringSearch(item.name, search, inclusive).relevant ||
+  hasRelevantTitle(item, search)
+)
 
-const hasRelevantTags = (sound, relevantTags) => relevantTags
-  && sound.tags
-  && relevantTags.every(
+const hasRelevantTags = (sound, relevantTags) => relevantTags &&
+  sound.tags &&
+  relevantTags.every(
     tagGroup => tagGroup.some(
       tag => sound.tags.indexOf(tag) !== -1
     )
-  );
+  )
 
 const getRelevantTags = (tags, search) => {
-  const searchSplit = splitSearchPatterns(search);
+  const searchSplit = splitSearchPatterns(search)
   return searchSplit.map(pattern => tags
     .filter(tag => isRelevant(tag, pattern))
-    .map(tag => tag.name));
-};
+    .map(tag => tag.name))
+}
 
 export const getGallerySoundsWithFlags = createSelector(
   [memoizeSoundList, getCategories],
   (sounds, categories) => sounds.map(sound => ({
     ...sound,
-    isUsed: categories.some(category => category.sounds.indexOf(sound.uuid) !== -1),
+    isUsed: categories.some(category => category.sounds.indexOf(sound.uuid) !== -1)
   }))
-);
+)
 
-export const getErrorsFilter = getFlag(memoizeSearch, 'filterErrors');
-export const getUsedFilter = getFlag(memoizeSearch, 'filterUsed');
+export const getErrorsFilter = getFlag(memoizeSearch, 'filterErrors')
+export const getUsedFilter = getFlag(memoizeSearch, 'filterUsed')
 
 export const getGallerySoundList = createSelector(
   [
@@ -64,31 +64,31 @@ export const getGallerySoundList = createSelector(
     getTags,
     getSoundSearchValueCleared,
     getErrorsFilter,
-    getUsedFilter,
+    getUsedFilter
   ],
   (sounds, tags, search, filterErrors, filterUsed) => {
-    let soundsFiltered = sounds;
+    let soundsFiltered = sounds
     if (filterUsed) {
-      soundsFiltered = soundsFiltered.filter(sound => !sound.isUsed);
+      soundsFiltered = soundsFiltered.filter(sound => !sound.isUsed)
     }
     if (filterErrors) {
-      soundsFiltered = soundsFiltered.filter(sound => !sound.error);
+      soundsFiltered = soundsFiltered.filter(sound => !sound.error)
     }
     if (search) {
-      const relevantTags = getRelevantTags(tags, search);
+      const relevantTags = getRelevantTags(tags, search)
       soundsFiltered = soundsFiltered
-        .filter(sound => isRelevant(sound, search) || hasRelevantTags(sound, relevantTags));
+        .filter(sound => isRelevant(sound, search) || hasRelevantTags(sound, relevantTags))
     }
-    return soundsFiltered.slice(0, 20);
+    return soundsFiltered.slice(0, 20)
   }
-);
+)
 
 export const getGallerySound = createSelector(
   getSound,
   state => state
-);
+)
 
 export const getGalleryTarget = createSelector(
   memoizeTarget,
   state => state
-);
+)

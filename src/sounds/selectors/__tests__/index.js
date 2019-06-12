@@ -1,4 +1,4 @@
-import * as selectors from '..';
+import * as selectors from '..'
 
 describe('sounds selectors', () => {
   it('memoizeSoundList returns sound list', () => {
@@ -6,17 +6,17 @@ describe('sounds selectors', () => {
       sounds: {
         list: [
           {
-            uuid: 'foo',
-          },
-        ],
-      },
-    };
+            uuid: 'foo'
+          }
+        ]
+      }
+    }
     expect(selectors.memoizeSoundList(state)).toEqual([
       {
-        uuid: 'foo',
-      },
-    ]);
-  });
+        uuid: 'foo'
+      }
+    ])
+  })
 
   it('getSound returns sound by uuid', () => {
     const state = {
@@ -24,16 +24,16 @@ describe('sounds selectors', () => {
         list: [
           {
             uuid: 'foo',
-            url: 'http://example.com/test',
-          },
-        ],
-      },
-    };
+            url: 'http://example.com/test'
+          }
+        ]
+      }
+    }
     expect(selectors.getSound(state, 'foo')).toEqual({
       uuid: 'foo',
-      url: 'http://example.com/test',
-    });
-  });
+      url: 'http://example.com/test'
+    })
+  })
 
   it('getSoundPlayingStatus returns true when sound is playing', () => {
     const state = {
@@ -42,13 +42,13 @@ describe('sounds selectors', () => {
           {
             uuid: 'foo',
             url: 'http://example.com/test',
-            playing: true,
-          },
-        ],
-      },
-    };
-    expect(selectors.getSoundPlayingStatus(state, 'foo')).toEqual(true);
-  });
+            playing: true
+          }
+        ]
+      }
+    }
+    expect(selectors.getSoundPlayingStatus(state, 'foo')).toEqual(true)
+  })
 
   it('getSoundLoopStatus returns true when sound is playing', () => {
     const state = {
@@ -57,11 +57,11 @@ describe('sounds selectors', () => {
           {
             uuid: 'foo',
             url: 'http://example.com/test',
-            playing: true,
-          },
-        ],
-      },
-    };
-    expect(selectors.getSoundPlayingStatus(state, 'foo')).toEqual(true);
-  });
-});
+            playing: true
+          }
+        ]
+      }
+    }
+    expect(selectors.getSoundPlayingStatus(state, 'foo')).toEqual(true)
+  })
+})

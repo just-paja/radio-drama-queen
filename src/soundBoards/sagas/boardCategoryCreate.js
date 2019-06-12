@@ -1,22 +1,22 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { categoryCreate } from '../actions';
-import { createCategory } from '../../soundCategories/sagas';
+import { categoryCreate } from '../actions'
+import { createCategory } from '../../soundCategories/sagas'
 
-function* categoryCreateByFormSubmit({ payload, meta: { board } }) {
+function * categoryCreateByFormSubmit ({ payload, meta: { board } }) {
   yield call(createCategory, {
     payload: {
       ...payload,
-      board,
-    },
-  });
-  yield put(categoryCreate.formHide());
+      board
+    }
+  })
+  yield put(categoryCreate.formHide())
 }
 
-function* handleCategoryCreate() {
-  yield takeLatest(categoryCreate.SUBMIT, categoryCreateByFormSubmit);
+function * handleCategoryCreate () {
+  yield takeLatest(categoryCreate.SUBMIT, categoryCreateByFormSubmit)
 }
 
 export default [
-  handleCategoryCreate,
-];
+  handleCategoryCreate
+]

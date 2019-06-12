@@ -1,4 +1,4 @@
-import AudioManager from './AudioManager';
+import AudioManager from './AudioManager'
 
-export { AudioManager };
-export default { AudioManager };
+export { AudioManager }
+export default { AudioManager }

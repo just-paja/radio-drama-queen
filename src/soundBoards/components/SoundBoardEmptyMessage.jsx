@@ -1,7 +1,7 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import Typography from '@material-ui/core/Typography'
 
-import CanvasMessage from '../../components/CanvasMessage';
+import CanvasMessage from '../../components/CanvasMessage'
 
 const SoundBoardEmptyMessage = () => (
   <CanvasMessage heading="You don't have any sound categories defined!">
@@ -10,6 +10,6 @@ const SoundBoardEmptyMessage = () => (
       want to play just by visual inspection.
     </Typography>
   </CanvasMessage>
-);
+)
 
-export default SoundBoardEmptyMessage;
+export default SoundBoardEmptyMessage

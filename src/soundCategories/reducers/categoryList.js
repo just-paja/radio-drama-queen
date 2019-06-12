@@ -1,9 +1,9 @@
-import category, { initialState } from './category';
+import category, { initialState } from './category'
 
-import { createListReducer } from '../../lists';
-import { categoryList, categoryRename } from '../actions';
+import { createListReducer } from '../../lists'
+import { categoryList, categoryRename } from '../actions'
 
 export default createListReducer([
   categoryList,
-  categoryRename,
-], category, initialState);
+  categoryRename
+], category, initialState)

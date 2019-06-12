@@ -1,11 +1,11 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import SoundTag from '../components/SoundTag';
+import SoundTag from '../components/SoundTag'
 
-import { getTagByName } from '../selectors';
+import { getTagByName } from '../selectors'
 
 const mapStateToProps = (state, { tag }) => ({
-  tag: getTagByName(state, tag),
-});
+  tag: getTagByName(state, tag)
+})
 
-export default connect(mapStateToProps)(SoundTag);
+export default connect(mapStateToProps)(SoundTag)

@@ -1,22 +1,22 @@
-import getSagaTester from '../../../mock/sagaTester';
+import getSagaTester from '../../../mock/sagaTester'
 
-import * as logger from '../../clientLogger';
-import mainSaga from '..';
+import * as logger from '../../clientLogger'
+import mainSaga from '..'
 
 describe('main project saga', () => {
   beforeEach(() => {
-    jest.spyOn(logger, 'logWarning').mockImplementation();
-    jest.spyOn(logger, 'logError').mockImplementation();
-  });
+    jest.spyOn(logger, 'logWarning').mockImplementation()
+    jest.spyOn(logger, 'logError').mockImplementation()
+  })
 
   afterEach(() => {
-    jest.clearAllMocks();
-  });
+    jest.clearAllMocks()
+  })
 
   it('starts without errors', () => {
-    const sagaTester = getSagaTester();
+    const sagaTester = getSagaTester()
     expect(() => {
-      sagaTester.run(mainSaga);
-    }).not.toThrow();
-  });
-});
+      sagaTester.run(mainSaga)
+    }).not.toThrow()
+  })
+})

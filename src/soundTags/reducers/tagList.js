@@ -1,6 +1,6 @@
-import tag, { initialState } from './tag';
+import tag, { initialState } from './tag'
 
-import { createListReducer } from '../../lists';
-import { tagList } from '../actions';
+import { createListReducer } from '../../lists'
+import { tagList } from '../actions'
 
-export default createListReducer(tagList, tag, initialState);
+export default createListReducer(tagList, tag, initialState)

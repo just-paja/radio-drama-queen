@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 import {
   fetchFailure,
   changeParam,
   turnOff,
-  turnOn,
-} from 'react-saga-rest';
+  turnOn
+} from 'react-saga-rest'
 
-import { soundList, soundLoad } from '../actions';
-import { idCollection } from '../../collections';
+import { soundList, soundLoad } from '../actions'
+import { idCollection } from '../../collections'
 
 export const initialState = {
   loading: false,
@@ -17,15 +17,15 @@ export const initialState = {
   playing: false,
   tags: [],
   uuid: null,
-  valid: false,
-};
+  valid: false
+}
 
 export default handleActions({
   [soundList.PLAY]: turnOn('playing'),
   [soundList.PLAY_FAILURE]: (state, action) => ({
     ...state,
     error: action.payload,
-    playing: false,
+    playing: false
   }),
   [soundList.FINISHED]: turnOff('playing'),
   [soundList.STOP]: turnOff('playing'),
@@ -39,5 +39,5 @@ export default handleActions({
   [soundLoad.REQUEST]: turnOn('loading'),
   [soundLoad.SUCCESS]: turnOn('valid'),
   [soundLoad.FAILURE]: fetchFailure,
-  [soundLoad.FULFILL]: turnOff('loading'),
-}, initialState);
+  [soundLoad.FULFILL]: turnOff('loading')
+}, initialState)

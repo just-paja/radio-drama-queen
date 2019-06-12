@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
-import soundList from './soundList';
+import soundList from './soundList'
 
 export default combineReducers({
-  list: soundList,
-});
+  list: soundList
+})

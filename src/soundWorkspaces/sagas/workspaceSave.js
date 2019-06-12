@@ -3,13 +3,13 @@ import {
   put,
   select,
   take,
-  takeEvery,
-} from 'redux-saga/effects';
+  takeEvery
+} from 'redux-saga/effects'
 
-import { workspaceSave } from '../actions';
-import { getWorkspaceFilePath } from '../selectors';
+import { workspaceSave } from '../actions'
+import { getWorkspaceFilePath } from '../selectors'
 
-import { writeFile } from '../../LocalAssetsManager';
+import { writeFile } from '../../LocalAssetsManager'
 
 const stripMemoryState = ({ form, soundGallery, ...state }) => ({
   ...state,
@@ -17,52 +17,52 @@ const stripMemoryState = ({ form, soundGallery, ...state }) => ({
     ...state.sounds,
     list: state.sounds.list.map(sound => ({
       path: sound.path,
-      uuid: sound.uuid,
-    })),
+      uuid: sound.uuid
+    }))
   },
   soundWorkspaces: {
     ...state.soundWorkspaces,
     save: {
       ...state.soundWorkspaces.save,
-      saveAsDialogOpen: false,
+      saveAsDialogOpen: false
     },
     load: {
       ...state.soundWorkspaces.load,
-      loadFromDialogOpen: false,
-    },
-  },
-});
+      loadFromDialogOpen: false
+    }
+  }
+})
 
-function* save() {
-  yield put(workspaceSave.request());
+function * save () {
+  yield put(workspaceSave.request())
   try {
-    const path = yield select(getWorkspaceFilePath);
-    const state = yield select(state => state);
-    yield call(writeFile,path, JSON.stringify(stripMemoryState(state)));
-    yield put(workspaceSave.success());
+    const path = yield select(getWorkspaceFilePath)
+    const state = yield select(state => state)
+    yield call(writeFile, path, JSON.stringify(stripMemoryState(state)))
+    yield put(workspaceSave.success())
   } catch (error) {
-    yield put(workspaceSave.failure(error));
+    yield put(workspaceSave.failure(error))
   } finally {
-    yield put(workspaceSave.fulfill());
+    yield put(workspaceSave.fulfill())
   }
 }
 
-function* saveToNewDestination({ payload: { path } }) {
-  yield put(workspaceSave.destinationChange(path));
-  yield put(workspaceSave.trigger());
-  yield take(workspaceSave.SUCCESS);
-  yield put(workspaceSave.dialogHide());
+function * saveToNewDestination ({ payload: { path } }) {
+  yield put(workspaceSave.destinationChange(path))
+  yield put(workspaceSave.trigger())
+  yield take(workspaceSave.SUCCESS)
+  yield put(workspaceSave.dialogHide())
 }
 
-function* handleSave() {
-  yield takeEvery(workspaceSave.TRIGGER, save);
+function * handleSave () {
+  yield takeEvery(workspaceSave.TRIGGER, save)
 }
 
-function* handleSaveAs() {
-  yield takeEvery(workspaceSave.SAVE_AS, saveToNewDestination);
+function * handleSaveAs () {
+  yield takeEvery(workspaceSave.SAVE_AS, saveToNewDestination)
 }
 
 export default [
   handleSaveAs,
-  handleSave,
-];
+  handleSave
+]

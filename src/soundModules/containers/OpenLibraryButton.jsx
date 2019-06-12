@@ -1,18 +1,18 @@
-import CloudDownload from '@material-ui/icons/CloudDownload';
+import CloudDownload from '@material-ui/icons/CloudDownload'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import LabelButton from '../../components/LabelButton';
+import LabelButton from '../../components/LabelButton'
 
-import { libraryLoad } from '../actions';
+import { libraryLoad } from '../actions'
 
 const mapStateToProps = () => ({
   children: 'Download Library',
-  icon: CloudDownload,
-});
+  icon: CloudDownload
+})
 
 const mapDispatchToProps = {
-  onClick: libraryLoad.dialogShow,
-};
+  onClick: libraryLoad.dialogShow
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LabelButton);
+export default connect(mapStateToProps, mapDispatchToProps)(LabelButton)

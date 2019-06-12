@@ -1,3 +1,3 @@
-const { runMain } = require('./electron');
+const { runMain } = require('./electron')
 
-runMain(true);
+runMain(true)

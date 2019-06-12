@@ -1,20 +1,20 @@
-import SaveAlt from '@material-ui/icons/SaveAlt';
+import SaveAlt from '@material-ui/icons/SaveAlt'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import LabelButton from '../../components/LabelButton';
+import LabelButton from '../../components/LabelButton'
 
-import { workspaceSave } from '../actions';
-import { isWorkspaceEmpty } from '../selectors';
+import { workspaceSave } from '../actions'
+import { isWorkspaceEmpty } from '../selectors'
 
 const mapStateToProps = (state) => ({
   children: 'Save As',
   disabled: isWorkspaceEmpty(state),
-  icon: SaveAlt,
-});
+  icon: SaveAlt
+})
 
 const mapDispatchToProps = {
-  onClick: workspaceSave.dialogOpen,
-};
+  onClick: workspaceSave.dialogOpen
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LabelButton);
+export default connect(mapStateToProps, mapDispatchToProps)(LabelButton)

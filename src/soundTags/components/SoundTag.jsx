@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import { Classes } from '../../proptypes';
-import { SoundTag as SoundTagPropType } from '../proptypes';
+import { Classes } from '../../proptypes'
+import { SoundTag as SoundTagPropType } from '../proptypes'
 
 const styles = theme => ({
   button: {
@@ -14,51 +14,51 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     '&:hover': {
-      color: theme.palette.text.primary,
-    },
-  },
-});
+      color: theme.palette.text.primary
+    }
+  }
+})
 
 class SoundTag extends Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
+  constructor () {
+    super()
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick() {
-    const { onClick, tag } = this.props;
+  handleClick () {
+    const { onClick, tag } = this.props
     if (onClick) {
-      onClick(tag.name);
+      onClick(tag.name)
     }
   }
 
-  render() {
-    const { classes, tag } = this.props;
+  render () {
+    const { classes, tag } = this.props
     if (!tag) {
-      return null;
+      return null
     }
     return (
       <button
         className={classes.button}
         onClick={this.handleClick}
-        type="button"
+        type='button'
       >
         #
         {tag.title || tag.name}
       </button>
-    );
+    )
   }
 }
 
 SoundTag.propTypes = {
   classes: Classes.isRequired,
   onClick: PropTypes.func,
-  tag: SoundTagPropType,
-};
+  tag: SoundTagPropType
+}
 
 SoundTag.defaultProps = {
   onClick: null,
-  tag: null,
-};
+  tag: null
+}
 
-export default withStyles(styles)(SoundTag);
+export default withStyles(styles)(SoundTag)

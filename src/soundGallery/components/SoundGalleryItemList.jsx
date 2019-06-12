@@ -1,19 +1,19 @@
-import Paper from '@material-ui/core/Paper';
-import PropTypes from 'prop-types';
-import React from 'react';
+import Paper from '@material-ui/core/Paper'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import SoundGalleryItem from './SoundGalleryItem';
+import SoundGalleryItem from './SoundGalleryItem'
 
-import { GallerySound, GalleryTarget } from '../proptypes';
-import { Classes } from '../../proptypes';
+import { GallerySound, GalleryTarget } from '../proptypes'
+import { Classes } from '../../proptypes'
 
 const styles = theme => ({
   body: {
-    padding: theme.spacing(),
-  },
-});
+    padding: theme.spacing()
+  }
+})
 
 const SoundGalleryItemList = ({
   classes,
@@ -21,7 +21,7 @@ const SoundGalleryItemList = ({
   onSoundPlay,
   onTagAdd,
   sounds,
-  target,
+  target
 }) => (
   <Paper className={classes.body}>
     {sounds.map(sound => (
@@ -35,7 +35,7 @@ const SoundGalleryItemList = ({
       />
     ))}
   </Paper>
-);
+)
 
 SoundGalleryItemList.propTypes = {
   classes: Classes.isRequired,
@@ -43,11 +43,11 @@ SoundGalleryItemList.propTypes = {
   onTagAdd: PropTypes.func.isRequired,
   onSoundPlay: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(GallerySound).isRequired,
-  target: GalleryTarget,
-};
+  target: GalleryTarget
+}
 
 SoundGalleryItemList.defaultProps = {
-  target: null,
-};
+  target: null
+}
 
-export default withStyles(styles)(SoundGalleryItemList);
+export default withStyles(styles)(SoundGalleryItemList)

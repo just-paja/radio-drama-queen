@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import { SoundStatusIcon } from '..';
+import { SoundStatusIcon } from '..'
 
 describe('SoundStatusIcon component', () => {
   it('renders error icon given the sound has an error', () => {
@@ -10,9 +10,9 @@ describe('SoundStatusIcon component', () => {
       <SoundStatusIcon
         error={new Error('Test!')}
       />
-    );
-    expect(comp).toContainMatchingElement('ErrorIcon');
-  });
+    )
+    expect(comp).toContainMatchingElement('ErrorIcon')
+  })
 
   it('renders stop icon given the sound is playing', () => {
     const comp = shallow(
@@ -20,9 +20,9 @@ describe('SoundStatusIcon component', () => {
         playing
         valid
       />
-    );
-    expect(comp).toContainMatchingElement('StopIcon');
-  });
+    )
+    expect(comp).toContainMatchingElement('StopIcon')
+  })
 
   it('renders disabled icon given the sound is not valid', () => {
     const comp = shallow(
@@ -30,21 +30,21 @@ describe('SoundStatusIcon component', () => {
         playing
         valid={false}
       />
-    );
-    expect(comp).toContainMatchingElement('NotInterestedIcon');
-  });
+    )
+    expect(comp).toContainMatchingElement('NotInterestedIcon')
+  })
 
   it('renders play arrow icon given the sound is not playing and has no error', () => {
     const comp = shallow(
       <SoundStatusIcon valid />
-    );
-    expect(comp).toContainMatchingElement('PlayArrowIcon');
-  });
+    )
+    expect(comp).toContainMatchingElement('PlayArrowIcon')
+  })
 
   it('renders loader given the sound is loading', () => {
     const comp = shallow(
       <SoundStatusIcon loading />
-    );
-    expect(comp).toContainMatchingElement('WithStyles(ForwardRef(CircularProgress))');
-  });
-});
+    )
+    expect(comp).toContainMatchingElement('WithStyles(ForwardRef(CircularProgress))')
+  })
+})

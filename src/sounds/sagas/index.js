@@ -1,12 +1,12 @@
-import soundLoad from './soundLoad';
-import soundPlay from './soundPlay';
-import soundRegister from './soundRegister';
-import soundStop from './soundStop';
-import soundStopAll from './soundStopAll';
-import soundToggle from './soundToggle';
-import soundVolumeChange from './soundVolumeChange';
+import soundLoad from './soundLoad'
+import soundPlay from './soundPlay'
+import soundRegister from './soundRegister'
+import soundStop from './soundStop'
+import soundStopAll from './soundStopAll'
+import soundToggle from './soundToggle'
+import soundVolumeChange from './soundVolumeChange'
 
-export * from './soundLoad';
+export * from './soundLoad'
 
 export default [
   ...soundLoad,
@@ -15,5 +15,5 @@ export default [
   ...soundStop,
   ...soundStopAll,
   ...soundToggle,
-  ...soundVolumeChange,
-];
+  ...soundVolumeChange
+]

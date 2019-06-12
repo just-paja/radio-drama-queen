@@ -1,2 +1,2 @@
-export * from './soundCategories';
-export * from './soundCategoryGrid';
+export * from './soundCategories'
+export * from './soundCategoryGrid'

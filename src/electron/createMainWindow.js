@@ -1,12 +1,12 @@
-const path = require('path');
+const path = require('path')
 
-const { BrowserWindow } = require('electron');
+const { BrowserWindow } = require('electron')
 
-const BackendMessenger = require('./BackendMessenger');
-const handlers = require('./handlers');
-const SoundManager = require('./SoundManager');
+const BackendMessenger = require('./BackendMessenger')
+const handlers = require('./handlers')
+const SoundManager = require('./SoundManager')
 
-const { soundRead, soundRegister } = require('../sounds/actions');
+const { soundRead, soundRegister } = require('../sounds/actions')
 
 module.exports = (development) => {
   const mainWindow = new BrowserWindow({
@@ -17,15 +17,15 @@ module.exports = (development) => {
     title: 'Radio Drama Queen',
     width: 960,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: true
     }
-  });
+  })
 
-  const messenger = new BackendMessenger(mainWindow, development);
-  const soundManager = new SoundManager();
+  const messenger = new BackendMessenger(mainWindow, development)
+  const soundManager = new SoundManager()
 
-  messenger.handleAction(soundRegister.REQUEST, soundRegister, handlers.soundRegister(soundManager));
-  messenger.handleAction(soundRead.REQUEST, soundRead, handlers.soundRead(soundManager));
+  messenger.handleAction(soundRegister.REQUEST, soundRegister, handlers.soundRegister(soundManager))
+  messenger.handleAction(soundRead.REQUEST, soundRead, handlers.soundRead(soundManager))
 
   // TODO: Handle sound load
   // TODO: Handle sound unload
@@ -35,14 +35,14 @@ module.exports = (development) => {
   // TODO: Handle sound mute
   // TODO: Handle sound unmute
 
-  mainWindow.removeMenu();
-  mainWindow.setMenuBarVisibility(false);
-  mainWindow.setFullScreenable(true);
+  mainWindow.removeMenu()
+  mainWindow.setMenuBarVisibility(false)
+  mainWindow.setFullScreenable(true)
 
   if (development) {
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools()
   }
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  return mainWindow;
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  return mainWindow
 }

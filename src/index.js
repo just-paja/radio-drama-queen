@@ -1,5 +1,5 @@
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './registerServiceWorker'
 
-import './main';
+import './main'
 
-registerServiceWorker();
+registerServiceWorker()

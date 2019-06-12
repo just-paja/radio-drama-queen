@@ -1,15 +1,15 @@
-import { handleActions } from 'redux-actions';
-import { turnOn, turnOff } from 'react-saga-rest';
+import { handleActions } from 'redux-actions'
+import { turnOn, turnOff } from 'react-saga-rest'
 
-import { libraryLoad } from '../actions';
+import { libraryLoad } from '../actions'
 
 const initialState = {
-  showOpenLibraryDialog: false,
-};
+  showOpenLibraryDialog: false
+}
 
 const ui = handleActions({
   [libraryLoad.DIALOG_HIDE]: turnOff('showOpenLibraryDialog'),
-  [libraryLoad.DIALOG_SHOW]: turnOn('showOpenLibraryDialog'),
-}, initialState);
+  [libraryLoad.DIALOG_SHOW]: turnOn('showOpenLibraryDialog')
+}, initialState)
 
-export default ui;
+export default ui

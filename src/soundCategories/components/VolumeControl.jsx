@@ -1,36 +1,36 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import Slider from '@material-ui/lab/Slider';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import Slider from '@material-ui/lab/Slider'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import VolumeToggleButton from './VolumeToggleButton';
+import VolumeToggleButton from './VolumeToggleButton'
 
 const styles = {
   inline: {
     alignItems: 'center',
-    display: 'flex',
-  },
-};
+    display: 'flex'
+  }
+}
 
 class VolumeControl extends Component {
-  constructor() {
-    super();
-    this.handleChange = this.handleChange.bind(this);
+  constructor () {
+    super()
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(event, value) {
-    const { onChange } = this.props;
-    onChange(value);
+  handleChange (event, value) {
+    const { onChange } = this.props
+    onChange(value)
   }
 
-  render() {
+  render () {
     const {
       classes,
       muted,
       onMuteToggle,
-      volume,
-    } = this.props;
+      volume
+    } = this.props
     return (
       <div className={classes.inline}>
         <VolumeToggleButton muted={muted} onClick={onMuteToggle} />
@@ -41,7 +41,7 @@ class VolumeControl extends Component {
           value={muted ? 0 : volume}
         />
       </div>
-    );
+    )
   }
 }
 
@@ -50,11 +50,11 @@ VolumeControl.propTypes = {
   muted: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onMuteToggle: PropTypes.func.isRequired,
-  volume: PropTypes.number.isRequired,
-};
+  volume: PropTypes.number.isRequired
+}
 
 VolumeControl.defaultProps = {
-  muted: false,
-};
+  muted: false
+}
 
-export default withStyles(styles)(VolumeControl);
+export default withStyles(styles)(VolumeControl)

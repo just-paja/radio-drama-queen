@@ -1,23 +1,23 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const SoundName = ({
   name,
-  uuid,
+  uuid
 }) => (
   <span>
     {name || uuid}
   </span>
-);
+)
 
 SoundName.propTypes = {
   name: PropTypes.string,
-  uuid: PropTypes.string.isRequired,
-};
+  uuid: PropTypes.string.isRequired
+}
 
 SoundName.defaultProps = {
   name: '',
-  highlight: '',
-};
+  highlight: ''
+}
 
-export default SoundName;
+export default SoundName

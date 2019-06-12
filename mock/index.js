@@ -1,2 +1,2 @@
-export * from './store';
-export { default as getSagaTester } from './sagaTester';
+export * from './store'
+export { default as getSagaTester } from './sagaTester'

@@ -1,15 +1,15 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import SoundLibraryStatus from '../components/SoundLibraryStatus';
+import SoundLibraryStatus from '../components/SoundLibraryStatus'
 
-import { getGallerySize } from '../../soundGallery/selectors';
+import { getGallerySize } from '../../soundGallery/selectors'
 import {
   countBoardSounds,
   countErrorSounds,
   countMemorySounds,
   countPlayingSounds,
-  countTags,
-} from '../selectors';
+  countTags
+} from '../selectors'
 
 const mapStateToProps = state => ({
   boardSounds: countBoardSounds(state),
@@ -17,11 +17,11 @@ const mapStateToProps = state => ({
   inMemorySounds: countMemorySounds(state),
   playingSounds: countPlayingSounds(state),
   registeredSounds: getGallerySize(state),
-  tags: countTags(state),
-});
+  tags: countTags(state)
+})
 
-const container = connect(mapStateToProps)(SoundLibraryStatus);
+const container = connect(mapStateToProps)(SoundLibraryStatus)
 
-container.displayName = 'Connect(SoundLibraryStatus)';
+container.displayName = 'Connect(SoundLibraryStatus)'
 
-export default container;
+export default container

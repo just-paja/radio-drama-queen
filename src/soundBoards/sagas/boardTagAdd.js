@@ -3,46 +3,46 @@ import {
   call,
   put,
   select,
-  takeEvery,
-} from 'redux-saga/effects';
+  takeEvery
+} from 'redux-saga/effects'
 
-import { soundBoard } from '../actions';
-import { soundLoad } from '../../sounds/actions';
-import { getBoardCategoryByName } from '../selectors';
-import { createCategory } from '../../soundCategories/sagas';
-import { categoryList } from '../../soundCategories/actions';
-import { getTagByName } from '../../soundTags/selectors';
-import { getAllUnusedSoundsByTag } from '../../soundCategories/selectors';
+import { soundBoard } from '../actions'
+import { soundLoad } from '../../sounds/actions'
+import { getBoardCategoryByName } from '../selectors'
+import { createCategory } from '../../soundCategories/sagas'
+import { categoryList } from '../../soundCategories/actions'
+import { getTagByName } from '../../soundTags/selectors'
+import { getAllUnusedSoundsByTag } from '../../soundCategories/selectors'
 
-function* addTag({ payload, meta: { uuid } }) {
-  const tag = yield select(getTagByName, payload);
+function * addTag ({ payload, meta: { uuid } }) {
+  const tag = yield select(getTagByName, payload)
   if (tag) {
-    const sounds = yield select(getAllUnusedSoundsByTag, payload);
-    const soundUuids = sounds.map(sound => sound.uuid);
-    const categoryName = tag.title || tag.name;
-    const category = yield select(getBoardCategoryByName, uuid, categoryName);
+    const sounds = yield select(getAllUnusedSoundsByTag, payload)
+    const soundUuids = sounds.map(sound => sound.uuid)
+    const categoryName = tag.title || tag.name
+    const category = yield select(getBoardCategoryByName, uuid, categoryName)
     if (category) {
       yield all(soundUuids.map(soundUuid => put(categoryList.soundAdd(
         category.uuid,
         soundUuid
-      ))));
+      ))))
     } else {
       yield call(createCategory, {
         payload: {
           name: categoryName,
           board: uuid,
-          sounds: soundUuids,
-        },
-      });
+          sounds: soundUuids
+        }
+      })
     }
-    yield all(soundUuids.map(soundUuid => put(soundLoad.trigger(soundUuid))));
+    yield all(soundUuids.map(soundUuid => put(soundLoad.trigger(soundUuid))))
   }
 }
 
-function* handleTagAdd() {
-  yield takeEvery(soundBoard.TAG_ADD, addTag);
+function * handleTagAdd () {
+  yield takeEvery(soundBoard.TAG_ADD, addTag)
 }
 
 export default [
-  handleTagAdd,
-];
+  handleTagAdd
+]

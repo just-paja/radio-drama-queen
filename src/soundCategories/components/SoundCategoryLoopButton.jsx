@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Repeat from '@material-ui/icons/Repeat';
+import PropTypes from 'prop-types'
+import React from 'react'
+import Repeat from '@material-ui/icons/Repeat'
 
-import SoundCategoryIconButton from './SoundCategoryIconButton';
+import SoundCategoryIconButton from './SoundCategoryIconButton'
 
 const SoundCategoryLoopButton = ({ onClick, loop }) => (
   <SoundCategoryIconButton
@@ -10,15 +10,15 @@ const SoundCategoryLoopButton = ({ onClick, loop }) => (
     icon={Repeat}
     onClick={onClick}
   />
-);
+)
 
 SoundCategoryLoopButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  loop: PropTypes.bool,
-};
+  loop: PropTypes.bool
+}
 
 SoundCategoryLoopButton.defaultProps = {
-  loop: false,
-};
+  loop: false
+}
 
-export default SoundCategoryLoopButton;
+export default SoundCategoryLoopButton

@@ -1,5 +1,5 @@
-import playAndForget from './playAndForget';
+import playAndForget from './playAndForget'
 
 export default [
-  ...playAndForget,
-];
+  ...playAndForget
+]

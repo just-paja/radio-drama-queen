@@ -1,5 +1,5 @@
-import { createListRoutine } from '../../lists';
+import { createListRoutine } from '../../lists'
 
-export const tagList = createListRoutine('TAG', [], 'name');
+export const tagList = createListRoutine('TAG', [], 'name')
 
-export default { tagList };
+export default { tagList }

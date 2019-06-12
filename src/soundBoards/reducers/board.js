@@ -1,12 +1,12 @@
-import { handleActions } from 'redux-actions';
-import { changeParam } from 'react-saga-rest';
+import { handleActions } from 'redux-actions'
+import { changeParam } from 'react-saga-rest'
 
-import { soundBoard } from '../actions';
+import { soundBoard } from '../actions'
 
 export const initialState = {
-  name: null,
-};
+  name: null
+}
 
 export default handleActions({
-  [soundBoard.RENAME]: changeParam('name', 'payload'),
-}, initialState);
+  [soundBoard.RENAME]: changeParam('name', 'payload')
+}, initialState)

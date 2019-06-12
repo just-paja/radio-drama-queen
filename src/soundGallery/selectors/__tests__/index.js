@@ -1,4 +1,4 @@
-import { getGallerySoundList } from '..';
+import { getGallerySoundList } from '..'
 
 describe('soundGallery getGallerySoundList selector', () => {
   it('returns item with multiple relevant tags', () => {
@@ -9,48 +9,48 @@ describe('soundGallery getGallerySoundList selector', () => {
             uuid: 'vroom1',
             file: 'vroom1',
             name: 'vroom1',
-            tags: ['alien', 'spaceship'],
+            tags: ['alien', 'spaceship']
           },
           {
             uuid: 'vroom2',
             file: 'vroom2',
             name: 'vroom2',
-            tags: ['spaceship'],
-          },
-        ],
+            tags: ['spaceship']
+          }
+        ]
       },
       soundCategories: {
-        list: [],
+        list: []
       },
       soundGallery: {
         search: {
-          search: 'ALIEN SPACESHIP',
-        },
+          search: 'ALIEN SPACESHIP'
+        }
       },
       soundTags: {
         list: [
           {
             name: 'alien',
             title: {
-              en: 'Alien',
-            },
+              en: 'Alien'
+            }
           },
           {
             name: 'spaceship',
             title: {
-              en: 'Spaceship',
-            },
-          },
-        ],
-      },
-    };
+              en: 'Spaceship'
+            }
+          }
+        ]
+      }
+    }
     expect(getGallerySoundList(state)).toEqual([
       expect.objectContaining({
         uuid: 'vroom1',
         file: 'vroom1',
         name: 'vroom1',
-        tags: ['alien', 'spaceship'],
-      }),
-    ]);
-  });
-});
+        tags: ['alien', 'spaceship']
+      })
+    ])
+  })
+})

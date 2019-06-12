@@ -1,1 +1,1 @@
-export { default as connectSoundDropTarget } from './connectSoundDropTarget';
+export { default as connectSoundDropTarget } from './connectSoundDropTarget'

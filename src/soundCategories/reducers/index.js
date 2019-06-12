@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
-import categoryList from './categoryList';
+import categoryList from './categoryList'
 
 export default combineReducers({
-  list: categoryList,
-});
+  list: categoryList
+})

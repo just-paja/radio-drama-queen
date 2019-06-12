@@ -1,35 +1,35 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 
-import { workspaceLoad } from '../actions';
+import { workspaceLoad } from '../actions'
 
 const initialState = {
   error: null,
   loading: false,
-  loadFromDialogOpen: false,
-};
+  loadFromDialogOpen: false
+}
 
 const ui = handleActions({
   [workspaceLoad.REQUEST]: state => ({
     ...state,
     error: null,
-    loading: true,
+    loading: true
   }),
   [workspaceLoad.FAILURE]: (state, action) => ({
     ...state,
-    error: action.payload,
+    error: action.payload
   }),
   [workspaceLoad.FULFILL]: state => ({
     ...state,
-    loading: true,
+    loading: true
   }),
   [workspaceLoad.DIALOG_OPEN]: state => ({
     ...state,
-    loadFromDialogOpen: true,
+    loadFromDialogOpen: true
   }),
   [workspaceLoad.DIALOG_HIDE]: state => ({
     ...state,
-    loadFromDialogOpen: false,
-  }),
-}, initialState);
+    loadFromDialogOpen: false
+  })
+}, initialState)
 
-export default ui;
+export default ui

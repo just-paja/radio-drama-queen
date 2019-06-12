@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { configure } from 'enzyme';
+import { configure } from 'enzyme'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from 'enzyme-adapter-react-16'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'jest-enzyme';
+import 'jest-enzyme'
 
-configure({ adapter: new Adapter() });
+configure({ adapter: new Adapter() })

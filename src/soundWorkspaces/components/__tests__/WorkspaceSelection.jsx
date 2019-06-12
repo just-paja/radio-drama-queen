@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import { WorkspaceSelection } from '..';
+import { WorkspaceSelection } from '..'
 
 describe('WorkspaceSelection component', () => {
   it('renders view library button', () => {
@@ -11,9 +11,9 @@ describe('WorkspaceSelection component', () => {
         onBoardSelect={() => {}}
         onViewSelect={() => {}}
       />
-    );
-    expect(comp.dive().find('[value="VIEW_LIBRARY"]')).toHaveLength(1);
-  });
+    )
+    expect(comp.dive().find('[value="VIEW_LIBRARY"]')).toHaveLength(1)
+  })
 
   it('renders board selection', () => {
     const comp = shallow(
@@ -21,19 +21,19 @@ describe('WorkspaceSelection component', () => {
         onBoardSelect={() => {}}
         onViewSelect={() => {}}
       />
-    );
-    expect(comp.dive()).toContainMatchingElements(1, 'Connect(SoundBoardSelection)');
-  });
+    )
+    expect(comp.dive()).toContainMatchingElements(1, 'Connect(SoundBoardSelection)')
+  })
 
   it('triggers view change on toggle button group change', () => {
-    const onViewSelect = jest.fn();
+    const onViewSelect = jest.fn()
     const comp = shallow(
       <WorkspaceSelection
         onBoardSelect={() => {}}
         onViewSelect={onViewSelect}
       />
-    ).dive();
-    comp.find('WithStyles(ForwardRef(ToggleButton))').first().simulate('change', null, 'VIEW_LIBRARY');
-    expect(onViewSelect).toHaveBeenCalledWith('VIEW_LIBRARY');
-  });
-});
+    ).dive()
+    comp.find('WithStyles(ForwardRef(ToggleButton))').first().simulate('change', null, 'VIEW_LIBRARY')
+    expect(onViewSelect).toHaveBeenCalledWith('VIEW_LIBRARY')
+  })
+})

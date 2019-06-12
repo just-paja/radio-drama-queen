@@ -1,24 +1,24 @@
-import { handleActions } from 'redux-actions';
-import { LIST_ACTIONS, LIST_IDENTIFIER } from './routines';
+import { handleActions } from 'redux-actions'
+import { LIST_ACTIONS, LIST_IDENTIFIER } from './routines'
 
 const identifyItem = (action, identifier) => item => (
-  (action.meta && item[identifier] === action.meta[identifier])
-  || item[identifier] === action.payload
-  || (
-    action.payload instanceof Object
-    && action.payload[identifier] === item[identifier]
+  (action.meta && item[identifier] === action.meta[identifier]) ||
+  item[identifier] === action.payload ||
+  (
+    action.payload instanceof Object &&
+    action.payload[identifier] === item[identifier]
   )
-);
+)
 
 const handleItemAction = (itemReducer, identifier) => (state, action) => {
-  const index = state.findIndex(identifyItem(action, identifier));
+  const index = state.findIndex(identifyItem(action, identifier))
   if (index !== -1) {
-    const nextState = state.slice();
-    nextState[index] = itemReducer(nextState[index], action);
-    return nextState;
+    const nextState = state.slice()
+    nextState[index] = itemReducer(nextState[index], action)
+    return nextState
   }
-  return state;
-};
+  return state
+}
 
 const flattenRoutineActions = (itemReducer, routines) => {
   if (routines instanceof Array) {
@@ -26,33 +26,33 @@ const flattenRoutineActions = (itemReducer, routines) => {
       ...flatAggr,
       ...routine[LIST_ACTIONS].reduce((aggr, itemAction) => ({
         ...aggr,
-        [itemAction]: handleItemAction(itemReducer, routine[LIST_IDENTIFIER]),
+        [itemAction]: handleItemAction(itemReducer, routine[LIST_IDENTIFIER])
       }), {})
-    }), {});
+    }), {})
   }
-  return flattenRoutineActions(itemReducer, [routines]);
-};
+  return flattenRoutineActions(itemReducer, [routines])
+}
 
 const addItem = (mainRoutine, itemInitialState, state, action) => {
-  const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
+  const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]))
   if (index === -1) {
     return [
       ...state,
       {
         ...itemInitialState,
-        ...action.payload,
-      },
-    ];
+        ...action.payload
+      }
+    ]
   }
-  return state;
-};
+  return state
+}
 
 export const createListReducer = (
   routines,
   itemReducer,
-  itemInitialState,
+  itemInitialState
 ) => {
-  const mainRoutine = routines instanceof Array ? routines[0] : routines;
+  const mainRoutine = routines instanceof Array ? routines[0] : routines
 
   return handleActions({
     [mainRoutine.ADD]: (state, action) => addItem(mainRoutine, itemInitialState, state, action),
@@ -61,26 +61,26 @@ export const createListReducer = (
       state
     ),
     [mainRoutine.PUT]: (state, action) => {
-      const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
+      const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]))
       if (index === -1) {
-        return addItem(mainRoutine, itemInitialState, state, action);
+        return addItem(mainRoutine, itemInitialState, state, action)
       }
-      const nextState = state.slice();
-      nextState[index] = action.payload;
-      return nextState;
+      const nextState = state.slice()
+      nextState[index] = action.payload
+      return nextState
     },
     [mainRoutine.REMOVE]: (state, action) => {
-      const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]));
+      const index = state.findIndex(identifyItem(action, mainRoutine[LIST_IDENTIFIER]))
       if (index !== -1) {
-        const nextState = state.slice();
-        nextState.splice(index, 1);
-        return nextState;
+        const nextState = state.slice()
+        nextState.splice(index, 1)
+        return nextState
       }
-      return state;
+      return state
     },
     [mainRoutine.CLEAR]: () => [],
-    ...flattenRoutineActions(itemReducer, routines),
-  }, []);
-};
+    ...flattenRoutineActions(itemReducer, routines)
+  }, [])
+}
 
-export default { createListReducer };
+export default { createListReducer }

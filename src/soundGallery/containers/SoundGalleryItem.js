@@ -1,21 +1,21 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import SoundGalleryItem from '../components/SoundGalleryItem';
+import SoundGalleryItem from '../components/SoundGalleryItem'
 
-import { gallerySound } from '../actions';
-import { getGallerySound, getGalleryTarget } from '../selectors';
+import { gallerySound } from '../actions'
+import { getGallerySound, getGalleryTarget } from '../selectors'
 
 const mapStateToProps = (state, { soundUuid }) => ({
   sound: getGallerySound(state, soundUuid),
-  target: getGalleryTarget(state),
-});
+  target: getGalleryTarget(state)
+})
 
 const mapDispatchToProps = {
-  onPlay: gallerySound.play,
-};
+  onPlay: gallerySound.play
+}
 
-const container = connect(mapStateToProps, mapDispatchToProps)(SoundGalleryItem);
+const container = connect(mapStateToProps, mapDispatchToProps)(SoundGalleryItem)
 
-container.displayName = 'Connect(SoundGalleryItem)';
+container.displayName = 'Connect(SoundGalleryItem)'
 
-export default container;
+export default container

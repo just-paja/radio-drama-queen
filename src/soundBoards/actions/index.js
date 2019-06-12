@@ -1,5 +1,5 @@
-import { createRoutine } from '../../actions/routines';
-import { createListRoutine } from '../../lists';
+import { createRoutine } from '../../actions/routines'
+import { createListRoutine } from '../../lists'
 
 export const soundBoard = createListRoutine('BOARD', [
   'CATEGORY_ADD',
@@ -7,18 +7,17 @@ export const soundBoard = createListRoutine('BOARD', [
   'RENAME',
   'SOUND_ADD',
   'SOUND_DROP',
-  'TAG_ADD',
-]);
+  'TAG_ADD'
+])
 
 export const boardRename = createListRoutine('BOARD_RENAME', [
   'CLOSE',
   'OPEN',
-  'SUBMIT',
-]);
-
+  'SUBMIT'
+])
 
 export const categoryCreate = createRoutine('BOARD_CATEGORY', [
   'FORM_HIDE',
   'FORM_SHOW',
-  'SUBMIT',
-]);
+  'SUBMIT'
+])

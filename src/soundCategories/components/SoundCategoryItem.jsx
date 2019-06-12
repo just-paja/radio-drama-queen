@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import { SoundName, SoundStatusIcon } from '../../sounds/components';
-import { Sound } from '../../sounds/proptypes';
+import { SoundName, SoundStatusIcon } from '../../sounds/components'
+import { Sound } from '../../sounds/proptypes'
 
 const styles = theme => ({
   button: {
@@ -17,35 +17,35 @@ const styles = theme => ({
     userSelect: 'none',
     width: '100%',
     '&:hover': {
-      background: theme.palette.action.hover,
-    },
+      background: theme.palette.action.hover
+    }
   },
   icon: {
-    height: theme.typography.fontSize * 3/2,
-    marginLeft: theme.spacing(1/2),
+    height: theme.typography.fontSize * 3 / 2,
+    marginLeft: theme.spacing(1 / 2),
     marginRight: theme.spacing(1.5),
-    width: theme.typography.fontSize * 3/2,
+    width: theme.typography.fontSize * 3 / 2
   }
-});
+})
 
 class SoundCategoryItem extends Component {
-  constructor() {
-    super();
-    this.handleToggle = this.handleToggle.bind(this);
+  constructor () {
+    super()
+    this.handleToggle = this.handleToggle.bind(this)
   }
 
-  handleToggle() {
-    const { onToggle, sound } = this.props;
-    onToggle(sound.uuid);
+  handleToggle () {
+    const { onToggle, sound } = this.props
+    onToggle(sound.uuid)
   }
 
-  render() {
+  render () {
     const {
       classes,
       connectDragSource,
       search,
-      sound,
-    } = this.props;
+      sound
+    } = this.props
     return sound && connectDragSource ? connectDragSource(
       <button
         className={classes.button}
@@ -65,8 +65,8 @@ class SoundCategoryItem extends Component {
           uuid={sound.uuid}
           highlight={search}
         />
-    </button>
-    ) : null;
+      </button>
+    ) : null
   }
 }
 
@@ -75,12 +75,12 @@ SoundCategoryItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   onToggle: PropTypes.func.isRequired,
   search: PropTypes.string,
-  sound: Sound.isRequired,
-};
+  sound: Sound.isRequired
+}
 
 SoundCategoryItem.defaultProps = {
   connectDragSource: null,
-  search: '',
-};
+  search: ''
+}
 
-export default withStyles(styles)(SoundCategoryItem);
+export default withStyles(styles)(SoundCategoryItem)

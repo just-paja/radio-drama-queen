@@ -1,54 +1,54 @@
-import AddCircle from '@material-ui/icons/AddCircle';
-import IconButton from '@material-ui/core/IconButton';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import AddCircle from '@material-ui/icons/AddCircle'
+import IconButton from '@material-ui/core/IconButton'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import SoundTag from '../../soundTags/containers/SoundTag';
+import SoundTag from '../../soundTags/containers/SoundTag'
 
-import { SoundStatusIcon } from '../../sounds/components';
-import { GallerySound } from '../proptypes';
-import { Classes } from '../../proptypes';
+import { SoundStatusIcon } from '../../sounds/components'
+import { GallerySound } from '../proptypes'
+import { Classes } from '../../proptypes'
 
 const styles = theme => ({
   controls: {
     alignItems: 'flex-start',
     display: 'flex',
     flexDirection: 'row',
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   item: {
     display: 'flex',
-    alignItems: 'top',
-  },
-});
+    alignItems: 'top'
+  }
+})
 
 class SoundGalleryItem extends Component {
-  constructor() {
-    super();
-    this.handlePlayClick = this.handlePlayClick.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleAddTag = this.handleAddTag.bind(this);
+  constructor () {
+    super()
+    this.handlePlayClick = this.handlePlayClick.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
+    this.handleAddTag = this.handleAddTag.bind(this)
   }
 
-  handleAdd() {
-    const { onAdd, sound: { uuid }, target } = this.props;
-    onAdd(uuid, { target });
+  handleAdd () {
+    const { onAdd, sound: { uuid }, target } = this.props
+    onAdd(uuid, { target })
   }
 
-  handleAddTag(tag) {
-    const { onAddTag, target } = this.props;
-    onAddTag(tag, { target });
+  handleAddTag (tag) {
+    const { onAddTag, target } = this.props
+    onAddTag(tag, { target })
   }
 
-  handlePlayClick() {
-    const { onPlay, sound: { uuid } } = this.props;
-    onPlay(uuid);
+  handlePlayClick () {
+    const { onPlay, sound: { uuid } } = this.props
+    onPlay(uuid)
   }
 
-  render() {
-    const { classes, sound } = this.props;
+  render () {
+    const { classes, sound } = this.props
     return (
       <div className={classes.item}>
         <div className={classes.controls}>
@@ -75,12 +75,12 @@ class SoundGalleryItem extends Component {
                 onClick={this.handleAddTag}
                 tag={tag}
               />,
-              ' ',
+              ' '
             ], [])}
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -89,7 +89,7 @@ SoundGalleryItem.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onAddTag: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
-  sound: GallerySound.isRequired,
-};
+  sound: GallerySound.isRequired
+}
 
-export default withStyles(styles)(SoundGalleryItem);
+export default withStyles(styles)(SoundGalleryItem)

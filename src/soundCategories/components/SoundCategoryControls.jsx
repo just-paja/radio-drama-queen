@@ -1,54 +1,54 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import SoundCategoryExclusiveButton from './SoundCategoryExclusiveButton';
-import SoundCategoryLoopButton from './SoundCategoryLoopButton';
-import SoundCategoryStopButton from './SoundCategoryStopButton';
-import VolumeControl from './VolumeControl';
+import SoundCategoryExclusiveButton from './SoundCategoryExclusiveButton'
+import SoundCategoryLoopButton from './SoundCategoryLoopButton'
+import SoundCategoryStopButton from './SoundCategoryStopButton'
+import VolumeControl from './VolumeControl'
 
 export default class SoundCategoryControls extends Component {
-  constructor() {
-    super();
-    this.handleExclusiveToggle = this.handleExclusiveToggle.bind(this);
-    this.handleLoopToggle = this.handleLoopToggle.bind(this);
-    this.handleMuteToggle = this.handleMuteToggle.bind(this);
-    this.handleStop = this.handleStop.bind(this);
-    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+  constructor () {
+    super()
+    this.handleExclusiveToggle = this.handleExclusiveToggle.bind(this)
+    this.handleLoopToggle = this.handleLoopToggle.bind(this)
+    this.handleMuteToggle = this.handleMuteToggle.bind(this)
+    this.handleStop = this.handleStop.bind(this)
+    this.handleVolumeChange = this.handleVolumeChange.bind(this)
   }
 
-  handleLoopToggle() {
-    const { uuid, onLoopToggle } = this.props;
-    onLoopToggle(uuid);
+  handleLoopToggle () {
+    const { uuid, onLoopToggle } = this.props
+    onLoopToggle(uuid)
   }
 
-  handleStop() {
-    const { uuid, onStop } = this.props;
-    onStop(uuid);
+  handleStop () {
+    const { uuid, onStop } = this.props
+    onStop(uuid)
   }
 
-  handleVolumeChange(value) {
-    const { uuid, onVolumeChange } = this.props;
-    onVolumeChange(uuid, value);
+  handleVolumeChange (value) {
+    const { uuid, onVolumeChange } = this.props
+    onVolumeChange(uuid, value)
   }
 
-  handleMuteToggle() {
-    const { uuid, onMuteToggle } = this.props;
-    onMuteToggle(uuid);
+  handleMuteToggle () {
+    const { uuid, onMuteToggle } = this.props
+    onMuteToggle(uuid)
   }
 
-  handleExclusiveToggle() {
-    const { uuid, onExclusiveToggle } = this.props;
-    onExclusiveToggle(uuid);
+  handleExclusiveToggle () {
+    const { uuid, onExclusiveToggle } = this.props
+    onExclusiveToggle(uuid)
   }
 
-  render() {
+  render () {
     const {
       exclusive,
       loop,
       muted,
       playing,
-      volume,
-    } = this.props;
+      volume
+    } = this.props
     return (
       <div style={{ width: '100%' }}>
         <VolumeControl
@@ -66,7 +66,7 @@ export default class SoundCategoryControls extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -81,12 +81,12 @@ SoundCategoryControls.propTypes = {
   onVolumeChange: PropTypes.func.isRequired,
   playing: PropTypes.bool,
   uuid: PropTypes.string.isRequired,
-  volume: PropTypes.number.isRequired,
-};
+  volume: PropTypes.number.isRequired
+}
 
 SoundCategoryControls.defaultProps = {
   exclusive: false,
   loop: false,
   muted: false,
-  playing: false,
-};
+  playing: false
+}

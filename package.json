@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
@@ -66,6 +67,7 @@
     "@electron-forge/plugin-webpack": "^6.0.0-beta.39",
     "@electron-forge/publisher-github": "^6.0.0-beta.39",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "8.0.5",
     "electron": "^5.0.3",
     "electron-installer-debian": "^1.2.0",
@@ -81,7 +83,14 @@
     "react-test-renderer": "^16.8.6",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
-    "redux-saga-tester": "^1.0.469"
+    "redux-saga-tester": "^1.0.469",
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ],
+    "parser": "babel-eslint"
   },
   "author": {
     "name": "Pavel Žák",

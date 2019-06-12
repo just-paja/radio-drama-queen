@@ -1,15 +1,15 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import DeleteButton from '../../components/DeleteButton';
+import DeleteButton from '../../components/DeleteButton'
 
-import { libraryWipe } from '../actions';
+import { libraryWipe } from '../actions'
 
 const mapStateToProps = () => ({
-  children: 'Wipe Library',
-});
+  children: 'Wipe Library'
+})
 
 const mapDispatchToProps = {
-  onClick: libraryWipe.trigger,
-};
+  onClick: libraryWipe.trigger
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteButton);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteButton)

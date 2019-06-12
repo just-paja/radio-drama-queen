@@ -1,18 +1,18 @@
-import { createRoutine } from '../../actions/routines';
-import { createListRoutine } from '../../lists';
+import { createRoutine } from '../../actions/routines'
+import { createListRoutine } from '../../lists'
 
 export const categoryCreate = createRoutine('CATEGORY_CREATE', [
   'FORM_HIDE',
   'FORM_SHOW',
   'SUBMIT',
-  'TRIGGER',
-]);
+  'TRIGGER'
+])
 
 export const categoryRename = createListRoutine('CATEGORY_RENAME', [
   'CLOSE',
   'OPEN',
-  'SUBMIT',
-]);
+  'SUBMIT'
+])
 
 export const categoryList = createListRoutine('CATEGORY', [
   'EXCLUSIVE_TOGGLE',
@@ -26,5 +26,5 @@ export const categoryList = createListRoutine('CATEGORY', [
   'SOUND_REMOVE',
   'STOP',
   'TAG_ADD',
-  'UNMUTE',
-]);
+  'UNMUTE'
+])

@@ -1,16 +1,16 @@
-import Audiotrack from '@material-ui/icons/Audiotrack';
-import React from 'react';
+import Audiotrack from '@material-ui/icons/Audiotrack'
+import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-import { Classes } from '../../proptypes';
-import { SoundBoard } from '../proptypes';
+import { Classes } from '../../proptypes'
+import { SoundBoard } from '../proptypes'
 
 const styles = {
   iconSize: {
-    fontSize: '0.75rem',
-  },
-};
+    fontSize: '0.75rem'
+  }
+}
 
 const SoundBoardLabel = ({ board, classes }) => (
   <span>
@@ -22,11 +22,11 @@ const SoundBoardLabel = ({ board, classes }) => (
     ) : null}
     <span>{board.name}</span>
   </span>
-);
+)
 
 SoundBoardLabel.propTypes = {
   board: SoundBoard.isRequired,
-  classes: Classes.isRequired,
-};
+  classes: Classes.isRequired
+}
 
-export default withStyles(styles)(SoundBoardLabel);
+export default withStyles(styles)(SoundBoardLabel)

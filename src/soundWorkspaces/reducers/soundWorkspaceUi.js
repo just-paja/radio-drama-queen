@@ -1,32 +1,32 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 
-import { workspace, workspaceSave } from '../actions';
-import { VIEW_BOARD, VIEW_LIBRARY } from '../constants';
+import { workspace, workspaceSave } from '../actions'
+import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 
 const initialState = {
   board: null,
   saveAsDialogOpen: false,
-  view: VIEW_LIBRARY,
-};
+  view: VIEW_LIBRARY
+}
 
 const ui = handleActions({
   [workspace.SELECT_BOARD]: (state, action) => ({
     ...state,
     view: VIEW_BOARD,
-    board: action.payload,
+    board: action.payload
   }),
   [workspace.SELECT_VIEW]: (state, action) => ({
     ...state,
-    view: action.payload === null && state.board ? VIEW_BOARD : action.payload,
+    view: action.payload === null && state.board ? VIEW_BOARD : action.payload
   }),
   [workspaceSave.DIALOG_OPEN]: state => ({
     ...state,
-    saveAsDialogOpen: true,
+    saveAsDialogOpen: true
   }),
   [workspaceSave.DIALOG_HIDE]: state => ({
     ...state,
-    saveAsDialogOpen: false,
-  }),
-}, initialState);
+    saveAsDialogOpen: false
+  })
+}, initialState)
 
-export default ui;
+export default ui
