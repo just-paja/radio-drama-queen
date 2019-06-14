@@ -41,7 +41,6 @@ class SceneSpeedDial extends Component {
   render () {
     const { children, classes, label } = this.props
     const { open } = this.state
-    const isTouch = typeof document !== 'undefined' && 'ontouchstart' in document.documentElement
     return (
       <SpeedDial
         ariaLabel={label}
@@ -50,8 +49,8 @@ class SceneSpeedDial extends Component {
         onBlur={this.handleClose}
         onClick={this.handleClick}
         onClose={this.handleClose}
-        onFocus={isTouch ? undefined : this.handleOpen}
-        onMouseEnter={isTouch ? undefined : this.handleOpen}
+        onFocus={this.handleOpen}
+        onMouseEnter={this.handleOpen}
         onMouseLeave={this.handleClose}
         open={open}
       >
