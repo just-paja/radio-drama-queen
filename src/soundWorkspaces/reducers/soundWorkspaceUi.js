@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 
+import { libraryWipe } from '../../soundModules/actions'
 import { workspace, workspaceSave } from '../actions'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 
@@ -10,6 +11,10 @@ const initialState = {
 }
 
 const ui = handleActions({
+  [libraryWipe.TRIGGER]: state => ({
+    ...state,
+    board: null
+  }),
   [workspace.SELECT_BOARD]: (state, action) => ({
     ...state,
     view: VIEW_BOARD,
