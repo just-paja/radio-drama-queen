@@ -20,7 +20,7 @@ class BackendMessenger {
 
   subscribeToIpc () {
     ipcMain.on('frontendSays', (event, action) => {
-      if (this.debug) {
+      if (action.type.includes('FAILURE')) {
         console.log('in', action.type, JSON.stringify(action))
       }
       this.listeners.forEach((listener) => {
@@ -40,7 +40,7 @@ class BackendMessenger {
   }
 
   sendMessage (action) {
-    if (this.debug) {
+    if (action.type.includes('FAILURE')) {
       console.log('out', action.type, JSON.stringify(action))
     }
     this.window.webContents.send('backendSays', action)
