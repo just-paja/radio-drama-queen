@@ -5,6 +5,9 @@ const workerpool = require('workerpool')
 const { remove } = require('diacritics')
 
 const reduceTags = (aggr, item) => {
+  if (!item || !item.data) {
+    return []
+  }
   const language = item.data.language === 'XXX' ? 'eng' : item.data.language
   return [
     ...aggr,
