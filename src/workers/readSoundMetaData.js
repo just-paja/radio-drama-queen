@@ -35,7 +35,9 @@ workerpool.worker({
     return new Promise((resolve, reject) => {
       try {
         mediatags.read(soundData.cachePath, {
-          onError: reject,
+          onError: (errorInfo) => {
+            reject(new Error(errorInfo.info))
+          },
           onSuccess: (data) => {
             const format = path.extname(soundData.path).substr(1)
             resolve(Object.assign({}, soundData, {
