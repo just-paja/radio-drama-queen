@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 import { libraryWipe } from '../../soundModules/actions'
+import { soundBoard } from '../../soundBoards/actions'
 import { workspace, workspaceSave } from '../actions'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 
@@ -15,6 +16,11 @@ const ui = handleActions({
     ...state,
     board: null
   }),
+  [soundBoard.REMOVE]: (state, action) => (
+    action.payload === state.board
+      ? { ...state, board: null }
+      : state
+  ),
   [workspace.SELECT_BOARD]: (state, action) => ({
     ...state,
     view: VIEW_BOARD,

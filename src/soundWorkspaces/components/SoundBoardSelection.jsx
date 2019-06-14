@@ -7,10 +7,11 @@ import React, { Component } from 'react'
 import SoundBoardLabel from '../../soundBoards/components/SoundBoardLabel'
 
 import { connect } from 'react-redux'
-import { workspace } from '../actions'
 import { getActiveBoardUuid } from '../selectors'
 import { getBoardsWithStatus } from '../../soundBoards/selectors'
 import { SoundBoard } from '../../soundBoards/proptypes'
+import { SoundBoardMenu } from './SoundBoardMenu'
+import { workspace } from '../actions'
 
 class SoundBoardSelectionComponent extends Component {
   constructor () {
@@ -38,7 +39,7 @@ class SoundBoardSelectionComponent extends Component {
               <SoundBoardLabel board={board} />
             </ListItemText>
             <ListItemSecondaryAction>
-              xxx
+              <SoundBoardMenu boardUuid={board.uuid} />
             </ListItemSecondaryAction>
           </ListItem>
         ))}
