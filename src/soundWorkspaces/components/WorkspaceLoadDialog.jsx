@@ -1,17 +1,13 @@
 import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Field, Form } from 'redux-form'
+import { connect } from 'react-redux'
+import { getWorkspaceFilePath, isLoadFromDialogOpen } from '../selectors'
+import { workspaceLoad } from '../actions'
+import { WorkspaceLoadForm } from './WorkspaceLoadForm'
 
-import CancelButton from '../../components/CancelButton'
-import Input from '../../components/Input'
-import OpenButton from '../../components/OpenButton'
-
-const WorkspaceLoadDialog = ({
+const WorkspaceLoadDialogComponent = ({
   handleSubmit,
   onClose,
   open
@@ -21,38 +17,32 @@ const WorkspaceLoadDialog = ({
     onClose={onClose}
     aria-labelledby='workspaceDestinationDialogTitle'
   >
-    {open ? (
-      <Form onSubmit={handleSubmit}>
-        <DialogTitle id='workspaceDestinationDialogTitle'>
-          Load workspace configuration
-        </DialogTitle>
-        <DialogContent>
-          <Field
-            autoFocus
-            component={Input}
-            label='File system path'
-            name='path'
-          />
-        </DialogContent>
-        <DialogActions>
-          <CancelButton onClick={onClose} />
-          <OpenButton type='submit'>
-            Load
-          </OpenButton>
-        </DialogActions>
-      </Form>
-    ) : ''}
+    {open && <WorkspaceLoadForm />}
   </Dialog>
 )
 
-WorkspaceLoadDialog.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+WorkspaceLoadDialogComponent.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool
 }
 
-WorkspaceLoadDialog.defaultProps = {
+WorkspaceLoadDialogComponent.defaultProps = {
   open: false
 }
 
-export default WorkspaceLoadDialog
+const mapStateToProps = state => ({
+  open: isLoadFromDialogOpen(state),
+  initialValues: {
+    path: getWorkspaceFilePath(state)
+  }
+})
+
+const mapDispatchToProps = {
+  onClose: workspaceLoad.dialogHide,
+  onSubmit: workspaceLoad.loadFrom
+}
+
+export const WorkspaceLoadDialog = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WorkspaceLoadDialogComponent)

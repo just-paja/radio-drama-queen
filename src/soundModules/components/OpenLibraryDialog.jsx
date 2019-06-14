@@ -1,18 +1,13 @@
 import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Field, Form } from 'redux-form'
+import { connect } from 'react-redux'
+import { isOpenLibraryDialogOpen } from '../selectors'
+import { libraryLoad } from '../actions'
+import { OpenLibraryForm } from './OpenLibraryForm'
 
-import CancelButton from '../../components/CancelButton'
-import Input from '../../components/Input'
-import OpenButton from '../../components/OpenButton'
-
-const OpenLibraryDialog = ({
-  handleSubmit,
+const OpenLibraryDialogComponent = ({
   onClose,
   open
 }) => (
@@ -21,37 +16,28 @@ const OpenLibraryDialog = ({
     onClose={onClose}
     aria-labelledby='openLibraryDialogTitle'
   >
-    <Form onSubmit={handleSubmit}>
-      <DialogTitle id='openLibraryDialogTitle'>
-        Open Library
-      </DialogTitle>
-      <DialogContent>
-        <Field
-          autoFocus
-          component={Input}
-          label='Library definition URL'
-          name='url'
-          type='url'
-        />
-      </DialogContent>
-      <DialogActions>
-        <CancelButton onClick={onClose} />
-        <OpenButton type='submit'>
-          Open
-        </OpenButton>
-      </DialogActions>
-    </Form>
+    {open && <OpenLibraryForm />}
   </Dialog>
 )
 
-OpenLibraryDialog.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+OpenLibraryDialogComponent.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool
 }
 
-OpenLibraryDialog.defaultProps = {
+OpenLibraryDialogComponent.defaultProps = {
   open: false
 }
 
-export default OpenLibraryDialog
+const mapStateToProps = state => ({
+  open: isOpenLibraryDialogOpen(state)
+})
+
+const mapDispatchToProps = {
+  onClose: libraryLoad.dialogHide
+}
+
+export const OpenLibraryDialog = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OpenLibraryDialogComponent)

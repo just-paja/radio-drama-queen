@@ -8,11 +8,11 @@ import { Provider } from 'react-redux'
 import { withStyles } from '@material-ui/styles'
 
 import AppMenu from './containers/AppMenu'
-import OpenLibraryDialog from './soundModules/containers/OpenLibraryDialog'
-import WorkspaceLoadDialog from './soundWorkspaces/containers/WorkspaceLoadDialog'
-import WorkspaceSaveDialog from './soundWorkspaces/containers/WorkspaceSaveDialog'
+import { OpenLibraryDialog } from './soundModules/components'
 import {
   SoundLibraryStatus,
+  WorkspaceLoadDialog,
+  WorkspaceSaveDialog,
   WorkspaceView
 } from './soundWorkspaces/components'
 
