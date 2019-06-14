@@ -34,7 +34,7 @@ const styles = theme => ({
     background: 'rgba(0,0,0,.8)',
     bottom: 0,
     color: 'white',
-    fontSize: theme.typography.fontSize * 0.75,
+    fontSize: theme.typography.fontSize,
     left: 0,
     paddingRight: theme.spacing(1 / 2),
     position: 'fixed',

@@ -14,13 +14,13 @@ const styles = {
 
 const SoundBoardLabel = ({ board, classes }) => (
   <span>
+    {board.name}
     {board.playing ? (
-      <span>
-        <Audiotrack className={classes.iconSize} />
+      <React.Fragment>
         {' '}
-      </span>
+        <Audiotrack className={classes.iconSize} />
+      </React.Fragment>
     ) : null}
-    <span>{board.name}</span>
   </span>
 )
 

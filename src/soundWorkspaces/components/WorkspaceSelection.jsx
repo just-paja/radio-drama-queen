@@ -1,14 +1,16 @@
 import LibraryMusic from '@material-ui/icons/LibraryMusic'
+import Dashboard from '@material-ui/icons/Dashboard'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-
-import { withStyles } from '@material-ui/core/styles'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 
 import { Classes } from '../../proptypes'
-import { VIEW_LIBRARY } from '../constants'
-import { SoundBoardSelection } from '../../soundBoards/containers'
+import { connect } from 'react-redux'
+import { getWorkspaceView } from '../selectors'
+import { withStyles } from '@material-ui/core/styles'
+import { workspace } from '../actions'
+import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 
 const styles = {
   libraryButton: {
@@ -22,7 +24,7 @@ const styles = {
   }
 }
 
-class WorkspaceSelection extends Component {
+class WorkspaceSelectionComponent extends Component {
   constructor () {
     super()
     this.handleViewChange = this.handleViewChange.bind(this)
@@ -34,45 +36,49 @@ class WorkspaceSelection extends Component {
   }
 
   render () {
-    const {
-      activeBoard,
-      classes,
-      onBoardSelect,
-      view
-    } = this.props
+    const { className, view } = this.props
     return (
-      <ToggleButtonGroup
-        className={classes.viewSwitcher}
-        exclusive
+      <BottomNavigation
+        className={className}
         onChange={this.handleViewChange}
         value={view}
       >
-        <SoundBoardSelection
-          activeBoard={activeBoard}
-          onBoardSelect={onBoardSelect}
+        <BottomNavigationAction
+          label='Boards'
+          icon={<Dashboard />}
+          value={VIEW_BOARD}
         />
-        <ToggleButton
-          className={classes.libraryButton}
+        <BottomNavigationAction
+          label='Gallery'
+          icon={<LibraryMusic />}
           value={VIEW_LIBRARY}
-        >
-          <LibraryMusic />
-        </ToggleButton>
-      </ToggleButtonGroup>
+        />
+      </BottomNavigation>
     )
   }
 }
 
-WorkspaceSelection.propTypes = {
-  activeBoard: PropTypes.string,
+WorkspaceSelectionComponent.propTypes = {
+  className: PropTypes.string,
   classes: Classes.isRequired,
-  onBoardSelect: PropTypes.func.isRequired,
   onViewSelect: PropTypes.func.isRequired,
   view: PropTypes.string
 }
 
-WorkspaceSelection.defaultProps = {
-  activeBoard: null,
+WorkspaceSelectionComponent.defaultProps = {
   view: null
 }
 
-export default withStyles(styles)(WorkspaceSelection)
+const mapStateToProps = state => ({
+  view: getWorkspaceView(state)
+})
+
+const mapDispatchToProps = {
+  onBoardSelect: workspace.selectBoard,
+  onViewSelect: workspace.selectView
+}
+
+export const WorkspaceSelection = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(WorkspaceSelectionComponent))

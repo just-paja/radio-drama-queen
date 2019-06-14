@@ -13,10 +13,13 @@ import { Classes } from '../../proptypes'
 import { GalleryTarget } from '../proptypes'
 
 const styles = theme => ({
+  box: {
+    flexGrow: 1
+  },
   layout: {
     margin: 'auto',
     maxWidth: theme.breakpoints.values.sm,
-    paddingTop: 2 * theme.spacing(1)
+    paddingTop: 2 * theme.spacing(1),
   }
 })
 
@@ -52,7 +55,7 @@ const SoundGallery = ({
   }
 
   return (
-    <div>
+    <div className={classes.box}>
       <SoundGalleryTarget
         board={target.board}
         category={target.category}

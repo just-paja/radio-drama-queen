@@ -9,7 +9,6 @@ import React from 'react'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton'
-import WorkspaceSelection from '../soundWorkspaces/containers/WorkspaceSelection'
 
 import { Classes } from '../proptypes'
 import { withStyles } from '@material-ui/core/styles'
@@ -66,7 +65,6 @@ class AppMenu extends React.Component {
           <IconButton onClick={this.handleMenuOpen}>
             <MenuIcon />
           </IconButton>
-          <WorkspaceSelection />
           <SwipeableDrawer
             open={drawerOpen}
             onClose={this.handleMenuClose}

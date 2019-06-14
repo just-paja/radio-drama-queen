@@ -6,8 +6,21 @@ import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
 import { SoundBoardView } from './SoundBoardView'
 import { SoundGalleryView } from './SoundGalleryView'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
+import { withStyles } from '@material-ui/core/styles'
+import { WorkspaceSidebar } from './WorkspaceSidebar'
 
-function WorkspaceViewComponent ({ board, view }) {
+const styles = theme => ({
+  sidebar: {
+    minWidth: theme.spacing(24)
+  },
+  view: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexGrow: 1
+  }
+})
+
+function renderContent (board, view) {
   if (view === VIEW_LIBRARY) {
     return <SoundGalleryView />
   }
@@ -15,6 +28,15 @@ function WorkspaceViewComponent ({ board, view }) {
     return <SoundBoardView board={board} />
   }
   return null
+}
+
+function WorkspaceViewComponent ({ classes, board, view }) {
+  return (
+    <div className={classes.view}>
+      <WorkspaceSidebar />
+      {renderContent(board, view)}
+    </div>
+  )
 }
 
 WorkspaceViewComponent.displayName = 'WorkspaceView'
@@ -34,4 +56,6 @@ const mapStateToProps = state => ({
   view: getWorkspaceView(state)
 })
 
-export const WorkspaceView = connect(mapStateToProps)(WorkspaceViewComponent)
+export const WorkspaceView = connect(
+  mapStateToProps
+)(withStyles(styles)(WorkspaceViewComponent))
