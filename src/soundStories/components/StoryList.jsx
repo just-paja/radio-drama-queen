@@ -48,6 +48,7 @@ class StoryListComponent extends React.Component {
             </ListItem>
           ))}
         </List>
+        <StoryCreateButton />
       </React.Fragment>
     )
   }
