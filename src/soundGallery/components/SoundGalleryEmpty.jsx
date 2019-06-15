@@ -8,7 +8,7 @@ import LabelButton from '../../components/LabelButton'
 import CanvasMessage from '../../components/CanvasMessage'
 
 const SoundGalleryEmptyComponent = ({ onConfigOpen, onLibraryOpen }) => (
-  <CanvasMessage heading='Oh no! Your sound library is empty!'>
+  <CanvasMessage heading='Sound library is empty!'>
     <Typography gutterBottom>
       The sound library stores all the sounds. You can browse and filter here.
     </Typography>

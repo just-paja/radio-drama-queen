@@ -2,16 +2,22 @@ import { handleActions } from 'redux-actions'
 
 import { libraryWipe } from '../../soundModules/actions'
 import { soundBoard } from '../../soundBoards/actions'
-import { workspace, workspaceSave } from '../actions'
+import { stories } from '../../soundStories/actions'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
+import { workspace, workspaceSave } from '../actions'
 
 const initialState = {
+  story: null,
   board: null,
   saveAsDialogOpen: false,
   view: VIEW_LIBRARY
 }
 
 const ui = handleActions({
+  [stories.SELECT]: (state, action) => ({
+    ...state,
+    story: action.payload
+  }),
   [libraryWipe.TRIGGER]: state => ({
     ...state,
     board: null

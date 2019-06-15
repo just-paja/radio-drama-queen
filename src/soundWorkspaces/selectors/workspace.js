@@ -29,3 +29,8 @@ export const getWorkspaceView = createSelector(
   getUiState,
   state => state.view
 )
+
+export const getActiveStoryName = createSelector(
+  getUiState,
+  state => state.story
+)

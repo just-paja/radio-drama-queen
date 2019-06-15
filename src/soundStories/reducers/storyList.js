@@ -1,8 +1,7 @@
-import story, { initialState } from './story'
-
 import { createListReducer } from '../../lists'
 import { stories } from '../actions'
+import story, { initialState } from './story'
 
-export default createListReducer([
+export const storyList = createListReducer([
   stories
 ], story, initialState)

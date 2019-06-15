@@ -13,6 +13,7 @@ import {
   WorkspaceSaveDialog,
   WorkspaceView
 } from './soundWorkspaces/components'
+import { StoryCreateDialog } from './soundStories/components'
 
 const styles = {
   '@global': {
@@ -46,6 +47,7 @@ class App extends React.Component {
             <WorkspaceView />
             <OpenLibraryDialog />
             <SoundLibraryStatus />
+            <StoryCreateDialog />
             <WorkspaceLoadDialog />
             <WorkspaceSaveDialog />
           </DragDropContextProvider>

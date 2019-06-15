@@ -4,19 +4,38 @@ import { connect } from 'react-redux'
 import { libraryLoad } from '../../soundModules/actions'
 import { SoundGalleryEmpty } from '../../soundGallery/components'
 import { StoryList } from '../../soundStories/components'
+import { areStoriesEmpty } from '../../soundStories/selectors'
+import { withStyles } from '@material-ui/core/styles'
 import { workspaceLoad } from '../actions'
 
-function WorkspaceEmptyComponent ({ onConfigOpen, onLibraryOpen }) {
+const styles = {
+  container: {
+    margin: 'auto'
+  }
+}
+
+function WorkspaceEmptyComponent ({
+  classes,
+  onConfigOpen,
+  onLibraryOpen,
+  noStories
+}) {
   return (
-    <React.Fragment>
+    <div className={classes.container}>
       <StoryList />
-      <SoundGalleryEmpty
-        onConfigOpen={onConfigOpen}
-        onLibraryOpen={onLibraryOpen}
-      />
-    </React.Fragment>
+      {!noStories && (
+        <SoundGalleryEmpty
+          onConfigOpen={onConfigOpen}
+          onLibraryOpen={onLibraryOpen}
+        />
+      )}
+    </div>
   )
 }
+
+const mapStateToProps = state => ({
+  noStories: areStoriesEmpty(state)
+})
 
 const mapDispatchToProps = {
   onConfigOpen: workspaceLoad.dialogOpen,
@@ -24,6 +43,6 @@ const mapDispatchToProps = {
 }
 
 export const WorkspaceEmpty = connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
-)(WorkspaceEmptyComponent)
+)(withStyles(styles)(WorkspaceEmptyComponent))

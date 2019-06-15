@@ -16,7 +16,7 @@ const styles = theme => ({
 
 const CanvasMessage = ({ children, classes, heading }) => (
   <Paper className={classes.messageSize} elevation={0}>
-    <Typography variant='h5' gutterBottom>
+    <Typography variant='h2' gutterBottom>
       {heading}
     </Typography>
     <div>
