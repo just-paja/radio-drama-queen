@@ -1,10 +1,11 @@
 import React from 'react'
 
+import { areStoriesEmpty } from '../../soundStories/selectors'
 import { connect } from 'react-redux'
+import { getActiveStoryName } from '../selectors'
 import { libraryLoad } from '../../soundModules/actions'
 import { SoundGalleryEmpty } from '../../soundGallery/components'
 import { StoryList } from '../../soundStories/components'
-import { areStoriesEmpty } from '../../soundStories/selectors'
 import { withStyles } from '@material-ui/core/styles'
 import { workspaceLoad } from '../actions'
 
@@ -15,6 +16,7 @@ const styles = {
 }
 
 function WorkspaceEmptyComponent ({
+  activeStory,
   classes,
   onConfigOpen,
   onLibraryOpen,
@@ -22,18 +24,20 @@ function WorkspaceEmptyComponent ({
 }) {
   return (
     <div className={classes.container}>
-      <StoryList />
-      {!noStories && (
-        <SoundGalleryEmpty
-          onConfigOpen={onConfigOpen}
-          onLibraryOpen={onLibraryOpen}
-        />
-      )}
+      {activeStory
+        ? (
+          <SoundGalleryEmpty
+            onConfigOpen={onConfigOpen}
+            onLibraryOpen={onLibraryOpen}
+          />
+        ) : <StoryList />
+      }
     </div>
   )
 }
 
 const mapStateToProps = state => ({
+  activeStory: getActiveStoryName(state),
   noStories: areStoriesEmpty(state)
 })
 
