@@ -1,9 +1,8 @@
 import { FORM_STORY_CREATE } from '../constants'
 import { getFormValues } from 'redux-form'
+import { ipcRenderer } from '../../ipcActionPipe'
 import { put, select, take, takeEvery } from 'redux-saga/effects'
 import { stories, storyCreate } from '../actions'
-
-const ipcRenderer = global.require && global.require('electron').ipcRenderer
 
 function * storyListLoad ({ payload }) {
   yield put(stories.request(null, payload))

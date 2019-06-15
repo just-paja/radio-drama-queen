@@ -12,8 +12,7 @@ import AudioManager from '../AudioManager'
 import { createQueue } from 'redux-saga-job-queue'
 import { soundList, soundLoad, soundRead } from '../actions'
 import { getSound } from '../selectors'
-
-const ipcRenderer = global.require && global.require('electron').ipcRenderer
+import { ipcRenderer } from '../../ipcActionPipe'
 
 let queue
 

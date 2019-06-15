@@ -1,4 +1,4 @@
-const ipcRenderer = global.require && global.require('electron').ipcRenderer
+export const ipcRenderer = global.require && global.require('electron').ipcRenderer
 
 export default (store) => {
   if (ipcRenderer) {
