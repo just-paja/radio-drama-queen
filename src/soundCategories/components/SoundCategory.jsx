@@ -25,6 +25,10 @@ const styles = theme => ({
     marginLeft: theme.spacing(-1 / 2),
     marginRight: theme.spacing(-1 / 2)
   },
+  card: {
+    boxShadow: 'none',
+    border: '1px solid #eee'
+  },
   canDrop: {
     background: 'rgba(0,0,0,0.25)'
   },
@@ -60,7 +64,7 @@ class SoundCategory extends React.Component {
     return connectDropTarget(
       <div>
         <Card
-          className={classnames({
+          className={classnames(classes.card, {
             [classes.canDrop]: isOver && canDrop
           })}
         >
