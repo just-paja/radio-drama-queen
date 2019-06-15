@@ -27,6 +27,8 @@ export class StoryManager {
   }
 
   saveStory (story) {
-    return jetpack.writeAsync(this.storyNameToFilePath(story.name), story)
+    return jetpack
+      .writeAsync(this.storyNameToFilePath(story.name), story)
+      .then(() => story)
   }
 }

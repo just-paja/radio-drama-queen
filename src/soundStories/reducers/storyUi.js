@@ -4,10 +4,10 @@ import { turnOff, turnOn } from 'react-saga-rest'
 import { storyCreate } from '../actions'
 
 const initialState = {
-  showStoryCreateDialog: false,
+  showStoryCreateDialog: false
 }
 
 export const storyUi = handleActions({
-  [storyCreate.CLOSE]: turnOff('showStoryCreateDialog'),
+  [storyCreate.SUCCESS]: turnOff('showStoryCreateDialog'),
   [storyCreate.OPEN]: turnOn('showStoryCreateDialog')
 }, initialState)

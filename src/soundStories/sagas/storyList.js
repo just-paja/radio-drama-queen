@@ -15,7 +15,9 @@ function * storyListLoad ({ payload }) {
 function * storySave () {
   const values = yield select(getFormValues(FORM_STORY_CREATE))
   yield put(stories.add(values))
-  yield put(storyCreate.close())
+  ipcRenderer.send('frontendSays', storyCreate.request(null, values))
+  yield take([storyCreate.SUCCESS, storyCreate.FAILURE])
+  yield put(storyCreate.fulfill(null, values))
 }
 
 function * handleStoryListLoad () {

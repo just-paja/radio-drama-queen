@@ -10,6 +10,9 @@ export const stories = createListRoutine('STORY_LIST', [
 ], 'name')
 
 export const storyCreate = createListRoutine('STORY_CREATE', [
+  'REQUEST',
+  'SUCCESS',
+  'FULFILL',
   'CLOSE',
   'OPEN',
   'SUBMIT'
