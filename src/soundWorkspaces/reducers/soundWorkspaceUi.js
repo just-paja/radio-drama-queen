@@ -14,9 +14,18 @@ const initialState = {
 }
 
 const ui = handleActions({
+  [stories.ADD]: (state, action) => {
+    if (!state.story) {
+      return {
+        ...state,
+        story: action.payload.name
+      }
+    }
+    return state
+  },
   [stories.SELECT]: (state, action) => ({
     ...state,
-    story: action.payload
+    story: action.meta ? action.meta.name : null
   }),
   [libraryWipe.TRIGGER]: state => ({
     ...state,

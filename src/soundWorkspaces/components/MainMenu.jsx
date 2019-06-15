@@ -11,6 +11,7 @@ import WipeLibraryButton from '../../soundModules/containers/WipeLibraryButton'
 import { areSoundCategoriesEmpty } from '../../soundCategories/selectors'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
+import { getActiveStoryName } from '../selectors'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceLoadFromButton } from './WorkspaceLoadFromButton'
 import { WorkspaceSaveAsButton } from './WorkspaceSaveAsButton'
@@ -46,7 +47,7 @@ class MainMenuComponent extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { activeStory, classes } = this.props
     const { drawerOpen } = this.state
     const menuItems = []
 
@@ -62,7 +63,7 @@ class MainMenuComponent extends React.Component {
         <Button onClick={this.handleMenuOpen}>
           <MenuIcon />
           {' '}
-          Hérečka
+          {activeStory}
         </Button>
         <SwipeableDrawer
           open={drawerOpen}
@@ -87,6 +88,7 @@ class MainMenuComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  activeStory: getActiveStoryName(state),
   isEmpty: areSoundCategoriesEmpty(state)
 })
 

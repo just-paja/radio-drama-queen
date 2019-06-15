@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 
 import { connect } from 'react-redux'
 import { stories } from '../actions'
+import { getActiveStory, getStories } from '../selectors'
 import { StoryCreateButton } from './StoryCreateButton'
 
 class StoryListComponent extends React.Component {
@@ -16,7 +17,7 @@ class StoryListComponent extends React.Component {
   }
 
   renderContent () {
-    const { activeStory, stories } = this.props
+    const { activeStory, onStorySelect, stories } = this.props
     if (stories.length === 0) {
       return (
         <CanvasMessage heading='No recent stories'>
@@ -31,14 +32,14 @@ class StoryListComponent extends React.Component {
     return (
       <React.Fragment>
         <Typography variant='h2' gutterBottom>
-          Recent stories
+          Saved stories
         </Typography>
         <List>
           {stories.map(story => (
             <ListItem
               button
               key={story.name}
-              onClick={() => this.handleBoardChange(story.name)}
+              onClick={() => onStorySelect(story.name)}
               selected={story.name === activeStory}
             >
               <ListItemText>
@@ -62,8 +63,9 @@ class StoryListComponent extends React.Component {
 
 StoryListComponent.propTypes = {
   activeStory: PropTypes.string,
-  stories: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onDataRequest: PropTypes.func.isRequired
+  stories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDataRequest: PropTypes.func.isRequired,
+  onStorySelect: PropTypes.func.isRequired
 }
 
 StoryListComponent.defaultProps = {
@@ -71,11 +73,13 @@ StoryListComponent.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  stories: []
+  activeStory: getActiveStory(state),
+  stories: getStories(state)
 })
 
 const mapDispatchToProps = {
-  onDataRequest: stories.trigger
+  onDataRequest: stories.trigger,
+  onStorySelect: stories.select
 }
 
 export const StoryList = connect(

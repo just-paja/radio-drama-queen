@@ -7,9 +7,10 @@ export const stories = createListRoutine('STORY_LIST', [
   'SELECT',
   'SUCCESS',
   'TRIGGER'
-])
+], 'name')
+
 export const storyCreate = createListRoutine('STORY_CREATE', [
   'CLOSE',
   'OPEN',
   'SUBMIT'
-])
+], 'name')
