@@ -1,3 +1,3 @@
-const { runMain } = require('./electron')
+import { runMain } from './electron'
 
 runMain(true)

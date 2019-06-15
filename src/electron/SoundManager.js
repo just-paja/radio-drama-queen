@@ -1,31 +1,25 @@
-const electron = require('electron')
+import { SoundStorage } from './SoundStorage'
+import { PATH_WORKERS } from './paths'
+
 const generateUuid = require('uuid/v4')
 const path = require('path')
 const workerpool = require('workerpool')
 
-const exePath = electron.app.getAppPath('exe')
-
 const readSoundMetaData = workerpool.pool(path.join(
-  exePath,
-  'src',
-  'workers',
+  PATH_WORKERS,
   'readSoundMetaData.js'
 ))
 
 const readSoundDataUrl = workerpool.pool(path.join(
-  exePath,
-  'src',
-  'workers',
+  PATH_WORKERS,
   'readSoundDataUrl.js'
 ))
-
-const SoundStorage = require('./SoundStorage')
 
 /**
  * Class responsible for dispatching the sound actions and retaining all the
  * sounds in memory. Each of its public methods returns a promise.
  */
-class SoundManager {
+export class SoundManager {
   constructor () {
     this.describeSound = this.describeSound.bind(this)
     this.readSoundMetaData = this.readSoundMetaData.bind(this)
@@ -67,5 +61,3 @@ class SoundManager {
     return readSoundDataUrl.exec('readSoundDataUrl', [soundData])
   }
 }
-
-module.exports = SoundManager

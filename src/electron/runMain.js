@@ -1,8 +1,7 @@
-const { app } = require('electron')
+import { createMainWindow } from './createMainWindow'
+import { app } from 'electron'
 
-const createMainWindow = require('./createMainWindow')
-
-module.exports = (development) => {
+export function runMain (development) {
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
   let mainWindow

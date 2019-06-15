@@ -1,38 +1,21 @@
-const electron = require('electron')
 const fs = require('fs')
 const hash = require('hash.js')
 const jetpack = require('fs-jetpack')
 const request = require('request')
 
-const isLocalPath = path => path.indexOf('file:') === 0
-
-const removeLocalProtocol = path => path.substr(7)
-
-const splitNameFromExtension = (url) => {
-  const fileParts = url.split('/')
-  const fileName = fileParts[fileParts.length - 1]
-  const fileNameParts = fileName.split('.')
-  return {
-    name: fileNameParts.join('.'),
-    extension: fileNameParts.length > 1 ? fileNameParts.pop() : null
-  }
-}
-
-const getPath = (...args) => {
-  if (electron) {
-    return electron.app.getPath(...args)
-  }
-  return '/var/tmp'
-}
+const {
+  isLocalPath,
+  PATH_CACHE,
+  removeLocalProtocol,
+  splitNameFromExtension
+} = require('./paths')
 
 /**
  * Class responsible for dispatching the sound actions and retaining all the
  * sounds in memory. Each of its public methods returns a promise.
  */
-class SoundStorage {
-  constructor () {
-    this.pathHome = jetpack.path(getPath('userData'), 'Cache')
-  }
+export class SoundStorage {
+  pathHome = PATH_CACHE
 
   /**
    * Returns universal cache path where to save temporary sounds from
@@ -106,5 +89,3 @@ class SoundStorage {
     })
   }
 }
-
-module.exports = SoundStorage

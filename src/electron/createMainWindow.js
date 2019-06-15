@@ -1,14 +1,13 @@
-const path = require('path')
+import { SoundManager } from './SoundManager'
 
 const { BrowserWindow } = require('electron')
 
 const BackendMessenger = require('./BackendMessenger')
 const handlers = require('./handlers')
-const SoundManager = require('./SoundManager')
 
 const { soundRead, soundRegister } = require('../sounds/actions')
 
-module.exports = (development) => {
+export function createMainWindow (development) {
   const mainWindow = new BrowserWindow({
     height: 600,
     // icon: path.join(__dirname, '..', 'public', 'favicon.png'),
