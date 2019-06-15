@@ -12,15 +12,21 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     minWidth: theme.spacing(24)
+  },
+  sticky: {
+    position: 'sticky',
+    top: 0
   }
 })
 
 function WorkspaceSidebarComponent ({ classes, board, view }) {
   return (
     <div className={classes.sidebar}>
-      <p style={{ textAlign: 'center' }}>Drama Queen</p>
-      <WorkspaceSelection />
-      <SoundBoardSelection />
+      <div className={classes.sticky}>
+        <p style={{ textAlign: 'center' }}>Drama Queen</p>
+        <WorkspaceSelection />
+        <SoundBoardSelection />
+      </div>
     </div>
   )
 }
