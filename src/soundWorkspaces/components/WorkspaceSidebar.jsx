@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Classes } from '../../proptypes'
+import { MainMenu } from './MainMenu'
 import { SoundBoardSelection } from './SoundBoardSelection'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceSelection } from './WorkspaceSelection'
@@ -23,7 +24,7 @@ function WorkspaceSidebarComponent ({ classes, board, view }) {
   return (
     <div className={classes.sidebar}>
       <div className={classes.sticky}>
-        <p style={{ textAlign: 'center' }}>Drama Queen</p>
+        <MainMenu />
         <WorkspaceSelection />
         <SoundBoardSelection />
       </div>

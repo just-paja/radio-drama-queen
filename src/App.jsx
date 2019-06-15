@@ -1,14 +1,12 @@
 import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'
 import MultiBackend from 'react-dnd-multi-backend'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 
 import { DragDropContextProvider } from 'react-dnd'
+import { OpenLibraryDialog } from './soundModules/components'
 import { Provider } from 'react-redux'
 import { withStyles } from '@material-ui/styles'
-
-import AppMenu from './containers/AppMenu'
-import { OpenLibraryDialog } from './soundModules/components'
 import {
   SoundLibraryStatus,
   WorkspaceLoadDialog,
@@ -38,15 +36,13 @@ const styles = {
   }
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
-class App extends Component {
+class App extends React.Component {
   render () {
     const { classes, store } = this.props
     return (
       <div className={classes.app}>
         <Provider store={store}>
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
-            <AppMenu />
             <WorkspaceView />
             <OpenLibraryDialog />
             <SoundLibraryStatus />

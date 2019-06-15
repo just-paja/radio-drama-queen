@@ -1,4 +1,5 @@
 export { default as WorkspaceSelection } from './WorkspaceSelection'
+export * from './MainMenu'
 export * from './SoundBoardView'
 export * from './SoundGalleryView'
 export * from './SoundLibraryStatus'

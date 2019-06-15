@@ -1,22 +1,20 @@
-import AppBar from '@material-ui/core/AppBar'
 import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MenuIcon from '@material-ui/icons/Menu'
-import OpenLibraryButton from '../soundModules/containers/OpenLibraryButton'
+import OpenLibraryButton from '../../soundModules/containers/OpenLibraryButton'
 import React from 'react'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import Toolbar from '@material-ui/core/Toolbar'
-import WipeLibraryButton from '../soundModules/containers/WipeLibraryButton'
+import WipeLibraryButton from '../../soundModules/containers/WipeLibraryButton'
 
-import { Classes } from '../proptypes'
+import { areSoundCategoriesEmpty } from '../../soundCategories/selectors'
+import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import {
-  WorkspaceLoadFromButton,
-  WorkspaceSaveAsButton,
-  WorkspaceSaveButton
-} from '../soundWorkspaces/components'
+import { WorkspaceLoadFromButton } from './WorkspaceLoadFromButton'
+import { WorkspaceSaveAsButton } from './WorkspaceSaveAsButton'
+import { WorkspaceSaveButton } from './WorkspaceSaveButton'
 
 const styles = {
   list: {
@@ -24,7 +22,7 @@ const styles = {
   }
 }
 
-class AppMenu extends React.Component {
+class MainMenuComponent extends React.Component {
   static propTypes = {
     classes: Classes.isRequired
   }
@@ -60,32 +58,38 @@ class AppMenu extends React.Component {
     menuItems.push(<WipeLibraryButton button buttonComponent={ListItem} key='wipe' />)
 
     return (
-      <AppBar position='static'>
-        <Toolbar>
-          <IconButton onClick={this.handleMenuOpen}>
-            <MenuIcon />
-          </IconButton>
-          <SwipeableDrawer
-            open={drawerOpen}
-            onClose={this.handleMenuClose}
-            onOpen={this.handleMenuOpen}
+      <React.Fragment>
+        <Button onClick={this.handleMenuOpen}>
+          <MenuIcon />
+          {' '}
+          Hérečka
+        </Button>
+        <SwipeableDrawer
+          open={drawerOpen}
+          onClose={this.handleMenuClose}
+          onOpen={this.handleMenuOpen}
+        >
+          <div
+            className={classes.list}
+            onClick={this.handleMenuClose}
+            onKeyDown={this.handleMenuClose}
+            role='button'
+            tabIndex={0}
           >
-            <div
-              className={classes.list}
-              onClick={this.handleMenuClose}
-              onKeyDown={this.handleMenuClose}
-              role='button'
-              tabIndex={0}
-            >
-              <List>
-                {menuItems}
-              </List>
-            </div>
-          </SwipeableDrawer>
-        </Toolbar>
-      </AppBar>
+            <List>
+              {menuItems}
+            </List>
+          </div>
+        </SwipeableDrawer>
+      </React.Fragment>
     )
   }
 }
 
-export default withStyles(styles)(AppMenu)
+const mapStateToProps = state => ({
+  isEmpty: areSoundCategoriesEmpty(state)
+})
+
+export const MainMenu = connect(
+  mapStateToProps
+)(withStyles(styles)(MainMenuComponent))
