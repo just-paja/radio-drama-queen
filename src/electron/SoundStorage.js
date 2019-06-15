@@ -19,8 +19,8 @@ const splitNameFromExtension = (url) => {
 }
 
 const getPath = (...args) => {
-  if (electron && electron.remote) {
-    return electron.remote.app.getPath(...args)
+  if (electron) {
+    return electron.app.getPath(...args)
   }
   return '/var/tmp'
 }
@@ -31,7 +31,7 @@ const getPath = (...args) => {
  */
 class SoundStorage {
   constructor () {
-    this.pathHome = getPath('userData')
+    this.pathHome = jetpack.path(getPath('userData'), 'Cache')
   }
 
   /**

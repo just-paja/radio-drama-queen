@@ -73,7 +73,7 @@ class LocalAssetsManager {
   }
 
   getCachePath () {
-    return jetpack.path(this.home, 'cache')
+    return jetpack.path(this.home, 'Cache')
   }
 
   getConfigPath (url) {
