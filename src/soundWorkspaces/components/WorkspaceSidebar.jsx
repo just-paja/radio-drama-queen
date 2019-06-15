@@ -12,18 +12,15 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     minWidth: theme.spacing(24)
-  },
-  workspaceSelection: {
-    marginTop: 'auto',
-    marginBottom: theme.spacing(3)
   }
 })
 
 function WorkspaceSidebarComponent ({ classes, board, view }) {
   return (
     <div className={classes.sidebar}>
+      <p style={{ textAlign: 'center' }}>Drama Queen</p>
+      <WorkspaceSelection />
       <SoundBoardSelection />
-      <WorkspaceSelection className={classes.workspaceSelection} />
     </div>
   )
 }
