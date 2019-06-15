@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
+import { getActiveStoryName } from '../selectors'
 import { MainMenu } from './MainMenu'
 import { SoundBoardSelection } from './SoundBoardSelection'
 import { withStyles } from '@material-ui/core/styles'
@@ -20,12 +22,12 @@ const styles = theme => ({
   }
 })
 
-function WorkspaceSidebarComponent ({ classes, board, view }) {
+function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
   return (
     <div className={classes.sidebar}>
       <div className={classes.sticky}>
         <MainMenu />
-        <WorkspaceSelection />
+        {activeStory && <WorkspaceSelection />}
         <SoundBoardSelection />
       </div>
     </div>
@@ -36,4 +38,10 @@ WorkspaceSidebarComponent.propTypes = {
   classes: Classes.isRequired
 }
 
-export const WorkspaceSidebar = withStyles(styles)(WorkspaceSidebarComponent)
+const mapStateToProps = state => ({
+  activeStory: getActiveStoryName(state)
+})
+
+export const WorkspaceSidebar = connect(
+  mapStateToProps
+)(withStyles(styles)(WorkspaceSidebarComponent))
