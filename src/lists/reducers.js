@@ -79,10 +79,7 @@ export const createListReducer = (
     },
     [mainRoutine.CLEAR]: () => [],
     ...flattenRoutineActions(itemReducer, routines),
-    [mainRoutine.SUCCESS]: (state, action) => {
-      console.log(action)
-      return action.payload
-    }
+    [mainRoutine.SUCCESS]: (state, action) => action.payload
   }, [])
 }
 
