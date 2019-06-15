@@ -47,11 +47,8 @@ class SceneSpeedDial extends Component {
         className={classes.speedDial}
         icon={<SpeedDialIcon />}
         onBlur={this.handleClose}
-        onClick={this.handleClick}
         onClose={this.handleClose}
         onFocus={this.handleOpen}
-        onMouseEnter={this.handleOpen}
-        onMouseLeave={this.handleClose}
         open={open}
       >
         {children}
