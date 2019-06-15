@@ -19,6 +19,11 @@ export const getGallerySize = createSelector(
   state => state.length
 )
 
+export const isGalleryEmpty = createSelector(
+  getGallerySize,
+  gallerySize => gallerySize <= 0
+)
+
 export const getSoundSearchValueCleared = createSelector(
   getSoundSearchValue,
   value => clearSearch(value)

@@ -55,6 +55,7 @@ export const createListReducer = (
   const mainRoutine = routines instanceof Array ? routines[0] : routines
 
   return handleActions({
+    [mainRoutine.SUCCESS]: (state, action) => action.payload,
     [mainRoutine.ADD]: (state, action) => addItem(mainRoutine, itemInitialState, state, action),
     [mainRoutine.ADD_GROUP]: (state, action) => action.payload.reduce(
       (aggr, payload) => addItem(mainRoutine, itemInitialState, aggr, { payload }),

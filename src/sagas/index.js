@@ -7,6 +7,7 @@ import soundBoards from '../soundBoards/sagas'
 import soundCategories from '../soundCategories/sagas'
 import soundGallery from '../soundGallery/sagas'
 import soundModules from '../soundModules/sagas'
+import soundStories from '../soundStories/sagas'
 import soundWorkspaces from '../soundWorkspaces/sagas'
 import sounds from '../sounds/sagas'
 
@@ -15,6 +16,7 @@ const sagas = [
   ...soundCategories,
   ...soundGallery,
   ...soundModules,
+  ...soundStories,
   ...soundWorkspaces,
   ...sounds
 ]

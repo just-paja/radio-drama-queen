@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import { withStyles } from '@material-ui/core/styles'
-
-import SoundGalleryEmptyMessage from './SoundGalleryEmptyMessage'
 import SoundGalleryItemList from '../containers/SoundGalleryItemList'
 import SoundGallerySearch from '../containers/SoundGallerySearch'
 import SoundGallerySpeedDial from './SoundGallerySpeedDial'
@@ -11,6 +7,8 @@ import SoundGalleryTarget from '../containers/SoundGalleryTarget'
 
 import { Classes } from '../../proptypes'
 import { GalleryTarget } from '../proptypes'
+import { SoundGalleryEmpty } from './SoundGalleryEmpty'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   box: {
@@ -19,7 +17,7 @@ const styles = theme => ({
   layout: {
     margin: 'auto',
     maxWidth: theme.breakpoints.values.sm,
-    paddingTop: 2 * theme.spacing(1),
+    paddingTop: 2 * theme.spacing(1)
   }
 })
 
@@ -37,7 +35,7 @@ const SoundGallery = ({
   let content
   if (librarySize === 0) {
     content = (
-      <SoundGalleryEmptyMessage
+      <SoundGalleryEmpty
         onConfigOpen={onConfigOpen}
         onLibraryOpen={onLibraryOpen}
       />

@@ -3,10 +3,12 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
+import { isGalleryEmpty } from '../../soundGallery/selectors'
 import { SoundBoardView } from './SoundBoardView'
 import { SoundGalleryView } from './SoundGalleryView'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
+import { WorkspaceEmpty } from './WorkspaceEmpty'
 import { WorkspaceSidebar } from './WorkspaceSidebar'
 
 const styles = theme => ({
@@ -20,7 +22,10 @@ const styles = theme => ({
   }
 })
 
-function renderContent (board, view) {
+function renderContent (empty, board, view) {
+  if (empty) {
+    return <WorkspaceEmpty />
+  }
   if (view === VIEW_LIBRARY) {
     return <SoundGalleryView />
   }
@@ -30,11 +35,11 @@ function renderContent (board, view) {
   return null
 }
 
-function WorkspaceViewComponent ({ classes, board, view }) {
+function WorkspaceViewComponent ({ classes, board, empty, view }) {
   return (
     <div className={classes.view}>
       <WorkspaceSidebar />
-      {renderContent(board, view)}
+      {renderContent(empty, board, view)}
     </div>
   )
 }
@@ -43,16 +48,19 @@ WorkspaceViewComponent.displayName = 'WorkspaceView'
 
 WorkspaceViewComponent.propTypes = {
   board: PropTypes.string,
+  empty: PropTypes.bool,
   view: PropTypes.string
 }
 
 WorkspaceViewComponent.defaultProps = {
   board: null,
+  empty: false,
   view: null
 }
 
 const mapStateToProps = state => ({
   board: getActiveBoardUuid(state),
+  empty: isGalleryEmpty(state),
   view: getWorkspaceView(state)
 })
 

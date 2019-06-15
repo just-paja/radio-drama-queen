@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import LabelButton from '../../components/LabelButton'
 import CanvasMessage from '../../components/CanvasMessage'
 
-const SoundGalleryEmptyMessage = ({ onConfigOpen, onLibraryOpen }) => (
+const SoundGalleryEmptyComponent = ({ onConfigOpen, onLibraryOpen }) => (
   <CanvasMessage heading='Oh no! Your sound library is empty!'>
     <Typography gutterBottom>
       The sound library stores all the sounds. You can browse and filter here.
@@ -21,9 +21,9 @@ const SoundGalleryEmptyMessage = ({ onConfigOpen, onLibraryOpen }) => (
   </CanvasMessage>
 )
 
-SoundGalleryEmptyMessage.propTypes = {
+SoundGalleryEmptyComponent.propTypes = {
   onConfigOpen: PropTypes.func.isRequired,
   onLibraryOpen: PropTypes.func.isRequired
 }
 
-export default SoundGalleryEmptyMessage
+export const SoundGalleryEmpty = SoundGalleryEmptyComponent

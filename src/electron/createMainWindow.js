@@ -1,4 +1,5 @@
 import { SoundManager } from './SoundManager'
+import { StoryManager } from './StoryManager'
 
 const { BrowserWindow } = require('electron')
 
@@ -6,6 +7,7 @@ const BackendMessenger = require('./BackendMessenger')
 const handlers = require('./handlers')
 
 const { soundRead, soundRegister } = require('../sounds/actions')
+const { stories } = require('../soundStories/actions')
 
 export function createMainWindow (development) {
   const mainWindow = new BrowserWindow({
@@ -22,9 +24,11 @@ export function createMainWindow (development) {
 
   const messenger = new BackendMessenger(mainWindow, development)
   const soundManager = new SoundManager()
+  const storyManager = new StoryManager()
 
   messenger.handleAction(soundRegister.REQUEST, soundRegister, handlers.soundRegister(soundManager))
   messenger.handleAction(soundRead.REQUEST, soundRead, handlers.soundRead(soundManager))
+  messenger.handleAction(stories.REQUEST, stories, handlers.listStories(storyManager))
 
   // TODO: Handle sound load
   // TODO: Handle sound unload

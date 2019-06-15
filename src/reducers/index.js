@@ -6,6 +6,7 @@ import soundCategories from '../soundCategories/reducers'
 import soundGallery from '../soundGallery/reducers'
 import soundModules from '../soundModules/reducers'
 import sounds from '../sounds/reducers'
+import soundStories from '../soundStories/reducers'
 import soundTags from '../soundTags/reducers'
 import soundWorkspaces from '../soundWorkspaces/reducers'
 
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   soundGallery,
   soundModules,
   sounds,
+  soundStories,
   soundTags,
   soundWorkspaces
 })

@@ -22,7 +22,7 @@ export const getPath = (...args) => {
   return '/var/tmp'
 }
 
-export const PATH_STORIES = jetpack.path(getPath('userData'), 'Stories')
 export const PATH_CACHE = jetpack.path(getPath('userData'), 'Cache')
 export const PATH_EXE = getPath('exe')
+export const PATH_STORIES = jetpack.path(getPath('userData'), 'Stories')
 export const PATH_WORKERS = jetpack.path(PATH_EXE, 'src', 'workers')
