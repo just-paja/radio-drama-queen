@@ -1,6 +1,6 @@
-import { call, put, take, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import { createQueue } from 'redux-saga-job-queue'
-import { ipcRenderer } from '../../ipcActionPipe'
+import { request } from '../../ipcActionPipe'
 import { matchSoundLoadFinish } from './soundLoad'
 import { soundList, soundRegister } from '../actions'
 import { tagList } from '../../soundTags/actions'
@@ -10,9 +10,7 @@ let queue
 const isQueueRunning = () => Boolean(queue && !queue.isFinished())
 
 function * registerSound ({ payload }) {
-  yield put(soundRegister.request(null, payload))
-  ipcRenderer.send('frontendSays', soundRegister.request(null, payload))
-  yield take(matchSoundLoadFinish(soundRegister))
+  yield request(soundRegister, payload, matchSoundLoadFinish(soundRegister))
 }
 
 function * addSound ({ payload }) {

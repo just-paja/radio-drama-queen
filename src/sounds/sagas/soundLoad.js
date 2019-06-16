@@ -12,7 +12,7 @@ import AudioManager from '../AudioManager'
 import { createQueue } from 'redux-saga-job-queue'
 import { soundList, soundLoad, soundRead } from '../actions'
 import { getSound } from '../selectors'
-import { ipcRenderer } from '../../ipcActionPipe'
+import { say } from '../../ipcActionPipe'
 
 let queue
 
@@ -78,7 +78,7 @@ export const matchSoundLoadFinish = (routine, uuid) => action => (
 
 function * readSoundDataUrl ({ payload }) {
   yield put(soundRead.request(payload.uuid, payload))
-  ipcRenderer.send('frontendSays', soundRead.request(payload.uuid, payload))
+  say(soundRead.request(payload.uuid, payload))
   const result = yield take(matchSoundLoadFinish(soundRead, payload.uuid))
   yield put(soundRead.fulfill(payload.uuid))
   return result.payload
