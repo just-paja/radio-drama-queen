@@ -1,8 +1,8 @@
-import { FORM_STORY_CREATE } from '../constants'
+import { FORM_STORY_CREATE } from './constants'
 import { getFormValues } from 'redux-form'
-import { request } from '../../ipcActionPipe'
+import { request } from '../ipcActionPipe'
 import { put, select, takeEvery } from 'redux-saga/effects'
-import { stories, storyCreate, storySave } from '../actions'
+import { stories, storyCreate, storySave } from './actions'
 
 function stripMemoryState ({ form, soundGallery, ...state }) {
   return {
