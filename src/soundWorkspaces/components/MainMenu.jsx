@@ -14,8 +14,6 @@ import { connect } from 'react-redux'
 import { getActiveStoryName } from '../selectors'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceLoadFromButton } from './WorkspaceLoadFromButton'
-import { WorkspaceSaveAsButton } from './WorkspaceSaveAsButton'
-import { WorkspaceSaveButton } from './WorkspaceSaveButton'
 
 const styles = {
   list: {
@@ -53,8 +51,6 @@ class MainMenuComponent extends React.Component {
 
     menuItems.push(<WorkspaceLoadFromButton button buttonComponent={ListItem} key='loadFrom' />)
     menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key='open' />)
-    menuItems.push(<WorkspaceSaveButton button buttonComponent={ListItem} key='save' />)
-    menuItems.push(<WorkspaceSaveAsButton button buttonComponent={ListItem} key='saveAs' />)
     menuItems.push(<Divider key='dividerOps' />)
     menuItems.push(<WipeLibraryButton button buttonComponent={ListItem} key='wipe' />)
 

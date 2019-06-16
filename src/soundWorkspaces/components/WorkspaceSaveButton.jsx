@@ -1,14 +1,15 @@
-import LabelButton from '../../components/LabelButton'
+import IconButton from '@material-ui/core/IconButton'
 import Save from '@material-ui/icons/Save'
+import React from 'react'
 
 import { connect } from 'react-redux'
-import { getWorkspaceFilePath, isWorkspaceEmpty } from '../selectors'
+import { isWorkspaceEmpty } from '../selectors'
 import { workspaceSave } from '../actions'
 
 const mapStateToProps = (state) => ({
-  children: 'Save',
-  disabled: isWorkspaceEmpty(state) || !getWorkspaceFilePath(state),
-  icon: Save
+  disabled: isWorkspaceEmpty(state),
+  children: <Save />,
+  title: 'Save'
 })
 
 const mapDispatchToProps = {
@@ -18,4 +19,4 @@ const mapDispatchToProps = {
 export const WorkspaceSaveButton = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LabelButton)
+)(IconButton)

@@ -31,12 +31,13 @@ const mapStateToProps = state => ({
 
 const styles = theme => ({
   footer: {
-    background: 'rgba(0,0,0,.8)',
+    background: 'rgba(0,0,0,.33)',
     bottom: 0,
     color: 'white',
     fontSize: theme.typography.fontSize,
     left: 0,
     paddingRight: theme.spacing(1 / 2),
+    paddingLeft: theme.spacing(24),
     position: 'fixed',
     right: 0,
     justifyContent: 'flex-end',
@@ -45,7 +46,7 @@ const styles = theme => ({
   },
   stat: {
     display: 'block',
-    background: '#000',
+    background: 'rgba(0,0,0,.66)',
     padding: theme.spacing(1 / 2),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
