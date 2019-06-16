@@ -38,12 +38,10 @@ export class SoundManager {
    * @return Promise Sound metadata
    */
   registerSound (soundData) {
-    if (soundData.uuid) {
-      return Promise.resolve(soundData)
-    }
-    return Promise.resolve(Object.assign({}, soundData, {
-      uuid: generateUuid()
-    }))
+    return Promise.resolve({
+      ...soundData,
+      uuid: soundData.uuid || generateUuid()
+    })
   }
 
   /**

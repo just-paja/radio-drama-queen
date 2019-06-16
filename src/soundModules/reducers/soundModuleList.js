@@ -6,6 +6,5 @@ import { soundModule as soundModuleActions } from '../actions'
 export default createListReducer(
   soundModuleActions,
   soundModule,
-  initialState,
-  'name'
+  initialState
 )

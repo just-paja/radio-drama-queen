@@ -50,7 +50,8 @@ const addItem = (mainRoutine, itemInitialState, state, action) => {
 export const createListReducer = (
   routines,
   itemReducer,
-  itemInitialState
+  itemInitialState,
+  otherReducers = {}
 ) => {
   const mainRoutine = routines instanceof Array ? routines[0] : routines
   return handleActions({
@@ -79,7 +80,8 @@ export const createListReducer = (
     },
     [mainRoutine.CLEAR]: () => [],
     ...flattenRoutineActions(itemReducer, routines),
-    [mainRoutine.SUCCESS]: (state, action) => action.payload
+    [mainRoutine.SUCCESS]: (state, action) => action.payload,
+    ...otherReducers
   }, [])
 }
 

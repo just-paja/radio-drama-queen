@@ -6,7 +6,7 @@ import {
   turnOn
 } from 'react-saga-rest'
 
-import { soundList, soundLoad } from '../actions'
+import { soundList, soundLoad, soundRegister } from '../actions'
 import { idCollection } from '../../collections'
 
 export const initialState = {

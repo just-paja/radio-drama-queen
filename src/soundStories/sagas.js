@@ -61,11 +61,12 @@ function * loadStory () {
 
 function * reloadSound (sound) {
   yield put(soundRegister.trigger(sound.uuid, sound))
-  yield take(matchSoundLoadFinish(soundRegister, sound.uuid))
-  const isUsed = yield select(isSoundUsed, sound.uuid)
-  if (isUsed) {
-    yield put(soundLoad.trigger(sound.uuid))
-    yield take(matchSoundLoadFinish(soundLoad, sound.uuid))
+  const result = yield take(matchSoundLoadFinish(soundRegister, sound.uuid))
+  if (result.type === soundRegister.SUCCESS) {
+    if (yield select(isSoundUsed, sound.uuid)) {
+      yield put(soundLoad.trigger(sound.uuid))
+      yield take(matchSoundLoadFinish(soundLoad, sound.uuid))
+    }
   }
 }
 
