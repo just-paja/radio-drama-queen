@@ -24,6 +24,7 @@ export class StoryManager {
 
   loadStory (storyName) {
     return jetpack.readAsync(this.storyNameToFilePath(storyName))
+      .then(contents => JSON.parse(contents))
   }
 
   saveStory (story) {

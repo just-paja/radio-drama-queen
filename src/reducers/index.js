@@ -10,7 +10,7 @@ import soundStories from '../soundStories/reducers'
 import soundTags from '../soundTags/reducers'
 import soundWorkspaces from '../soundWorkspaces/reducers'
 
-import { workspaceLoad } from '../soundWorkspaces/actions'
+import { storyLoad } from '../soundStories/actions'
 
 const appReducer = combineReducers({
   form,
@@ -25,8 +25,9 @@ const appReducer = combineReducers({
 })
 
 export default (state, action) => {
-  if (action.type === workspaceLoad.RESET) {
-    return action.payload
+  if (action.type === storyLoad.SUCCESS) {
+    const { name, ...nextState } = action.payload
+    return nextState
   }
   return appReducer(state, action)
 }

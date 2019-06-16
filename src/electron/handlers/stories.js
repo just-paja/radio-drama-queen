@@ -11,6 +11,13 @@ export function listStories (storyManager) {
       .catch(error => messenger.sendMessage(routine.failure(null, error.message)))
 }
 
+export function loadStory (storyManager) {
+  return (messenger, routine, action) =>
+    storyManager.loadStory(action.payload)
+      .then(story => messenger.sendMessage(routine.success(null, story)))
+      .catch(error => messenger.sendMessage(routine.failure(null, error.message)))
+}
+
 export function saveStory (storyManager) {
   return (messenger, routine, action) =>
     storyManager.saveStory(action.payload)

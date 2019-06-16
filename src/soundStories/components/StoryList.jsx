@@ -7,7 +7,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import { connect } from 'react-redux'
-import { stories } from '../actions'
+import { stories, storyLoad } from '../actions'
 import { getActiveStory, getStories } from '../selectors'
 import { StoryCreateButton } from './StoryCreateButton'
 
@@ -80,7 +80,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onDataRequest: stories.trigger,
-  onStorySelect: stories.select
+  onStorySelect: storyLoad.trigger
 }
 
 export const StoryList = connect(

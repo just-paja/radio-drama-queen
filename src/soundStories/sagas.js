@@ -1,8 +1,12 @@
+import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 import { FORM_STORY_CREATE } from './constants'
 import { getFormValues } from 'redux-form'
+import { isSoundUsed } from '../soundCategories/selectors'
+import { matchSoundLoadFinish } from '../sounds/sagas'
+import { memoizeSoundList } from '../sounds/selectors'
 import { request } from '../ipcActionPipe'
-import { put, select, takeEvery } from 'redux-saga/effects'
-import { stories, storyCreate, storySave } from './actions'
+import { soundRegister, soundLoad } from '../sounds/actions'
+import { stories, storyCreate, storyLoad, storySave } from './actions'
 
 function stripMemoryState ({ form, soundGallery, ...state }) {
   return {
@@ -49,8 +53,33 @@ function * saveStory () {
   })
 }
 
+function * loadStory () {
+  yield takeEvery(storyLoad.TRIGGER, function * save (action) {
+    yield request(storyLoad, action.meta.name)
+  })
+}
+
+function * reloadSound (sound) {
+  yield put(soundRegister.trigger(sound.uuid, sound))
+  yield take(matchSoundLoadFinish(soundRegister, sound.uuid))
+  const isUsed = yield select(isSoundUsed, sound.uuid)
+  if (isUsed) {
+    yield put(soundLoad.trigger(sound.uuid))
+    yield take(matchSoundLoadFinish(soundLoad, sound.uuid))
+  }
+}
+
+function * reloadAllSounds () {
+  yield takeEvery(storyLoad.SUCCESS, function * reload () {
+    const sounds = yield select(memoizeSoundList)
+    yield all(sounds.map(sound => call(reloadSound, sound)))
+  })
+}
+
 export default [
   createStory,
   fetchStoryList,
+  loadStory,
+  reloadAllSounds,
   saveStory
 ]

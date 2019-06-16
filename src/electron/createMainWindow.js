@@ -7,7 +7,7 @@ const BackendMessenger = require('./BackendMessenger')
 const handlers = require('./handlers')
 
 const { soundRead, soundRegister } = require('../sounds/actions')
-const { stories, storyCreate, storySave } = require('../soundStories/actions')
+const { stories, storyCreate, storyLoad, storySave } = require('../soundStories/actions')
 
 export function createMainWindow (development) {
   const mainWindow = new BrowserWindow({
@@ -31,6 +31,7 @@ export function createMainWindow (development) {
   messenger.handleAction(stories.REQUEST, stories, handlers.listStories(storyManager))
   messenger.handleAction(storyCreate.REQUEST, storyCreate, handlers.saveStory(storyManager))
   messenger.handleAction(storySave.REQUEST, storySave, handlers.saveStory(storyManager))
+  messenger.handleAction(storyLoad.REQUEST, storyLoad, handlers.loadStory(storyManager))
 
   // TODO: Handle sound load
   // TODO: Handle sound unload

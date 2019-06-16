@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions'
 
 import { libraryWipe } from '../../soundModules/actions'
 import { soundBoard } from '../../soundBoards/actions'
-import { stories } from '../../soundStories/actions'
+import { stories, storyLoad } from '../../soundStories/actions'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 import { workspace, workspaceSave } from '../actions'
 
@@ -23,7 +23,7 @@ const ui = handleActions({
     }
     return state
   },
-  [stories.SELECT]: (state, action) => ({
+  [storyLoad.TRIGGER]: (state, action) => ({
     ...state,
     story: action.meta ? action.meta.name : null
   }),
