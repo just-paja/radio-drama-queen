@@ -6,8 +6,8 @@ import { getActiveStoryName } from '../selectors'
 import { MainMenu } from './MainMenu'
 import { SoundBoardSelection } from './SoundBoardSelection'
 import { withStyles } from '@material-ui/core/styles'
+import { WorkspaceSaveButton } from '../../soundStories/components'
 import { WorkspaceSelection } from './WorkspaceSelection'
-import { WorkspaceSaveButton } from './WorkspaceSaveButton'
 
 const styles = theme => ({
   sidebar: {

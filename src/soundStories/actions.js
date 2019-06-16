@@ -18,3 +18,11 @@ export const storyCreate = createListRoutine('STORY_CREATE', [
   'SUBMIT',
   'SUCCESS'
 ], 'name')
+
+export const storySave = createListRoutine('STORY_SAVE', [
+  'FAILURE',
+  'FULFILL',
+  'REQUEST',
+  'SUCCESS',
+  'TRIGGER'
+], 'name')
