@@ -5,15 +5,18 @@ import Grid from '@material-ui/core/Grid'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
-import Typography from '@material-ui/core/Typography'
-
-import { withStyles } from '@material-ui/core/styles'
-
 import SoundBoardCategory from './SoundBoardCategory'
 import SoundBoardCategoryCreate from '../containers/SoundBoardCategoryCreate'
 import SoundBoardEmptyMessage from './SoundBoardEmptyMessage'
 import SoundBoardRenameDialog from '../containers/SoundBoardRenameDialog'
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial'
+import Typography from '@material-ui/core/Typography'
+
+import { connect } from 'react-redux'
+import { categoryCreate, soundBoard } from '../actions'
+import { getBoardCategoryUuids, isCategoryCreateFormVisible } from '../selectors'
+import { connectSoundDropTarget } from '../../sounds/containers'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   board: {
@@ -64,7 +67,7 @@ const renderSnackbar = (isOver, canDrop) => (
   />
 )
 
-class SoundBoard extends Component {
+class SoundBoardComponent extends Component {
   constructor () {
     super()
     this.handleSoundPickerOpen = this.handleSoundPickerOpen.bind(this)
@@ -118,7 +121,8 @@ class SoundBoard extends Component {
   };
 };
 
-SoundBoard.propTypes = {
+SoundBoardComponent.displayName = 'SoundBoard'
+SoundBoardComponent.propTypes = {
   canDrop: PropTypes.bool,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -129,10 +133,23 @@ SoundBoard.propTypes = {
   uuid: PropTypes.string
 }
 
-SoundBoard.defaultProps = {
+SoundBoardComponent.defaultProps = {
   canDrop: false,
   isOver: false,
   showCreateForm: false
 }
 
-export default withStyles(styles)(SoundBoard)
+const mapStateToProps = (state, { uuid }) => ({
+  categories: getBoardCategoryUuids(state, uuid),
+  showCreateForm: isCategoryCreateFormVisible(state)
+})
+
+const mapDispatchToProps = {
+  onAdd: categoryCreate.formShow,
+  onDrop: soundBoard.soundDrop
+}
+
+export const SoundBoard = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(connectSoundDropTarget(withStyles(styles)(SoundBoardComponent)))

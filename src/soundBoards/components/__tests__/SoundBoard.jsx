@@ -1,102 +1,83 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
-
+import { renderWithDnd } from '../../../../mock'
 import { SoundBoard } from '..'
 
 describe('SoundBoard component', () => {
-  it('renders empty message when there are no categories', () => {
-    const comp = shallow(
-      <SoundBoard
-        onSoundPickerOpen={() => {}}
-        categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
-    )
-    expect(comp.dive()).toContainMatchingElements(1, 'SoundBoardEmptyMessage')
-  })
+  const state = {
+    soundBoards: {
+      list: [
+        {
+          name: 'Board 1',
+          uuid: 'board-1'
+        }
+      ],
+      ui: {
+        showCreateForm: true
+      }
+    },
+    soundCategories: {
+      list: [
+        {
+          name: 'foo',
+          uuid: 'category-1',
+          board: 'board-1',
+          sounds: [],
+          volume: 1
+        },
+        {
+          name: 'foo',
+          uuid: 'category-2',
+          board: 'board-1',
+          sounds: [],
+          volume: 1
+        },
+        {
+          name: 'foo',
+          uuid: 'category-3',
+          board: 'board-2',
+          sounds: [],
+          volume: 1
+        }
+      ]
+    },
+    sounds: {
+      list: []
+    }
+  }
 
   it('renders board speed dial', () => {
-    const comp = shallow(
+    const comp = renderWithDnd(
       <SoundBoard
+        uuid='board-1'
         onSoundPickerOpen={() => {}}
         categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
+      />,
+      state
     )
-    expect(comp.dive()).toContainMatchingElements(1, 'Connect(SoundBoardSpeedDial)')
-  })
-
-  it('renders snackbar open when touch is over and can drop', () => {
-    const comp = shallow(
-      <SoundBoard
-        onSoundPickerOpen={() => {}}
-        canDrop
-        isOver
-        categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
-    )
-    expect(comp.dive().find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', true)
-  })
-
-  it('renders snackbar closed when touch is not over and can drop', () => {
-    const comp = shallow(
-      <SoundBoard
-        onSoundPickerOpen={() => {}}
-        canDrop
-        isOver={false}
-        categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
-    )
-    expect(comp.dive().find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', false)
-  })
-
-  it('renders snackbar closed when touch is over and can not drop', () => {
-    const comp = shallow(
-      <SoundBoard
-        onSoundPickerOpen={() => {}}
-        canDrop={false}
-        isOver
-        categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
-    )
-    expect(comp.dive().find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', false)
+    expect(comp).toContainMatchingElement('Connect(SoundBoardSpeedDial)')
   })
 
   it('renders create form when given showCreateForm flag', () => {
-    const comp = shallow(
+    const comp = renderWithDnd(
       <SoundBoard
-        onSoundPickerOpen={() => {}}
-        showCreateForm
-        categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
-    )
-    expect(comp.dive('Connect(ReduxForm(SoundBoardCategoryCreate))')).toHaveLength(1)
-  })
-
-  it('does not render create form when not given showCreateForm flag', () => {
-    const comp = shallow(
-      <SoundBoard
+        uuid='board-1'
         onSoundPickerOpen={() => {}}
         categories={[]}
-        connectDropTarget={nodes => nodes}
-      />
+      />,
+      state
     )
-    expect(comp.dive().find('Connect(ReduxForm(SoundBoardCategoryCreate))')).toHaveLength(0)
+    expect(comp).toContainMatchingElement('SoundBoardCategoryCreateForm')
   })
 
-  it('renders category container for category', () => {
-    const comp = shallow(
+  it('renders categories', () => {
+    const comp = renderWithDnd(
       <SoundBoard
+        uuid='board-1'
         onSoundPickerOpen={() => {}}
-        categories={['foo-uuid']}
-        connectDropTarget={nodes => nodes}
-      />
+      />,
+      state
     )
-    expect(comp.dive().find('WithStyles(SoundBoardCategory)')).toHaveProp('uuid', 'foo-uuid')
+    expect(comp).toContainMatchingElement('SoundBoardCategory')
   })
 })

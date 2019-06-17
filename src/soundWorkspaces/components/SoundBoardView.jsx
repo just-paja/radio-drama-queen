@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { SoundBoard } from '../../soundBoards/containers'
+import { SoundBoard } from '../../soundBoards/components'
 import { connect } from 'react-redux'
 import { workspace } from '../actions'
 
