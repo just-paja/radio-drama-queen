@@ -7,15 +7,15 @@ import React, { Component } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import SoundBoardCategory from './SoundBoardCategory'
 import SoundBoardCategoryCreate from '../containers/SoundBoardCategoryCreate'
-import SoundBoardEmptyMessage from './SoundBoardEmptyMessage'
 import SoundBoardRenameDialog from '../containers/SoundBoardRenameDialog'
 import SoundBoardSpeedDial from '../containers/SoundBoardSpeedDial'
 import Typography from '@material-ui/core/Typography'
 
-import { connect } from 'react-redux'
 import { categoryCreate, soundBoard } from '../actions'
-import { getBoardCategoryUuids, isCategoryCreateFormVisible } from '../selectors'
+import { connect } from 'react-redux'
 import { connectSoundDropTarget } from '../../sounds/containers'
+import { getBoardCategoryUuids, isCategoryCreateFormVisible } from '../selectors'
+import { SoundBoardEmpty } from './SoundBoardEmpty'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
@@ -96,7 +96,7 @@ class SoundBoardComponent extends Component {
     })
     let content
     if (categories.length === 0 && !showCreateForm) {
-      content = (<SoundBoardEmptyMessage />)
+      content = (<SoundBoardEmpty />)
     } else {
       content = []
       content.push(renderCategories(categories, onSoundPickerOpen))

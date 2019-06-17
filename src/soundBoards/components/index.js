@@ -1,6 +1,7 @@
 export { default as SoundBoardCategory } from './SoundBoardCategory'
 export { default as SoundBoardCategoryCreateForm } from './SoundBoardCategoryCreateForm'
-export { default as SoundBoardEmptyMessage } from './SoundBoardEmptyMessage'
 export { default as SoundBoardLabel } from './SoundBoardLabel'
 export { default as SoundBoardSpeedDial } from './SoundBoardSpeedDial'
+export * from './NoBoards'
 export * from './SoundBoard'
+export * from './SoundBoardEmpty'

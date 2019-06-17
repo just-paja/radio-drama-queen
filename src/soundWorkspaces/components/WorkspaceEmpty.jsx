@@ -2,12 +2,13 @@ import React from 'react'
 
 import { areStoriesEmpty } from '../../soundStories/selectors'
 import { connect } from 'react-redux'
-import { getActiveStoryName } from '../selectors'
-import { libraryLoad } from '../../soundModules/actions'
+import { getActiveStoryName, getWorkspaceView } from '../selectors'
+import { isGalleryEmpty } from '../../soundGallery/selectors'
+import { NoBoards } from '../../soundBoards/components'
 import { SoundGalleryEmpty } from '../../soundGallery/components'
 import { StoryList } from '../../soundStories/components'
+import { VIEW_LIBRARY } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
-import { workspaceLoad } from '../actions'
 
 const styles = {
   container: {
@@ -15,23 +16,29 @@ const styles = {
   }
 }
 
+function renderContent ({
+  activeStory,
+  galleryEmpty,
+  view
+}) {
+  if (!activeStory) {
+    return <StoryList />
+  }
+  if (galleryEmpty && view === VIEW_LIBRARY) {
+    return <SoundGalleryEmpty />
+  }
+  return <NoBoards />
+}
+
 function WorkspaceEmptyComponent ({
   activeStory,
   classes,
-  onConfigOpen,
-  onLibraryOpen,
-  noStories
+  galleryEmpty,
+  view
 }) {
   return (
     <div className={classes.container}>
-      {activeStory
-        ? (
-          <SoundGalleryEmpty
-            onConfigOpen={onConfigOpen}
-            onLibraryOpen={onLibraryOpen}
-          />
-        ) : <StoryList />
-      }
+      {renderContent({ activeStory, galleryEmpty, view })}
     </div>
   )
 }
@@ -40,15 +47,11 @@ WorkspaceEmptyComponent.displayName = 'WorkspaceEmpty'
 
 const mapStateToProps = state => ({
   activeStory: getActiveStoryName(state),
-  noStories: areStoriesEmpty(state)
+  galleryEmpty: isGalleryEmpty(state),
+  noStories: areStoriesEmpty(state),
+  view: getWorkspaceView(state)
 })
 
-const mapDispatchToProps = {
-  onConfigOpen: workspaceLoad.dialogOpen,
-  onLibraryOpen: libraryLoad.dialogShow
-}
-
 export const WorkspaceEmpty = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(withStyles(styles)(WorkspaceEmptyComponent))
