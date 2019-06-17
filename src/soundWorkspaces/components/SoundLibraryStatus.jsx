@@ -34,14 +34,16 @@ const styles = theme => ({
     background: 'rgba(0,0,0,.33)',
     bottom: 0,
     color: 'white',
+    cursor: 'default',
+    display: 'flex',
     fontSize: theme.typography.fontSize,
+    justifyContent: 'flex-end',
     left: 0,
-    paddingRight: theme.spacing(1 / 2),
     paddingLeft: theme.spacing(24),
+    paddingRight: theme.spacing(1 / 2),
     position: 'fixed',
     right: 0,
-    justifyContent: 'flex-end',
-    display: 'flex',
+    userSelect: 'none',
     zIndex: 1200
   },
   stat: {
@@ -63,8 +65,8 @@ const styles = theme => ({
   }
 })
 
-const renderNumberWithIcon = (classes, number, IconComponent) => (
-  <span className={classes.stat}>
+const renderNumberWithIcon = (classes, number, IconComponent, title) => (
+  <span className={classes.stat} title={title}>
     <IconComponent className={classes.icon} />
     {' '}
     {number}
@@ -82,12 +84,12 @@ const SoundLibraryStatusComponent = ({
 }) => (
   <footer className={classes.footer}>
     <SoundStopAllButton className={classes.stopAllButton} />
-    {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon)}
-    {renderNumberWithIcon(classes, tags, LabelIcon)}
-    {renderNumberWithIcon(classes, errorSounds, WarningIcon)}
-    {renderNumberWithIcon(classes, inMemorySounds, MemoryIcon)}
-    {renderNumberWithIcon(classes, boardSounds, DashboardIcon)}
-    {renderNumberWithIcon(classes, registeredSounds, AllInclusiveIcon)}
+    {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon, 'Playing')}
+    {renderNumberWithIcon(classes, tags, LabelIcon, 'Tags')}
+    {renderNumberWithIcon(classes, errorSounds, WarningIcon, 'Sound errors')}
+    {renderNumberWithIcon(classes, inMemorySounds, MemoryIcon, 'Sounds ready to play')}
+    {renderNumberWithIcon(classes, boardSounds, DashboardIcon, 'Sounds on board')}
+    {renderNumberWithIcon(classes, registeredSounds, AllInclusiveIcon, 'Registered sounds')}
   </footer>
 )
 
