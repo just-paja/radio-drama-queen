@@ -8,9 +8,11 @@ import React from 'react'
 import SoundStopAllButton from '../../sounds/containers/SoundStopAllButton'
 import WarningIcon from '@material-ui/icons/Warning'
 
+import { MainMenu } from './MainMenu'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getGallerySize } from '../../soundGallery/selectors'
+import { LibraryStat } from './LibraryStat'
 import { withStyles } from '@material-ui/core/styles'
 import {
   countBoardSounds,
@@ -30,48 +32,31 @@ const mapStateToProps = state => ({
 })
 
 const styles = theme => ({
-  footer: {
-    background: 'rgba(0,0,0,.33)',
-    bottom: 0,
+  header: {
+    background: '#2f2f2f',
     color: 'white',
     cursor: 'default',
     display: 'flex',
     fontSize: theme.typography.fontSize,
     justifyContent: 'flex-end',
     left: 0,
-    paddingLeft: theme.spacing(24),
+    padding: 0,
     paddingRight: theme.spacing(1 / 2),
-    position: 'fixed',
     right: 0,
+    top: 0,
     userSelect: 'none',
     zIndex: 1200
   },
-  stat: {
-    display: 'block',
-    background: 'rgba(0,0,0,.66)',
-    padding: theme.spacing(1 / 2),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    marginLeft: theme.spacing(1 / 2)
+  icons: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row'
   },
   stopAllButton: {
     marginRight: 'auto',
     marginLeft: theme.spacing(1)
-  },
-  icon: {
-    height: theme.typography.fontSize * 0.75,
-    width: theme.typography.fontSize * 0.75,
-    verticalAlign: 'middle'
   }
 })
-
-const renderNumberWithIcon = (classes, number, IconComponent, title) => (
-  <span className={classes.stat} title={title}>
-    <IconComponent className={classes.icon} />
-    {' '}
-    {number}
-  </span>
-)
 
 const SoundLibraryStatusComponent = ({
   boardSounds,
@@ -82,15 +67,18 @@ const SoundLibraryStatusComponent = ({
   registeredSounds,
   tags
 }) => (
-  <footer className={classes.footer}>
+  <header className={classes.header}>
+    <MainMenu />
     <SoundStopAllButton className={classes.stopAllButton} />
-    {renderNumberWithIcon(classes, playingSounds, PlayArrowIcon, 'Playing')}
-    {renderNumberWithIcon(classes, tags, LabelIcon, 'Tags')}
-    {renderNumberWithIcon(classes, errorSounds, WarningIcon, 'Sound errors')}
-    {renderNumberWithIcon(classes, inMemorySounds, MemoryIcon, 'Sounds ready to play')}
-    {renderNumberWithIcon(classes, boardSounds, DashboardIcon, 'Sounds on board')}
-    {renderNumberWithIcon(classes, registeredSounds, AllInclusiveIcon, 'Registered sounds')}
-  </footer>
+    <span className={classes.icons}>
+      <LibraryStat number={playingSounds} icon={PlayArrowIcon} title='Playing' />
+      <LibraryStat number={tags} icon={LabelIcon} title='Tags' />
+      <LibraryStat number={errorSounds} icon={WarningIcon} title='Sound errors' />
+      <LibraryStat number={inMemorySounds} icon={MemoryIcon} title='Sounds ready to play' />
+      <LibraryStat number={boardSounds} icon={DashboardIcon} title='Sounds on board' />
+      <LibraryStat number={registeredSounds} icon={AllInclusiveIcon} title='Registered sounds' />
+    </span>
+  </header>
 )
 
 SoundLibraryStatusComponent.displayName = 'SoundLibraryStatus'

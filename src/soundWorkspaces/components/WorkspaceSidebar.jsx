@@ -3,7 +3,6 @@ import React from 'react'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getActiveStoryName } from '../selectors'
-import { MainMenu } from './MainMenu'
 import { SoundBoardSelection } from './SoundBoardSelection'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceSaveButton } from '../../soundStories/components'
@@ -11,6 +10,7 @@ import { WorkspaceSelection } from './WorkspaceSelection'
 
 const styles = theme => ({
   sidebar: {
+    background: '#f0f0f0',
     display: 'flex',
     flexDirection: 'column',
     width: theme.spacing(24)
@@ -18,13 +18,12 @@ const styles = theme => ({
   sticky: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    flexGrow: 1,
     position: 'sticky',
     top: 0
   },
   overlay: {
     display: 'flex',
-    background: '#f0f0f0',
     borderRight: '1px solid #eee',
     flexDirection: 'column',
     flexGrow: 1,
@@ -45,7 +44,6 @@ function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
     <div className={classes.sidebar}>
       <div className={classes.sticky}>
         <div className={classes.overlay}>
-          <MainMenu />
           {activeStory && (
             <React.Fragment>
               <WorkspaceSelection className={classes.stretch} />

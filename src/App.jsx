@@ -8,7 +8,6 @@ import { OpenLibraryDialog } from './soundModules/components'
 import { Provider } from 'react-redux'
 import { withStyles } from '@material-ui/styles'
 import {
-  SoundLibraryStatus,
   WorkspaceLoadDialog,
   WorkspaceSaveDialog,
   WorkspaceView
@@ -46,7 +45,6 @@ class App extends React.Component {
           <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
             <WorkspaceView />
             <OpenLibraryDialog />
-            <SoundLibraryStatus />
             <StoryCreateDialog />
             <WorkspaceLoadDialog />
             <WorkspaceSaveDialog />

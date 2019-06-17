@@ -6,6 +6,7 @@ import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
 import { isGalleryEmpty } from '../../soundGallery/selectors'
 import { SoundBoardView } from './SoundBoardView'
 import { SoundGalleryView } from './SoundGalleryView'
+import { SoundLibraryStatus } from './SoundLibraryStatus'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceEmpty } from './WorkspaceEmpty'
@@ -18,6 +19,11 @@ const styles = theme => ({
   view: {
     display: 'flex',
     flexDirection: 'row',
+    flexGrow: 1
+  },
+  withHeader: {
+    display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1
   }
 })
@@ -36,9 +42,12 @@ function renderContent (empty, board, view) {
 
 function WorkspaceViewComponent ({ classes, board, empty, view }) {
   return (
-    <div className={classes.view}>
-      <WorkspaceSidebar />
-      {renderContent(empty, board, view)}
+    <div className={classes.withHeader}>
+      <SoundLibraryStatus />
+      <div className={classes.view}>
+        <WorkspaceSidebar />
+        {renderContent(empty, board, view)}
+      </div>
     </div>
   )
 }
