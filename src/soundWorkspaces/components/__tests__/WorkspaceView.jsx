@@ -4,15 +4,29 @@ import { renderWithDnd } from '../../../../mock'
 import { WorkspaceView } from '..'
 
 describe('WorkspaceView component', () => {
+  it('renders sidebard', () => {
+    const comp = renderWithDnd(<WorkspaceView />)
+    expect(comp).toContainMatchingElement('WorkspaceSidebar')
+  })
+
   it('renders sound gallery view when viewing library', () => {
     const comp = renderWithDnd(<WorkspaceView />, {
       soundWorkspaces: {
         ui: {
+          story: 'x1',
           view: 'VIEW_LIBRARY'
         }
+      },
+      sounds: {
+        list: [
+          {
+            tags: [],
+            uuid: 's1'
+          }
+        ]
       }
     })
-    expect(comp).toContainMatchingElements(1, 'Connect(SoundGalleryView)')
+    expect(comp).toContainMatchingElement('SoundGalleryView')
   })
 
   it('renders sound board when viewing sound boards', () => {
@@ -26,33 +40,43 @@ describe('WorkspaceView component', () => {
       },
       soundWorkspaces: {
         ui: {
+          story: 'x1',
           board: 'test123',
           view: 'VIEW_BOARD'
         }
+      },
+      sounds: {
+        list: [
+          {
+            tags: [],
+            uuid: 's1'
+          }
+        ]
       }
     })
-    expect(comp).toContainMatchingElements(1, 'Connect(SoundBoardView)')
+    expect(comp).toContainMatchingElement('SoundBoardView')
   })
 
   it('renders empty when given board view but no board', () => {
     const comp = renderWithDnd(<WorkspaceView />, {
       soundWorkspaces: {
         ui: {
+          story: 'x1',
           view: 'VIEW_BOARD'
         }
       }
     })
-    expect(comp).toBeEmptyRender()
+    expect(comp).toContainMatchingElement('WorkspaceEmpty')
   })
 
-  it('renders empty when given no view', () => {
+  it('renders workspace empty board dialog given view is null', () => {
     const comp = renderWithDnd(<WorkspaceView />, {
       soundWorkspaces: {
         ui: {
           view: null
         }
       }
-    }).find('WorkspaceView')
-    expect(comp).toBeEmptyRender()
+    })
+    expect(comp).toContainMatchingElement('WorkspaceEmpty')
   })
 })

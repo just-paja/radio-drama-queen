@@ -1,39 +1,20 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
-
+import { renderWithContainers } from '../../../../mock'
 import { WorkspaceSelection } from '..'
 
 describe('WorkspaceSelection component', () => {
   it('renders view library button', () => {
-    const comp = shallow(
-      <WorkspaceSelection
-        onBoardSelect={() => {}}
-        onViewSelect={() => {}}
-      />
-    )
-    expect(comp.dive().find('[value="VIEW_LIBRARY"]')).toHaveLength(1)
-  })
-
-  it('renders board selection', () => {
-    const comp = shallow(
-      <WorkspaceSelection
-        onBoardSelect={() => {}}
-        onViewSelect={() => {}}
-      />
-    )
-    expect(comp.dive()).toContainMatchingElements(1, 'Connect(SoundBoardSelection)')
+    const comp = renderWithContainers(<WorkspaceSelection />)
+    expect(comp).toContainMatchingElement('ForwardRef(BottomNavigationAction)[value="VIEW_LIBRARY"]')
   })
 
   it('triggers view change on toggle button group change', () => {
-    const onViewSelect = jest.fn()
-    const comp = shallow(
-      <WorkspaceSelection
-        onBoardSelect={() => {}}
-        onViewSelect={onViewSelect}
-      />
-    ).dive()
-    comp.find('WithStyles(ForwardRef(ToggleButton))').first().simulate('change', null, 'VIEW_LIBRARY')
-    expect(onViewSelect).toHaveBeenCalledWith('VIEW_LIBRARY')
+    const comp = renderWithContainers(<WorkspaceSelection />)
+    comp.find('ForwardRef(BottomNavigationAction)[value="VIEW_LIBRARY"]').simulate('click')
+    expect(comp.store.getActions()).toContainEqual({
+      type: 'WORKSPACE/SELECT_VIEW',
+      payload: 'VIEW_LIBRARY'
+    })
   })
 })

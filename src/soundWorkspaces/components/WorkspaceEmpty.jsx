@@ -36,6 +36,8 @@ function WorkspaceEmptyComponent ({
   )
 }
 
+WorkspaceEmptyComponent.displayName = 'WorkspaceEmpty'
+
 const mapStateToProps = state => ({
   activeStory: getActiveStoryName(state),
   noStories: areStoriesEmpty(state)

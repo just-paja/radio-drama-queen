@@ -23,16 +23,15 @@ const styles = theme => ({
 })
 
 function renderContent (empty, board, view) {
-  if (empty) {
-    return <WorkspaceEmpty />
+  if (!empty) {
+    if (view === VIEW_LIBRARY) {
+      return <SoundGalleryView />
+    }
+    if (view === VIEW_BOARD && board) {
+      return <SoundBoardView board={board} />
+    }
   }
-  if (view === VIEW_LIBRARY) {
-    return <SoundGalleryView />
-  }
-  if (view === VIEW_BOARD && board) {
-    return <SoundBoardView board={board} />
-  }
-  return null
+  return <WorkspaceEmpty />
 }
 
 function WorkspaceViewComponent ({ classes, board, empty, view }) {

@@ -25,7 +25,7 @@ describe('SoundBoardView component', () => {
   }
   it('renders sound board when viewing sound boards', () => {
     const comp = renderWithDnd(<SoundBoardView board='sd6f4sd6f4' />, state)
-    expect(comp.find('Connect(SoundBoard)')).toHaveProp('uuid', 'sd6f4sd6f4')
+    expect(comp.find('SoundBoard')).toHaveProp('uuid', 'sd6f4sd6f4')
   })
 
   it('dispatches select view with target on sound picker open', () => {

@@ -23,6 +23,7 @@ const sagas = [
 
 export default function * rootSaga () {
   yield all(sagas.map(saga => fork(keepAlive(saga, {
+    maxAttempts: 1,
     onEachError: compatLogWarning,
     onFail: logError
   }))))

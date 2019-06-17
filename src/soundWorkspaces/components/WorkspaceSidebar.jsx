@@ -61,6 +61,7 @@ function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
   )
 }
 
+WorkspaceSidebarComponent.displayName = 'WorkspaceSidebar'
 WorkspaceSidebarComponent.propTypes = {
   classes: Classes.isRequired
 }
