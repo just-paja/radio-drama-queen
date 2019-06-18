@@ -24,10 +24,17 @@ const appReducer = combineReducers({
   soundWorkspaces
 })
 
+function normalizeStoryState (state, story) {
+  const { name, ...nextState } = story
+  return {
+    ...state,
+    ...nextState
+  }
+}
+
 export default (state, action) => {
   if (action.type === storyLoad.SUCCESS) {
-    const { name, ...nextState } = action.payload
-    return nextState
+    return normalizeStoryState(state, action.payload)
   }
   return appReducer(state, action)
 }

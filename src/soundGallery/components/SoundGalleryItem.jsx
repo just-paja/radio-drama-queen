@@ -5,8 +5,7 @@ import React, { Component } from 'react'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import SoundTag from '../../soundTags/containers/SoundTag'
-
+import { SoundTags } from './SoundTags'
 import { SoundStatusIcon } from '../../sounds/components'
 import { GallerySound } from '../proptypes'
 import { Classes } from '../../proptypes'
@@ -19,8 +18,15 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   item: {
+    alignItems: 'center',
+    cursor: 'default',
     display: 'flex',
-    alignItems: 'top'
+    marginLeft: -1 * theme.spacing(1),
+    marginRight: -1 * theme.spacing(1),
+    userSelect: 'none',
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,.1)'
+    }
   }
 })
 
@@ -29,7 +35,7 @@ class SoundGalleryItem extends Component {
     super()
     this.handlePlayClick = this.handlePlayClick.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
-    this.handleAddTag = this.handleAddTag.bind(this)
+    this.handleTagAdd = this.handleTagAdd.bind(this)
   }
 
   handleAdd () {
@@ -37,7 +43,7 @@ class SoundGalleryItem extends Component {
     onAdd(uuid, { target })
   }
 
-  handleAddTag (tag) {
+  handleTagAdd (tag) {
     const { onAddTag, target } = this.props
     onAddTag(tag, { target })
   }
@@ -67,17 +73,7 @@ class SoundGalleryItem extends Component {
         </div>
         <div>
           <span>{sound.name}</span>
-          <div className={classes.tags}>
-            {sound.tags && sound.tags.reduce((aggr, tag) => [
-              ...aggr,
-              <SoundTag
-                key={tag}
-                onClick={this.handleAddTag}
-                tag={tag}
-              />,
-              ' '
-            ], [])}
-          </div>
+          <SoundTags onTagClick={this.handleTagAdd} tags={sound.tags} />
         </div>
       </div>
     )
