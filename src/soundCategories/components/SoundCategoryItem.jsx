@@ -1,3 +1,4 @@
+import formatDuration from 'format-duration'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -8,7 +9,8 @@ import { Sound } from '../../sounds/proptypes'
 
 const styles = theme => ({
   button: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
     background: 'none',
     border: 'none',
     display: 'flex',
@@ -20,11 +22,25 @@ const styles = theme => ({
       background: theme.palette.action.hover
     }
   },
+  identification: {
+    alignItems: 'flex-start',
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    textAlign: 'left'
+  },
   icon: {
     height: theme.typography.fontSize * 3 / 2,
     marginLeft: theme.spacing(1 / 2),
     marginRight: theme.spacing(1.5),
     width: theme.typography.fontSize * 3 / 2
+  },
+  info: {
+    display: 'flex',
+    width: '100%',
+    fontSize: theme.typography.fontSize * 3 / 4,
+    justifyContent: 'flex-end',
+    textAlign: 'right'
   }
 })
 
@@ -52,19 +68,26 @@ class SoundCategoryItem extends Component {
         disabled={Boolean(sound.error)}
         onClick={this.handleToggle}
       >
-        <SoundStatusIcon
-          className={classes.icon}
-          error={sound.error}
-          loading={sound.loading}
-          playing={sound.playing}
-          size={21}
-          valid={sound.valid}
-        />
-        <SoundName
-          name={sound.name}
-          uuid={sound.uuid}
-          highlight={search}
-        />
+        <span className={classes.identification}>
+          <SoundStatusIcon
+            className={classes.icon}
+            error={sound.error}
+            loading={sound.loading}
+            playing={sound.playing}
+            size={21}
+            valid={sound.valid}
+          />
+          <SoundName
+            name={sound.name}
+            uuid={sound.uuid}
+            highlight={search}
+          />
+        </span>
+        <span className={classes.info}>
+          {sound.duration
+            ? formatDuration(sound.duration * 1000)
+            : null}
+        </span>
       </button>
     ) : null
   }
