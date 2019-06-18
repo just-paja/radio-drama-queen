@@ -37,7 +37,11 @@ export default handleActions({
   [soundList.TAG_REMOVE]: idCollection.removePayload('tags'),
   [soundList.UNLOAD]: turnOff('valid'),
   [soundLoad.REQUEST]: turnOn('loading'),
-  [soundLoad.SUCCESS]: turnOn('valid'),
+  [soundLoad.SUCCESS]: (state, action) => ({
+    ...state,
+    ...action.payload,
+    valid: true
+  }),
   [soundLoad.FAILURE]: fetchFailure,
   [soundLoad.FULFILL]: turnOff('loading')
 }, initialState)

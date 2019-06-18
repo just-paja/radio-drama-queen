@@ -33,12 +33,21 @@ const loadFile = file => new Promise((resolve, reject) => {
   reader.readAsDataURL(file)
 })
 
-function * loadAudio (uuid, src, format) {
-  yield new Promise((resolve, reject) => {
+function loadAudio (uuid, src, format) {
+  return new Promise((resolve, reject) => {
     AudioManager.store(uuid, new Howl({
       src,
       format,
-      onload: resolve,
+      onload: () => {
+        try {
+          const connector = AudioManager.findByUuid(uuid)
+          return resolve({
+            duration: connector.sound.duration()
+          })
+        } catch (e) {
+          reject(e)
+        }
+      },
       onloaderror: (soundId, error) => {
         reject(new Error(error))
       }
@@ -88,8 +97,11 @@ function * loadSoundUrl ({ payload, payload: { format, uuid } }) {
   try {
     yield put(soundLoad.request(uuid, payload))
     const dataUrl = yield call(readSoundDataUrl, { payload })
-    yield call(loadAudio, uuid, dataUrl, format)
-    yield put(soundLoad.success(uuid))
+    const soundInfo = yield call(loadAudio, uuid, dataUrl, format)
+    yield put(soundLoad.success(uuid, {
+      ...payload,
+      ...soundInfo
+    }))
   } catch (error) {
     yield put(soundLoad.failure(uuid, error))
   } finally {
