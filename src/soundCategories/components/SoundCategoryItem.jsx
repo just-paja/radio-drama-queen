@@ -1,13 +1,16 @@
-import formatDuration from 'format-duration'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { withStyles } from '@material-ui/core/styles'
 
 import { SoundName, SoundStatusIcon } from '../../sounds/components'
+import { SoundPlaybackInfo } from './SoundPlaybackInfo'
 import { Sound } from '../../sounds/proptypes'
 
 const styles = theme => ({
+  container: {
+    width: '100%'
+  },
   button: {
     alignItems: 'flex-start',
     flexDirection: 'column',
@@ -22,6 +25,12 @@ const styles = theme => ({
       background: theme.palette.action.hover
     }
   },
+  duration: {
+    fontSize: theme.typography.fontSize * 3 / 4,
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  },
   identification: {
     alignItems: 'flex-start',
     display: 'flex',
@@ -34,13 +43,6 @@ const styles = theme => ({
     marginLeft: theme.spacing(1 / 2),
     marginRight: theme.spacing(1.5),
     width: theme.typography.fontSize * 3 / 2
-  },
-  info: {
-    display: 'flex',
-    width: '100%',
-    fontSize: theme.typography.fontSize * 3 / 4,
-    justifyContent: 'flex-end',
-    textAlign: 'right'
   }
 })
 
@@ -63,32 +65,32 @@ class SoundCategoryItem extends Component {
       sound
     } = this.props
     return sound && connectDragSource ? connectDragSource(
-      <button
-        className={classes.button}
-        disabled={Boolean(sound.error)}
-        onClick={this.handleToggle}
-      >
-        <span className={classes.identification}>
-          <SoundStatusIcon
-            className={classes.icon}
-            error={sound.error}
-            loading={sound.loading}
-            playing={sound.playing}
-            size={21}
-            valid={sound.valid}
-          />
-          <SoundName
-            name={sound.name}
-            uuid={sound.uuid}
-            highlight={search}
-          />
-        </span>
-        <span className={classes.info}>
-          {sound.duration
-            ? formatDuration(sound.duration * 1000)
-            : null}
-        </span>
-      </button>
+      <div className={classes.container}>
+        <button
+          className={classes.button}
+          disabled={Boolean(sound.error)}
+          onClick={this.handleToggle}
+        >
+          <span className={classes.identification}>
+            <SoundStatusIcon
+              className={classes.icon}
+              error={sound.error}
+              loading={sound.loading}
+              playing={sound.playing}
+              size={21}
+              valid={sound.valid}
+            />
+            <SoundName
+              name={sound.name}
+              uuid={sound.uuid}
+              highlight={search}
+            />
+          </span>
+        </button>
+        <div className={classes.duration}>
+          <SoundPlaybackInfo duration={sound.duration} />
+        </div>
+      </div>
     ) : null
   }
 }
