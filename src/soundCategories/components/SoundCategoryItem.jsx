@@ -12,12 +12,11 @@ const styles = theme => ({
     width: '100%'
   },
   button: {
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     flexDirection: 'column',
     background: 'none',
     border: 'none',
     display: 'flex',
-    margin: 0,
     padding: theme.spacing(1),
     userSelect: 'none',
     width: '100%',
@@ -26,16 +25,14 @@ const styles = theme => ({
     }
   },
   duration: {
-    fontSize: theme.typography.fontSize * 3 / 4,
-    padding: theme.spacing(1),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    display: 'flex',
+    fontSize: theme.typography.fontSize * 2 / 4,
+    marginTop: theme.spacing(1/4),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   identification: {
-    alignItems: 'flex-start',
     display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
     textAlign: 'left'
   },
   icon: {
@@ -86,10 +83,14 @@ class SoundCategoryItem extends Component {
               highlight={search}
             />
           </span>
+          <span className={classes.duration}>
+            <SoundPlaybackInfo
+              duration={sound.duration}
+              playing={sound.playing}
+              uuid={sound.uuid}
+            />
+          </span>
         </button>
-        <div className={classes.duration}>
-          <SoundPlaybackInfo duration={sound.duration} />
-        </div>
       </div>
     ) : null
   }

@@ -50,7 +50,7 @@ function loadAudio (uuid, src, format) {
       },
       onloaderror: (soundId, error) => {
         reject(new Error(error))
-      }
+      },
     }))
   })
 }
