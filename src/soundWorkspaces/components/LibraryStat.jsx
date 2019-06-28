@@ -45,9 +45,14 @@ class LibraryStatComponent extends React.Component {
     refresh: false
   }
 
+  constructor (props) {
+    super(props)
+    this.blink = this.blink.bind(this)
+  }
+
   componentDidUpdate (prevProps) {
     if (prevProps.number !== this.props.number) {
-      this.blink()
+      global.requestAnimationFrame(this.blink)
     }
   }
 
