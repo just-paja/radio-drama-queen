@@ -18,7 +18,6 @@ const styles = theme => ({
   sticky: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
     position: 'sticky',
     top: 0
   },
@@ -27,12 +26,14 @@ const styles = theme => ({
     borderRight: '1px solid #eee',
     flexDirection: 'column',
     flexGrow: 1,
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(2)
   },
   buttons: {
+    bottom: theme.spacing(2),
     display: 'flex',
+    left: theme.spacing(2),
     marginTop: 'auto',
-    paddingLeft: theme.spacing(1)
+    position: 'fixed'
   },
   stretch: {
     width: '100%'
@@ -48,13 +49,15 @@ function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
             <React.Fragment>
               <WorkspaceSelection className={classes.stretch} />
               <SoundBoardSelection />
-              <div className={classes.buttons}>
-                <WorkspaceSaveButton />
-              </div>
             </React.Fragment>
           )}
         </div>
       </div>
+      {activeStory && (
+        <div className={classes.buttons}>
+          <WorkspaceSaveButton />
+        </div>
+      )}
     </div>
   )
 }

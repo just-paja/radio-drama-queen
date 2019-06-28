@@ -33,7 +33,7 @@ const styles = theme => ({
     alignContent: 'start'
   },
   canDrop: {
-    background: 'rgba(0,0,0,.2)'
+    background: theme.palette.dropTarget
   }
 })
 

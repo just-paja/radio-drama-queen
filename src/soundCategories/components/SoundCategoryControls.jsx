@@ -1,12 +1,23 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-
 import SoundCategoryExclusiveButton from './SoundCategoryExclusiveButton'
 import SoundCategoryLoopButton from './SoundCategoryLoopButton'
 import SoundCategoryStopButton from './SoundCategoryStopButton'
 import VolumeControl from './VolumeControl'
+import VolumeToggleButton from './VolumeToggleButton'
 
-export default class SoundCategoryControls extends Component {
+import { Classes } from '../../proptypes'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+  buttons: {
+    marginLeft: theme.spacing(-3 / 2),
+    marginRight: theme.spacing(-3 / 2),
+    width: '100%'
+  }
+})
+
+class SoundCategoryControls extends Component {
   constructor () {
     super()
     this.handleExclusiveToggle = this.handleExclusiveToggle.bind(this)
@@ -17,60 +28,51 @@ export default class SoundCategoryControls extends Component {
   }
 
   handleLoopToggle () {
-    const { uuid, onLoopToggle } = this.props
-    onLoopToggle(uuid)
+    this.props.onLoopToggle(this.props.uuid)
   }
 
   handleStop () {
-    const { uuid, onStop } = this.props
-    onStop(uuid)
+    this.props.onStop(this.props.uuid)
   }
 
   handleVolumeChange (value) {
-    const { uuid, onVolumeChange } = this.props
-    onVolumeChange(uuid, value)
+    this.props.onVolumeChange(this.props.uuid, value)
   }
 
   handleMuteToggle () {
-    const { uuid, onMuteToggle } = this.props
-    onMuteToggle(uuid)
+    this.props.onMuteToggle(this.props.uuid)
   }
 
   handleExclusiveToggle () {
-    const { uuid, onExclusiveToggle } = this.props
-    onExclusiveToggle(uuid)
+    this.props.onExclusiveToggle(this.props.uuid)
   }
 
   render () {
-    const {
-      exclusive,
-      loop,
-      muted,
-      playing,
-      volume
-    } = this.props
+    const { classes, exclusive, loop, muted, playing, volume } = this.props
     return (
-      <div style={{ width: '100%' }}>
+      <React.Fragment>
         <VolumeControl
           muted={muted}
           onChange={this.handleVolumeChange}
           onMuteToggle={this.handleMuteToggle}
           volume={volume}
         />
-        <div>
+        <div className={classes.buttons}>
           <SoundCategoryStopButton playing={playing} onClick={this.handleStop} />
           <SoundCategoryLoopButton loop={loop} onClick={this.handleLoopToggle} />
           <SoundCategoryExclusiveButton
             exclusive={exclusive}
             onClick={this.handleExclusiveToggle}
           />
+          <VolumeToggleButton onClick={this.handleMuteToggle} muted={muted} />
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }
 
 SoundCategoryControls.propTypes = {
+  classes: Classes.isRequired,
   exclusive: PropTypes.bool,
   loop: PropTypes.bool,
   muted: PropTypes.bool,
@@ -90,3 +92,5 @@ SoundCategoryControls.defaultProps = {
   muted: false,
   playing: false
 }
+
+export default withStyles(styles)(SoundCategoryControls)

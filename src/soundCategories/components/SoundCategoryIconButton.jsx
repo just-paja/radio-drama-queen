@@ -9,16 +9,17 @@ import { Classes, ClassName } from '../../proptypes'
 
 const styles = theme => ({
   button: {
-    height: '1em !important',
-    marginRight: '0.5rem',
-    padding: '0.3rem',
-    width: '1em !important'
+    height: theme.spacing(4),
+    padding: theme.spacing(0),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    width: theme.spacing(4)
   },
   icon: {
-    height: '1rem',
+    height: theme.spacing(2),
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '1rem'
+    width: theme.spacing(2)
   }
 })
 

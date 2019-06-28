@@ -4,14 +4,14 @@ import Slider from '@material-ui/lab/Slider'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import VolumeToggleButton from './VolumeToggleButton'
-
-const styles = {
+const styles = theme => ({
   inline: {
     alignItems: 'center',
-    display: 'flex'
+    display: 'flex',
+    height: theme.spacing(4),
+    width: '100%'
   }
-}
+})
 
 class VolumeControl extends Component {
   constructor () {
@@ -28,12 +28,10 @@ class VolumeControl extends Component {
     const {
       classes,
       muted,
-      onMuteToggle,
       volume
     } = this.props
     return (
       <div className={classes.inline}>
-        <VolumeToggleButton muted={muted} onClick={onMuteToggle} />
         <Slider
           max={100}
           min={0}
@@ -49,7 +47,6 @@ VolumeControl.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   muted: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  onMuteToggle: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired
 }
 

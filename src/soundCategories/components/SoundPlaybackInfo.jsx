@@ -10,16 +10,16 @@ const styles = theme => ({
   duration: {
     alignItems: 'center',
     display: 'flex',
-    position: 'relative',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    position: 'relative',
     width: '100%'
   },
   data: {
     flexShrink: 0
   },
   progress: {
-    background: 'rgba(0,0,0,.05)',
+    background: theme.palette.listSeparator,
     display: 'flex',
     flexGrow: 1,
     flexShrink: 1,
@@ -28,7 +28,7 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   indicator: {
-    background: 'rgba(0,0,0,.2)',
+    background: theme.palette.interactionOverlay,
     transformOrigin: 'center left',
     width: '100%'
   }

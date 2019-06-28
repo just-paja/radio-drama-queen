@@ -13,9 +13,6 @@ const styles = theme => ({
   },
   button: {
     alignItems: 'stretch',
-    borderTopWidth: 1,
-    borderTopStyle: 'solid',
-    borderColor: theme.palette.grey[100],
     flexDirection: 'column',
     background: 'none',
     border: 'none',
@@ -23,6 +20,8 @@ const styles = theme => ({
     padding: theme.spacing(1),
     userSelect: 'none',
     width: '100%',
+    ...theme.components.listSeparator,
+
     '&:hover': {
       background: theme.palette.action.hover
     }
@@ -30,7 +29,7 @@ const styles = theme => ({
   duration: {
     display: 'flex',
     fontSize: theme.typography.fontSize / 2,
-    marginTop: theme.spacing(1 / 4),
+    marginTop: theme.spacing(1 / 2),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1)
   },

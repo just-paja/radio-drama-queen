@@ -6,13 +6,10 @@ import React from 'react'
 import { DragDropContextProvider } from 'react-dnd'
 import { OpenLibraryDialog } from './soundModules/components'
 import { Provider } from 'react-redux'
-import { withStyles } from '@material-ui/styles'
-import {
-  WorkspaceLoadDialog,
-  WorkspaceSaveDialog,
-  WorkspaceView
-} from './soundWorkspaces/components'
 import { StoryCreateDialog } from './soundStories/components'
+import { theme } from './theme'
+import { ThemeProvider, withStyles } from '@material-ui/styles'
+import { WorkspaceLoadDialog, WorkspaceSaveDialog, WorkspaceView } from './soundWorkspaces/components'
 
 const styles = {
   '@global': {
@@ -40,17 +37,19 @@ class App extends React.Component {
   render () {
     const { classes, store } = this.props
     return (
-      <div className={classes.app}>
-        <Provider store={store}>
-          <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
-            <WorkspaceView />
-            <OpenLibraryDialog />
-            <StoryCreateDialog />
-            <WorkspaceLoadDialog />
-            <WorkspaceSaveDialog />
-          </DragDropContextProvider>
-        </Provider>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className={classes.app}>
+          <Provider store={store}>
+            <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
+              <WorkspaceView />
+              <OpenLibraryDialog />
+              <StoryCreateDialog />
+              <WorkspaceLoadDialog />
+              <WorkspaceSaveDialog />
+            </DragDropContextProvider>
+          </Provider>
+        </div>
+      </ThemeProvider>
     )
   }
 }
