@@ -43,5 +43,6 @@ export default handleActions({
     valid: true
   }),
   [soundLoad.FAILURE]: fetchFailure,
-  [soundLoad.FULFILL]: turnOff('loading')
+  [soundLoad.FULFILL]: turnOff('loading'),
+  [soundLoad.UNLOAD_SUCCESS]: turnOff('valid')
 }, initialState)

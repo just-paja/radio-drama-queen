@@ -51,6 +51,9 @@ function loadAudio (uuid, src, format) {
       onloaderror: (soundId, error) => {
         reject(new Error(error))
       },
+      onunload: () => {
+        console.log('unloaded', uuid)
+      }
     }))
   })
 }

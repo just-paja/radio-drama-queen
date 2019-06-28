@@ -22,7 +22,8 @@ export const soundList = createListRoutine('SOUND', [
   'TAG_REMOVE',
   'TOGGLE',
   'VOLUME_SET',
-  'UNLOAD'
+  'UNLOAD',
+  'UNLOAD_SUCCESS',
 ])
 
 export const soundRegister = createListActionsRoutine('SOUND_REGISTER', [

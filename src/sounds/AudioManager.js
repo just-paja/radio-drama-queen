@@ -14,6 +14,7 @@ class AudioManager {
   constructor () {
     this.sounds = []
     this.play = this.play.bind(this)
+    this.remove = this.remove.bind(this)
   }
 
   isSoundPlaying (uuid) {
@@ -35,6 +36,7 @@ class AudioManager {
     if (soundIndex !== -1) {
       const nextState = this.sounds.slice()
       nextState.splice(soundIndex, 1)
+      this.sounds[soundIndex].sound.unload()
       this.sounds = nextState
     }
   }
