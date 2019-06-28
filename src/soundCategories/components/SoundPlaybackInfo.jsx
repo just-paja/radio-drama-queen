@@ -38,7 +38,7 @@ class SoundPlaybackInfoComponent extends React.Component {
   audio = null
   state = { position: 0 }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.pipePosition = this.pipePosition.bind(this)
     this.reset = this.reset.bind(this)
@@ -57,9 +57,17 @@ class SoundPlaybackInfoComponent extends React.Component {
       this.queueFrame(this.pipePosition)
     }
     if (prevProps.playing && !this.props.playing) {
-      global.cancelAnimationFrame(this.animationFrameId)
+      this.cancelNextFrame()
       this.queueFrame(this.reset)
     }
+  }
+
+  componentWillUnmount () {
+    this.cancelNextFrame()
+  }
+
+  cancelNextFrame () {
+    global.cancelAnimationFrame(this.animationFrameId)
   }
 
   queueFrame (lambda) {
