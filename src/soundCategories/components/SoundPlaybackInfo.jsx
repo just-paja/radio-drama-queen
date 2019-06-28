@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   duration: {
+    alignItems: 'center',
     display: 'flex',
     position: 'relative',
     flexDirection: 'row',
@@ -18,16 +19,16 @@ const styles = theme => ({
     flexShrink: 0
   },
   progress: {
-    alignItems: 'center',
+    background: 'rgba(0,0,0,.05)',
     display: 'flex',
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
     flexGrow: 1,
-    flexShrink: 1
+    flexShrink: 1,
+    height: 3,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   indicator: {
-    background: 'rgba(0,0,0,.25)',
-    height: 3,
+    background: 'rgba(0,0,0,.2)',
     transformOrigin: 'center left',
     width: '100%'
   }
@@ -98,7 +99,7 @@ class SoundPlaybackInfoComponent extends React.Component {
   }
 
   render () {
-    const { classes, duration, playing } = this.props
+    const { classes, duration } = this.props
     return !duration ? null : (
       <span className={classes.duration}>
         <span className={classes.data}>
@@ -130,7 +131,7 @@ SoundPlaybackInfoComponent.propTypes = {
 
 SoundPlaybackInfoComponent.defaultProps = {
   duration: null,
-  playing: false,
+  playing: false
 }
 
 export const SoundPlaybackInfo = withStyles(styles)(SoundPlaybackInfoComponent)

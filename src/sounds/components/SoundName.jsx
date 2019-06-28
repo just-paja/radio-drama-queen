@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const SoundName = ({
-  name,
-  uuid
-}) => (
+const SoundName = ({ name, uuid }) => (
   <span>
     {name || uuid}
   </span>

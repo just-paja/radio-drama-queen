@@ -13,6 +13,9 @@ const styles = theme => ({
   },
   button: {
     alignItems: 'stretch',
+    borderTopWidth: 1,
+    borderTopStyle: 'solid',
+    borderColor: theme.palette.grey[100],
     flexDirection: 'column',
     background: 'none',
     border: 'none',
@@ -26,20 +29,28 @@ const styles = theme => ({
   },
   duration: {
     display: 'flex',
-    fontSize: theme.typography.fontSize * 2 / 4,
-    marginTop: theme.spacing(1/4),
+    fontSize: theme.typography.fontSize / 2,
+    marginTop: theme.spacing(1 / 4),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1)
   },
   identification: {
     display: 'flex',
+    alignItems: 'center',
     textAlign: 'left'
   },
+  name: {
+    height: theme.spacing(2),
+    overflow: 'hidden',
+    paddingRight: theme.spacing(1),
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
   icon: {
-    height: theme.typography.fontSize * 3 / 2,
+    height: theme.spacing(2),
     marginLeft: theme.spacing(1 / 2),
-    marginRight: theme.spacing(1.5),
-    width: theme.typography.fontSize * 3 / 2
+    marginRight: theme.spacing(1 / 2),
+    width: theme.spacing(2)
   }
 })
 
@@ -77,11 +88,13 @@ class SoundCategoryItem extends Component {
               size={21}
               valid={sound.valid}
             />
-            <SoundName
-              name={sound.name}
-              uuid={sound.uuid}
-              highlight={search}
-            />
+            <span className={classes.name}>
+              <SoundName
+                name={sound.name}
+                uuid={sound.uuid}
+                highlight={search}
+              />
+            </span>
           </span>
           <span className={classes.duration}>
             <SoundPlaybackInfo

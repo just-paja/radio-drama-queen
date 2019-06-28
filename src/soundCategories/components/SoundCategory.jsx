@@ -23,7 +23,8 @@ const styles = theme => ({
   },
   soundList: {
     marginLeft: theme.spacing(-1 / 2),
-    marginRight: theme.spacing(-1 / 2)
+    marginRight: theme.spacing(-1 / 2),
+    paddingBottom: 0
   },
   card: {
     boxShadow: 'none',
@@ -33,16 +34,22 @@ const styles = theme => ({
     background: 'rgba(0,0,0,0.25)'
   },
   cardPadding: {
-    padding: 0.5 * theme.spacing(1)
+    padding: 0
   },
   headlinePadding: {
     padding: theme.spacing(1),
+    paddingLeft: theme.spacing(3 / 2),
     paddingBottom: 0
   },
   headlineControls: {
     display: 'flex',
     justifyContent: 'space-between',
     marginRight: '-0.5rem'
+  },
+  categoryActions: {
+    borderTopWidth: 1,
+    borderTopStyle: 'solid',
+    borderColor: theme.palette.grey[200]
   }
 })
 
@@ -89,7 +96,7 @@ class SoundCategory extends React.Component {
               ))}
             </List>
           </CardContent>
-          <CardActions>
+          <CardActions className={classes.categoryActions}>
             <SoundCategoryControls uuid={uuid} />
           </CardActions>
         </Card>
