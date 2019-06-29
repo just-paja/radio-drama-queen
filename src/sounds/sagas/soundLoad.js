@@ -1,18 +1,11 @@
-import { Howl } from 'howler'
-import {
-  call,
-  put,
-  take,
-  takeEvery,
-  select
-} from 'redux-saga/effects'
-
 import AudioManager from '../AudioManager'
 
+import { call, put, take, takeEvery, select } from 'redux-saga/effects'
 import { createQueue } from 'redux-saga-job-queue'
-import { soundList, soundLoad, soundRead } from '../actions'
 import { getSound } from '../selectors'
+import { Howl } from 'howler'
 import { say } from '../../ipcActionPipe'
+import { soundList, soundLoad, soundRead } from '../actions'
 
 let queue
 

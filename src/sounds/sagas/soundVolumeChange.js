@@ -1,8 +1,7 @@
-import { takeLatest } from 'redux-saga/effects'
-
 import AudioManager from '../AudioManager'
 
 import { soundList } from '../actions'
+import { takeEvery } from 'redux-saga/effects'
 
 const setSoundVolume = (uuid, volume) => {
   const howl = AudioManager.findByUuid(uuid)
@@ -11,20 +10,16 @@ const setSoundVolume = (uuid, volume) => {
   }
 }
 
-const setSoundVolumeByAction = ({ payload: { volume }, meta: { uuid } }) => {
-  setSoundVolume(uuid, volume)
-}
-
-const setGroupSoundVolume = ({ payload: { sounds, volume } }) => {
-  sounds.map(uuid => setSoundVolume(uuid, volume))
-}
-
 function * handleSoundVolumeChange () {
-  yield takeLatest(soundList.VOLUME_SET, setSoundVolumeByAction)
+  yield takeEvery(soundList.VOLUME_SET, ({ payload: { volume }, meta: { uuid } }) => {
+    setSoundVolume(uuid, volume)
+  })
 }
 
 function * handleSoundGroupVolumeChange () {
-  yield takeLatest(soundList.GROUP_VOLUME_SET, setGroupSoundVolume)
+  yield takeEvery(soundList.GROUP_VOLUME_SET, ({ payload: { sounds, volume } }) => {
+    sounds.map(uuid => setSoundVolume(uuid, volume))
+  })
 }
 
 export default [

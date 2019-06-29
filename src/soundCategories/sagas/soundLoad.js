@@ -1,16 +1,11 @@
-import { put, takeLatest } from '@redux-saga/core/effects'
-
 import { categoryList } from '../actions'
+import { put, takeEvery } from '@redux-saga/core/effects'
 import { soundLoad } from '../../sounds/actions'
 
-function * loadSound ({ payload }) {
-  yield put(soundLoad.trigger(payload))
-}
-
 function * handleSoundAdd () {
-  yield takeLatest(categoryList.SOUND_ADD, loadSound)
+  yield takeEvery(categoryList.SOUND_ADD, function * ({ payload }) {
+    yield put(soundLoad.trigger(payload))
+  })
 }
 
-export default [
-  handleSoundAdd
-]
+export default [handleSoundAdd]
