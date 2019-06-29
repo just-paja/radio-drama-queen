@@ -1,23 +1,15 @@
-import {
-  all,
-  put,
-  select,
-  takeEvery
-} from 'redux-saga/effects'
-
-import { categoryList } from '../actions'
+import { all, put, select, takeEvery } from 'redux-saga/effects'
+import { categoryRoutines } from '../actions'
 import { getSoundCategories } from '../selectors'
-import { soundList } from '../../sounds/actions'
-
-function * playCategorySound ({ meta: { uuid } }) {
-  const soundCategories = yield select(getSoundCategories, uuid)
-  yield all(soundCategories
-    .filter(category => category.exclusive)
-    .map(category => put(categoryList.stop(category.uuid, uuid))))
-}
+import { soundRoutines } from '../../sounds'
 
 export function * handleCategorySoundPlay () {
-  yield takeEvery(soundList.PLAY, playCategorySound)
+  yield takeEvery(soundRoutines.play.TRIGGER, function * ({ payload }) {
+    const soundCategories = yield select(getSoundCategories, payload)
+    yield all(soundCategories
+      .filter(category => category.exclusive)
+      .map(category => put(categoryRoutines.stop(category.uuid, payload))))
+  })
 }
 
 export default [

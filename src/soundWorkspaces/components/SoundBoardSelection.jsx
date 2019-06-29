@@ -6,12 +6,12 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import SoundBoardLabel from '../../soundBoards/components/SoundBoardLabel'
 
+import { BoardContextMenu } from '../../soundBoards/components'
 import { connect } from 'react-redux'
 import { getActiveBoardUuid } from '../selectors'
 import { getBoardsWithStatus } from '../../soundBoards/selectors'
 import { SoundBoard } from '../../soundBoards/proptypes'
-import { SoundBoardMenu } from './SoundBoardMenu'
-import { workspace } from '../actions'
+import { workspaceRoutines } from '../actions'
 
 class SoundBoardSelectionComponent extends Component {
   constructor () {
@@ -39,7 +39,7 @@ class SoundBoardSelectionComponent extends Component {
               <SoundBoardLabel board={board} />
             </ListItemText>
             <ListItemSecondaryAction>
-              <SoundBoardMenu boardUuid={board.uuid} />
+              <BoardContextMenu boardUuid={board.uuid} />
             </ListItemSecondaryAction>
           </ListItem>
         ))}
@@ -48,6 +48,7 @@ class SoundBoardSelectionComponent extends Component {
   }
 }
 
+SoundBoardSelectionComponent.displayName = 'SoundBoardSelection'
 SoundBoardSelectionComponent.propTypes = {
   activeBoard: PropTypes.string,
   boards: PropTypes.arrayOf(SoundBoard).isRequired,
@@ -64,7 +65,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  onBoardSelect: workspace.selectBoard
+  onBoardSelect: workspaceRoutines.selectBoard
 }
 
 export const SoundBoardSelection = connect(

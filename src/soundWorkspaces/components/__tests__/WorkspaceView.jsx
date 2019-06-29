@@ -1,29 +1,29 @@
 import React from 'react'
 
-import { renderWithDnd } from '../../../../mock'
+import { renderWithDnd } from '../../../mock'
 import { WorkspaceView } from '..'
 
 describe('WorkspaceView component', () => {
-  it('renders sidebard', () => {
+  it('renders sidebar', () => {
     const comp = renderWithDnd(<WorkspaceView />)
     expect(comp).toContainMatchingElement('WorkspaceSidebar')
   })
 
   it('renders sound gallery view when viewing library', () => {
     const comp = renderWithDnd(<WorkspaceView />, {
-      soundWorkspaces: {
-        ui: {
-          story: 'x1',
-          view: 'VIEW_LIBRARY'
-        }
-      },
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             tags: [],
             uuid: 's1'
           }
         ]
+      },
+      soundWorkspaces: {
+        ui: {
+          story: 'x1',
+          view: 'VIEW_LIBRARY'
+        }
       }
     })
     expect(comp).toContainMatchingElement('SoundGalleryView')
@@ -31,10 +31,14 @@ describe('WorkspaceView component', () => {
 
   it('renders sound board when viewing sound boards', () => {
     const comp = renderWithDnd(<WorkspaceView />, {
-      soundBoards: {
-        list: [
+      entities: {
+        boards: [
+          { uuid: 'test123' }
+        ],
+        sounds: [
           {
-            uuid: 'test123'
+            tags: [],
+            uuid: 's1'
           }
         ]
       },
@@ -44,14 +48,6 @@ describe('WorkspaceView component', () => {
           board: 'test123',
           view: 'VIEW_BOARD'
         }
-      },
-      sounds: {
-        list: [
-          {
-            tags: [],
-            uuid: 's1'
-          }
-        ]
       }
     })
     expect(comp).toContainMatchingElement('SoundBoardView')

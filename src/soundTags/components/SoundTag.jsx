@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-
-import { withStyles } from '@material-ui/core/styles'
+import React from 'react'
 
 import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
 import { SoundTag as SoundTagPropType } from '../proptypes'
+import { tagStore } from '../store'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   button: {
@@ -19,7 +20,7 @@ const styles = theme => ({
   }
 })
 
-class SoundTag extends Component {
+class SoundTagComponent extends React.Component {
   constructor () {
     super()
     this.handleClick = this.handleClick.bind(this)
@@ -50,15 +51,23 @@ class SoundTag extends Component {
   }
 }
 
-SoundTag.propTypes = {
+SoundTagComponent.displayName = 'SoundTag'
+SoundTagComponent.propTypes = {
   classes: Classes.isRequired,
   onClick: PropTypes.func,
   tag: SoundTagPropType
 }
-
-SoundTag.defaultProps = {
+SoundTagComponent.defaultProps = {
   onClick: null,
   tag: null
 }
 
-export default withStyles(styles)(SoundTag)
+function mapStateToProps (state, { tag }) {
+  return {
+    tag: tagStore.getFirst(state, tag)
+  }
+}
+
+export const SoundTag = connect(mapStateToProps)(
+  withStyles(styles)(SoundTagComponent)
+)

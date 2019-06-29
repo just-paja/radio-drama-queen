@@ -43,11 +43,13 @@ class BackendMessenger {
     if (action.type.includes('FAILURE')) {
       console.log('out', action.type, JSON.stringify(action))
     }
-    this.window.webContents.send('backendSays', action)
+    this.window.webContents.send('backendSays', Object.assign({}, action, {
+      timestamp: new Date()
+    }))
   }
 
-  handleAction (matcher, routine, action) {
-    this.listeners.push({ matcher, routine, action })
+  handleAction (routine, action) {
+    this.listeners.push({ matcher: routine.REQUEST, routine, action })
   };
 }
 

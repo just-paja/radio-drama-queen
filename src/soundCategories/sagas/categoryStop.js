@@ -1,13 +1,14 @@
-import { categoryList } from '../actions'
+import { categoryRoutines } from '../actions'
 import { getCategorySoundPlayingUuids } from '../selectors'
 import { put, select, takeEvery } from 'redux-saga/effects'
-import { soundList } from '../../sounds/actions'
+import { soundRoutines } from '../../sounds'
 
 function * handleCategoryCreateStop () {
-  yield takeEvery(categoryList.STOP, function * ({ meta: { uuid }, payload: noStop }) {
-    const playingSounds = yield select(getCategorySoundPlayingUuids, uuid)
-    const sounds = playingSounds.filter(sound => !noStop || sound !== noStop)
-    yield put(soundList.groupStop(null, { sounds }))
+  yield takeEvery(categoryRoutines.stop.TRIGGER, function * ({ payload, meta: noStop }) {
+    const playingSounds = yield select(getCategorySoundPlayingUuids, payload)
+    if (playingSounds.length) {
+      yield put(soundRoutines.stop(playingSounds.filter(sound => !noStop || sound !== noStop)))
+    }
   })
 }
 

@@ -6,8 +6,8 @@ const { BrowserWindow } = require('electron')
 const BackendMessenger = require('./BackendMessenger')
 const handlers = require('./handlers')
 
-const { soundRead, soundRegister } = require('../sounds/actions')
-const { stories, storyCreate, storyLoad, storySave } = require('../soundStories/actions')
+const { soundRoutines } = require('../sounds/actions')
+const { storyRoutines } = require('../soundStories/actions')
 
 export function createMainWindow (development) {
   const mainWindow = new BrowserWindow({
@@ -26,12 +26,12 @@ export function createMainWindow (development) {
   const soundManager = new SoundManager()
   const storyManager = new StoryManager()
 
-  messenger.handleAction(soundRegister.REQUEST, soundRegister, handlers.soundRegister(soundManager))
-  messenger.handleAction(soundRead.REQUEST, soundRead, handlers.soundRead(soundManager))
-  messenger.handleAction(stories.REQUEST, stories, handlers.listStories(storyManager))
-  messenger.handleAction(storyCreate.REQUEST, storyCreate, handlers.saveStory(storyManager))
-  messenger.handleAction(storySave.REQUEST, storySave, handlers.saveStory(storyManager))
-  messenger.handleAction(storyLoad.REQUEST, storyLoad, handlers.loadStory(storyManager))
+  messenger.handleAction(storyRoutines.create, handlers.saveStory(storyManager))
+  messenger.handleAction(storyRoutines.list, handlers.listStories(storyManager))
+  messenger.handleAction(storyRoutines.load, handlers.loadStory(storyManager))
+  messenger.handleAction(soundRoutines.read, handlers.soundRead(soundManager))
+  messenger.handleAction(soundRoutines.register, handlers.soundRegister(soundManager))
+  messenger.handleAction(storyRoutines.save, handlers.saveStory(storyManager))
 
   // TODO: Handle sound load
   // TODO: Handle sound unload

@@ -1,20 +1,13 @@
-import boardCategoryCreate from './boardCategoryCreate'
-import boardCreate from './boardCreate'
-import boardRemove from './boardRemove'
-import boardRename from './boardRename'
-import boardSoundAdd from './boardSoundAdd'
-import boardSoundDrop from './boardSoundDrop'
-import boardTagAdd from './boardTagAdd'
-
-export * from './boardCategoryCreateDefault'
-export * from './boardCreate'
+import boardManipulation from './boardManipulation'
+import categories from './categories'
+import soundAdd from './soundAdd'
+import soundDrop from './soundDrop'
+import tags from './tags'
 
 export default [
-  ...boardCategoryCreate,
-  ...boardCreate,
-  ...boardRemove,
-  ...boardRename,
-  ...boardSoundAdd,
-  ...boardSoundDrop,
-  ...boardTagAdd
+  ...boardManipulation,
+  ...categories,
+  ...soundAdd,
+  ...soundDrop,
+  ...tags
 ]

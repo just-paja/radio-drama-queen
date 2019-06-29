@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
+import { getGalleryTarget } from '../selectors'
+import { soundStore } from '../../sounds'
 
 import SoundGallery from '../components/SoundGallery'
 
-import { getGallerySize, getGalleryTarget } from '../selectors'
-
 const mapStateToProps = state => ({
-  librarySize: getGallerySize(state),
+  librarySize: soundStore.getSize(state),
   target: getGalleryTarget(state)
 })
 

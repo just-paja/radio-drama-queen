@@ -1,11 +1,8 @@
 import { connect } from 'react-redux'
 import { DragSource } from 'react-dnd'
+import { soundRoutines, soundStore, DRAG_TYPE_SOUND } from '../../sounds'
 
 import SoundCategoryItem from '../components/SoundCategoryItem'
-
-import { getSound } from '../../sounds/selectors'
-import { soundList } from '../../sounds/actions'
-import { DRAG_TYPE_SOUND } from '../../sounds/constants'
 
 const soundItem = {
   beginDrag ({ sound }) {
@@ -19,11 +16,11 @@ const collect = (connectDrag, monitor) => ({
 })
 
 const mapStateToProps = (state, { uuid }) => ({
-  sound: getSound(state, uuid)
+  sound: soundStore.getFirst(state, uuid)
 })
 
 const mapDispatchToProps = {
-  onToggle: soundList.toggle
+  onToggle: soundRoutines.play
 }
 
 const container = connect(mapStateToProps, mapDispatchToProps)(DragSource(

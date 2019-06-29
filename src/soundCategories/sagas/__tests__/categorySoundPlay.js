@@ -1,14 +1,14 @@
 import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
 
-import { categoryList } from '../../actions'
-import { soundList } from '../../../sounds/actions'
+import { categoryRoutines } from '../../actions'
+import { getSagaTester } from '../../../mock'
+import { soundRoutines } from '../../../sounds'
 
 describe('categorySoundPlay saga', () => {
   it('stops all sound related categories that are exclusive', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'category-1',
             sounds: ['sound-1', 'sound-2'],
@@ -31,12 +31,12 @@ describe('categorySoundPlay saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.play('sound-1'))
+    sagaTester.dispatch(soundRoutines.play('sound-1'))
     expect(sagaTester.getCalledActions()).toContainEqual(
-      categoryList.stop('category-1', 'sound-1')
+      categoryRoutines.stop('category-1', 'sound-1')
     )
     expect(sagaTester.getCalledActions()).toContainEqual(
-      categoryList.stop('category-2', 'sound-1')
+      categoryRoutines.stop('category-2', 'sound-1')
     )
   })
 })

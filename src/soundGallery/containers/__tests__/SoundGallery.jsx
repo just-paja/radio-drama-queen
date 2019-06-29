@@ -1,10 +1,7 @@
 import React from 'react'
-
-import { shallow } from 'enzyme'
-
 import SoundGallery from '../SoundGallery'
 
-import { renderWithContainers } from '../../../../mock'
+import { renderWithContainers } from '../../../mock'
 
 describe('SoundGallery container', () => {
   it('provides sounds', () => {

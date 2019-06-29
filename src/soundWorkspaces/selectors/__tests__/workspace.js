@@ -14,8 +14,8 @@ describe('soundWorkspaces workspace selectors', () => {
 
   it('getActiveBoard returns active board', () => {
     const state = {
-      soundBoards: {
-        list: [
+      entities: {
+        boards: [
           {
             uuid: 'board-1',
             name: 'Board 1'
@@ -36,8 +36,8 @@ describe('soundWorkspaces workspace selectors', () => {
 
   it('given no board is active getDefaultTargetBoard returns first available board', () => {
     const state = {
-      soundBoards: {
-        list: [
+      entities: {
+        boards: [
           {
             uuid: 'board-1',
             name: 'Board 1'
@@ -56,8 +56,8 @@ describe('soundWorkspaces workspace selectors', () => {
 
   it('given a board is active getDefaultTargetBoard returns the active board', () => {
     const state = {
-      soundBoards: {
-        list: [
+      entities: {
+        boards: [
           {
             uuid: 'board-1',
             name: 'Board 1'

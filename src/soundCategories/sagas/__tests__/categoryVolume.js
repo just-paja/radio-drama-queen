@@ -1,14 +1,14 @@
 import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
 
-import { categoryList } from '../../actions'
-import { soundList } from '../../../sounds/actions'
+import { getSagaTester } from '../../../mock'
+import { categoryRoutines } from '../../actions'
+import { soundRoutines } from '../../../sounds'
 
 describe('categoryVolume saga', () => {
-  it('dispatches groupVolumeSet for all category sounds', () => {
+  it('dispatches setVolume for all category sounds', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -18,17 +18,16 @@ describe('categoryVolume saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.setVolume('foo', 25))
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.groupVolumeSet(null, {
-      sounds: ['sound1', 'sound2'],
+    sagaTester.dispatch(categoryRoutines.setVolume('foo', 25))
+    expect(sagaTester.getCalledActions()).toContainEqual(soundRoutines.setVolume(['sound1', 'sound2'], {
       volume: 25
     }))
   })
 
-  it('unmutes category on groupVolumeSet if muted', () => {
+  it('given muted is true, it unmutes category on setVolume', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -39,14 +38,19 @@ describe('categoryVolume saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.setVolume('foo', 25))
-    expect(sagaTester.numCalled(categoryList.UNMUTE)).toBe(1)
+    sagaTester.dispatch(categoryRoutines.setVolume('foo', 25))
+    expect(sagaTester.getState()).toHaveProperty('entities.categories', [
+      expect.objectContaining({
+        uuid: 'foo',
+        muted: false
+      })
+    ])
   })
 
   it('sets muted to true on category mute if not muted', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -57,17 +61,19 @@ describe('categoryVolume saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.muteToggle('foo'))
-    expect(sagaTester.getState().soundCategories.list).toContainEqual(expect.objectContaining({
-      uuid: 'foo',
-      muted: true
-    }))
+    sagaTester.dispatch(categoryRoutines.toggleMute('foo'))
+    expect(sagaTester.getState()).toHaveProperty('entities.categories', [
+      expect.objectContaining({
+        uuid: 'foo',
+        muted: true
+      })
+    ])
   })
 
-  it('dispatches groupVolumeSet for all category sounds with volume 0 on mute if not muted', () => {
+  it('dispatches setVolume for all category sounds with volume 0 on mute if not muted', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -78,17 +84,16 @@ describe('categoryVolume saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.muteToggle('foo'))
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.groupVolumeSet(null, {
-      sounds: ['sound1', 'sound2'],
-      volume: 0
-    }))
+    sagaTester.dispatch(categoryRoutines.toggleMute('foo'))
+    expect(sagaTester.getCalledActions()).toContainEqual(
+      soundRoutines.setVolume(['sound1', 'sound2'], { volume: 0 })
+    )
   })
 
   it('sets muted to false on category mute if muted', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -99,17 +104,19 @@ describe('categoryVolume saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.muteToggle('foo'))
-    expect(sagaTester.getState().soundCategories.list).toContainEqual(expect.objectContaining({
-      uuid: 'foo',
-      muted: false
-    }))
+    sagaTester.dispatch(categoryRoutines.toggleMute('foo'))
+    expect(sagaTester.getState()).toHaveProperty('entities.categories', [
+      expect.objectContaining({
+        uuid: 'foo',
+        muted: false
+      })
+    ])
   })
 
-  it('dispatches groupVolumeSet for all category sounds with volume 0 same as category on mute if muted', () => {
+  it('dispatches setVolume for all category sounds with volume 0 same as category on mute if muted', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -120,9 +127,8 @@ describe('categoryVolume saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.muteToggle('foo'))
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.groupVolumeSet(null, {
-      sounds: ['sound1', 'sound2'],
+    sagaTester.dispatch(categoryRoutines.toggleMute('foo'))
+    expect(sagaTester.getCalledActions()).toContainEqual(soundRoutines.setVolume(['sound1', 'sound2'], {
       volume: 0.75
     }))
   })

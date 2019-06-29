@@ -84,6 +84,7 @@ class LibraryStatComponent extends React.Component {
   }
 }
 
+LibraryStatComponent.displayName = 'LibraryStat'
 LibraryStatComponent.propTypes = {
   classes: Classes.isRequired,
   icon: PropTypes.object.isRequired,

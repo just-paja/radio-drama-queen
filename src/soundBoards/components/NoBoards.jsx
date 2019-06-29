@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
+import { boardRoutines } from '../actions'
 import { connect } from 'react-redux'
-import { soundBoard } from '../actions'
 
 const NoBoardsComponent = ({ onBoardCreate, onLibraryOpen }) => (
   <CanvasMessage heading='No boards!'>
@@ -26,7 +26,7 @@ NoBoardsComponent.propTypes = {
 
 const mapStateToProps = undefined
 const mapDispatchToProps = {
-  onBoardCreate: soundBoard.create
+  onBoardCreate: boardRoutines.create
 }
 
 export const NoBoards = connect(

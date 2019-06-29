@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { areStoriesEmpty } from '../../soundStories/selectors'
+import { storyStore } from '../../soundStories'
 import { connect } from 'react-redux'
 import { getActiveStoryName, getWorkspaceView } from '../selectors'
-import { isGalleryEmpty } from '../../soundGallery/selectors'
+import { soundStore } from '../../sounds'
 import { NoBoards } from '../../soundBoards/components'
 import { SoundGalleryEmpty } from '../../soundGallery/components'
 import { StoryList } from '../../soundStories/components'
@@ -47,8 +47,8 @@ WorkspaceEmptyComponent.displayName = 'WorkspaceEmpty'
 
 const mapStateToProps = state => ({
   activeStory: getActiveStoryName(state),
-  galleryEmpty: isGalleryEmpty(state),
-  noStories: areStoriesEmpty(state),
+  galleryEmpty: soundStore.isEmpty(state),
+  noStories: storyStore.isEmpty(state),
   view: getWorkspaceView(state)
 })
 

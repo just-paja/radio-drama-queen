@@ -6,6 +6,7 @@ import { logError, compatLogWarning } from '../clientLogger'
 import soundBoards from '../soundBoards/sagas'
 import soundCategories from '../soundCategories/sagas'
 import soundGallery from '../soundGallery/sagas'
+import soundLibraries from '../soundLibraries/sagas'
 import soundModules from '../soundModules/sagas'
 import soundStories from '../soundStories/sagas'
 import soundWorkspaces from '../soundWorkspaces/sagas'
@@ -15,6 +16,7 @@ const sagas = [
   ...soundBoards,
   ...soundCategories,
   ...soundGallery,
+  ...soundLibraries,
   ...soundModules,
   ...soundStories,
   ...soundWorkspaces,

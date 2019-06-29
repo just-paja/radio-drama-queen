@@ -1,36 +1,18 @@
+import { categoryStore } from '../../soundCategories'
 import { createSelector } from 'reselect'
-
-import { getBoards } from '../../soundBoards/selectors'
-import { getCategories } from '../../soundCategories/selectors'
-import { memoizeSoundList } from '../../sounds/selectors'
+import { soundStore } from '../../sounds'
 
 const getWorkspacesState = state => state.soundWorkspaces
 
-const getLoadState = state => getWorkspacesState(state).load
-const getSaveState = state => getWorkspacesState(state).save
-
-export const isLoadFromDialogOpen = createSelector(
-  getLoadState,
-  state => state.loadFromDialogOpen
-)
-
-export const isWorkspaceEmpty = createSelector(
-  getBoards,
-  boards => boards.length === 0
-)
-
-export const isSaveAsDialogOpen = createSelector(
-  getSaveState,
-  state => state.saveAsDialogOpen
-)
+const getUiState = state => getWorkspacesState(state).ui
 
 export const getWorkspaceFilePath = createSelector(
-  getSaveState,
+  getUiState,
   state => state.path
 )
 
 export const getUsedSounds = createSelector(
-  [memoizeSoundList, getCategories],
+  [soundStore.getAll, categoryStore.getAll],
   (sounds, categories) => sounds.filter(
     sound => categories.some(category => category.sounds.indexOf(sound.uuid) !== -1)
   )

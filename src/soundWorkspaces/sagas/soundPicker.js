@@ -4,7 +4,7 @@ import {
   takeEvery
 } from 'redux-saga/effects'
 
-import { workspace } from '../actions'
+import { workspaceRoutines } from '../actions'
 import { VIEW_LIBRARY } from '../constants'
 import { galleryTarget } from '../../soundGallery/actions'
 import { getGalleryTarget } from '../../soundGallery/selectors'
@@ -13,23 +13,26 @@ function * setTarget ({ payload, meta }) {
   if (meta && payload === VIEW_LIBRARY && meta.target) {
     yield put(galleryTarget.set(meta.target))
   } else {
-    yield put(galleryTarget.clear())
+    const target = yield select(getGalleryTarget)
+    if (target.board || target.category) {
+      yield put(galleryTarget.clear())
+    }
   }
 }
 
 function * goBack () {
   const target = yield select(getGalleryTarget)
-  yield put(workspace.selectBoard(target.board))
+  yield put(workspaceRoutines.selectBoard(target.board))
 }
 
 function * handleGoBack () {
-  yield takeEvery(workspace.GO_BACK, goBack)
+  yield takeEvery(workspaceRoutines.goBack.TRIGGER, goBack)
 }
 
 function * handleViewChange () {
   yield takeEvery([
-    workspace.SELECT_VIEW,
-    workspace.SELECT_BOARD
+    workspaceRoutines.selectBoard.TRIGGER,
+    workspaceRoutines.selectView.TRIGGER
   ], setTarget)
 }
 

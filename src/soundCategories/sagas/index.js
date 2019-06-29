@@ -8,8 +8,6 @@ import categoryVolume from './categoryVolume'
 import soundDrop from './soundDrop'
 import soundLoad from './soundLoad'
 
-export * from './categoryCreate'
-
 export default [
   ...categoryCreate,
   ...categoryLoopToggle,

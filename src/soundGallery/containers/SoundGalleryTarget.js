@@ -1,13 +1,12 @@
-import { connect } from 'react-redux'
-
 import SoundGalleryTarget from '../components/SoundGalleryTarget'
 
-import { getBoard } from '../../soundBoards/selectors'
-import { getCategory } from '../../soundCategories/selectors'
+import { connect } from 'react-redux'
+import { boardStore } from '../../soundBoards'
+import { categoryStore } from '../../soundCategories'
 
 const mapStateToProps = (state, { board, category }) => ({
-  board: getBoard(state, board),
-  category: getCategory(state, category)
+  board: boardStore.getFirst(state, board),
+  category: categoryStore.getFirst(state, category)
 })
 
 const container = connect(mapStateToProps)(SoundGalleryTarget)

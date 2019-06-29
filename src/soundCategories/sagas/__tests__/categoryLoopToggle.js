@@ -1,23 +1,21 @@
 import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
 
-import { categoryList } from '../../actions'
+import { categoryRoutines } from '../../actions'
+import { getSagaTester } from '../../../mock'
 
 describe('categoryLoopToggle saga', () => {
   it('given loop is off, switches all sounds loop to on', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'category-1',
             sounds: ['sound-1', 'sound-2'],
             loop: false,
             volume: 1
           }
-        ]
-      },
-      sounds: {
-        list: [
+        ],
+        sounds: [
           {
             uuid: 'sound-1',
             loop: false
@@ -30,8 +28,8 @@ describe('categoryLoopToggle saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.loopToggle('category-1'))
-    expect(sagaTester.getState().sounds.list).toEqual([
+    sagaTester.dispatch(categoryRoutines.toggleLoop('category-1'))
+    expect(sagaTester.getState()).toHaveProperty('entities.sounds', [
       {
         uuid: 'sound-1',
         loop: true
@@ -45,8 +43,8 @@ describe('categoryLoopToggle saga', () => {
 
   it('given loop is on, switches all sounds loop to off', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'category-1',
             sounds: ['sound-1', 'sound-2'],
@@ -54,10 +52,8 @@ describe('categoryLoopToggle saga', () => {
             loop: true,
             volume: 1
           }
-        ]
-      },
-      sounds: {
-        list: [
+        ],
+        sounds: [
           {
             uuid: 'sound-1',
             loop: false
@@ -70,8 +66,8 @@ describe('categoryLoopToggle saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.loopToggle('category-1'))
-    expect(sagaTester.getState().sounds.list).toEqual([
+    sagaTester.dispatch(categoryRoutines.toggleLoop('category-1'))
+    expect(sagaTester.getState()).toHaveProperty('entities.sounds', [
       {
         uuid: 'sound-1',
         loop: false
@@ -86,15 +82,15 @@ describe('categoryLoopToggle saga', () => {
   it('does not fail when given non-existent category', () => {
     const onError = jest.fn()
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: []
+      entities: {
+        categories: []
       }
     }, {
       options: { onError }
     })
     expect(() => {
       sagaTester.runAll(sagas)
-      sagaTester.dispatch(categoryList.loopToggle('category-1'))
+      sagaTester.dispatch(categoryRoutines.toggleLoop('category-1'))
     }).not.toThrow()
     expect(onError).not.toHaveBeenCalled()
   })

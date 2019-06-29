@@ -1,15 +1,29 @@
 import { all, put, select, takeEvery } from 'redux-saga/effects'
-import { categoryList } from '../actions'
-import { getCategorySoundUuids } from '../selectors'
-import { soundList } from '../../sounds/actions'
+import { CategoryRenameDialog } from '../components'
+import { categoryRoutines } from '../actions'
+import { getCategoryPlayingStatus, getCategorySoundUuids } from '../selectors'
+import { reflectRoutine } from '../../sagas/reflect'
+import { soundRoutines } from '../../sounds'
 
 function * handleCategoryRemove () {
-  yield takeEvery(categoryList.REMOVE_STOP, function * ({ meta: { uuid } }) {
-    const sounds = yield select(getCategorySoundUuids, uuid)
-    yield put(categoryList.stop(uuid))
-    yield put(categoryList.remove(uuid))
-    yield all(sounds.map(soundUuid => put(soundList.unload(soundUuid))))
+  yield takeEvery(categoryRoutines.remove.TRIGGER, function * ({ payload }) {
+    const sounds = yield select(getCategorySoundUuids, payload)
+    const playing = yield select(getCategoryPlayingStatus, payload)
+    if (playing) {
+      yield put(categoryRoutines.stop(payload))
+    }
+    yield all(sounds.map(soundUuid => put(soundRoutines.unload(soundUuid))))
+    yield put(categoryRoutines.remove.success(payload))
   })
 }
 
-export default [handleCategoryRemove]
+function * handleCategoryRenameSuccessDialog () {
+  yield takeEvery(categoryRoutines.rename.SUCCESS, function * () {
+    yield put(CategoryRenameDialog.close())
+  })
+}
+export default [
+  handleCategoryRemove,
+  handleCategoryRenameSuccessDialog,
+  reflectRoutine(categoryRoutines.rename)
+]

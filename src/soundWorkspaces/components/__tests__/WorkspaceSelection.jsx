@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { renderWithContainers } from '../../../../mock'
+import { renderWithContainers } from '../../../mock'
 import { WorkspaceSelection } from '..'
 
 describe('WorkspaceSelection component', () => {

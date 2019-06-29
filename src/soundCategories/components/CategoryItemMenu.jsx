@@ -2,7 +2,7 @@ import Delete from '@material-ui/icons/Delete'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { categoryList } from '../actions'
+import { categoryRoutines } from '../actions'
 import { connect } from 'react-redux'
 import { Children } from '../../proptypes'
 import { SoundMenu } from '../../sounds/components'
@@ -32,7 +32,7 @@ CategoryItemMenuComponent.defaultProps = {
 }
 
 const mapDispatchToProps = {
-  onRemove: categoryList.soundRemove
+  onRemove: categoryRoutines.soundRemove
 }
 
 function mergeProps (stateProps, dispatchProps, ownProps) {

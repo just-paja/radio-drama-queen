@@ -1,16 +1,13 @@
-import { call, select, takeEvery } from 'redux-saga/effects'
+import { put, select, takeEvery } from 'redux-saga/effects'
 
-import { soundList } from '../actions'
+import { soundRoutines } from '../actions'
 import { getPlayingSoundsUuids } from '../selectors'
-import { stopSoundGroup } from './soundStop'
-
-function * stopAllSounds () {
-  const sounds = yield select(getPlayingSoundsUuids)
-  yield call(stopSoundGroup, { payload: { sounds } })
-}
 
 function * handleSoundStopAll () {
-  yield takeEvery(soundList.STOP_ALL, stopAllSounds)
+  yield takeEvery(soundRoutines.stopAll.TRIGGER, function * () {
+    const sounds = yield select(getPlayingSoundsUuids)
+    yield put(soundRoutines.stop(sounds))
+  })
 }
 
 export default [

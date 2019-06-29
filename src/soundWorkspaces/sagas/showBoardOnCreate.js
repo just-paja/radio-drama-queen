@@ -1,14 +1,12 @@
 import { put, takeEvery } from 'redux-saga/effects'
 
-import { workspace } from '../actions'
-import { soundBoard } from '../../soundBoards/actions'
-
-function * showBoard ({ payload: { uuid } }) {
-  yield put(workspace.selectBoard(uuid))
-}
+import { workspaceRoutines } from '../actions'
+import { boardRoutines } from '../../soundBoards'
 
 function * handleBoardCreate () {
-  yield takeEvery(soundBoard.ADD, showBoard)
+  yield takeEvery(boardRoutines.create.SUCCESS, function * ({ payload: { uuid } }) {
+    yield put(workspaceRoutines.selectBoard(uuid))
+  })
 }
 
 export default [

@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect'
 import { getFlag } from 'react-saga-rest'
 
+import { categoryStore } from '../../soundCategories'
 import { clearSearch, splitSearchPatterns, stringSearch } from '../../search'
-import { getSound, memoizeSoundList } from '../../sounds/selectors'
-import { getTags } from '../../soundTags/selectors'
-import { getCategories } from '../../soundCategories/selectors'
+import { soundStore } from '../../sounds'
+import { tagStore } from '../../soundTags'
 
 const memoizeSearch = state => state.soundGallery.search
 const memoizeTarget = state => state.soundGallery.target
@@ -14,13 +14,8 @@ export const getSoundSearchValue = createSelector(
   state => state.search
 )
 
-export const getGallerySize = createSelector(
-  memoizeSoundList,
-  state => state.length
-)
-
 export const isGalleryEmpty = createSelector(
-  getGallerySize,
+  soundStore.getSize,
   gallerySize => gallerySize <= 0
 )
 
@@ -53,7 +48,7 @@ const getRelevantTags = (tags, search) => {
 }
 
 export const getGallerySoundsWithFlags = createSelector(
-  [memoizeSoundList, getCategories],
+  [soundStore.getAll, categoryStore.getAll],
   (sounds, categories) => sounds.map(sound => ({
     ...sound,
     isUsed: categories.some(category => category.sounds.indexOf(sound.uuid) !== -1)
@@ -66,7 +61,7 @@ export const getUsedFilter = getFlag(memoizeSearch, 'filterUsed')
 export const getGallerySoundList = createSelector(
   [
     getGallerySoundsWithFlags,
-    getTags,
+    tagStore.getAll,
     getSoundSearchValueCleared,
     getErrorsFilter,
     getUsedFilter
@@ -86,11 +81,6 @@ export const getGallerySoundList = createSelector(
     }
     return soundsFiltered.slice(0, 20)
   }
-)
-
-export const getGallerySound = createSelector(
-  getSound,
-  state => state
 )
 
 export const getGalleryTarget = createSelector(

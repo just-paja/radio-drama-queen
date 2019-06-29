@@ -1,10 +1,9 @@
 import Audiotrack from '@material-ui/icons/Audiotrack'
 import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
-
 import { Classes } from '../../proptypes'
 import { SoundBoard } from '../proptypes'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
   iconSize: {

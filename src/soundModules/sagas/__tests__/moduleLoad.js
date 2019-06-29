@@ -1,6 +1,6 @@
 import sagas from '../moduleLoad'
 
-import { getSagaTester } from '../../../../mock'
+import { getSagaTester } from '../../../mock'
 import { soundModule } from '../../actions'
 
 import * as localAssetsManager from '../../../LocalAssetsManager'

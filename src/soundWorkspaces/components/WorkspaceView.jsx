@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import { BoardRenameDialog } from '../../soundBoards/components'
+import { CategoryRenameDialog } from '../../soundCategories/components'
 import { connect } from 'react-redux'
 import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
 import { isGalleryEmpty } from '../../soundGallery/selectors'
 import { SoundBoardView } from './SoundBoardView'
 import { SoundGalleryView } from './SoundGalleryView'
-import { SoundLibraryStatus } from './SoundLibraryStatus'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceEmpty } from './WorkspaceEmpty'
 import { WorkspaceSidebar } from './WorkspaceSidebar'
+import { WorkspaceStatus } from './WorkspaceStatus'
 
 const styles = theme => ({
   sidebar: {
@@ -29,13 +31,11 @@ const styles = theme => ({
 })
 
 function renderContent (empty, board, view) {
-  if (!empty) {
-    if (view === VIEW_LIBRARY) {
-      return <SoundGalleryView />
-    }
-    if (view === VIEW_BOARD && board) {
-      return <SoundBoardView board={board} />
-    }
+  if (view === VIEW_LIBRARY && !empty) {
+    return <SoundGalleryView />
+  }
+  if (view === VIEW_BOARD && board) {
+    return <SoundBoardView board={board} />
   }
   return <WorkspaceEmpty />
 }
@@ -43,11 +43,13 @@ function renderContent (empty, board, view) {
 function WorkspaceViewComponent ({ classes, board, empty, view }) {
   return (
     <div className={classes.withHeader}>
-      <SoundLibraryStatus />
+      <WorkspaceStatus />
       <div className={classes.view}>
         <WorkspaceSidebar />
         {renderContent(empty, board, view)}
       </div>
+      <BoardRenameDialog />
+      <CategoryRenameDialog />
     </div>
   )
 }

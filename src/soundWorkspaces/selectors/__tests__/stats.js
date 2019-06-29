@@ -3,8 +3,8 @@ import * as selectors from '..'
 describe('soundWorkspaces stats selectors', () => {
   it('countBoardSounds returns amount of sounds located on any board', () => {
     const state = {
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'category-1',
             board: 'board-1',
@@ -15,20 +15,16 @@ describe('soundWorkspaces stats selectors', () => {
             board: 'board-2',
             sounds: ['sound-2']
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'board-1'
           },
           {
             uuid: 'board-2'
           }
-        ]
-      },
-      sounds: {
-        list: [
+        ],
+        sounds: [
           {
             uuid: 'sound-1'
           },
@@ -46,8 +42,8 @@ describe('soundWorkspaces stats selectors', () => {
 
   it('countMemorySounds returns amount of valid sounds', () => {
     const state = {
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'sound-1',
             valid: true
@@ -67,8 +63,8 @@ describe('soundWorkspaces stats selectors', () => {
 
   it('countErrorSounds returns amount of errored sounds', () => {
     const state = {
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'sound-1',
             error: new Error('Test!')
@@ -88,8 +84,8 @@ describe('soundWorkspaces stats selectors', () => {
 
   it('countPlayingSounds returns amount of errored sounds', () => {
     const state = {
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'sound-1',
             playing: true
@@ -109,8 +105,8 @@ describe('soundWorkspaces stats selectors', () => {
 
   it('countTags returns sound tag amount', () => {
     const state = {
-      soundTags: {
-        list: [
+      entities: {
+        tags: [
           {
             name: 'tag-1'
           },

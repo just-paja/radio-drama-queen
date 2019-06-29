@@ -7,9 +7,10 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import { connect } from 'react-redux'
-import { stories, storyLoad } from '../actions'
-import { getActiveStory, getStories } from '../selectors'
+import { getActiveStoryName } from '../../soundWorkspaces/selectors'
 import { StoryCreateButton } from './StoryCreateButton'
+import { storyRoutines } from '../actions'
+import { storyStore } from '../store'
 
 class StoryListComponent extends React.Component {
   componentDidMount () {
@@ -74,13 +75,13 @@ StoryListComponent.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  activeStory: getActiveStory(state),
-  stories: getStories(state)
+  activeStory: getActiveStoryName(state),
+  stories: storyStore.getAll(state)
 })
 
 const mapDispatchToProps = {
-  onDataRequest: stories.trigger,
-  onStorySelect: storyLoad.trigger
+  onDataRequest: storyRoutines.list,
+  onStorySelect: storyRoutines.load
 }
 
 export const StoryList = connect(

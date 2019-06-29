@@ -1,31 +1,24 @@
-import {
-  all,
-  call,
-  put,
-  takeEvery,
-  select
-} from 'redux-saga/effects'
-
-import { soundModule } from '../actions'
-import { getModule } from '../selectors'
-import { soundRegister } from '../../sounds/actions'
+import { all, call, put, takeEvery, select } from 'redux-saga/effects'
 import { getHttpDirName, getModuleShape } from '../modulePaths'
+import { moduleRoutines } from '../actions'
+import { moduleStore } from '../store'
+import { soundRoutines } from '../../sounds'
 
-function * registerModuleSounds ({ meta: { name: moduleName } }) {
-  const module = yield select(getModule, moduleName)
+function * registerModuleSounds ({ payload: { name: moduleName } }) {
+  const module = yield select(moduleStore.getFirst, moduleName)
   if (module && module.sounds && module.sounds.length !== 0) {
     const { sounds, url } = module
-    yield all(sounds.map(soundPath => put(soundRegister.trigger(null, {
+    yield all(sounds.map(soundPath => put(soundRoutines.register({
       path: `${getHttpDirName(url)}${soundPath}`
     }))))
   }
 }
 
-function * loadSubModules ({ meta: { name: moduleName } }) {
-  const module = yield select(getModule, moduleName)
+function * loadSubModules ({ payload: { name: moduleName } }) {
+  const module = yield select(moduleStore.getFirst, moduleName)
   const submodules = module.modules
   if (submodules && submodules.length !== 0) {
-    yield all(submodules.map(submodule => put(soundModule.add(getModuleShape(
+    yield all(submodules.map(submodule => put(moduleRoutines.load.success(getModuleShape(
       module.url,
       {
         name: submodule,
@@ -36,18 +29,17 @@ function * loadSubModules ({ meta: { name: moduleName } }) {
       },
       submodule
     )))))
-    yield put(soundModule.loadTrigger(submodules))
+    yield put(moduleRoutines.load(submodules))
   }
 }
 
 function * integrateModuleResources (action) {
-  // yield call(registerModuleTags, action);
   yield call(loadSubModules, action)
   yield call(registerModuleSounds, action)
 }
 
 function * handleModuleLoadSuccess () {
-  yield takeEvery(soundModule.LOAD_SUCCESS, integrateModuleResources)
+  yield takeEvery(moduleRoutines.load.SUCCESS, integrateModuleResources)
 }
 
 export default [

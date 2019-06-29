@@ -1,13 +1,13 @@
 import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
 
-import { categoryList } from '../../actions'
+import { categoryRoutines } from '../../actions'
+import { getSagaTester } from '../../../mock'
 
 describe('categoryRemove saga', () => {
-  it('dispatches category stop for removed category', () => {
+  it('removes the category from existence', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'foo',
             sounds: ['sound1', 'sound2'],
@@ -17,24 +17,7 @@ describe('categoryRemove saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.removeStop('foo'))
-    expect(sagaTester.getCalledActions()).toContainEqual(categoryList.stop('foo'))
-  })
-
-  it('removes category for the list', () => {
-    const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
-          {
-            uuid: 'foo',
-            sounds: ['sound1', 'sound2'],
-            volume: 1
-          }
-        ]
-      }
-    })
-    sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.removeStop('foo'))
-    expect(sagaTester.getState().soundCategories.list).toHaveLength(0)
+    sagaTester.dispatch(categoryRoutines.remove('foo'))
+    expect(sagaTester.getState()).toHaveProperty('entities.categories', [])
   })
 })

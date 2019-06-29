@@ -1,10 +1,10 @@
-import { categoryList } from '../actions'
+import { categoryRoutines } from '../actions'
 import { put, takeEvery } from '@redux-saga/core/effects'
-import { soundLoad } from '../../sounds/actions'
+import { soundRoutines } from '../../sounds'
 
 function * handleSoundAdd () {
-  yield takeEvery(categoryList.SOUND_ADD, function * ({ payload }) {
-    yield put(soundLoad.trigger(payload))
+  yield takeEvery(categoryRoutines.soundAdd.TRIGGER, function * ({ payload: { sound } }) {
+    yield put(soundRoutines.load(sound))
   })
 }
 

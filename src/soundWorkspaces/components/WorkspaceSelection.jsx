@@ -9,7 +9,7 @@ import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getWorkspaceView } from '../selectors'
 import { withStyles } from '@material-ui/core/styles'
-import { workspace } from '../actions'
+import { workspaceRoutines } from '../actions'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
 
 const styles = {
@@ -74,8 +74,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  onBoardSelect: workspace.selectBoard,
-  onViewSelect: workspace.selectView
+  onBoardSelect: workspaceRoutines.selectBoard,
+  onViewSelect: workspaceRoutines.selectView
 }
 
 export const WorkspaceSelection = connect(

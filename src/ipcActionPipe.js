@@ -7,12 +7,14 @@ export function say (action) {
 }
 
 export function * request (routine, payload, matcher) {
-  yield put(routine.request(null, payload))
-  say(routine.request(null, payload))
-  if (routine) {
-    yield take(matcher || [routine.SUCCESS, routine.FAILURE])
-  }
-  yield put(routine.fulfill(null, payload))
+  const action = routine.request(payload)
+  yield put(action)
+  say(action)
+  const result = routine
+    ? yield take(matcher || [routine.SUCCESS, routine.FAILURE])
+    : null
+  yield put(routine.fulfill(payload))
+  return result
 }
 
 export default (store) => {

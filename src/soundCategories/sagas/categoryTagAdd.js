@@ -1,15 +1,14 @@
 import { all, put, select, takeEvery } from 'redux-saga/effects'
-
-import { getTagByName } from '../../soundTags/selectors'
-import { categoryList } from '../actions'
+import { categoryRoutines } from '../actions'
 import { getAllUnusedSoundsByTag } from '../selectors'
+import { tagStore } from '../../soundTags'
 
 function * addTagToCategory ({ payload, meta: { uuid } }) {
-  const tag = yield select(getTagByName, payload)
+  const tag = yield select(tagStore.getObject, payload)
   if (tag) {
     const sounds = yield select(getAllUnusedSoundsByTag, payload)
     const soundUuids = sounds.map(sound => sound.uuid)
-    yield all(soundUuids.map(soundUuid => put(categoryList.soundAdd(
+    yield all(soundUuids.map(soundUuid => put(categoryRoutines.soundAdd(
       uuid,
       soundUuid
     ))))
@@ -17,7 +16,7 @@ function * addTagToCategory ({ payload, meta: { uuid } }) {
 }
 
 function * handleTagAdd () {
-  yield takeEvery(categoryList.TAG_ADD, addTagToCategory)
+  yield takeEvery(categoryRoutines.tagAdd.TRIGGER, addTagToCategory)
 }
 
 export default [

@@ -1,20 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import { boardRoutines } from '../../soundBoards'
 import { connect } from 'react-redux'
-import { libraryLoad } from '../../soundModules/actions'
-import { soundBoard } from '../../soundBoards/actions'
+import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { SoundGallery } from '../../soundGallery/containers'
-import { workspace, workspaceLoad, workspaceSound, workspaceTag } from '../actions'
-
-const mapDispatchToProps = {
-  onAddSoundToBoard: workspaceSound.addToBoard,
-  onAddTagToBoard: workspaceTag.addToBoard,
-  onBoardCreate: soundBoard.create,
-  onConfigOpen: workspaceLoad.dialogOpen,
-  onGalleryGoBack: workspace.goBack,
-  onLibraryOpen: libraryLoad.dialogShow
-}
+import { workspaceRoutines, workspaceLoad, workspaceTag } from '../actions'
 
 const SoundGalleryViewComponent = ({
   onAddSoundToBoard,
@@ -46,6 +37,15 @@ SoundGalleryViewComponent.propTypes = {
 
 SoundGalleryViewComponent.defaultProps = {
   target: null
+}
+
+const mapDispatchToProps = {
+  onAddSoundToBoard: workspaceRoutines.addSound,
+  onAddTagToBoard: workspaceTag.addToBoard,
+  onBoardCreate: boardRoutines.create,
+  onConfigOpen: workspaceLoad.dialogOpen,
+  onGalleryGoBack: workspaceRoutines.goBack,
+  onLibraryOpen: OpenLibraryDialog.open
 }
 
 export const SoundGalleryView = connect(

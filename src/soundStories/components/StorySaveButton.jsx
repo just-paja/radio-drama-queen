@@ -3,7 +3,7 @@ import Save from '@material-ui/icons/Save'
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { storySave } from '../actions'
+import { storyRoutines } from '../actions'
 
 const mapStateToProps = (state) => ({
   disabled: false,
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  onClick: storySave.trigger
+  onClick: storyRoutines.save
 }
 
 export const WorkspaceSaveButton = connect(

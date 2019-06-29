@@ -8,8 +8,8 @@ export const createAction = actionName => (payload, meta) => ({
   payload
 })
 
-export const createRoutineActions = (baseName, extraActions, actionCreator) => ({
-  ...extraActions.reduce((aggr, action) => {
+export const createRoutineActions = (baseName, extraActions, actionCreator) =>
+  extraActions.reduce((aggr, action) => {
     const actionName = composeActionType(baseName, action)
     return {
       ...aggr,
@@ -17,7 +17,6 @@ export const createRoutineActions = (baseName, extraActions, actionCreator) => (
       [camelCase(action)]: actionCreator(actionName)
     }
   }, {})
-})
 
 export const createRoutine = (baseName, extraActions) => createRoutineActions(
   baseName,

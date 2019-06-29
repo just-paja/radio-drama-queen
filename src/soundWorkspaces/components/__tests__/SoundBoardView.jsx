@@ -1,20 +1,16 @@
 import React from 'react'
 
 import { workspace } from '../../actions'
-import { renderWithDnd } from '../../../../mock'
+import { renderWithDnd } from '../../../mock'
 import { SoundBoardView } from '..'
 
 describe('SoundBoardView component', () => {
   const state = {
-    soundBoards: {
-      list: [
-        {
-          uuid: 'sd6f4sd6f4'
-        }
-      ]
-    },
-    sounds: {
-      list: [
+    entities: {
+      boards: [
+        { uuid: 'sd6f4sd6f4' }
+      ],
+      sounds: [
         {
           name: 'foo',
           uuid: 'foo',
@@ -25,7 +21,7 @@ describe('SoundBoardView component', () => {
   }
   it('renders sound board when viewing sound boards', () => {
     const comp = renderWithDnd(<SoundBoardView board='sd6f4sd6f4' />, state)
-    expect(comp.find('SoundBoard')).toHaveProp('uuid', 'sd6f4sd6f4')
+    expect(comp.find('Board')).toHaveProp('uuid', 'sd6f4sd6f4')
   })
 
   it('dispatches select view with target on sound picker open', () => {

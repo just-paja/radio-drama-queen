@@ -4,7 +4,7 @@ const workerpool = require('workerpool')
 workerpool.worker({
   readSoundDataUrl: (soundData) => {
     if (!soundData) {
-      return
+      return Promise.reject(new Error('You must provide sound data'))
     }
 
     return jetpack

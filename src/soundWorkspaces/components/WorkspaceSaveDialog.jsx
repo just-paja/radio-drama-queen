@@ -1,44 +1,27 @@
-import Dialog from '@material-ui/core/Dialog'
-import PropTypes from 'prop-types'
+import Input from '../../components/Input'
 import React from 'react'
 
-import { connect } from 'react-redux'
-import { isSaveAsDialogOpen } from '../selectors'
-import { workspaceSave } from '../actions'
-import { WorkspaceSaveForm } from './WorkspaceSaveForm'
+import { dialogForm } from '../../dialogs'
+import { Field } from 'redux-form'
+import { FORM_WORKSPACE_SAVE_AS } from '../constants'
+import { getWorkspaceFilePath } from '../selectors'
+import { workspaceLoad } from '../actions'
 
-const WorkspaceSaveDialogComponent = ({
-  handleSubmit,
-  onClose,
-  open
-}) => (
-  <Dialog
-    open={open}
-    onClose={onClose}
-    aria-labelledby='workspaceDestinationDialogTitle'
-  >
-    {open && <WorkspaceSaveForm />}
-  </Dialog>
+const WorkspaceSaveDialogComponent = () => (
+  <Field
+    autoFocus
+    component={Input}
+    label='File system path'
+    name='path'
+  />
 )
 
-WorkspaceSaveDialogComponent.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool
-}
-
-WorkspaceSaveDialogComponent.defaultProps = {
-  open: false
-}
-
-const mapStateToProps = state => ({
-  open: isSaveAsDialogOpen(state)
-})
-
-const mapDispatchToProps = {
-  onClose: workspaceSave.dialogHide
-}
-
-export const WorkspaceSaveDialog = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WorkspaceSaveDialogComponent)
+export const WorkspaceSaveDialog = dialogForm({
+  dialog: FORM_WORKSPACE_SAVE_AS,
+  onSubmit: workspaceLoad.loadFrom,
+  submitLabel: 'Save configuration',
+  title: 'Save workspace configuration',
+  initialValues: state => ({
+    path: getWorkspaceFilePath(state)
+  })
+})(WorkspaceSaveDialogComponent)

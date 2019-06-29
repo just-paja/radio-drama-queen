@@ -1,9 +1,8 @@
-import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
-
 import AudioManager from '../../AudioManager'
+import sagas from '..'
 
-import { soundList } from '../../actions'
+import { getSagaTester } from '../../../mock'
+import { soundRoutines } from '../../actions'
 
 describe('soundPlay saga', () => {
   beforeEach(() => {
@@ -19,8 +18,8 @@ describe('soundPlay saga', () => {
 
   it('calls AudioManager play on sound play', () => {
     const sagaTester = getSagaTester({
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'foo',
             playing: false,
@@ -30,14 +29,14 @@ describe('soundPlay saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.play('foo'))
+    sagaTester.dispatch(soundRoutines.play('foo'))
     expect(AudioManager.play).toHaveBeenCalledWith('foo')
   })
 
   it('triggers sound finished action after sound finished playing', () => {
     const sagaTester = getSagaTester({
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'foo',
             playing: false,
@@ -47,15 +46,15 @@ describe('soundPlay saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.play('foo'))
-    expect(sagaTester.numCalled(soundList.FINISHED)).toBe(1)
+    sagaTester.dispatch(soundRoutines.play('foo'))
+    expect(sagaTester.numCalled(soundRoutines.play.FULFILL)).toBe(1)
   })
 
   it('triggers replays sound when it is still marked as playing and loop at the end of the cycle', () => {
     AudioManager.play.mockImplementation(() => new Promise(resolve => setTimeout(resolve, 1000)))
     const sagaTester = getSagaTester({
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'foo',
             playing: false,
@@ -65,11 +64,11 @@ describe('soundPlay saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.play('foo'))
-    jest.runTimersToTime(1000)
+    sagaTester.dispatch(soundRoutines.play('foo'))
+    jest.runTimersToTime(2000)
     sagaTester.updateState({
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'foo',
             playing: false,
@@ -78,8 +77,8 @@ describe('soundPlay saga', () => {
         ]
       }
     })
-    return sagaTester.waitFor(soundList.PLAY)
-      .then(() => sagaTester.dispatch(soundList.stop('foo')))
+    return sagaTester.waitFor(soundRoutines.play.TRIGGER)
+      .then(() => sagaTester.dispatch(soundRoutines.stop('foo')))
       .then(() => {
         expect(AudioManager.play).toHaveBeenCalledTimes(2)
       })

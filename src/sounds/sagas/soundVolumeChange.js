@@ -1,6 +1,6 @@
 import AudioManager from '../AudioManager'
 
-import { soundList } from '../actions'
+import { soundRoutines } from '../actions'
 import { takeEvery } from 'redux-saga/effects'
 
 const setSoundVolume = (uuid, volume) => {
@@ -11,18 +11,12 @@ const setSoundVolume = (uuid, volume) => {
 }
 
 function * handleSoundVolumeChange () {
-  yield takeEvery(soundList.VOLUME_SET, ({ payload: { volume }, meta: { uuid } }) => {
-    setSoundVolume(uuid, volume)
-  })
-}
-
-function * handleSoundGroupVolumeChange () {
-  yield takeEvery(soundList.GROUP_VOLUME_SET, ({ payload: { sounds, volume } }) => {
+  yield takeEvery(soundRoutines.setVolume.TRIGGER, ({ payload, meta: { volume } }) => {
+    const sounds = payload instanceof Array ? payload : [payload]
     sounds.map(uuid => setSoundVolume(uuid, volume))
   })
 }
 
 export default [
-  handleSoundVolumeChange,
-  handleSoundGroupVolumeChange
+  handleSoundVolumeChange
 ]

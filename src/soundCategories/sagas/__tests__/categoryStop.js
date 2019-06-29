@@ -1,100 +1,101 @@
 import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
 
-import { categoryList } from '../../actions'
-import { soundList } from '../../../sounds/actions'
+import { categoryRoutines } from '../../actions'
+import { getSagaTester } from '../../../mock'
+import { soundRoutines } from '../../../sounds'
 
 describe('categoryStop saga', () => {
   it('dispatches group stop for all playing sounds in a category', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
-            uuid: 'foo',
-            sounds: ['sound1', 'sound2'],
+            uuid: 'category-1',
+            sounds: ['sound-1', 'sound-2'],
             volume: 1
           }
-        ]
-      },
-      sounds: {
-        list: [
+        ],
+        sounds: [
           {
-            uuid: 'sound1',
+            uuid: 'sound-1',
             playing: true
           },
           {
-            uuid: 'sound2',
+            uuid: 'sound-2',
             playing: true
           }
         ]
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.stop('foo'))
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.groupStop(null, {
-      sounds: ['sound1', 'sound2']
-    }))
+    sagaTester.dispatch(categoryRoutines.stop('category-1'))
+    expect(sagaTester.getCalledActions()).toContainEqual(
+      soundRoutines.stop(['sound-1', 'sound-2'])
+    )
   })
 
   it('dispatches group stop omitting not playing sounds in a category', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
-            uuid: 'foo',
-            sounds: ['sound1', 'sound2'],
+            uuid: 'category-1',
+            sounds: ['sound-1', 'sound-2'],
             volume: 1
           }
-        ]
-      },
-      sounds: {
-        list: [
+        ],
+        sounds: [
           {
-            uuid: 'sound1',
+            uuid: 'sound-1',
             playing: true
           },
           {
-            uuid: 'sound2',
+            uuid: 'sound-2',
             playing: false
           }
         ]
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.stop('foo'))
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.groupStop(null, {
-      sounds: ['sound1']
-    }))
+    sagaTester.dispatch(categoryRoutines.stop('category-1'))
+    expect(sagaTester.getCalledActions()).toContainEqual(
+      soundRoutines.stop(['sound-1'])
+    )
   })
 
   it('dispatches group stop omitting a passed exceptional sound uuid', () => {
     const sagaTester = getSagaTester({
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
-            uuid: 'foo',
-            sounds: ['sound1', 'sound2'],
+            uuid: 'category-1',
+            sounds: ['sound-1', 'sound-2'],
             volume: 1
           }
-        ]
-      },
-      sounds: {
-        list: [
+        ],
+        sounds: [
           {
-            uuid: 'sound1',
+            uuid: 'sound-1',
             playing: true
           },
           {
-            uuid: 'sound2',
+            uuid: 'sound-2',
             playing: true
           }
         ]
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(categoryList.stop('foo', 'sound2'))
-    expect(sagaTester.getCalledActions()).toContainEqual(soundList.groupStop(null, {
-      sounds: ['sound1']
-    }))
+    sagaTester.dispatch(categoryRoutines.stop('category-1', 'sound-2'))
+    expect(sagaTester.getState()).toHaveProperty('entities.sounds', [
+      {
+        uuid: 'sound-1',
+        playing: false
+      },
+      {
+        uuid: 'sound-2',
+        playing: true
+      }
+    ])
   })
 })

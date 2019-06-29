@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import SoundTag from '../../soundTags/containers/SoundTag'
 
 import { Classes } from '../../proptypes'
 import { SoundTag as SoundTagType } from '../../soundTags/proptypes'
+import { SoundTag } from '../../soundTags/components'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({

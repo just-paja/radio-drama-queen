@@ -1,9 +1,8 @@
-import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
-
 import AudioManager from '../../AudioManager'
+import sagas from '..'
 
-import { soundList } from '../../actions'
+import { getSagaTester } from '../../../mock'
+import { soundRoutines } from '../../actions'
 
 describe('soundVolumeChange saga', () => {
   beforeEach(() => {
@@ -23,7 +22,7 @@ describe('soundVolumeChange saga', () => {
     }
     AudioManager.findByUuid.mockReturnValue(testHowl)
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.volumeSet('foo', { volume: 25 }))
+    sagaTester.dispatch(soundRoutines.setVolume('foo', { volume: 25 }))
     expect(testHowl.sound.volume).toHaveBeenCalledWith(0.25)
   })
 
@@ -36,7 +35,7 @@ describe('soundVolumeChange saga', () => {
     }
     const sagaTester = getSagaTester({}, sagaErrorHandler)
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.volumeSet('foo', { volume: 25 }))
+    sagaTester.dispatch(soundRoutines.setVolume('foo', { volume: 25 }))
     expect(sagaErrorHandler.options.onError).not.toHaveBeenCalled()
   })
 
@@ -56,10 +55,7 @@ describe('soundVolumeChange saga', () => {
       .mockReturnValueOnce(testHowl1)
       .mockReturnValueOnce(testHowl2)
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.groupVolumeSet(null, {
-      volume: 25,
-      sounds: ['foo', 'bar']
-    }))
+    sagaTester.dispatch(soundRoutines.setVolume(['foo', 'bar'], { volume: 25 }))
     expect(testHowl1.sound.volume).toHaveBeenCalledWith(0.25)
     expect(testHowl2.sound.volume).toHaveBeenCalledWith(0.25)
   })

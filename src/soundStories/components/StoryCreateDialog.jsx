@@ -1,44 +1,22 @@
-import Dialog from '@material-ui/core/Dialog'
-import PropTypes from 'prop-types'
+import Input from '../../components/Input'
 import React from 'react'
 
-import { connect } from 'react-redux'
-import { isStoryCreateDialogVisible } from '../selectors'
-import { storyCreate } from '../actions'
-import { StoryCreateForm } from './StoryCreateForm'
+import { dialogForm } from '../../dialogs'
+import { Field } from 'redux-form'
+import { FORM_STORY_CREATE } from '../constants'
+import { storyRoutines } from '../actions'
 
-const StoryCreateDialogComponent = ({
-  handleSubmit,
-  onClose,
-  open
-}) => (
-  <Dialog
-    open={open}
-    onClose={onClose}
-    aria-labelledby='workspaceDestinationDialogTitle'
-  >
-    {open && <StoryCreateForm />}
-  </Dialog>
+const StoryCreateFormComponent = () => (
+  <Field
+    autoFocus
+    component={Input}
+    label='Story name'
+    name='name'
+  />
 )
 
-StoryCreateDialogComponent.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool
-}
-
-StoryCreateDialogComponent.defaultProps = {
-  open: false
-}
-
-const mapStateToProps = state => ({
-  open: isStoryCreateDialogVisible(state)
-})
-
-const mapDispatchToProps = {
-  onClose: storyCreate.close
-}
-
-export const StoryCreateDialog = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StoryCreateDialogComponent)
+export const StoryCreateDialog = dialogForm({
+  dialog: FORM_STORY_CREATE,
+  onSubmit: storyRoutines.create,
+  title: 'Create story'
+})(StoryCreateFormComponent)

@@ -1,3 +1,2 @@
-export * from './soundRead'
-export * from './soundRegister'
+export * from './sounds'
 export * from './stories'

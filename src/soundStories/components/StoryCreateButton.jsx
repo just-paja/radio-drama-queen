@@ -2,7 +2,7 @@ import LabelButton from '../../components/LabelButton'
 import Create from '@material-ui/icons/Create'
 
 import { connect } from 'react-redux'
-import { storyCreate } from '../actions'
+import { StoryCreateDialog } from './StoryCreateDialog'
 
 const mapStateToProps = (state) => ({
   children: 'Create story',
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  onClick: storyCreate.open
+  onClick: StoryCreateDialog.open
 }
 
 export const StoryCreateButton = connect(

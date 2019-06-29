@@ -1,27 +1,16 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { createQueue } from 'redux-saga-job-queue'
-import { request } from '../../ipcActionPipe'
 import { matchSoundLoadFinish } from './soundLoad'
-import { soundList, soundRegister } from '../actions'
-import { tagList } from '../../soundTags/actions'
+import { request } from '../../ipcActionPipe'
+import { soundRoutines } from '../actions'
+import { tagRoutines } from '../../soundTags'
 
 let queue
 
 const isQueueRunning = () => Boolean(queue && !queue.isFinished())
 
 function * registerSound ({ payload }) {
-  yield request(soundRegister, payload, matchSoundLoadFinish(soundRegister))
-}
-
-function * addSound ({ payload }) {
-  const { tags, ...sound } = payload
-  yield put(tagList.addGroup(tags))
-  yield put(soundList.put({
-    ...sound,
-    tags: tags
-      .map(tag => tag.name)
-      .filter((item, index, source) => source.indexOf(item) === index)
-  }))
+  yield request(soundRoutines.register, payload, matchSoundLoadFinish(soundRoutines.register))
 }
 
 function * registerSoundInQueue ({ payload }) {
@@ -39,14 +28,16 @@ function * registerSoundInQueue ({ payload }) {
 }
 
 function * handleSoundRegister () {
-  yield takeEvery(soundRegister.TRIGGER, registerSoundInQueue)
+  yield takeEvery(soundRoutines.register.TRIGGER, registerSoundInQueue)
 }
 
-function * handleSoundRegisterSuccess () {
-  yield takeEvery(soundRegister.SUCCESS, addSound)
+function * handleNewTags () {
+  yield takeEvery(soundRoutines.register.SUCCESS, function * ({ payload: { tags } }) {
+    yield put(tagRoutines.register(tags))
+  })
 }
 
 export default [
   handleSoundRegister,
-  handleSoundRegisterSuccess
+  handleNewTags
 ]

@@ -1,48 +1,27 @@
-import Dialog from '@material-ui/core/Dialog'
-import PropTypes from 'prop-types'
+import Input from '../../components/Input'
 import React from 'react'
 
-import { connect } from 'react-redux'
-import { getWorkspaceFilePath, isLoadFromDialogOpen } from '../selectors'
+import { dialogForm } from '../../dialogs'
+import { Field } from 'redux-form'
+import { FORM_WORKSPACE_LOAD_FROM } from '../constants'
+import { getWorkspaceFilePath } from '../selectors'
 import { workspaceLoad } from '../actions'
-import { WorkspaceLoadForm } from './WorkspaceLoadForm'
 
-const WorkspaceLoadDialogComponent = ({
-  handleSubmit,
-  onClose,
-  open
-}) => (
-  <Dialog
-    open={open}
-    onClose={onClose}
-    aria-labelledby='workspaceDestinationDialogTitle'
-  >
-    {open && <WorkspaceLoadForm />}
-  </Dialog>
+const WorkspaceLoadDialogComponent = () => (
+  <Field
+    autoFocus
+    component={Input}
+    label='File system path'
+    name='path'
+  />
 )
 
-WorkspaceLoadDialogComponent.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool
-}
-
-WorkspaceLoadDialogComponent.defaultProps = {
-  open: false
-}
-
-const mapStateToProps = state => ({
-  open: isLoadFromDialogOpen(state),
-  initialValues: {
+export const WorkspaceLoadDialog = dialogForm({
+  dialog: FORM_WORKSPACE_LOAD_FROM,
+  onSubmit: workspaceLoad.loadFrom,
+  submitLabel: 'Load configuration',
+  title: 'Workspace configuration',
+  initialValues: state => ({
     path: getWorkspaceFilePath(state)
-  }
-})
-
-const mapDispatchToProps = {
-  onClose: workspaceLoad.dialogHide,
-  onSubmit: workspaceLoad.loadFrom
-}
-
-export const WorkspaceLoadDialog = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WorkspaceLoadDialogComponent)
+  })
+})(WorkspaceLoadDialogComponent)

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { renderWithDnd } from '../../../../mock'
+import { renderWithDnd } from '../../../mock'
 import { SoundBoard } from '..'
 
 describe('SoundBoard component', () => {

@@ -1,57 +1,39 @@
 import { handleActions } from 'redux-actions'
-
-import { libraryWipe } from '../../soundModules/actions'
-import { soundBoard } from '../../soundBoards/actions'
-import { stories, storyLoad } from '../../soundStories/actions'
+import { boardRoutines } from '../../soundBoards'
+import { storyRoutines } from '../../soundStories'
 import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
-import { workspace, workspaceSave } from '../actions'
+import { workspaceRoutines } from '../actions'
 
 const initialState = {
   story: null,
   board: null,
-  saveAsDialogOpen: false,
   view: VIEW_LIBRARY
 }
 
+function selectStory (state, action) {
+  return { ...state, story: action.payload.name }
+}
+
 const ui = handleActions({
-  [stories.ADD]: (state, action) => {
-    if (!state.story) {
-      return {
-        ...state,
-        story: action.payload.name
-      }
-    }
-    return state
-  },
-  [storyLoad.TRIGGER]: (state, action) => ({
-    ...state,
-    story: action.meta ? action.meta.name : null
-  }),
-  [libraryWipe.TRIGGER]: state => ({
+  [storyRoutines.create.SUCCESS]: selectStory,
+  [storyRoutines.load.SUCCESS]: selectStory,
+  [workspaceRoutines.wipe.TRIGGER]: state => ({
     ...state,
     board: null
   }),
-  [soundBoard.REMOVE]: (state, action) => (
+  [boardRoutines.remove.TRIGGER]: (state, action) => (
     action.payload === state.board
       ? { ...state, board: null }
       : state
   ),
-  [workspace.SELECT_BOARD]: (state, action) => ({
+  [workspaceRoutines.selectBoard.TRIGGER]: (state, action) => ({
     ...state,
     view: VIEW_BOARD,
     board: action.payload
   }),
-  [workspace.SELECT_VIEW]: (state, action) => ({
+  [workspaceRoutines.selectView.TRIGGER]: (state, action) => ({
     ...state,
     view: action.payload === null && state.board ? VIEW_BOARD : action.payload
-  }),
-  [workspaceSave.DIALOG_OPEN]: state => ({
-    ...state,
-    saveAsDialogOpen: true
-  }),
-  [workspaceSave.DIALOG_HIDE]: state => ({
-    ...state,
-    saveAsDialogOpen: false
   })
 }, initialState)
 

@@ -1,19 +1,16 @@
-import { put, select, takeEvery } from 'redux-saga/effects'
-
 import { getSoundPlayingStatus } from '../selectors'
-import { soundList } from '../actions'
-
-function * toggleSound ({ meta: { uuid } }) {
-  const playing = yield select(getSoundPlayingStatus, uuid)
-  if (playing) {
-    yield put(soundList.stop(uuid))
-  } else {
-    yield put(soundList.play(uuid))
-  }
-}
+import { put, select, takeEvery } from 'redux-saga/effects'
+import { soundRoutines } from '../actions'
 
 export function * handleSoundToggle () {
-  yield takeEvery(soundList.TOGGLE, toggleSound)
+  yield takeEvery(soundRoutines.toggle.TRIGGER, function * ({ payload }) {
+    const playing = yield select(getSoundPlayingStatus, payload)
+    if (playing) {
+      yield put(soundRoutines.stop(payload))
+    } else {
+      yield put(soundRoutines.play(payload))
+    }
+  })
 }
 
 export default [

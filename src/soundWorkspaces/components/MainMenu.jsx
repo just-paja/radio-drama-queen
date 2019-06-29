@@ -1,19 +1,20 @@
-import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MenuIcon from '@material-ui/icons/Menu'
-import OpenLibraryButton from '../../soundModules/containers/OpenLibraryButton'
+import PropTypes from 'prop-types'
 import React from 'react'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import WipeLibraryButton from '../../soundModules/containers/WipeLibraryButton'
 
-import { areSoundCategoriesEmpty } from '../../soundCategories/selectors'
+import { categoryStore } from '../../soundCategories'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getActiveStoryName } from '../selectors'
+import { OpenLibraryButton } from '../../soundLibraries/components'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceLoadFromButton } from './WorkspaceLoadFromButton'
+import { WorkspaceWipeButton } from './WorkspaceWipeButton'
 
 const styles = {
   list: {
@@ -47,13 +48,6 @@ class MainMenuComponent extends React.Component {
   render () {
     const { activeStory, classes } = this.props
     const { drawerOpen } = this.state
-    const menuItems = []
-
-    menuItems.push(<WorkspaceLoadFromButton button buttonComponent={ListItem} key='loadFrom' />)
-    menuItems.push(<OpenLibraryButton button buttonComponent={ListItem} key='open' />)
-    menuItems.push(<Divider key='dividerOps' />)
-    menuItems.push(<WipeLibraryButton button buttonComponent={ListItem} key='wipe' />)
-
     return (
       <React.Fragment>
         <Button onClick={this.handleMenuOpen}>
@@ -74,7 +68,10 @@ class MainMenuComponent extends React.Component {
             tabIndex={0}
           >
             <List>
-              {menuItems}
+              <WorkspaceLoadFromButton button buttonComponent={ListItem} />
+              <OpenLibraryButton button buttonComponent={ListItem} />
+              <Divider />
+              <WorkspaceWipeButton button buttonComponent={ListItem} />
             </List>
           </div>
         </SwipeableDrawer>
@@ -83,9 +80,18 @@ class MainMenuComponent extends React.Component {
   }
 }
 
+MainMenuComponent.propTypes = {
+  activeStory: PropTypes.string,
+  classes: Classes.isRequired
+}
+
+MainMenuComponent.defaultProps = {
+  activeStory: null
+}
+
 const mapStateToProps = state => ({
   activeStory: getActiveStoryName(state),
-  isEmpty: areSoundCategoriesEmpty(state)
+  isEmpty: categoryStore.isEmpty(state)
 })
 
 export const MainMenu = connect(

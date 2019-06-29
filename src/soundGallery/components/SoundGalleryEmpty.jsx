@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
-import { libraryLoad } from '../../soundModules/actions'
+import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { connect } from 'react-redux'
 
 const SoundGalleryEmptyComponent = ({ onLibraryOpen }) => (
@@ -25,7 +25,7 @@ SoundGalleryEmptyComponent.propTypes = {
 
 const mapStateToProps = undefined
 const mapDispatchToProps = {
-  onLibraryOpen: libraryLoad.dialogShow
+  onLibraryOpen: OpenLibraryDialog.open
 }
 
 export const SoundGalleryEmpty = connect(

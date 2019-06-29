@@ -1,26 +1,22 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { SoundBoard } from '../../soundBoards/components'
+import { Board } from '../../soundBoards/components'
 import { connect } from 'react-redux'
-import { workspace } from '../actions'
+import { workspaceRoutines } from '../actions'
 
 import * as constants from '../constants'
-
-const mapDispatchToProps = {
-  onSoundPickerOpen: payload => workspace.selectView(constants.VIEW_LIBRARY, {
-    target: payload
-  })
-}
 
 const SoundBoardViewComponent = ({
   board,
   onSoundPickerOpen
 }) => (
-  <SoundBoard
-    onSoundPickerOpen={onSoundPickerOpen}
-    uuid={board}
-  />
+  <React.Fragment>
+    <Board
+      onSoundPickerOpen={onSoundPickerOpen}
+      uuid={board}
+    />
+  </React.Fragment>
 )
 
 SoundBoardViewComponent.displayName = 'SoundBoardView'
@@ -31,6 +27,12 @@ SoundBoardViewComponent.propTypes = {
 
 SoundBoardViewComponent.defaultProps = {
   board: null
+}
+
+const mapDispatchToProps = {
+  onSoundPickerOpen: payload => workspaceRoutines.selectView(constants.VIEW_LIBRARY, {
+    target: payload
+  })
 }
 
 export const SoundBoardView = connect(

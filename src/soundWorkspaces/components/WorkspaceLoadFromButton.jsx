@@ -2,7 +2,7 @@ import LabelButton from '../../components/LabelButton'
 import OpenInBrowser from '@material-ui/icons/OpenInBrowser'
 
 import { connect } from 'react-redux'
-import { workspaceLoad } from '../actions'
+import { WorkspaceLoadDialog } from './WorkspaceLoadDialog'
 
 const mapStateToProps = () => ({
   children: 'Open Configuration',
@@ -10,10 +10,12 @@ const mapStateToProps = () => ({
 })
 
 const mapDispatchToProps = {
-  onClick: workspaceLoad.dialogOpen
+  onClick: WorkspaceLoadDialog.open
 }
 
 export const WorkspaceLoadFromButton = connect(
   mapStateToProps,
   mapDispatchToProps
 )(LabelButton)
+
+WorkspaceLoadFromButton.displayName = 'WorkspaceLoadFromButton'

@@ -1,7 +1,7 @@
 import sagas from '..'
 
-import { getSagaTester } from '../../../../mock'
-import { soundModule } from '../../actions'
+import { getSagaTester } from '../../../mock'
+import { moduleRoutines } from '../../actions'
 
 import * as localAssetsManager from '../../../LocalAssetsManager'
 

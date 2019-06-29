@@ -1,26 +1,31 @@
-import { combineReducers } from 'redux'
-import { reducer as form } from 'redux-form'
-
-import soundBoards from '../soundBoards/reducers'
-import soundCategories from '../soundCategories/reducers'
 import soundGallery from '../soundGallery/reducers'
-import soundModules from '../soundModules/reducers'
-import sounds from '../sounds/reducers'
-import soundStories from '../soundStories/reducers'
-import soundTags from '../soundTags/reducers'
 import soundWorkspaces from '../soundWorkspaces/reducers'
 
-import { storyLoad } from '../soundStories/actions'
+import { boardStore } from '../soundBoards'
+import { categoryStore } from '../soundCategories'
+import { combineReducers } from 'redux'
+import { createEntitiesReducer } from '../entities'
+import { dialogStore } from '../dialogs'
+import { libraryStore } from '../soundLibraries'
+import { moduleStore } from '../soundModules'
+import { reducer as form } from 'redux-form'
+import { soundStore } from '../sounds'
+import { storyRoutines, storyStore } from '../soundStories'
+import { tagStore } from '../soundTags'
 
 const appReducer = combineReducers({
+  entities: createEntitiesReducer({
+    boards: boardStore.reducer,
+    categories: categoryStore.reducer,
+    dialogs: dialogStore.reducer,
+    libraries: libraryStore.reducer,
+    modules: moduleStore.reducer,
+    sounds: soundStore.reducer,
+    stories: storyStore.reducer,
+    tags: tagStore.reducer
+  }),
   form,
-  soundBoards,
-  soundCategories,
   soundGallery,
-  soundModules,
-  sounds,
-  soundStories,
-  soundTags,
   soundWorkspaces
 })
 
@@ -33,8 +38,8 @@ function normalizeStoryState (state, story) {
 }
 
 export default (state, action) => {
-  if (action.type === storyLoad.SUCCESS) {
-    return normalizeStoryState(state, action.payload)
+  if (action.type === storyRoutines.load.SUCCESS) {
+    return appReducer(normalizeStoryState(state, action.payload), action)
   }
   return appReducer(state, action)
 }

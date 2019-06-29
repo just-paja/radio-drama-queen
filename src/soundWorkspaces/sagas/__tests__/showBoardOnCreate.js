@@ -1,8 +1,8 @@
 import sagas from '..'
 import boardSagas from '../../../soundBoards/sagas'
-import getSagaTester from '../../../../mock/sagaTester'
 
-import { soundBoard } from '../../../soundBoards/actions'
+import { getSagaTester } from '../../../mock'
+import { boardRoutines } from '../../../soundBoards'
 
 jest.mock('uuid/v4', () => ({
   __esModule: true,
@@ -25,7 +25,7 @@ describe('showBoardOnCreate saga', () => {
     })
     sagaTester.runAll(sagas)
     sagaTester.runAll(boardSagas)
-    sagaTester.dispatch(soundBoard.create({
+    sagaTester.dispatch(boardRoutines.create({
       name: 'foo'
     }))
     expect(sagaTester.getState().soundWorkspaces.ui).toMatchObject({

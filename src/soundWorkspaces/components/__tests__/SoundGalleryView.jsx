@@ -1,8 +1,6 @@
 import React from 'react'
 
-import { libraryLoad } from '../../../soundModules/actions'
-import { renderWithContainers } from '../../../../mock'
-import { soundBoard } from '../../../soundBoards/actions'
+import { renderWithContainers } from '../../../mock'
 import { SoundGalleryView } from '..'
 import { workspace, workspaceSound, workspaceTag } from '../../actions'
 
@@ -11,8 +9,8 @@ describe('SoundGalleryView container', () => {
 
   beforeEach(() => {
     comp = renderWithContainers(<SoundGalleryView />, {
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             name: 'foo',
             uuid: 'foo',
@@ -49,11 +47,6 @@ describe('SoundGalleryView container', () => {
     }))
   })
 
-  it('dispatches soundBoard.create on board create', () => {
-    comp.find('SoundGalleryView').props().onBoardCreate()
-    expect(comp.store.getActions()).toContainEqual(soundBoard.create())
-  })
-
   it('dispatches workspace.goBack on gallery go back', () => {
     comp.find('SoundGalleryView').props().onGalleryGoBack({
       board: 'board-1',
@@ -63,10 +56,5 @@ describe('SoundGalleryView container', () => {
       board: 'board-1',
       category: 'category-1'
     }))
-  })
-
-  it('dispatches libraryLoad show dialog on library open', () => {
-    comp.find('SoundGalleryView').props().onLibraryOpen()
-    expect(comp.store.getActions()).toContainEqual(libraryLoad.dialogShow())
   })
 })

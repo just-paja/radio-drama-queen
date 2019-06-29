@@ -1,9 +1,8 @@
-import sagas from '..'
-import getSagaTester from '../../../../mock/sagaTester'
-
 import AudioManager from '../../AudioManager'
+import sagas from '..'
 
-import { soundList } from '../../actions'
+import { getSagaTester } from '../../../mock'
+import { soundRoutines } from '../../actions'
 
 describe('soundToggle saga', () => {
   beforeEach(() => {
@@ -13,8 +12,8 @@ describe('soundToggle saga', () => {
 
   it('dispatches play action when sound is not playing', () => {
     const sagaTester = getSagaTester({
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'foo',
             playing: false
@@ -23,14 +22,14 @@ describe('soundToggle saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.toggle('foo'))
-    expect(sagaTester.numCalled(soundList.PLAY)).toBe(1)
+    sagaTester.dispatch(soundRoutines.toggle('foo'))
+    expect(sagaTester.numCalled(soundRoutines.play.TRIGGER)).toBe(1)
   })
 
   it('dispatches stop action when sound is playing', () => {
     const sagaTester = getSagaTester({
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'foo',
             playing: true
@@ -39,7 +38,7 @@ describe('soundToggle saga', () => {
       }
     })
     sagaTester.runAll(sagas)
-    sagaTester.dispatch(soundList.toggle('foo'))
-    expect(sagaTester.numCalled(soundList.STOP)).toBe(1)
+    sagaTester.dispatch(soundRoutines.toggle('foo'))
+    expect(sagaTester.numCalled(soundRoutines.toggle.TRIGGER)).toBe(1)
   })
 })

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import { getBoards, findBoard } from '../../soundBoards/selectors'
+import { boardStore } from '../../soundBoards'
 
 const getWorkspacesState = state => state.soundWorkspaces
 const getUiState = state => getWorkspacesState(state).ui
@@ -11,12 +11,12 @@ export const getActiveBoardUuid = createSelector(
 )
 
 export const getActiveBoard = createSelector(
-  [getBoards, getActiveBoardUuid],
-  findBoard
+  [boardStore.getAll, getActiveBoardUuid],
+  (boards, uuid) => boards.find(board => board.uuid === uuid)
 )
 
 const getLastUsedBoardUuid = createSelector(
-  getBoards,
+  boardStore.getAll,
   boards => boards[0]
 )
 

@@ -1,23 +1,22 @@
+import { boardRoutines } from '../../soundBoards'
 import { call, put, takeEvery } from 'redux-saga/effects'
-
-import { workspaceTag } from '../actions'
-import { soundBoard } from '../../soundBoards/actions'
-import { categoryList } from '../../soundCategories/actions'
+import { categoryRoutines } from '../../soundCategories'
 import { createDefaultBoard } from './createDefaultBoard'
+import { tagRoutines } from '../../soundTags'
 
 function * addToBoard ({ payload, meta }) {
   if (meta && meta.target && meta.target.category) {
-    yield put(categoryList.tagAdd(meta.target.category, payload))
+    yield put(categoryRoutines.tagAdd(meta.target.category, payload))
   } else if (meta && meta.target && meta.target.board) {
-    yield put(soundBoard.tagAdd(meta.target.board, payload))
+    yield put(boardRoutines.tagAdd(meta.target.board, payload))
   } else {
     const board = yield call(createDefaultBoard)
-    yield put(soundBoard.tagAdd(board.uuid, payload))
+    yield put(boardRoutines.tagAdd(board.uuid, payload))
   }
 }
 
 function * handleTagAdd () {
-  yield takeEvery(workspaceTag.ADD_TO_BOARD, addToBoard)
+  yield takeEvery(tagRoutines.addToBoard.TRIGGER, addToBoard)
 }
 
 export default [

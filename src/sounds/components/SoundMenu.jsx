@@ -3,8 +3,9 @@ import React from 'react'
 import Edit from '@material-ui/icons/Edit'
 
 import { connect } from 'react-redux'
-import { Children } from '../../proptypes'
 import { ContextMenuControl, ContextMenuOptions } from '../../components'
+import { Children } from '../../proptypes'
+import { SoundEditDialog } from './SoundEditDialog'
 
 class SoundMenuComponent extends React.Component {
   constructor (props) {
@@ -44,7 +45,7 @@ SoundMenuComponent.defaultProps = {
 }
 
 const mapDispatchToProps = {
-  onEdit: () => {}
+  onEdit: SoundEditDialog.open
 }
 
 export const SoundMenu = connect(undefined, mapDispatchToProps)(SoundMenuComponent)

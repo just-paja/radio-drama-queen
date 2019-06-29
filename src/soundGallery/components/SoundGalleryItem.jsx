@@ -39,8 +39,8 @@ class SoundGalleryItem extends Component {
   }
 
   handleAdd () {
-    const { onAdd, sound: { uuid }, target } = this.props
-    onAdd(uuid, { target })
+    const { onAdd, sound: { uuid }, target: { board, category } } = this.props
+    onAdd({ board, category, sound: uuid })
   }
 
   handleTagAdd (tag) {

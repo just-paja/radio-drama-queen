@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { DragDropContextProvider } from 'react-dnd'
-import { OpenLibraryDialog } from './soundModules/components'
+import { OpenLibraryDialog } from './soundLibraries/components'
 import { Provider } from 'react-redux'
 import { StoryCreateDialog } from './soundStories/components'
+import { SoundEditDialog } from './sounds/components'
 import { theme } from './theme'
 import { ThemeProvider, withStyles } from '@material-ui/styles'
 import { WorkspaceLoadDialog, WorkspaceSaveDialog, WorkspaceView } from './soundWorkspaces/components'
@@ -43,6 +44,7 @@ class App extends React.Component {
             <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
               <WorkspaceView />
               <OpenLibraryDialog />
+              <SoundEditDialog />
               <StoryCreateDialog />
               <WorkspaceLoadDialog />
               <WorkspaceSaveDialog />
