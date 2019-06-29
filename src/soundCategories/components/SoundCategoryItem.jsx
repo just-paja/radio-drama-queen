@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
-
+import { CategoryItemMenu } from './CategoryItemMenu'
+import { Sound } from '../../sounds/proptypes'
 import { SoundName, SoundStatusIcon } from '../../sounds/components'
 import { SoundPlaybackInfo } from './SoundPlaybackInfo'
-import { Sound } from '../../sounds/proptypes'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
-  container: {
-    width: '100%'
-  },
   button: {
     alignItems: 'stretch',
     flexDirection: 'column',
@@ -60,57 +57,65 @@ class SoundCategoryItem extends Component {
   }
 
   handleToggle () {
-    const { onToggle, sound } = this.props
-    onToggle(sound.uuid)
+    this.props.onToggle(this.props.sound.uuid)
   }
 
   render () {
     const {
+      categoryUuid,
       classes,
       connectDragSource,
       search,
       sound
     } = this.props
-    return sound && connectDragSource ? connectDragSource(
-      <div className={classes.container}>
-        <button
-          className={classes.button}
-          disabled={Boolean(sound.error)}
-          onClick={this.handleToggle}
-        >
-          <span className={classes.identification}>
-            <SoundStatusIcon
-              className={classes.icon}
-              error={sound.error}
-              loading={sound.loading}
-              playing={sound.playing}
-              size={21}
-              valid={sound.valid}
-            />
-            <span className={classes.name}>
-              <SoundName
-                name={sound.name}
-                uuid={sound.uuid}
-                highlight={search}
-              />
-            </span>
-          </span>
-          <span className={classes.duration}>
-            <SoundPlaybackInfo
-              duration={sound.duration}
-              playing={sound.playing}
-              uuid={sound.uuid}
-            />
-          </span>
-        </button>
-      </div>
-    ) : null
+    const draggable = sound && connectDragSource && connectDragSource(
+      <button
+        className={classes.button}
+        disabled={Boolean(sound.error)}
+        onClick={this.handleToggle}
+        onContextMenu={this.handleContextMenuOpen}
+      >
+        <span className={classes.identification}>
+          <SoundStatusIcon
+            className={classes.icon}
+            error={sound.error}
+            loading={sound.loading}
+            playing={sound.playing}
+            size={21}
+            valid={sound.valid}
+          />
+          <SoundName
+            className={classes.name}
+            name={sound.name}
+            uuid={sound.uuid}
+            highlight={search}
+          />
+        </span>
+        <span className={classes.duration}>
+          <SoundPlaybackInfo
+            duration={sound.duration}
+            playing={sound.playing}
+            uuid={sound.uuid}
+          />
+        </span>
+      </button>
+    )
+
+    return (
+      <CategoryItemMenu
+        categoryUuid={categoryUuid}
+        soundUuid={sound.uuid}
+      >
+        {draggable}
+      </CategoryItemMenu>
+    )
   }
 }
 
 SoundCategoryItem.propTypes = {
-  connectDragSource: PropTypes.func,
+  category: PropTypes.string.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  connectDragSource: PropTypes.func,
   onToggle: PropTypes.func.isRequired,
   search: PropTypes.string,
   sound: Sound.isRequired

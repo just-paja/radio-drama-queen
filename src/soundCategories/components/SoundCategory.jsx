@@ -89,7 +89,7 @@ class SoundCategory extends React.Component {
             <List className={classes.soundList} dense>
               {sounds.map(soundUuid => (
                 <ListItem className={classes.removePadding} key={soundUuid}>
-                  <SoundCategoryItem uuid={soundUuid} />
+                  <SoundCategoryItem categoryUuid={uuid} uuid={soundUuid} />
                 </ListItem>
               ))}
             </List>

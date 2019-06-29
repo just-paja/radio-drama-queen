@@ -1,84 +1,41 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import Delete from '@material-ui/icons/Delete'
-import TextFields from '@material-ui/icons/TextFields'
 import Add from '@material-ui/icons/Add'
-import Menu from '@material-ui/core/Menu'
-import ListItemText from '@material-ui/core/ListItemText'
-import MenuItem from '@material-ui/core/MenuItem'
-import MoreVert from '@material-ui/icons/MoreVert'
+import Delete from '@material-ui/icons/Delete'
+import PropTypes from 'prop-types'
+import React from 'react'
+import TextFields from '@material-ui/icons/TextFields'
 
-import SoundCategoryIconButton from './SoundCategoryIconButton'
+import { ContextMenuUncontrolled, ContextMenuItem } from '../../components'
 
-class SoundCategoryMenu extends Component {
+class SoundCategoryMenu extends React.Component {
   constructor () {
     super()
     this.handleAddSound = this.handleAddSound.bind(this)
-    this.handleMenuClose = this.handleMenuClose.bind(this)
-    this.handleMenuOpen = this.handleMenuOpen.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.handleRename = this.handleRename.bind(this)
-    this.state = {
-      menuAnchor: null
-    }
   }
 
   handleAddSound () {
-    const { onSoundPickerOpen, boardUuid, uuid } = this.props
-    this.handleMenuClose()
-    onSoundPickerOpen({
-      board: boardUuid,
-      category: uuid
+    this.props.onSoundPickerOpen({
+      board: this.props.boardUuid,
+      category: this.props.uuid
     })
   }
 
-  handleMenuClose () {
-    this.setState({ menuAnchor: null })
-  }
-
-  handleMenuOpen (event) {
-    this.setState({ menuAnchor: event.currentTarget })
-  }
-
   handleRemove () {
-    const { onRemove, uuid } = this.props
-    this.handleMenuClose()
-    onRemove(uuid)
+    this.props.onRemove(this.props.uuid)
   }
 
   handleRename () {
-    const { onRename, uuid } = this.props
-    this.handleMenuClose()
-    onRename(uuid)
+    this.props.onRename(this.props.uuid)
   }
 
   render () {
-    const { menuAnchor } = this.state
     return (
-      <div>
-        <SoundCategoryIconButton
-          onClick={this.handleMenuOpen}
-          icon={MoreVert}
-        />
-        <Menu
-          anchorEl={menuAnchor}
-          onClose={this.handleMenuClose}
-          open={Boolean(menuAnchor)}
-        >
-          <MenuItem onClick={this.handleAddSound}>
-            <Add />
-            <ListItemText primary='Add sounds' />
-          </MenuItem>
-          <MenuItem onClick={this.handleRename}>
-            <TextFields />
-            <ListItemText primary='Rename' />
-          </MenuItem>
-          <MenuItem onClick={this.handleRemove}>
-            <Delete />
-            <ListItemText primary='Remove' />
-          </MenuItem>
-        </Menu>
-      </div>
+      <ContextMenuUncontrolled>
+        <ContextMenuItem icon={Add} label='Add sounds' onClick={this.handleAddSound} />
+        <ContextMenuItem icon={TextFields} label='Rename' onClick={this.handleRename} />
+        <ContextMenuItem icon={Delete} label='Remove' onClick={this.handleRemove} />
+      </ContextMenuUncontrolled>
     )
   }
 }
