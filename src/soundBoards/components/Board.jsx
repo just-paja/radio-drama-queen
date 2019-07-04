@@ -25,9 +25,8 @@ const styles = theme => ({
     flexGrow: 1
   },
   gridSpacing: {
-    padding: theme.spacing(1),
     minWidth: 320,
-    alignContent: 'start'
+    padding: theme.spacing(1)
   },
   canDrop: {
     background: theme.palette.dropTarget
@@ -77,25 +76,20 @@ class BoardComponent extends Component {
     const gridClasses = classnames(classes.grow, classes.gridSpacing, {
       [classes.canDrop]: isOver && canDrop
     })
-    let content
-    if (categories.length === 0) {
-      content = (<BoardEmpty board={uuid} />)
-    } else {
-      content = []
-      content.push(renderCategories(categories, onSoundPickerOpen))
-    }
     // Wrapping div is necessary for react-dnd
     return connectDropTarget(
       <div className={classes.board}>
-        <BoardRenameDialog boardUuid={uuid} />
         <Grid className={gridClasses} container>
-          {content}
-          <BoardSpeedDial
-            boardUuid={uuid}
-            onSoundAdd={this.handleSoundPickerOpen}
-          />
+          {categories.length > 0
+            ? renderCategories(categories, onSoundPickerOpen)
+            : <BoardEmpty board={uuid} />
+          }
           {renderSnackbar(isOver, canDrop)}
         </Grid>
+        <BoardSpeedDial
+          boardUuid={uuid}
+          onSoundAdd={this.handleSoundPickerOpen}
+        />
       </div>
     )
   };

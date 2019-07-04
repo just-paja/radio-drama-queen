@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions'
 import { boardRoutines } from '../../soundBoards'
 import { storyRoutines } from '../../soundStories'
-import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
+import { VIEW_BOARD, VIEW_STORIES } from '../constants'
 import { workspaceRoutines } from '../actions'
 
 const initialState = {
   story: null,
   board: null,
-  view: VIEW_LIBRARY
+  view: VIEW_STORIES
 }
 
 function selectStory (state, action) {

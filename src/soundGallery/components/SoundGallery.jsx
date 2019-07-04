@@ -42,28 +42,28 @@ const SoundGallery = ({
     )
   } else {
     content = (
-      <div>
-        <SoundGallerySearch />
-        <SoundGalleryItemList
-          onSoundAdd={onAddSound}
-          onTagAdd={onAddTag}
+      <div className={classes.box}>
+        <SoundGalleryTarget
+          board={target.board}
+          category={target.category}
+          onGoBack={onGoBack}
         />
+        <div className={classes.layout}>
+          <SoundGallerySearch />
+          <SoundGalleryItemList
+            onSoundAdd={onAddSound}
+            onTagAdd={onAddTag}
+          />
+        </div>
       </div>
     )
   }
 
   return (
-    <div className={classes.box}>
-      <SoundGalleryTarget
-        board={target.board}
-        category={target.category}
-        onGoBack={onGoBack}
-      />
-      <div className={classes.layout}>
-        {content}
-        <SoundGallerySpeedDial onBoardCreate={onBoardCreate} />
-      </div>
-    </div>
+    <React.Fragment>
+      {content}
+      <SoundGallerySpeedDial onBoardCreate={onBoardCreate} />
+    </React.Fragment>
   )
 }
 

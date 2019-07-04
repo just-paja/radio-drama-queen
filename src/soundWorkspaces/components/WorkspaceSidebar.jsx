@@ -6,7 +6,6 @@ import { getActiveStoryName } from '../selectors'
 import { SoundBoardSelection } from './SoundBoardSelection'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceSaveButton } from '../../soundStories/components'
-import { WorkspaceSelection } from './WorkspaceSelection'
 
 const styles = theme => ({
   sidebar: {
@@ -34,9 +33,6 @@ const styles = theme => ({
     left: theme.spacing(2),
     marginTop: 'auto',
     position: 'fixed'
-  },
-  stretch: {
-    width: '100%'
   }
 })
 
@@ -47,7 +43,6 @@ function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
         <div className={classes.overlay}>
           {activeStory && (
             <React.Fragment>
-              <WorkspaceSelection className={classes.stretch} />
               <SoundBoardSelection />
             </React.Fragment>
           )}

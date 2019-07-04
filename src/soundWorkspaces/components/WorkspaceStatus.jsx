@@ -13,6 +13,7 @@ import { soundStore } from '../../sounds'
 import { LibraryStat } from './LibraryStat'
 import { MainMenu } from './MainMenu'
 import { StopAllButton } from '../../sounds/components'
+import { WorkspaceSelection } from './WorkspaceSelection'
 import { withStyles } from '@material-ui/core/styles'
 import {
   countBoardSounds,
@@ -69,6 +70,7 @@ const WorkspaceStatusComponent = ({
 }) => (
   <header className={classes.header}>
     <MainMenu />
+    <WorkspaceSelection />
     <StopAllButton className={classes.stopAllButton} />
     <span className={classes.icons}>
       <LibraryStat number={playingSounds} icon={PlayArrowIcon} title='Playing' />

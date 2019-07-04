@@ -8,9 +8,9 @@ import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
 import { isGalleryEmpty } from '../../soundGallery/selectors'
 import { SoundBoardView } from './SoundBoardView'
 import { SoundGalleryView } from './SoundGalleryView'
-import { VIEW_BOARD, VIEW_LIBRARY } from '../constants'
+import { StoryView } from './StoryView'
+import { VIEW_BOARD, VIEW_LIBRARY, VIEW_STORIES } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
-import { WorkspaceEmpty } from './WorkspaceEmpty'
 import { WorkspaceSidebar } from './WorkspaceSidebar'
 import { WorkspaceStatus } from './WorkspaceStatus'
 
@@ -31,13 +31,16 @@ const styles = theme => ({
 })
 
 function renderContent (empty, board, view) {
-  if (view === VIEW_LIBRARY && !empty) {
+  if (view === VIEW_LIBRARY) {
     return <SoundGalleryView />
   }
-  if (view === VIEW_BOARD && board) {
+  if (view === VIEW_BOARD) {
     return <SoundBoardView board={board} />
   }
-  return <WorkspaceEmpty />
+  if (view === VIEW_STORIES) {
+    return <StoryView />
+  }
+  return null
 }
 
 function WorkspaceViewComponent ({ classes, board, empty, view }) {
