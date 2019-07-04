@@ -6,7 +6,6 @@ import Snackbar from '@material-ui/core/Snackbar'
 import SoundBoardCategory from './SoundBoardCategory'
 
 import { BoardEmpty } from './BoardEmpty'
-import { BoardRenameDialog } from './BoardRenameDialog'
 import { boardRoutines } from '../actions'
 import { BoardSpeedDial } from './BoardSpeedDial'
 import { categoryRoutines } from '../../soundCategories'
@@ -21,9 +20,6 @@ const styles = theme => ({
     flexDirection: 'column',
     flexGrow: 1
   },
-  grow: {
-    flexGrow: 1
-  },
   gridSpacing: {
     minWidth: 320,
     padding: theme.spacing(1)
@@ -33,14 +29,17 @@ const styles = theme => ({
   }
 })
 
-const renderCategories = (categories, onSoundPickerOpen) =>
-  categories.map(categoryUuid => (
-    <SoundBoardCategory
-      key={categoryUuid}
-      onSoundPickerOpen={onSoundPickerOpen}
-      uuid={categoryUuid}
-    />
-  ))
+const renderCategories = (gridClasses, categories, onSoundPickerOpen) => (
+  <Grid alignItems='flex-start' className={gridClasses} container>
+    {categories.map(categoryUuid => (
+      <SoundBoardCategory
+        key={categoryUuid}
+        onSoundPickerOpen={onSoundPickerOpen}
+        uuid={categoryUuid}
+      />
+    ))}
+  </Grid>
+)
 
 const renderSnackbar = (isOver, canDrop) => (
   <Snackbar
@@ -73,19 +72,18 @@ class BoardComponent extends Component {
       onSoundPickerOpen,
       uuid
     } = this.props
-    const gridClasses = classnames(classes.grow, classes.gridSpacing, {
-      [classes.canDrop]: isOver && canDrop
-    })
     // Wrapping div is necessary for react-dnd
     return connectDropTarget(
-      <div className={classes.board}>
-        <Grid className={gridClasses} container>
-          {categories.length > 0
-            ? renderCategories(categories, onSoundPickerOpen)
-            : <BoardEmpty board={uuid} />
-          }
-          {renderSnackbar(isOver, canDrop)}
-        </Grid>
+      <div
+        className={classnames(classes.board, {
+          [classes.canDrop]: isOver && canDrop
+        })}
+      >
+        {categories.length > 0
+          ? renderCategories(classes.gridSpacing, categories, onSoundPickerOpen)
+          : <BoardEmpty board={uuid} />
+        }
+        {renderSnackbar(isOver, canDrop)}
         <BoardSpeedDial
           boardUuid={uuid}
           onSoundAdd={this.handleSoundPickerOpen}
