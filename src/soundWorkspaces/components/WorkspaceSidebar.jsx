@@ -12,7 +12,7 @@ const styles = theme => ({
     background: '#f0f0f0',
     display: 'flex',
     flexDirection: 'column',
-    width: theme.spacing(24)
+    minWidth: theme.spacing(24)
   },
   sticky: {
     display: 'flex',
