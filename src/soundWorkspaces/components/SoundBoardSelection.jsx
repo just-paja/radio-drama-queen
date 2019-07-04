@@ -1,58 +1,29 @@
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import SoundBoardLabel from '../../soundBoards/components/SoundBoardLabel'
+import React from 'react'
 
-import { BoardContextMenu } from '../../soundBoards/components'
 import { connect } from 'react-redux'
 import { getActiveBoardUuid } from '../selectors'
 import { getBoardsWithStatus } from '../../soundBoards/selectors'
 import { SoundBoard } from '../../soundBoards/proptypes'
-import { workspaceRoutines } from '../actions'
+import { SoundBoardSelectionItem } from './SoundBoardSelectionItem'
 
-class SoundBoardSelectionComponent extends Component {
-  constructor () {
-    super()
-    this.handleBoardChange = this.handleBoardChange.bind(this)
-  }
-
-  handleBoardChange (value) {
-    const { activeBoard, onBoardSelect } = this.props
-    onBoardSelect(value || activeBoard)
-  }
-
-  render () {
-    const { activeBoard, boards } = this.props
-    return (
-      <List>
-        {boards.map(board => (
-          <ListItem
-            button
-            key={board.uuid}
-            onClick={() => this.handleBoardChange(board.uuid)}
-            selected={board.uuid === activeBoard}
-          >
-            <ListItemText>
-              <SoundBoardLabel board={board} />
-            </ListItemText>
-            <ListItemSecondaryAction>
-              <BoardContextMenu boardUuid={board.uuid} />
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
-    )
-  }
-}
+const SoundBoardSelectionComponent = ({ activeBoard, boards }) => (
+  <List>
+    {boards.map(board =>
+      <SoundBoardSelectionItem
+        board={board}
+        key={board.uuid}
+        selected={board.uuid === activeBoard}
+      />
+    )}
+  </List>
+)
 
 SoundBoardSelectionComponent.displayName = 'SoundBoardSelection'
 SoundBoardSelectionComponent.propTypes = {
   activeBoard: PropTypes.string,
-  boards: PropTypes.arrayOf(SoundBoard).isRequired,
-  onBoardSelect: PropTypes.func.isRequired
+  boards: PropTypes.arrayOf(SoundBoard).isRequired
 }
 
 SoundBoardSelectionComponent.defaultProps = {
@@ -64,11 +35,6 @@ const mapStateToProps = state => ({
   boards: getBoardsWithStatus(state)
 })
 
-const mapDispatchToProps = {
-  onBoardSelect: workspaceRoutines.selectBoard
-}
-
 export const SoundBoardSelection = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(SoundBoardSelectionComponent)

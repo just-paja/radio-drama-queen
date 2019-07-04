@@ -6,18 +6,14 @@ import TextFields from '@material-ui/icons/TextFields'
 import { BoardRenameDialog } from './BoardRenameDialog'
 import { boardRoutines } from '../actions'
 import { connect } from 'react-redux'
-import { ContextMenuUncontrolled, ContextMenuItem } from '../../components'
+import { ContextMenuControl } from '../../components'
+import { Children } from '../../proptypes'
 
 class BoardContextMenuComponent extends React.Component {
   constructor (props) {
     super(props)
-    this.handleAddSound = this.handleAddSound.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.handleRename = this.handleRename.bind(this)
-  }
-
-  handleAddSound () {
-    this.props.onSoundPickerOpen({ board: this.props.boardUuid })
   }
 
   handleRemove () {
@@ -30,16 +26,21 @@ class BoardContextMenuComponent extends React.Component {
 
   render () {
     return (
-      <ContextMenuUncontrolled>
-        <ContextMenuItem icon={TextFields} label='Rename' onClick={this.handleRename} />
-        <ContextMenuItem icon={Delete} label='Remove' onClick={this.handleRemove} />
-      </ContextMenuUncontrolled>
+      <ContextMenuControl
+        options={[
+          { icon: TextFields, label: 'Rename', onClick: this.handleRename },
+          { icon: Delete, label: 'Remove', onClick: this.handleRemove }
+        ]}
+      >
+        {this.props.children}
+      </ContextMenuControl>
     )
   }
 }
 
 BoardContextMenuComponent.propTypes = {
   boardUuid: PropTypes.string.isRequired,
+  children: Children.isRequired,
   onRemove: PropTypes.func.isRequired,
   onRename: PropTypes.func.isRequired
 }
