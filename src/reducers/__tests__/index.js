@@ -5,19 +5,15 @@ describe('combined reducer', () => {
     expect(reducer(undefined, {})).toHaveProperty('form')
   })
 
-  it('provides soundCategories reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('soundCategories')
+  it('provides entities reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('entities')
   })
 
-  it('provides soundModules reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('soundModules')
+  it('provides soundGallery reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('soundGallery')
   })
 
-  it('provides sounds reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('sounds')
-  })
-
-  it('provides soundTags reducer', () => {
-    expect(reducer(undefined, {})).toHaveProperty('sounds')
+  it('provides soundWorkspaces reducer', () => {
+    expect(reducer(undefined, {})).toHaveProperty('soundWorkspaces')
   })
 })

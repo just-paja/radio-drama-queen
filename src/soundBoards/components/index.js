@@ -1,6 +1,6 @@
-export { default as SoundBoardCategory } from './SoundBoardCategory'
 export { default as SoundBoardLabel } from './SoundBoardLabel'
 export * from './Board'
+export * from './BoardCategory'
 export * from './BoardContextMenu'
 export * from './BoardEmpty'
 export * from './BoardRenameDialog'

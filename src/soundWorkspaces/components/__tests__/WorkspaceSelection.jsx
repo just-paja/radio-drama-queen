@@ -1,20 +1,27 @@
 import React from 'react'
 
+import { workspaceRoutines } from '../../actions'
 import { renderWithContainers } from '../../../mock'
 import { WorkspaceSelection } from '..'
 
 describe('WorkspaceSelection component', () => {
   it('renders view library button', () => {
     const comp = renderWithContainers(<WorkspaceSelection />)
-    expect(comp).toContainMatchingElement('ForwardRef(BottomNavigationAction)[value="VIEW_LIBRARY"]')
+    expect(comp).toContainMatchingElement('ForwardRef(ToggleButton)[value="VIEW_LIBRARY"]')
   })
 
   it('triggers view change on toggle button group change', () => {
-    const comp = renderWithContainers(<WorkspaceSelection />)
-    comp.find('ForwardRef(BottomNavigationAction)[value="VIEW_LIBRARY"]').simulate('click')
-    expect(comp.store.getActions()).toContainEqual({
-      type: 'WORKSPACE/SELECT_VIEW',
-      payload: 'VIEW_LIBRARY'
-    })
+    const state = {
+      soundWorkspaces: {
+        ui: {
+          story: 'story-1'
+        }
+      }
+    }
+    const comp = renderWithContainers(<WorkspaceSelection />, state)
+    comp.find('ForwardRef(ToggleButton)[value="VIEW_LIBRARY"]').simulate('click')
+    expect(comp.store.getActions()).toContainEqual(
+      workspaceRoutines.selectView('VIEW_LIBRARY')
+    )
   })
 })

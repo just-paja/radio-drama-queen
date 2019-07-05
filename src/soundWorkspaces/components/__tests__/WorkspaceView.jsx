@@ -52,27 +52,4 @@ describe('WorkspaceView component', () => {
     })
     expect(comp).toContainMatchingElement('SoundBoardView')
   })
-
-  it('renders empty when given board view but no board', () => {
-    const comp = renderWithDnd(<WorkspaceView />, {
-      soundWorkspaces: {
-        ui: {
-          story: 'x1',
-          view: 'VIEW_BOARD'
-        }
-      }
-    })
-    expect(comp).toContainMatchingElement('WorkspaceEmpty')
-  })
-
-  it('renders workspace empty board dialog given view is null', () => {
-    const comp = renderWithDnd(<WorkspaceView />, {
-      soundWorkspaces: {
-        ui: {
-          view: null
-        }
-      }
-    })
-    expect(comp).toContainMatchingElement('WorkspaceEmpty')
-  })
 })

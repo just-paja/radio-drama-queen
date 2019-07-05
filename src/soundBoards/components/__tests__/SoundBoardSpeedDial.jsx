@@ -1,37 +1,23 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
+import { boardRoutines } from '../../actions'
+import { renderWithContainers } from '../../../mock'
+import { BoardSpeedDial } from '..'
 
-import { SoundBoardSpeedDial } from '..'
-
-describe('SoundBoardSpeedDial component', () => {
+describe('BoardSpeedDial component', () => {
   it('triggers onBoardCreate on create board action click', () => {
-    const onBoardCreate = jest.fn()
-    const comp = shallow(
-      <SoundBoardSpeedDial
-        boardUuid='x32'
-        categories={[]}
-        onBoardCreate={onBoardCreate}
-        onBoardRename={() => {}}
-        onCategoryCreate={() => {}}
-      />
+    const comp = renderWithContainers(
+      <BoardSpeedDial boardUuid='x32' />
     )
-    comp.find('[tooltipTitle="Create Board"]').simulate('click')
-    expect(onBoardCreate).toHaveBeenCalled()
+    comp.find('button[title="Create Board"]').simulate('click')
+    expect(comp.store.getActions()).toContainEqual(boardRoutines.create())
   })
 
   it('triggers onCategoryCreate on create board action click', () => {
-    const onCategoryCreate = jest.fn()
-    const comp = shallow(
-      <SoundBoardSpeedDial
-        boardUuid='x32'
-        categories={[]}
-        onBoardCreate={() => {}}
-        onBoardRename={() => {}}
-        onCategoryCreate={onCategoryCreate}
-      />
+    const comp = renderWithContainers(
+      <BoardSpeedDial boardUuid='x32' />
     )
-    comp.find('[tooltipTitle="Create Category"]').simulate('click')
-    expect(onCategoryCreate).toHaveBeenCalled()
+    comp.find('button[title="Create Category"]').simulate('click')
+    expect(comp.store.getActions()).toContainEqual(boardRoutines.createCategory('x32'))
   })
 })

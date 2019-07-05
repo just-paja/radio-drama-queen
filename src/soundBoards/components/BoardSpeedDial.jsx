@@ -6,6 +6,7 @@ import React from 'react'
 import SceneSpeedDial from '../../components/SceneSpeedDial'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 
+import { noArgs } from '../../components'
 import { BoardRenameDialog } from './BoardRenameDialog'
 import { boardRoutines } from '../actions'
 import { connect } from 'react-redux'
@@ -43,15 +44,15 @@ BoardSpeedDialComponent.propTypes = {
 
 const mapDispatchToProps = {
   onCategoryCreate: boardRoutines.createCategory,
-  onBoardCreate: boardRoutines.create,
-  onBoardRename: BoardRenameDialog.open
+  onBoardCreate: noArgs(boardRoutines.create),
+  onBoardRename: noArgs(BoardRenameDialog.open)
 }
 
 function mergeProps (stateProps, dispatchProps, ownProps) {
   return {
+    ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    ...ownProps,
     onCategoryCreate: () => dispatchProps.onCategoryCreate(ownProps.boardUuid)
   }
 }

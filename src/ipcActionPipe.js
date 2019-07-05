@@ -3,7 +3,9 @@ import { put, take } from 'redux-saga/effects'
 export const ipcRenderer = global.require && global.require('electron').ipcRenderer
 
 export function say (action) {
-  return ipcRenderer.send('frontendSays', action)
+  if (ipcRenderer) {
+    return ipcRenderer.send('frontendSays', action)
+  }
 }
 
 export function * request (routine, payload, matcher) {

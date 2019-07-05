@@ -1,4 +1,4 @@
-import getSagaTester from '../../../mock/sagaTester'
+import { getSagaTester } from '../../mock'
 
 import * as logger from '../../clientLogger'
 import mainSaga from '..'

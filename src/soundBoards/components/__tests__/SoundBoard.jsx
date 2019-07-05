@@ -1,23 +1,18 @@
 import React from 'react'
 
 import { renderWithDnd } from '../../../mock'
-import { SoundBoard } from '..'
+import { Board } from '..'
 
-describe('SoundBoard component', () => {
+describe('Board component', () => {
   const state = {
-    soundBoards: {
-      list: [
+    entities: {
+      boards: [
         {
           name: 'Board 1',
           uuid: 'board-1'
         }
       ],
-      ui: {
-        showCreateForm: true
-      }
-    },
-    soundCategories: {
-      list: [
+      categories: [
         {
           name: 'foo',
           uuid: 'category-1',
@@ -39,45 +34,31 @@ describe('SoundBoard component', () => {
           sounds: [],
           volume: 1
         }
-      ]
-    },
-    sounds: {
-      list: []
+      ],
+      sounds: []
     }
   }
 
   it('renders board speed dial', () => {
     const comp = renderWithDnd(
-      <SoundBoard
+      <Board
         uuid='board-1'
         onSoundPickerOpen={() => {}}
         categories={[]}
       />,
       state
     )
-    expect(comp).toContainMatchingElement('Connect(SoundBoardSpeedDial)')
-  })
-
-  it('renders create form when given showCreateForm flag', () => {
-    const comp = renderWithDnd(
-      <SoundBoard
-        uuid='board-1'
-        onSoundPickerOpen={() => {}}
-        categories={[]}
-      />,
-      state
-    )
-    expect(comp).toContainMatchingElement('SoundBoardCategoryCreateForm')
+    expect(comp).toContainMatchingElement('BoardSpeedDial')
   })
 
   it('renders categories', () => {
     const comp = renderWithDnd(
-      <SoundBoard
+      <Board
         uuid='board-1'
         onSoundPickerOpen={() => {}}
       />,
       state
     )
-    expect(comp).toContainMatchingElement('SoundBoardCategory')
+    expect(comp).toContainMatchingElement('BoardCategory[uuid="category-1"]')
   })
 })

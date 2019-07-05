@@ -3,8 +3,8 @@ import Grid from '@material-ui/core/Grid'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
-import SoundBoardCategory from './SoundBoardCategory'
 
+import { BoardCategory } from './BoardCategory'
 import { BoardEmpty } from './BoardEmpty'
 import { boardRoutines } from '../actions'
 import { BoardSpeedDial } from './BoardSpeedDial'
@@ -32,7 +32,7 @@ const styles = theme => ({
 const renderCategories = (gridClasses, categories, onSoundPickerOpen) => (
   <Grid alignItems='flex-start' className={gridClasses} container>
     {categories.map(categoryUuid => (
-      <SoundBoardCategory
+      <BoardCategory
         key={categoryUuid}
         onSoundPickerOpen={onSoundPickerOpen}
         uuid={categoryUuid}

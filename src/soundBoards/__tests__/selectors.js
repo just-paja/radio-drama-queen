@@ -1,29 +1,10 @@
 import * as selectors from '..'
 
 describe('soundBoards selectors', () => {
-  it('getBoards returns list of boards', () => {
-    const state = {
-      soundBoards: {
-        list: [
-          {
-            uuid: 'uuid-test',
-            name: 'foo'
-          }
-        ]
-      }
-    }
-    expect(selectors.getBoards(state)).toEqual([
-      {
-        uuid: 'uuid-test',
-        name: 'foo'
-      }
-    ])
-  })
-
   it('getBoardsWithStatus returns boards with playing flag when one of its sounds is playing', () => {
     const state = {
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             path: 'http://example.com/foo',
             uuid: 'uuid-sound-1',
@@ -34,20 +15,16 @@ describe('soundBoards selectors', () => {
             uuid: 'uuid-sound-2',
             playing: true
           }
-        ]
-      },
-      soundCategories: {
-        list: [
+        ],
+        categories: [
           {
             uuid: 'uuid-category',
             name: 'bar',
             sounds: ['uuid-sound-1', 'uuid-sound-2'],
             board: 'uuid-board-1'
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'uuid-board-1',
             name: 'foo'
@@ -73,27 +50,10 @@ describe('soundBoards selectors', () => {
     ])
   })
 
-  it('getBoard returns board by uuid', () => {
-    const state = {
-      soundBoards: {
-        list: [
-          {
-            uuid: 'uuid-board-1',
-            name: 'foo'
-          }
-        ]
-      }
-    }
-    expect(selectors.getBoard(state, 'uuid-board-1')).toEqual({
-      uuid: 'uuid-board-1',
-      name: 'foo'
-    })
-  })
-
   it('getBoardCategories returns board category list', () => {
     const state = {
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'uuid-category-1',
             name: 'bar',
@@ -106,10 +66,8 @@ describe('soundBoards selectors', () => {
             sounds: [],
             board: 'uuid-board-2'
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'uuid-board-1',
             name: 'foo'
@@ -129,18 +87,16 @@ describe('soundBoards selectors', () => {
 
   it('getBoardCategoryByName returns board category with name given it exists', () => {
     const state = {
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'uuid-category',
             name: 'bar',
             sounds: ['uuid-sound-1', 'uuid-sound-2'],
             board: 'uuid-board-1'
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'uuid-board-1',
             name: 'foo'
@@ -158,18 +114,16 @@ describe('soundBoards selectors', () => {
 
   it('getBoardCategoryByName returns undefined given category exists, but does not belong to the board', () => {
     const state = {
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'uuid-category',
             name: 'bar',
             sounds: ['uuid-sound-1', 'uuid-sound-2'],
             board: 'uuid-board-2'
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'uuid-board-1',
             name: 'foo'
@@ -182,18 +136,16 @@ describe('soundBoards selectors', () => {
 
   it('getBoardCategoryByName returns undefined given category with such name does not exist', () => {
     const state = {
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'uuid-category',
             name: 'foo',
             sounds: ['uuid-sound-1', 'uuid-sound-2'],
             board: 'uuid-board-1'
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'uuid-board-1',
             name: 'foo'
@@ -206,8 +158,8 @@ describe('soundBoards selectors', () => {
 
   it('getBoardCategoryUuids returns list of board category uuids', () => {
     const state = {
-      soundCategories: {
-        list: [
+      entities: {
+        categories: [
           {
             uuid: 'uuid-category-1',
             name: 'foo',
@@ -220,10 +172,8 @@ describe('soundBoards selectors', () => {
             sounds: [],
             board: 'uuid-board-1'
           }
-        ]
-      },
-      soundBoards: {
-        list: [
+        ],
+        boards: [
           {
             uuid: 'uuid-board-1',
             name: 'foo'
@@ -235,16 +185,5 @@ describe('soundBoards selectors', () => {
       'uuid-category-1',
       'uuid-category-2'
     ])
-  })
-
-  it('isCategoryCreateFormVisible returns showCreateForm flag', () => {
-    const state = {
-      soundBoards: {
-        ui: {
-          showCreateForm: true
-        }
-      }
-    }
-    expect(selectors.isCategoryCreateFormVisible(state)).toBe(true)
   })
 })

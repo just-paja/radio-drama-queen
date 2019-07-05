@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import soundWorkspaceUi from './soundWorkspaceUi'
+import ui from './ui'
 
 export default combineReducers({
-  ui: soundWorkspaceUi
+  ui
 })

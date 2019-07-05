@@ -9,7 +9,7 @@ import ipcActionPipe from './ipcActionPipe'
 
 export const sagaMiddleware = createSagaMiddleware()
 
-const DEVELOPMENT = process.env.NODE_ENV !== 'production' // eslint-disable-line no-undef
+const DEVELOPMENT = process.env.NODE_ENV === 'development'
 let store
 
 export default function configureStore (initialState = {}) {

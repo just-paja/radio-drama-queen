@@ -10,6 +10,7 @@ function CategoryNameComponent ({ name, uuid }) {
   )
 }
 
+CategoryNameComponent.displayName = 'CategoryName'
 CategoryNameComponent.propTypes = {
   name: PropTypes.string,
   uuid: PropTypes.string.isRequired

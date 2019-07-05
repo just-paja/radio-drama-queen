@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { workspace } from '../../actions'
+import { workspaceRoutines } from '../../actions'
 import { renderWithDnd } from '../../../mock'
 import { SoundBoardView } from '..'
 
@@ -30,7 +30,7 @@ describe('SoundBoardView component', () => {
       board: 'board-1',
       category: 'category-1'
     })
-    expect(comp.store.getActions()).toContainEqual(workspace.selectView('VIEW_LIBRARY', {
+    expect(comp.store.getActions()).toContainEqual(workspaceRoutines.selectView('VIEW_LIBRARY', {
       target: {
         board: 'board-1',
         category: 'category-1'

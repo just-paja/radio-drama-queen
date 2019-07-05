@@ -117,6 +117,7 @@ class CategoryComponent extends React.Component {
   }
 }
 
+CategoryComponent.displayName = 'Category'
 CategoryComponent.propTypes = {
   boardUuid: PropTypes.string.isRequired,
   canDrop: PropTypes.bool,

@@ -5,17 +5,35 @@ import { renderWithDnd } from '../../../mock'
 
 describe('Category component', () => {
   it('renders category name', () => {
+    const state = {
+      entities: {
+        boards: [
+          {
+            uuid: 'board-1',
+            categories: ['category-1']
+          }
+        ],
+        categories: [
+          {
+            board: 'board-1',
+            name: 'Test category',
+            uuid: 'category-1',
+            volume: 50,
+            sounds: ['sound-1']
+          }
+        ],
+        sounds: [
+          {
+            uuid: 'sound-1'
+          }
+        ]
+      }
+    }
     const comp = renderWithDnd(
-      <Category
-        boardUuid='board1'
-        onSoundPickerOpen={() => {}}
-        connectDropTarget={children => children}
-        name='Test category'
-        sounds={[]}
-        uuid='category-1'
-      />
+      <Category onSoundPickerOpen={() => {}} uuid='category-1' />,
+      state
     )
-    expect(comp.find('SoundCategoryName')).toHaveProp('name', 'Test category')
+    expect(comp.find('CategoryName')).toHaveProp('name', 'Test category')
   })
 
   it('renders category sounds', () => {
@@ -29,7 +47,9 @@ describe('Category component', () => {
         ],
         categories: [
           {
+            board: 'board-1',
             uuid: 'category-1',
+            volume: 50,
             sounds: ['sound-1']
           }
         ],
@@ -44,7 +64,8 @@ describe('Category component', () => {
       <Category
         onSoundPickerOpen={() => {}}
         uuid='category-1'
-      />
+      />,
+      state
     )
     expect(comp.find('CategoryItem')).toHaveProp('uuid', 'sound-1')
   })
@@ -60,7 +81,9 @@ describe('Category component', () => {
         ],
         categories: [
           {
+            board: 'board-1',
             uuid: 'category-1',
+            volume: 50,
             sounds: ['sound-1']
           }
         ],
@@ -79,39 +102,5 @@ describe('Category component', () => {
       state
     )
     expect(comp).toContainMatchingElement('CategoryControls[uuid="category-1"]')
-  })
-
-  it('renders open snackbar when drag is over and can be dropped', () => {
-    const state = {
-      entities: {
-        boards: [
-          {
-            uuid: 'board-1',
-            categories: ['category-1']
-          }
-        ],
-        categories: [
-          {
-            uuid: 'category-1',
-            sounds: ['sound-1']
-          }
-        ],
-        sounds: [
-          {
-            uuid: 'sound-1'
-          }
-        ]
-      }
-    }
-    const comp = renderWithDnd(
-      <Category
-        onSoundPickerOpen={() => {}}
-        canDrop
-        isOver
-        uuid='category-1'
-      />,
-      state
-    )
-    expect(comp.find('WithStyles(ForwardRef(Snackbar))')).toHaveProp('open', true)
   })
 })

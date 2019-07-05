@@ -11,7 +11,7 @@ const styles = theme => ({
   }
 })
 
-const SoundBoardCategory = ({
+const BoardCategoryComponent = ({
   classes,
   children,
   onSoundPickerOpen,
@@ -27,7 +27,8 @@ const SoundBoardCategory = ({
   </Grid>
 )
 
-SoundBoardCategory.propTypes = {
+BoardCategoryComponent.displayName = 'BoardCategory'
+BoardCategoryComponent.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
@@ -37,9 +38,9 @@ SoundBoardCategory.propTypes = {
   uuid: PropTypes.string
 }
 
-SoundBoardCategory.defaultProps = {
+BoardCategoryComponent.defaultProps = {
   children: null,
   uuid: null
 }
 
-export default withStyles(styles)(SoundBoardCategory)
+export const BoardCategory = withStyles(styles)(BoardCategoryComponent)

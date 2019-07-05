@@ -3,8 +3,8 @@ import { getGallerySoundList } from '..'
 describe('soundGallery getGallerySoundList selector', () => {
   it('returns item with multiple relevant tags', () => {
     const state = {
-      sounds: {
-        list: [
+      entities: {
+        sounds: [
           {
             uuid: 'vroom1',
             file: 'vroom1',
@@ -17,18 +17,9 @@ describe('soundGallery getGallerySoundList selector', () => {
             name: 'vroom2',
             tags: ['spaceship']
           }
-        ]
-      },
-      soundCategories: {
-        list: []
-      },
-      soundGallery: {
-        search: {
-          search: 'ALIEN SPACESHIP'
-        }
-      },
-      soundTags: {
-        list: [
+        ],
+        categories: [],
+        tags: [
           {
             name: 'alien',
             title: {
@@ -42,6 +33,11 @@ describe('soundGallery getGallerySoundList selector', () => {
             }
           }
         ]
+      },
+      soundGallery: {
+        search: {
+          search: 'ALIEN SPACESHIP'
+        }
       }
     }
     expect(getGallerySoundList(state)).toEqual([
