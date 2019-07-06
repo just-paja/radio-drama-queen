@@ -3,11 +3,13 @@ import IconButton from '@material-ui/core/IconButton'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
-
+import { boardStore } from '../../soundBoards'
+import { categoryStore } from '../../soundCategories'
 import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
 import { SoundBoard } from '../../soundBoards/proptypes'
 import { SoundCategory } from '../../soundCategories/proptypes'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = (theme) => ({
   target: {
@@ -23,7 +25,7 @@ const styles = (theme) => ({
   }
 })
 
-const SoundGalleryTarget = ({
+const GalleryTargetComponent = ({
   classes,
   board,
   category,
@@ -57,16 +59,26 @@ const SoundGalleryTarget = ({
   )
 }
 
-SoundGalleryTarget.propTypes = {
+GalleryTargetComponent.displayName = 'GalleryTarget'
+GalleryTargetComponent.propTypes = {
   board: SoundBoard,
   category: SoundCategory,
   classes: Classes.isRequired,
   onGoBack: PropTypes.func.isRequired
 }
 
-SoundGalleryTarget.defaultProps = {
+GalleryTargetComponent.defaultProps = {
   board: null,
   category: null
 }
 
-export default withStyles(styles)(SoundGalleryTarget)
+function mapStateToProps (state, { board, category }) {
+  return {
+    board: boardStore.getFirst(state, board),
+    category: categoryStore.getFirst(state, category)
+  }
+}
+
+export const GalleryTarget = connect(
+  mapStateToProps
+)(withStyles(styles)(GalleryTargetComponent))

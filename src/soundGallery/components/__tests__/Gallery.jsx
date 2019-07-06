@@ -1,13 +1,14 @@
 import React from 'react'
-import SoundGallery from '../SoundGallery'
 
+import { Gallery } from '..'
 import { renderWithContainers } from '../../../mock'
 
-describe('SoundGallery container', () => {
+describe('Gallery container', () => {
   it('provides sounds', () => {
     const state = {
-      sounds: {
-        list: [
+      entities: {
+        categories: [],
+        sounds: [
           {
             name: 'foo',
             uuid: 'foo',
@@ -16,18 +17,17 @@ describe('SoundGallery container', () => {
         ]
       }
     }
-    const comp = renderWithContainers(
-      <SoundGallery
+    const markup = (
+      <Gallery
         onAddSound={() => {}}
         onAddTag={() => {}}
         onBoardCreate={() => {}}
         onConfigOpen={() => {}}
         onGoBack={() => {}}
         onLibraryOpen={() => {}}
-        onSoundAdd={() => {}}
-      />,
-      state
+      />
     )
-    expect(comp.find('SoundGallery')).toHaveProp('librarySize', 1)
+    const comp = renderWithContainers(markup, state)
+    expect(comp.find('Gallery')).toHaveProp('librarySize', 1)
   })
 })

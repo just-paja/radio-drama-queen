@@ -5,7 +5,7 @@ import React from 'react'
 
 import SceneSpeedDial from '../../components/SceneSpeedDial'
 
-const SoundGallerySpeedDial = ({ onBoardCreate }) => (
+const GallerySpeedDialComponent = ({ onBoardCreate }) => (
   <SceneSpeedDial label='Sound Gallery Speed Dial'>
     <SpeedDialAction
       icon={<DashboardIcon />}
@@ -15,8 +15,8 @@ const SoundGallerySpeedDial = ({ onBoardCreate }) => (
   </SceneSpeedDial>
 )
 
-SoundGallerySpeedDial.propTypes = {
+GallerySpeedDialComponent.propTypes = {
   onBoardCreate: PropTypes.func.isRequired
 }
 
-export default SoundGallerySpeedDial
+export const GallerySpeedDial = GallerySpeedDialComponent

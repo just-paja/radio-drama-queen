@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import SoundGalleryItemList from '../containers/SoundGalleryItemList'
-import SoundGallerySearch from '../containers/SoundGallerySearch'
-import SoundGallerySpeedDial from './SoundGallerySpeedDial'
-import SoundGalleryTarget from '../containers/SoundGalleryTarget'
 
 import { Classes } from '../../proptypes'
-import { GalleryTarget } from '../proptypes'
-import { SoundGalleryEmpty } from './SoundGalleryEmpty'
+import { connect } from 'react-redux'
+import { GalleryEmpty } from './GalleryEmpty'
+import { GalleryItemList } from './GalleryItemList'
+import { GallerySearch } from './GallerySearch'
+import { GallerySpeedDial } from './GallerySpeedDial'
+import { GalleryTarget } from './GalleryTarget'
+import { GalleryTarget as GalleryTargetProp } from '../proptypes'
+import { getGalleryTarget } from '../selectors'
+import { soundStore } from '../../sounds'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
@@ -21,7 +24,7 @@ const styles = theme => ({
   }
 })
 
-const SoundGallery = ({
+const GalleryComponent = ({
   classes,
   librarySize,
   onAddSound,
@@ -35,7 +38,7 @@ const SoundGallery = ({
   let content
   if (librarySize === 0) {
     content = (
-      <SoundGalleryEmpty
+      <GalleryEmpty
         onConfigOpen={onConfigOpen}
         onLibraryOpen={onLibraryOpen}
       />
@@ -43,14 +46,14 @@ const SoundGallery = ({
   } else {
     content = (
       <div className={classes.box}>
-        <SoundGalleryTarget
+        <GalleryTarget
           board={target.board}
           category={target.category}
           onGoBack={onGoBack}
         />
         <div className={classes.layout}>
-          <SoundGallerySearch />
-          <SoundGalleryItemList
+          <GallerySearch />
+          <GalleryItemList
             onSoundAdd={onAddSound}
             onTagAdd={onAddTag}
           />
@@ -62,12 +65,13 @@ const SoundGallery = ({
   return (
     <React.Fragment>
       {content}
-      <SoundGallerySpeedDial onBoardCreate={onBoardCreate} />
+      <GallerySpeedDial onBoardCreate={onBoardCreate} />
     </React.Fragment>
   )
 }
 
-SoundGallery.propTypes = {
+GalleryComponent.displayName = 'Gallery'
+GalleryComponent.propTypes = {
   classes: Classes.isRequired,
   librarySize: PropTypes.number.isRequired,
   onAddSound: PropTypes.func.isRequired,
@@ -76,11 +80,18 @@ SoundGallery.propTypes = {
   onConfigOpen: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onLibraryOpen: PropTypes.func.isRequired,
-  target: GalleryTarget
+  target: GalleryTargetProp
 }
 
-SoundGallery.defaultProps = {
+GalleryComponent.defaultProps = {
   GalleryTarget: null
 }
 
-export default withStyles(styles)(SoundGallery)
+function mapStateToProps (state) {
+  return {
+    librarySize: soundStore.getSize(state),
+    target: getGalleryTarget(state)
+  }
+}
+
+export const Gallery = connect(mapStateToProps)(withStyles(styles)(GalleryComponent))

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { connect } from 'react-redux'
 
-const SoundGalleryEmptyComponent = ({ onLibraryOpen }) => (
+const GalleryEmptyComponent = ({ onLibraryOpen }) => (
   <CanvasMessage heading='Sound library is empty!'>
     <Typography gutterBottom>
       The sound library stores all the sounds. You can browse and filter here.
@@ -19,7 +19,7 @@ const SoundGalleryEmptyComponent = ({ onLibraryOpen }) => (
   </CanvasMessage>
 )
 
-SoundGalleryEmptyComponent.propTypes = {
+GalleryEmptyComponent.propTypes = {
   onLibraryOpen: PropTypes.func.isRequired
 }
 
@@ -28,7 +28,7 @@ const mapDispatchToProps = {
   onLibraryOpen: OpenLibraryDialog.open
 }
 
-export const SoundGalleryEmpty = connect(
+export const GalleryEmpty = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SoundGalleryEmptyComponent)
+)(GalleryEmptyComponent)

@@ -1,4 +1,4 @@
-import { createRoutine } from '../../actions/routines'
+import { createRoutine } from '../actions/routines'
 
 export const gallerySound = createRoutine('GALLERY_SOUND', [
   'PLAY'

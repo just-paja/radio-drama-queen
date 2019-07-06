@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect'
 import { getFlag } from 'react-saga-rest'
 
-import { categoryStore } from '../../soundCategories'
-import { clearSearch, splitSearchPatterns, stringSearch } from '../../search'
-import { soundStore } from '../../sounds'
-import { tagStore } from '../../soundTags'
+import { categoryStore } from '../soundCategories'
+import { clearSearch, splitSearchPatterns, stringSearch } from '../search'
+import { soundStore } from '../sounds'
+import { tagStore } from '../soundTags'
 
 const memoizeSearch = state => state.soundGallery.search
 const memoizeTarget = state => state.soundGallery.target

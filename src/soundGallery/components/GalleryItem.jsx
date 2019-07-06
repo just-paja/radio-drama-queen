@@ -3,12 +3,14 @@ import IconButton from '@material-ui/core/IconButton'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
-
-import { SoundTags } from './SoundTags'
-import { SoundStatusIcon } from '../../sounds/components'
-import { GallerySound } from '../proptypes'
 import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
+import { gallerySound } from '../actions'
+import { GallerySound } from '../proptypes'
+import { getGalleryTarget } from '../selectors'
+import { SoundStatusIcon } from '../../sounds/components'
+import { SoundTags } from './SoundTags'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   controls: {
@@ -30,7 +32,7 @@ const styles = theme => ({
   }
 })
 
-class SoundGalleryItem extends Component {
+class GalleryItemComponent extends Component {
   constructor () {
     super()
     this.handlePlayClick = this.handlePlayClick.bind(this)
@@ -80,7 +82,8 @@ class SoundGalleryItem extends Component {
   }
 }
 
-SoundGalleryItem.propTypes = {
+GalleryItemComponent.displayName = 'GalleryItem'
+GalleryItemComponent.propTypes = {
   classes: Classes.isRequired,
   onAdd: PropTypes.func.isRequired,
   onAddTag: PropTypes.func.isRequired,
@@ -88,4 +91,15 @@ SoundGalleryItem.propTypes = {
   sound: GallerySound.isRequired
 }
 
-export default withStyles(styles)(SoundGalleryItem)
+const mapStateToProps = (state, { soundUuid }) => ({
+  target: getGalleryTarget(state)
+})
+
+const mapDispatchToProps = {
+  onPlay: gallerySound.play
+}
+
+export const GalleryItem = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(GalleryItemComponent))

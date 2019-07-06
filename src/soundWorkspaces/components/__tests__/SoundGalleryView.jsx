@@ -2,7 +2,7 @@ import React from 'react'
 
 import { renderWithContainers } from '../../../mock'
 import { SoundGalleryView } from '..'
-import { workspace, workspaceSound, workspaceTag } from '../../actions'
+import { workspaceRoutines } from '../../actions'
 
 describe('SoundGalleryView container', () => {
   let comp
@@ -22,7 +22,7 @@ describe('SoundGalleryView container', () => {
   })
 
   it('renders sound gallery', () => {
-    expect(comp).toContainMatchingElement('Connect(SoundGallery)')
+    expect(comp).toContainMatchingElement('Gallery')
   })
 
   it('dispatches sound.addToBoard on sound add to board', () => {
@@ -30,7 +30,7 @@ describe('SoundGalleryView container', () => {
       board: 'board-1',
       category: 'category-1'
     })
-    expect(comp.store.getActions()).toContainEqual(workspaceSound.addToBoard('sound-1', {
+    expect(comp.store.getActions()).toContainEqual(workspaceRoutines.addSound('sound-1', {
       board: 'board-1',
       category: 'category-1'
     }))
@@ -41,7 +41,7 @@ describe('SoundGalleryView container', () => {
       board: 'board-1',
       category: 'category-1'
     })
-    expect(comp.store.getActions()).toContainEqual(workspaceTag.addToBoard('tag-1', {
+    expect(comp.store.getActions()).toContainEqual(workspaceRoutines.addTag('tag-1', {
       board: 'board-1',
       category: 'category-1'
     }))
@@ -52,7 +52,7 @@ describe('SoundGalleryView container', () => {
       board: 'board-1',
       category: 'category-1'
     })
-    expect(comp.store.getActions()).toContainEqual(workspace.goBack({
+    expect(comp.store.getActions()).toContainEqual(workspaceRoutines.goBack({
       board: 'board-1',
       category: 'category-1'
     }))

@@ -3,14 +3,11 @@ import { createEntityRoutines } from '../entities'
 
 export const workspaceRoutines = createEntityRoutines('WORKSPACE', [
   'ADD_SOUND',
+  'ADD_TAG',
   'GO_BACK',
   'SELECT_BOARD',
   'SELECT_VIEW',
   'WIPE'
-])
-
-export const workspaceTag = createRoutine('WORKSPACE_TAG', [
-  'ADD_TO_BOARD'
 ])
 
 export const workspaceSave = createRoutine('WORKSPACE_SAVE', [

@@ -4,8 +4,8 @@ import React from 'react'
 import { boardRoutines } from '../../soundBoards'
 import { connect } from 'react-redux'
 import { OpenLibraryDialog } from '../../soundLibraries/components'
-import { SoundGallery } from '../../soundGallery/containers'
-import { workspaceRoutines, workspaceLoad, workspaceTag } from '../actions'
+import { Gallery } from '../../soundGallery/components'
+import { workspaceRoutines, workspaceLoad } from '../actions'
 
 const SoundGalleryViewComponent = ({
   onAddSoundToBoard,
@@ -15,7 +15,7 @@ const SoundGalleryViewComponent = ({
   onGalleryGoBack,
   onLibraryOpen
 }) => (
-  <SoundGallery
+  <Gallery
     onAddSound={onAddSoundToBoard}
     onAddTag={onAddTagToBoard}
     onBoardCreate={onBoardCreate}
@@ -41,7 +41,7 @@ SoundGalleryViewComponent.defaultProps = {
 
 const mapDispatchToProps = {
   onAddSoundToBoard: workspaceRoutines.addSound,
-  onAddTagToBoard: workspaceTag.addToBoard,
+  onAddTagToBoard: workspaceRoutines.addTag,
   onBoardCreate: boardRoutines.create,
   onConfigOpen: workspaceLoad.dialogOpen,
   onGalleryGoBack: workspaceRoutines.goBack,

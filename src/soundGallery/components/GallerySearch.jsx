@@ -2,12 +2,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-
-import { withStyles } from '@material-ui/core/styles'
-
 import Input from '../../components/Input'
 
 import { Classes } from '../../proptypes'
+import { connect } from 'react-redux'
+import { gallerySearch } from '../actions'
+import { getSoundSearchValue, getErrorsFilter, getUsedFilter } from '../selectors'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   container: {
@@ -22,7 +23,7 @@ const styles = theme => ({
   }
 })
 
-class SoundSearchForm extends Component {
+class GallerySearchComponent extends Component {
   constructor () {
     super()
     this.handleFilterErrorsChange = this.handleFilterErrorsChange.bind(this)
@@ -88,7 +89,8 @@ class SoundSearchForm extends Component {
   }
 }
 
-SoundSearchForm.propTypes = {
+GallerySearchComponent.displayName = 'GallerySearch'
+GallerySearchComponent.propTypes = {
   classes: Classes.isRequired,
   filterErrors: PropTypes.bool,
   filterUsed: PropTypes.bool,
@@ -98,10 +100,25 @@ SoundSearchForm.propTypes = {
   search: PropTypes.string
 }
 
-SoundSearchForm.defaultProps = {
+GallerySearchComponent.defaultProps = {
   filterErrors: false,
   filterUsed: false,
   search: ''
 }
 
-export default withStyles(styles)(SoundSearchForm)
+const mapStateToProps = state => ({
+  filterErrors: getErrorsFilter(state),
+  filterUsed: getUsedFilter(state),
+  search: getSoundSearchValue(state)
+})
+
+const mapDispatchToProps = {
+  onFilterErrorsChange: gallerySearch.filterErrorsChange,
+  onFilterUsedChange: gallerySearch.filterUsedChange,
+  onChange: gallerySearch.change
+}
+
+export const GallerySearch = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(GallerySearchComponent))
