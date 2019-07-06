@@ -10,7 +10,6 @@ const isQueueRunning = () => queue && !queue.isFinished()
 
 function * loadModuleConfig ({ payload: moduleName }) {
   const module = yield select(moduleStore.getFirst, moduleName)
-  console.log(moduleName, module)
   if (module) {
     const { name, url } = module
     yield put(moduleRoutines.load.request(name))

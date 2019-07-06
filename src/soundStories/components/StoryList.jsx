@@ -39,12 +39,12 @@ class StoryListComponent extends React.Component {
           {stories.map(story => (
             <ListItem
               button
-              key={story.name}
+              key={story.uuid}
               onClick={() => onStorySelect(story.name)}
               selected={story.name === activeStory}
             >
               <ListItemText>
-                {story.name}
+                {story.name || story.uuid}
               </ListItemText>
             </ListItem>
           ))}

@@ -1,35 +1,44 @@
-import { PATH_STORIES } from './paths'
+import { PATH_STORIES, PATH_WORKERS } from './paths'
+
+import generateUuid from 'uuid/v4'
 import jetpack from 'fs-jetpack'
+import path from 'path'
+import workerpool from 'workerpool'
+
+const readStory = workerpool.pool(path.join(
+  PATH_WORKERS,
+  'readStory.js'
+))
 
 export class StoryManager {
   pathHome = PATH_STORIES
 
-  storyNameToFile (storyName) {
-    return `${storyName}.json`
+  storyUuidToFile (uuid) {
+    return `${uuid}.json`
   }
 
-  storyNameToFilePath (storyName) {
-    return jetpack.path(this.pathHome, this.storyNameToFile(storyName))
+  storyUuidToFilePath (uuid) {
+    return jetpack.path(this.pathHome, this.storyUuidToFile(uuid))
   }
 
-  fileToStoryName (file) {
+  fileToStoryUuid (file) {
     return file.substr(0, file.length - 5)
   }
 
   listStories () {
-    return jetpack.listAsync(this.pathHome).then(files => files
-      ? files.map(this.fileToStoryName)
-      : [])
+    return jetpack.listAsync(this.pathHome)
+      .then(files => files ? files.map(this.fileToStoryUuid) : [])
+      .then(uuids => Promise.all(uuids.map(uuid => readStory.exec('readStory', [uuid]))))
   }
 
-  loadStory (storyName) {
-    return jetpack.readAsync(this.storyNameToFilePath(storyName))
-      .then(contents => JSON.parse(contents))
+  loadStory (uuid) {
+    return readStory.exec('readStory', [uuid])
   }
 
   saveStory (story) {
+    const uuid = story.uuid || generateUuid()
     return jetpack
-      .writeAsync(this.storyNameToFilePath(story.name), story)
+      .writeAsync(this.storyUuidToFilePath(uuid), { ...story, uuid })
       .then(() => story)
   }
 }

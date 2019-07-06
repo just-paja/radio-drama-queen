@@ -1,11 +1,11 @@
-import electron from 'electron'
-import jetpack from 'fs-jetpack'
+const electron = require('electron')
+const jetpack = require('fs-jetpack')
 
-export const isLocalPath = path => path.indexOf('file:') === 0
+const isLocalPath = path => path.indexOf('file:') === 0
 
-export const removeLocalProtocol = path => path.substr(7)
+const removeLocalProtocol = path => path.substr(7)
 
-export const splitNameFromExtension = (url) => {
+const splitNameFromExtension = (url) => {
   const fileParts = url.split('/')
   const fileName = fileParts[fileParts.length - 1]
   const fileNameParts = fileName.split('.')
@@ -15,21 +15,33 @@ export const splitNameFromExtension = (url) => {
   }
 }
 
-export const getPath = (...args) => {
-  if (electron) {
-    return electron.app.getPath(...args)
-  }
-  return '/var/tmp'
+const PATH_FALLBACK_ROOT = '/radio-drama-queen'
+
+const getPath = (...args) => {
+  return jetpack.path(process.env.HOME, '.config', 'radio-drama-queen', ...args)
 }
 
-export const getAppPath = (...args) => {
-  if (electron) {
+const getAppPath = (...args) => {
+  if (electron && electron.app) {
     return electron.app.getAppPath(...args)
   }
-  return '/var/tmp'
+  return PATH_FALLBACK_ROOT
 }
 
-export const PATH_CACHE = jetpack.path(getPath('userData'), 'Cache')
-export const PATH_EXE = getAppPath('exe')
-export const PATH_STORIES = jetpack.path(getPath('userData'), 'Stories')
-export const PATH_WORKERS = jetpack.path(PATH_EXE, 'src', 'workers')
+const PATH_CACHE = getPath('Cache')
+const PATH_EXE = getAppPath('exe')
+const PATH_STORIES = getPath('Stories')
+const PATH_WORKERS = jetpack.path(PATH_EXE, 'src', 'workers')
+
+module.exports = {
+  getAppPath,
+  getPath,
+  isLocalPath,
+  PATH_CACHE,
+  PATH_EXE,
+  PATH_FALLBACK_ROOT,
+  PATH_STORIES,
+  PATH_WORKERS,
+  removeLocalProtocol,
+  splitNameFromExtension
+}

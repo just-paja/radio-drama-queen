@@ -1,4 +1,5 @@
 import hash from 'hash.js'
+import { PATH_CACHE } from './electron/paths'
 
 let fs
 let electron
@@ -58,33 +59,22 @@ const cacheFile = (url, cachePath) => {
   })
 }
 
-const getPath = (...args) => {
-  if (electron) {
-    return electron.remote.app.getPath(...args)
-  }
-  return null
-}
-
 class LocalAssetsManager {
   constructor () {
     this.downloadConfig = this.downloadConfig.bind(this)
     loadDependencies()
-    this.home = getPath('userData')
-  }
-
-  getCachePath () {
-    return jetpack.path(this.home, 'Cache')
+    this.home = PATH_CACHE
   }
 
   getConfigPath (url) {
     const sum = hash.sha256().update(url).digest('hex')
-    return jetpack.path(this.getCachePath(), `${sum}.json`)
+    return jetpack.path(this.home, `${sum}.json`)
   }
 
   getSoundPath (url) {
     const { extension } = splitNameFromExtension(url)
     const sum = hash.sha256().update(url).digest('hex')
-    return jetpack.path(this.getCachePath(), `${sum}.${extension}`)
+    return jetpack.path(this.home, `${sum}.${extension}`)
   }
 
   readFile (path) {
@@ -97,7 +87,7 @@ class LocalAssetsManager {
 
   ensureCacheDirExistence () {
     if (fs) {
-      return jetpack.dirAsync(this.getCachePath())
+      return jetpack.dirAsync(this.home)
     }
     return Promise.reject(new Error('Not available in this environment'))
   }

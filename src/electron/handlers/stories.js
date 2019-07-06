@@ -1,13 +1,7 @@
-function mapStories (storyNames) {
-  return storyNames.map(storyName => ({
-    name: storyName
-  }))
-}
-
 export function listStories (storyManager) {
   return (messenger, routine, action) =>
     storyManager.listStories()
-      .then(stories => messenger.sendMessage(routine.success(mapStories(stories))))
+      .then(stories => messenger.sendMessage(routine.success(stories)))
       .catch(error => messenger.sendMessage(routine.failure(error.message)))
 }
 

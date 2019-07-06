@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import { storyRoutines } from './actions'
 
 export const storyStore = createEntityStore('stories', {
-  identAttr: 'name',
+  identAttr: 'uuid',
   providedBy: [
     storyRoutines.create,
     storyRoutines.list,
