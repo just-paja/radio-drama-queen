@@ -14,7 +14,7 @@ function createAction (actionName) {
   }
 }
 
-export function createRoutine (baseName, extraActions) {
+export function createRoutine (baseName) {
   const TRIGGER = composeActionType(baseName, 'TRIGGER')
   const trigger = createAction(TRIGGER)
   trigger.trigger = trigger

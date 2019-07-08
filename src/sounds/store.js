@@ -3,6 +3,7 @@ import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { soundRoutines } from './actions'
 
 export const soundStore = createEntityStore('sounds', {
+  hasManyToMany: ['tags'],
   initialState: {
     loading: false,
     loop: false,

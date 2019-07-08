@@ -79,7 +79,7 @@ export const getGallerySoundList = createSelector(
       soundsFiltered = soundsFiltered
         .filter(sound => isRelevant(sound, search) || hasRelevantTags(sound, relevantTags))
     }
-    return soundsFiltered.slice(0, 20)
+    return soundsFiltered
   }
 )
 

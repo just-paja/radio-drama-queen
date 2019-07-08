@@ -40,7 +40,7 @@ class StoryListComponent extends React.Component {
             <ListItem
               button
               key={story.uuid}
-              onClick={() => onStorySelect(story.name)}
+              onClick={() => onStorySelect(story.uuid)}
               selected={story.name === activeStory}
             >
               <ListItemText>

@@ -4,9 +4,9 @@ const workerpool = require('workerpool')
 
 const { remove } = require('diacritics')
 
-const reduceTags = (aggr, item) => {
+function reduceTags (aggr, item) {
   if (!item || !item.data) {
-    return []
+    return aggr
   }
   const language = item.data.language === 'XXX' ? 'eng' : item.data.language
   return [
@@ -19,17 +19,15 @@ const reduceTags = (aggr, item) => {
   ]
 }
 
-const normalizeTags = (tags) => {
-  const tagArray = tags instanceof Array
-    ? tags
-    : [tags]
+function normalizeTags (tags) {
+  const tagArray = tags instanceof Array ? tags : [tags]
   return tagArray.reduce(reduceTags, [])
 }
 
 workerpool.worker({
   readSoundMetaData: (soundData) => {
     if (!soundData) {
-      return
+      return Promise.reject(new Error('You must pass some sound data'))
     }
 
     return new Promise((resolve, reject) => {

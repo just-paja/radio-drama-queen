@@ -14,23 +14,23 @@ import { storyRoutines, storyStore } from '../soundStories'
 import { tagStore } from '../soundTags'
 
 const appReducer = combineReducers({
-  entities: createEntitiesReducer({
-    boards: boardStore.reducer,
-    categories: categoryStore.reducer,
-    dialogs: dialogStore.reducer,
-    libraries: libraryStore.reducer,
-    modules: moduleStore.reducer,
-    sounds: soundStore.reducer,
-    stories: storyStore.reducer,
-    tags: tagStore.reducer
-  }),
+  entities: createEntitiesReducer(
+    boardStore,
+    categoryStore,
+    dialogStore,
+    libraryStore,
+    moduleStore,
+    soundStore,
+    storyStore,
+    tagStore
+  ),
   form,
   soundGallery,
   soundWorkspaces
 })
 
 function normalizeStoryState (state, story) {
-  const { name, ...nextState } = story
+  const { name, uuid, ...nextState } = story
   return {
     ...state,
     ...nextState
