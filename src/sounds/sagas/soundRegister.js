@@ -1,9 +1,8 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, takeEvery } from 'redux-saga/effects'
 import { createQueue } from 'redux-saga-job-queue'
 import { matchSoundLoadFinish } from './soundLoad'
 import { request } from '../../ipcActionPipe'
 import { soundRoutines } from '../actions'
-import { tagRoutines } from '../../soundTags'
 
 let queue
 
@@ -31,13 +30,6 @@ function * handleSoundRegister () {
   yield takeEvery(soundRoutines.register.TRIGGER, registerSoundInQueue)
 }
 
-function * handleNewTags () {
-  yield takeEvery(soundRoutines.register.SUCCESS, function * ({ payload: { tags } }) {
-    yield put(tagRoutines.register(tags))
-  })
-}
-
 export default [
-  handleSoundRegister,
-  handleNewTags
+  handleSoundRegister
 ]
