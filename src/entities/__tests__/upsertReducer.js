@@ -54,49 +54,6 @@ describe('upsert reducer', () => {
     ])
   })
 
-  it('appends item to state given payload object item does not exist and filters attributes', () => {
-    const state = [
-      { uuid: 'x3', name: 'foo' }
-    ]
-    const action = {
-      type: 'TEST',
-      payload: {
-        description: 'xxx',
-        name: 'bar',
-        uuid: 'x9'
-      }
-    }
-    const config = {
-      identAttr: 'uuid',
-      ignoreAttrs: ['description']
-    }
-    expect(upsert(state, action, config)).toEqual([
-      { uuid: 'x3', name: 'foo' },
-      { uuid: 'x9', name: 'bar' }
-    ])
-  })
-
-  it('modifies item given payload object item exists and filters attributes', () => {
-    const state = [
-      { uuid: 'x3', name: 'foo' }
-    ]
-    const action = {
-      type: 'TEST',
-      payload: {
-        description: 'xxx',
-        name: 'bar',
-        uuid: 'x3'
-      }
-    }
-    const config = {
-      identAttr: 'uuid',
-      ignoreAttrs: ['description']
-    }
-    expect(upsert(state, action, config)).toEqual([
-      { uuid: 'x3', name: 'bar' }
-    ])
-  })
-
   it('appends all items to state when called with array of payload objects', () => {
     const state = [
       { uuid: 'x3', name: 'foo' }

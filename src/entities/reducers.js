@@ -35,7 +35,7 @@ function filterItem (identAttr, ident) {
   }
 }
 
-function getItemIndex (state, identAttr, ident) {
+export function getItemIndex (state, identAttr, ident) {
   return state.findIndex(filterItem(identAttr, ident))
 }
 
@@ -51,7 +51,9 @@ export function reduceArray (reducer) {
   return function (state, action, config) {
     if (action.payload instanceof Array) {
       return action.payload.reduce(
-        (acc, payload) => reducer(acc, { ...action, payload }, config),
+        function (acc, payload) {
+          return reducer(acc, { payload }, config)
+        },
         state
       )
     }
@@ -69,8 +71,7 @@ export function requireIdent (reducer) {
 }
 
 export const remove = reduceArray(requireIdent(function (state, action, config, ident) {
-  const { identAttr } = config
-  const itemIndex = getItemIndex(state, identAttr, ident)
+  const itemIndex = getItemIndex(state, config.identAttr, ident)
   if (itemIndex === -1) {
     return state
   }
@@ -79,25 +80,27 @@ export const remove = reduceArray(requireIdent(function (state, action, config, 
   return nextState
 }))
 
+function processEntity (config, entity) {
+  if (config.entityProcessors && config.entityProcessors.length) {
+    return config.entityProcessors.reduce((acc, processor) => processor(acc), entity)
+  }
+  return entity
+}
+
 export const upsert = reduceArray(requireIdent(function (state, action, config, ident) {
-  const { identAttr, initialState, ignoreAttrs } = config
-  const itemIndex = getItemIndex(state, identAttr, ident)
+  const itemIndex = getItemIndex(state, config.identAttr, ident)
   if (itemIndex === -1) {
     return [
       ...state,
-      filterAttrs(ignoreAttrs, {
-        ...initialState,
+      processEntity(config, {
+        ...config.initialState,
         ...action.payload,
-        [identAttr]: ident
+        [config.identAttr]: ident
       })
     ]
   }
   const nextState = state.slice()
-  const item = state[itemIndex]
-  nextState[itemIndex] = filterAttrs(ignoreAttrs, {
-    ...item,
-    ...action.payload
-  })
+  nextState[itemIndex] = processEntity(config, action.payload)
   return nextState
 }))
 
@@ -140,20 +143,20 @@ export function createEntityReducer (config) {
   } = config
   const reducerConfig = configure(reducerOptions)
   return function entityReducer (state = [], action) {
-    if (isActionInRoutines(clearedBy, action)) {
-      return []
+    if (isActionRecognized(collectionReducers, action)) {
+      return collectionReducers[action.type](state, action, reducerConfig)
     }
     if (isActionInRoutines(providedBy, action)) {
       return upsert(state, action, reducerConfig)
     }
-    if (isActionInRoutines(deletedBy, action)) {
-      return remove(state, action, reducerConfig)
-    }
     if (isActionRecognized(on, action)) {
       return modify(state, action, { ...reducerConfig, reducer: on[action.type] })
     }
-    if (isActionRecognized(collectionReducers, action)) {
-      return collectionReducers[action.type](state, action, reducerConfig)
+    if (isActionInRoutines(deletedBy, action)) {
+      return remove(state, action, reducerConfig)
+    }
+    if (isActionInRoutines(clearedBy, action)) {
+      return []
     }
     return state
   }

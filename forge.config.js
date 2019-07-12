@@ -3,6 +3,7 @@ const packageInfo = require('./package.json')
 const allowedPatterns = [
   /package.json/,
   /[/\\]\.webpack($|[/\\]).*$/,
+  /[/\\]src($|[/\\]electron($|[/\\].+))/,
   /[/\\]src($|[/\\]workers($|[/\\].+))/
 ]
 

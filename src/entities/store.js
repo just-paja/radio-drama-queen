@@ -5,17 +5,22 @@ import { mergeArrays, createEntityReducer } from './reducers'
 class EntityStore extends Configurable {
   constructor (name, config) {
     super(config)
-    this.getAll = this.getAll.bind(this)
-    this.getFirst = this.getFirst.bind(this)
-    this.getFlag = this.getFlag.bind(this)
-    this.getProp = this.getProp.bind(this)
-    this.getSize = this.getSize.bind(this)
-    this.isEmpty = this.isEmpty.bind(this)
+    this.bind('getAll')
+    this.bind('getFirst')
+    this.bind('getFlag')
+    this.bind('getProp')
+    this.bind('getSize')
+    this.bind('isEmpty')
+    this.bind('mapItemAttrs')
     this.name = name
   }
 
   get identAttr () {
     return this.config.identAttr || 'uuid'
+  }
+
+  get attrSelectors () {
+    return this.config.attrSelectors
   }
 
   initialize () {
@@ -32,12 +37,26 @@ class EntityStore extends Configurable {
     this.reducer = createEntityReducer(this.config)
   }
 
-  getAll (state) {
+  mapItemAttrs (state, item) {
+    if (!this.attrSelectors) {
+      return item
+    }
+    return this.attrSelectors.reduce((acc, selector) => selector(acc, item), state)
+  }
+
+  getCollection (state) {
     return state.entities[this.name]
   }
 
+  getAll (state) {
+    return this.getCollection(state).map((item) => this.mapItemAttrs(state, item))
+  }
+
   getFirst (state, ident) {
-    return this.getAll(state).find(item => item[this.identAttr] === ident) || null
+    const item = this.getCollection(state).find(item => item[this.identAttr] === ident)
+    return item
+      ? this.mapItemAttrs(state, item)
+      : null
   }
 
   getProp (state, ident, prop) {

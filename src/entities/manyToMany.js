@@ -1,5 +1,4 @@
-import { mergeArrays, reduceArray, upsert } from './reducers'
-import { createEntityStore } from './store'
+import { getItemIndex, mergeArrays, reduceArray, upsert } from './reducers'
 import { Relationship } from './Relationship'
 
 class ManyToMany extends Relationship {
@@ -7,89 +6,81 @@ class ManyToMany extends Relationship {
     return `manyToMany(${this.connection})`
   }
 
-  createReferencer (parent, target, inverse = false) {
-    return reduceArray(function referenceManyToManyPayload (state, action, reducerConfig) {
-      const { identAttr } = reducerConfig
-      let items
-      if (inverse) {
-        const ident = action.payload[target.identAttr]
-        if (action.payload[parent.name]) {
-          items = action.payload[parent.name].map(item => ({
-            [identAttr]: `${item[parent.identAttr]}-${ident}`,
-            [target.name]: ident,
-            [parent.name]: item[target.identAttr]
-          }))
-        }
-      } else {
-        const ident = action.payload[parent.identAttr]
-        if (action.payload[target.name]) {
-          items = action.payload[target.name].map(item => ({
-            [identAttr]: `${ident}-${item[target.identAttr]}`,
-            [parent.name]: ident,
-            [target.name]: item[target.identAttr]
-          }))
-        }
-      }
-      return items
-        ? upsert(state, { payload: items }, reducerConfig)
-        : state
-    })
-  }
-
-  createReferenceReducers () {
-    const parentReducers = (this.parent.config.providedBy || []).reduce((acc, routine) => ({
-      ...acc,
-      [routine.SUCCESS]: this.createReferencer(this.parent, this.target)
-    }), {})
-    const targetReducers = (this.target.config.providedBy || []).reduce((acc, routine) => ({
-      ...acc,
-      [routine.SUCCESS]: this.createReferencer(this.parent, this.target, true)
-    }), parentReducers)
-    return targetReducers
-  }
-
-  createUpsertReducers (routines, srcName) {
+  createUpsertReducers (routines, src, dest) {
     return routines.reduce((acc, routine) => ({
       ...acc,
-      [routine.SUCCESS]: reduceArray((state, action, config) => {
-        if (!action.payload[srcName]) {
+      [routine.SUCCESS]: reduceArray(function (state, action, config) {
+        const carrier = action.payload
+        const items = carrier[dest.name]
+        if (!items) {
           return state
         }
-        const payload = action.payload[srcName]
+        const ident = carrier[src.identAttr]
+        const payload = items.map((item) => {
+          const itemIndex = getItemIndex(state, config.identAttr, item[config.identAttr])
+          if (itemIndex === -1) {
+            // console.log('create', item)
+            return {
+              ...item,
+              [src.name]: [ident]
+            }
+          } else {
+            // console.log('update', item)
+            return {
+              ...state[itemIndex],
+              ...item,
+              [src.name]: state[itemIndex][src.name].concat([ident])
+            }
+          }
+        })
         return upsert(state, { payload }, config)
       })
     }), {})
   }
 
-  createStore () {
-    this.store = createEntityStore(this.name, {
-      collectionReducers: this.createReferenceReducers(),
-      identAttr: 'composed'
-    })
-    this.store.relation = this
-    return this.store
+  createEntityProcessor (relatedStore) {
+    return function (item) {
+      const targets = item[relatedStore.name]
+      return {
+        ...item,
+        [relatedStore.name]: targets
+          ? targets.map((item) =>
+            item instanceof Object
+              ? item[relatedStore.identAttr]
+              : item)
+          : []
+      }
+    }
   }
 
   configureStores () {
+    if (this.target.config.providedBy) {
+      this.parent.configure({
+        collectionReducers: {
+          ...this.parent.collectionReducers,
+          ...this.createUpsertReducers(this.target.config.providedBy, this.target, this.parent)
+        }
+      })
+    }
     this.parent.configure({
-      ignoreAttrs: mergeArrays(
-        this.parent.ignoreAttrs,
-        [this.target.name]
-      ),
-      collectionReducers: {
-        ...this.parent.collectionReducers,
-        ...this.createUpsertReducers(this.target.config.providedBy, this.parent.name)
-      }
+      entityProcessors: mergeArrays(
+        this.parent.entityProcessors,
+        [this.createEntityProcessor(this.target)]
+      )
     })
+    if (this.parent.config.providedBy) {
+      this.target.configure({
+        collectionReducers: {
+          ...this.parent.collectionReducers,
+          ...this.createUpsertReducers(this.parent.config.providedBy, this.parent, this.target)
+        }
+      })
+    }
     this.target.configure({
-      ignoreAttrs: mergeArrays(
-        this.target.ignoreAttrs,
-        [this.parent.name]
-      ),
-      collectionReducers: {
-        ...this.parent.collectionReducers,
-        ...this.createUpsertReducers(this.parent.config.providedBy, this.target.name)
-      }
+      entityProcessors: mergeArrays(
+        this.target.entityProcessors,
+        [this.createEntityProcessor(this.parent)]
+      )
     })
   }
 }
