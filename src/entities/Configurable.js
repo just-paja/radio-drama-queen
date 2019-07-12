@@ -12,4 +12,18 @@ export class Configurable {
   configure (config) {
     this.config = { ...this.config, ...config }
   }
+
+  append (attr, ...values) {
+    this.config[attr] = [
+      ...(this[attr] || []),
+      ...values
+    ]
+  }
+
+  extend (attr, config) {
+    this.config[attr] = {
+      ...(this[attr] || {}),
+      ...config
+    }
+  }
 }

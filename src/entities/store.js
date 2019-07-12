@@ -4,7 +4,7 @@ import { mergeArrays, createEntityReducer } from './reducers'
 
 class EntityStore extends Configurable {
   constructor (name, config) {
-    super(config)
+    super({ ...config, name })
     this.bind('getAll')
     this.bind('getFirst')
     this.bind('getFlag')

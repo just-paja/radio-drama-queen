@@ -1,4 +1,4 @@
-import { getItemIndex, mergeArrays, reduceArray, upsert } from './reducers'
+import { filterUnique, getItemIndex, reduceArray, upsert } from './reducers'
 import { Relationship } from './Relationship'
 
 class ManyToMany extends Relationship {
@@ -6,32 +6,22 @@ class ManyToMany extends Relationship {
     return `manyToMany(${this.connection})`
   }
 
-  createUpsertReducers (routines, src, dest) {
-    return routines.reduce((acc, routine) => ({
+  createUpsertReducers (src) {
+    return src.config.providedBy.reduce((acc, routine) => ({
       ...acc,
       [routine.SUCCESS]: reduceArray(function (state, action, config) {
         const carrier = action.payload
-        const items = carrier[dest.name]
-        if (!items) {
+        const items = carrier[config.name]
+        if (!items || items.length === 0) {
           return state
         }
         const ident = carrier[src.identAttr]
         const payload = items.map((item) => {
           const itemIndex = getItemIndex(state, config.identAttr, item[config.identAttr])
-          if (itemIndex === -1) {
-            // console.log('create', item)
-            return {
-              ...item,
-              [src.name]: [ident]
-            }
-          } else {
-            // console.log('update', item)
-            return {
-              ...state[itemIndex],
-              ...item,
-              [src.name]: state[itemIndex][src.name].concat([ident])
-            }
-          }
+          const relatedItems = itemIndex === -1
+            ? [ident]
+            : state[itemIndex][src.name].concat([ident])
+          return { ...item, [src.name]: relatedItems }
         })
         return upsert(state, { payload }, config)
       })
@@ -44,10 +34,9 @@ class ManyToMany extends Relationship {
       return {
         ...item,
         [relatedStore.name]: targets
-          ? targets.map((item) =>
-            item instanceof Object
-              ? item[relatedStore.identAttr]
-              : item)
+          ? targets
+            .map((item) => item instanceof Object ? item[relatedStore.identAttr] : item)
+            .filter(filterUnique)
           : []
       }
     }
@@ -55,33 +44,13 @@ class ManyToMany extends Relationship {
 
   configureStores () {
     if (this.target.config.providedBy) {
-      this.parent.configure({
-        collectionReducers: {
-          ...this.parent.collectionReducers,
-          ...this.createUpsertReducers(this.target.config.providedBy, this.target, this.parent)
-        }
-      })
+      this.parent.extend('collectionReducers', this.createUpsertReducers(this.target))
     }
-    this.parent.configure({
-      entityProcessors: mergeArrays(
-        this.parent.entityProcessors,
-        [this.createEntityProcessor(this.target)]
-      )
-    })
     if (this.parent.config.providedBy) {
-      this.target.configure({
-        collectionReducers: {
-          ...this.parent.collectionReducers,
-          ...this.createUpsertReducers(this.parent.config.providedBy, this.parent, this.target)
-        }
-      })
+      this.target.extend('collectionReducers', this.createUpsertReducers(this.parent))
     }
-    this.target.configure({
-      entityProcessors: mergeArrays(
-        this.target.entityProcessors,
-        [this.createEntityProcessor(this.parent)]
-      )
-    })
+    this.parent.append('entityProcessors', this.createEntityProcessor(this.target))
+    this.target.append('entityProcessors', this.createEntityProcessor(this.parent))
   }
 }
 
