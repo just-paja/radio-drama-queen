@@ -37,8 +37,9 @@ export class StoryManager {
 
   saveStory (story) {
     const uuid = story.uuid || generateUuid()
+    const data = { ...story, uuid }
     return jetpack
-      .writeAsync(this.storyUuidToFilePath(uuid), { ...story, uuid })
-      .then(() => story)
+      .writeAsync(this.storyUuidToFilePath(uuid), data)
+      .then(() => data)
   }
 }
