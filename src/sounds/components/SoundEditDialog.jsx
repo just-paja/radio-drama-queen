@@ -4,21 +4,36 @@ import React from 'react'
 import { dialogForm, getDialogMeta } from '../../dialogs'
 import { Field } from 'redux-form'
 import { FORM_SOUND_EDIT } from '../constants'
+import { InputTags } from './InputTags'
 import { soundRoutines } from '../actions'
 import { soundStore } from '../store'
+import { tagStore } from '../../soundTags/store'
 
 const SoundEditDialogComponent = () => (
-  <Field
-    autoFocus
-    component={Input}
-    label='Title'
-    name='name'
-  />
+  <React.Fragment>
+    <Field
+      autoFocus
+      component={Input}
+      label='Title'
+      name='name'
+    />
+    <Field
+      component={InputTags}
+      label='Tags'
+      name='tags'
+    />
+  </React.Fragment>
 )
 
 export const SoundEditDialog = dialogForm({
   dialog: FORM_SOUND_EDIT,
-  initialValues: state => soundStore.getFirst(state, getDialogMeta(state, FORM_SOUND_EDIT)),
+  initialValues: (state) => {
+    const sound = soundStore.getFirst(state, getDialogMeta(state, FORM_SOUND_EDIT))
+    return sound ? {
+      ...sound,
+      tags: sound.tags.map(tag => tagStore.getFirst(state, tag))
+    } : sound
+  },
   onSubmit: soundRoutines.edit,
   title: 'Edit sound'
 })(SoundEditDialogComponent)

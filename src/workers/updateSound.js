@@ -4,23 +4,40 @@ const workerpool = require('workerpool')
 
 const { file } = require('tmp-promise')
 
+const logger = {
+  debug: (...args) => console.info(...args),
+  error: (...args) => console.error(...args),
+  info: (...args) => console.info(...args),
+  warn: (...args) => console.warn(...args)
+}
+
 workerpool.worker({
   updateSound: (soundData) => {
     if (!soundData) {
       return Promise.reject(new Error('You must pass some sound data'))
     }
 
-    const { name } = soundData
+    const { name, tags } = soundData
+    console.log(tags)
     let tempFile
     return file({ postfix: `.${soundData.format}` })
       .then(file => new Promise((resolve, reject) => {
         tempFile = file
-        ffmpeg(soundData.cachePath)
+        ffmpeg(soundData.cachePath, { logger })
           .audioCodec('copy')
-          .outputOptions([
-            '-metadata', `title=${name.replace(/\s+/g, ' ')}`
-          ])
-          .on('error', reject)
+          .outputOptions(
+            '-map_metadata',
+            '0:s:0',
+            '-metadata',
+            `title=${name.replace(/\s+/g, ' ')}`,
+            '-metadata',
+            `TIT1=${tags.map(tag => tag.title).join(', ')}`
+          )
+          .on('error', (err, stdout, stderr) => {
+            console.log(stdout)
+            console.log(stderr)
+            reject(err)
+          })
           .on('end', resolve)
           .save(tempFile.path)
       }))

@@ -1,3 +1,4 @@
+const iso639 = require('iso-639-1')
 const musicMetadata = require('music-metadata')
 const workerpool = require('workerpool')
 const path = require('path')
@@ -29,25 +30,48 @@ function normalizeName (soundData, metaData) {
   return path.basename(soundData.path)
 }
 
+function normalizeLanguage (header) {
+  if (!header || !header.value || !header.value.language || header.value.language === 'XXX') {
+    return 'eng'
+  }
+  const lang = header.value.language.toLowerCase()
+  return iso639.getName(lang)
+    ? lang
+    : 'eng'
+}
+
+function normalizeHeaderValue (header) {
+  if (header && header.value) {
+    return header.value.text || header.value
+  }
+  return ''
+}
+
+const COMMENT_TAGS = ['COMM', 'TXXX', 'TXXX:COMM', 'comment', 'TIT1']
+
 function normalizeTags (metaData) {
-  const languageTags = Object.keys(metaData.native).reduce((acc, version) => {
-    return acc.concat(metaData.native[version].reduce((innerAcc, header) => {
-      return header.id === 'COMM'
-        ? [...acc, header.value]
-        : acc
-    }, []))
-  }, []).reduce((acc, header) => ({
-    ...acc,
-    [header.language]: [
-      ...(acc[header.language] || []),
-      ...header.text.split(',')
-    ].filter(filterNonEmpty).filter(filterUnique)
-  }), {})
+  const languageTags = Object
+    .keys(metaData.native)
+    .reduce(
+      (acc, version) => acc.concat(metaData.native[version]
+        .filter(header => COMMENT_TAGS.indexOf(header.id) !== -1))
+      , []
+    ).reduce((acc, header) => {
+      const value = normalizeHeaderValue(header)
+      const language = normalizeLanguage(header)
+      return {
+        ...acc,
+        [language]: [
+          ...(acc[language] || []),
+          ...value.split(',')
+        ].map(str => str.trim()).filter(filterNonEmpty).filter(filterUnique)
+      }
+    }, {})
   return Object.keys(languageTags)
     .reduce((acc, language) => acc.concat(languageTags[language].map((tagStr) => ({
       language,
-      name: `${remove(tagStr.trim()).toLowerCase()}-${language}`,
-      title: tagStr.trim()
+      name: `${remove(tagStr).toLowerCase()}-${language}`,
+      title: tagStr
     }))), [])
 }
 
