@@ -12,7 +12,6 @@ import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { soundStore } from '../../sounds'
 import { LibraryStat } from './LibraryStat'
-import { MainMenu } from './MainMenu'
 import { StopAllButton } from '../../sounds/components'
 import { WorkspaceSelection } from './WorkspaceSelection'
 import { withStyles } from '@material-ui/core/styles'
@@ -70,7 +69,6 @@ const WorkspaceStatusComponent = ({
   tags
 }) => (
   <header className={classes.header}>
-    <MainMenu />
     <WorkspaceSelection />
     <ActiveStory />
     <StopAllButton className={classes.stopAllButton} />
