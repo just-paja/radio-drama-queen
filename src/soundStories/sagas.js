@@ -3,7 +3,7 @@ import { FORM_STORY_CREATE } from './constants'
 import { getFormValues } from 'redux-form'
 import { isSoundUsed } from '../soundCategories/selectors'
 import { matchSoundLoadFinish } from '../sounds/sagas'
-import { request } from '../ipcActionPipe'
+import { passRequest, request } from '../ipcActionPipe'
 import { soundRoutines, soundStore } from '../sounds'
 import { StoryCreateDialog } from './components'
 import { storyRoutines } from './actions'
@@ -23,12 +23,6 @@ function stripMemoryState ({ form, soundGallery, ...state }) {
   }
 }
 
-function * handleStoryList () {
-  yield takeEvery(storyRoutines.list.TRIGGER, function * ({ payload }) {
-    yield request(storyRoutines.list, payload)
-  })
-}
-
 function * handleStoryCreate () {
   yield takeEvery(storyRoutines.create.TRIGGER, function * () {
     const values = yield select(getFormValues(FORM_STORY_CREATE))
@@ -45,12 +39,6 @@ function * handleStoryCreateSuccess () {
 function * handleStorySave () {
   yield takeEvery(storyRoutines.save.TRIGGER, function * save () {
     yield request(storyRoutines.save, yield select(stripMemoryState))
-  })
-}
-
-function * handleStoryLoad () {
-  yield takeEvery(storyRoutines.load.TRIGGER, function * save ({ payload }) {
-    yield request(storyRoutines.load, payload)
   })
 }
 
@@ -76,7 +64,8 @@ export default [
   handleSoundReload,
   handleStoryCreate,
   handleStoryCreateSuccess,
-  handleStoryList,
-  handleStoryLoad,
-  handleStorySave
+  handleStorySave,
+  passRequest(storyRoutines.list),
+  passRequest(storyRoutines.load),
+  passRequest(storyRoutines.remove)
 ]

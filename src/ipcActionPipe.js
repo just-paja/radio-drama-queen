@@ -1,4 +1,4 @@
-import { put, take } from 'redux-saga/effects'
+import { put, take, takeEvery } from 'redux-saga/effects'
 
 export const ipcRenderer = global.require && global.require('electron').ipcRenderer
 
@@ -17,6 +17,14 @@ export function * request (routine, payload, matcher) {
     : null
   yield put(routine.fulfill(payload))
   return result
+}
+
+export function passRequest (routine) {
+  return function * passRoutineRequest () {
+    yield takeEvery(routine.TRIGGER, function * save ({ payload }) {
+      yield request(routine, payload)
+    })
+  }
 }
 
 export default (store) => {

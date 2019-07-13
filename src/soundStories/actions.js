@@ -4,5 +4,6 @@ export const storyRoutines = createEntityRoutines('STORY', [
   'CREATE',
   'LIST',
   'LOAD',
+  'REMOVE',
   'SAVE'
 ])

@@ -1,13 +1,12 @@
 import CanvasMessage from '../../components/CanvasMessage'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import { connect } from 'react-redux'
 import { getActiveStoryName } from '../../soundWorkspaces/selectors'
+import { StoryListItem } from './StoryListItem'
 import { StoryCreateButton } from './StoryCreateButton'
 import { storyRoutines } from '../actions'
 import { storyStore } from '../store'
@@ -37,16 +36,12 @@ class StoryListComponent extends React.Component {
         </Typography>
         <List>
           {stories.map(story => (
-            <ListItem
-              button
+            <StoryListItem
               key={story.uuid}
-              onClick={() => onStorySelect(story.uuid)}
-              selected={story.name === activeStory}
-            >
-              <ListItemText>
-                {story.name || story.uuid}
-              </ListItemText>
-            </ListItem>
+              selected={activeStory && activeStory.uuid === story.uuid}
+              story={story}
+              onClick={onStorySelect}
+            />
           ))}
         </List>
         <StoryCreateButton />

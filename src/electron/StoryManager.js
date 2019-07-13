@@ -35,6 +35,12 @@ export class StoryManager {
     return readStory.exec('readStory', [uuid])
   }
 
+  removeStory (uuid) {
+    return jetpack
+      .removeAsync(this.storyUuidToFilePath(uuid))
+      .then(() => uuid)
+  }
+
   saveStory (story) {
     const uuid = story.uuid || generateUuid()
     const data = { ...story, uuid }
