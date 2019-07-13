@@ -84,7 +84,7 @@ class CategoryItemComponent extends Component {
             error={sound.error}
             loading={sound.loading}
             playing={sound.playing}
-            size={21}
+            size={16}
             valid={sound.valid}
           />
           <SoundName
