@@ -4,6 +4,7 @@ import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getActiveStory } from '../selectors'
 import { SoundBoardSelection } from './SoundBoardSelection'
+import { Story } from '../../soundStories'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceSaveButton } from '../../soundStories/components'
 
@@ -59,6 +60,7 @@ function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
 
 WorkspaceSidebarComponent.displayName = 'WorkspaceSidebar'
 WorkspaceSidebarComponent.propTypes = {
+  activeStory: Story,
   classes: Classes.isRequired
 }
 

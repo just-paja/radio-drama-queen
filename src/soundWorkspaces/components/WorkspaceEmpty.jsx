@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
-import { storyStore } from '../../soundStories'
 import { connect } from 'react-redux'
 import { getActiveStoryName, getWorkspaceView } from '../selectors'
-import { soundStore } from '../../sounds'
 import { NoBoards } from '../../soundBoards/components'
 import { SoundGalleryEmpty } from '../../soundGallery/components'
+import { soundStore } from '../../sounds'
 import { StoryList } from '../../soundStories/components'
+import { Story, storyStore } from '../../soundStories'
 import { VIEW_LIBRARY } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -41,6 +42,18 @@ function WorkspaceEmptyComponent ({
       {renderContent({ activeStory, galleryEmpty, view })}
     </div>
   )
+}
+
+WorkspaceEmptyComponent.propTypes = {
+  activeStory: Story,
+  galleryEmpty: PropTypes.bool,
+  noStories: PropTypes.bool,
+  view: PropTypes.string
+}
+
+WorkspaceEmptyComponent.defaultProps = {
+  galleryEmpty: false,
+  noStories: false
 }
 
 WorkspaceEmptyComponent.displayName = 'WorkspaceEmpty'

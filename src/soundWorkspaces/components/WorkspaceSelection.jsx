@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { Classes } from '../../proptypes'
+import { Story } from '../../soundStories'
 import { connect } from 'react-redux'
 import { getActiveStory, getWorkspaceView } from '../selectors'
 import { withStyles } from '@material-ui/core/styles'
@@ -83,7 +84,7 @@ class WorkspaceSelectionComponent extends Component {
 }
 
 WorkspaceSelectionComponent.propTypes = {
-  activeStory: PropTypes.object,
+  activeStory: Story,
   className: PropTypes.string,
   classes: Classes.isRequired,
   onViewSelect: PropTypes.func.isRequired,

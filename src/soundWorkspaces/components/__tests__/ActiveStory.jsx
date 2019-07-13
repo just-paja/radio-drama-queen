@@ -1,21 +1,22 @@
 import React from 'react'
 
 import { renderWithContainers } from '../../../mock'
-import { MainMenu } from '..'
+import { ActiveStory } from '..'
 
-describe('MainMenu component', () => {
+describe('ActiveStory component', () => {
   it('renders active story name', () => {
-    const comp = renderWithContainers(<MainMenu />, {
+    const comp = renderWithContainers(<ActiveStory />, {
       entities: {
         stories: [
           {
-            name: 'Foo'
+            name: 'Foo',
+            uuid: 'story-1'
           }
         ]
       },
       soundWorkspaces: {
         ui: {
-          story: 'Foo'
+          story: 'story-1'
         }
       }
     })

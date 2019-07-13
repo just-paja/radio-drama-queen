@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getActiveStory } from '../selectors'
+import { Story } from '../../soundStories'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
@@ -23,8 +23,8 @@ const ActiveStoryComponent = ({ activeStory, classes }) => activeStory && (
 )
 
 ActiveStoryComponent.propTypes = {
-  activeStory: PropTypes.string,
-  clsses: Classes.isRequired
+  activeStory: Story,
+  classes: Classes.isRequired
 }
 
 ActiveStoryComponent.defaultProps = {

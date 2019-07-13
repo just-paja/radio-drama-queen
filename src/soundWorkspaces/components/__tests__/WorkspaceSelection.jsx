@@ -12,6 +12,14 @@ describe('WorkspaceSelection component', () => {
 
   it('triggers view change on toggle button group change', () => {
     const state = {
+      entities: {
+        stories: [
+          {
+            name: 'Story 1',
+            uuid: 'story-1'
+          }
+        ]
+      },
       soundWorkspaces: {
         ui: {
           story: 'story-1'
