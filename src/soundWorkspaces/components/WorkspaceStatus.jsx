@@ -5,14 +5,14 @@ import MemoryIcon from '@material-ui/icons/Memory'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import PropTypes from 'prop-types'
 import React from 'react'
+import Stop from '@material-ui/icons/Stop'
 import WarningIcon from '@material-ui/icons/Warning'
 
 import { ActiveStory } from './ActiveStory'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
-import { soundStore } from '../../sounds'
+import { soundRoutines, soundStore } from '../../sounds'
 import { LibraryStat } from './LibraryStat'
-import { StopAllButton } from '../../sounds/components'
 import { WorkspaceSelection } from './WorkspaceSelection'
 import { withStyles } from '@material-ui/core/styles'
 import {
@@ -22,15 +22,6 @@ import {
   countPlayingSounds,
   countTags
 } from '../selectors'
-
-const mapStateToProps = state => ({
-  boardSounds: countBoardSounds(state),
-  errorSounds: countErrorSounds(state),
-  inMemorySounds: countMemorySounds(state),
-  playingSounds: countPlayingSounds(state),
-  registeredSounds: soundStore.getSize(state),
-  tags: countTags(state)
-})
 
 const styles = theme => ({
   header: {
@@ -51,11 +42,8 @@ const styles = theme => ({
   icons: {
     alignItems: 'center',
     display: 'flex',
-    flexDirection: 'row'
-  },
-  stopAllButton: {
-    marginRight: 'auto',
-    marginLeft: theme.spacing(1)
+    flexDirection: 'row',
+    marginLeft: 'auto'
   }
 })
 
@@ -66,14 +54,19 @@ const WorkspaceStatusComponent = ({
   inMemorySounds,
   playingSounds,
   registeredSounds,
+  stopAll,
   tags
 }) => (
   <header className={classes.header}>
     <WorkspaceSelection />
     <ActiveStory />
-    <StopAllButton className={classes.stopAllButton} />
     <span className={classes.icons}>
-      <LibraryStat number={playingSounds} icon={PlayArrowIcon} title='Playing' />
+      <LibraryStat
+        number={playingSounds}
+        onClick={playingSounds > 0 ? stopAll : null}
+        icon={playingSounds === 0 ? PlayArrowIcon : Stop}
+        title='Playing'
+      />
       <LibraryStat number={tags} icon={LabelIcon} title='Tags' />
       <LibraryStat number={errorSounds} icon={WarningIcon} title='Sound errors' />
       <LibraryStat number={inMemorySounds} icon={MemoryIcon} title='Sounds ready to play' />
@@ -95,6 +88,22 @@ WorkspaceStatusComponent.propTypes = {
   tags: PropTypes.number.isRequired
 }
 
-export const WorkspaceStatus = connect(mapStateToProps)(
-  withStyles(styles)(WorkspaceStatusComponent)
-)
+function mapStateToProps (state) {
+  return {
+    boardSounds: countBoardSounds(state),
+    errorSounds: countErrorSounds(state),
+    inMemorySounds: countMemorySounds(state),
+    playingSounds: countPlayingSounds(state),
+    registeredSounds: soundStore.getSize(state),
+    tags: countTags(state)
+  }
+}
+
+const mapDispatchToProps = {
+  stopAll: soundRoutines.stopAll
+}
+
+export const WorkspaceStatus = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(WorkspaceStatusComponent))

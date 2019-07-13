@@ -19,12 +19,16 @@ const styles = theme => ({
   },
   stat: {
     alignItems: 'center',
+    color: '#fff',
+    border: 'none',
     backgroundColor: 'rgba(0,0,0,.33)',
     borderRadius: theme.spacing(1 / 2),
+    boxSizing: 'content-box',
+    fontSize: theme.spacing(7 / 4),
     display: 'flex',
-    height: 16,
+    height: theme.spacing(3),
     marginLeft: theme.spacing(1 / 2),
-    padding: theme.spacing(1 / 2),
+    padding: 0,
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     transition: 'all 0.1s ease-out',
@@ -68,18 +72,20 @@ class LibraryStatComponent extends React.Component {
   }
 
   render () {
-    const { classes, icon: Icon, number, title } = this.props
+    const { classes, icon: Icon, onClick, number, title } = this.props
     return (
-      <span
+      <button
         className={classnames(classes.stat, {
           [classes.highlight]: this.state.highlight
         })}
+        disabled={!onClick}
+        onClick={onClick}
         title={title}
       >
         <Icon className={classes.icon} />
         {' '}
         {number}
-      </span>
+      </button>
     )
   }
 }
@@ -89,7 +95,12 @@ LibraryStatComponent.propTypes = {
   classes: Classes.isRequired,
   icon: PropTypes.object.isRequired,
   number: PropTypes.number.isRequired,
+  onClick: PropTypes.func,
   title: PropTypes.string.isRequired
+}
+
+LibraryStatComponent.defaultProps = {
+  onClick: null
 }
 
 export const LibraryStat = withStyles(styles)(LibraryStatComponent)
