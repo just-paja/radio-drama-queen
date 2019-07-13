@@ -30,10 +30,15 @@ const appReducer = combineReducers({
 })
 
 function normalizeStoryState (state, story) {
-  const { name, uuid, ...nextState } = story
+  const { name, uuid, entities, ...nextState } = story
+  const { stories, ...otherEntities } = entities
   return {
     ...state,
-    ...nextState
+    ...nextState,
+    entities: {
+      ...state.entities,
+      ...otherEntities
+    }
   }
 }
 

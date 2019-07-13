@@ -6,18 +6,23 @@ import { isSoundUsed } from '../soundCategories/selectors'
 import { matchSoundLoadFinish } from '../sounds/sagas'
 import { passRequest, request } from '../ipcActionPipe'
 import { soundRoutines, soundStore } from '../sounds'
+import { storyStore } from './store'
 import { StoryCreateDialog, StoryRenameDialog } from './components'
 import { storyRoutines } from './actions'
 
 function stripMemoryState ({ form, soundGallery, ...state }) {
+  const story = storyStore.getFirst(state, state.soundWorkspaces.ui.story)
   return {
     ...state,
-    name: state.soundWorkspaces.ui.story,
+    name: story.name,
+    uuid: story.uuid,
     entities: {
       ...state.entities,
       dialogs: undefined,
+      stories: undefined,
       sounds: state.entities.sounds.map(sound => ({
         path: sound.path,
+        tags: sound.tags,
         uuid: sound.uuid
       }))
     }

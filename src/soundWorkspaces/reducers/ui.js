@@ -11,7 +11,7 @@ const initialState = {
 }
 
 function selectStory (state, action) {
-  return { ...state, story: action.payload.name }
+  return { ...state, story: action.payload.uuid }
 }
 
 const ui = handleActions({
