@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { gallerySound } from '../actions'
 import { GallerySound } from '../proptypes'
 import { getGalleryTarget } from '../selectors'
-import { SoundStatusIcon } from '../../sounds/components'
+import { SoundMenu, SoundStatusIcon } from '../../sounds/components'
 import { SoundTags } from './SoundTags'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -58,26 +58,28 @@ class GalleryItemComponent extends Component {
   render () {
     const { classes, sound } = this.props
     return (
-      <div className={classes.item}>
-        <div className={classes.controls}>
-          <IconButton disabled={sound.isUsed || sound.error} onClick={this.handleAdd}>
-            <AddCircle />
-          </IconButton>
-          <IconButton onClick={this.handlePlayClick}>
-            <SoundStatusIcon
-              error={sound.error}
-              loading={sound.loading}
-              playing={sound.playing}
-              size={22}
-              valid
-            />
-          </IconButton>
+      <SoundMenu soundUuid={sound.uuid}>
+        <div className={classes.item}>
+          <div className={classes.controls}>
+            <IconButton disabled={sound.isUsed || sound.error} onClick={this.handleAdd}>
+              <AddCircle />
+            </IconButton>
+            <IconButton onClick={this.handlePlayClick}>
+              <SoundStatusIcon
+                error={sound.error}
+                loading={sound.loading}
+                playing={sound.playing}
+                size={22}
+                valid
+              />
+            </IconButton>
+          </div>
+          <div>
+            <span>{sound.name}</span>
+            <SoundTags onTagClick={this.handleTagAdd} tags={sound.tags} />
+          </div>
         </div>
-        <div>
-          <span>{sound.name}</span>
-          <SoundTags onTagClick={this.handleTagAdd} tags={sound.tags} />
-        </div>
-      </div>
+      </SoundMenu>
     )
   }
 }

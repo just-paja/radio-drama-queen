@@ -21,6 +21,7 @@ function stripMemoryState ({ form, soundGallery, ...state }) {
       dialogs: undefined,
       stories: undefined,
       sounds: state.entities.sounds.map(sound => ({
+        duration: sound.duration,
         path: sound.path,
         tags: sound.tags,
         uuid: sound.uuid

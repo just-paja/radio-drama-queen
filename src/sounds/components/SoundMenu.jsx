@@ -41,7 +41,7 @@ SoundMenuComponent.propTypes = {
 }
 
 SoundMenuComponent.defaultProps = {
-  options: null
+  options: []
 }
 
 const mapDispatchToProps = {
