@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
-import { getActiveStoryName } from '../selectors'
+import { getActiveStory } from '../selectors'
 import { SoundBoardSelection } from './SoundBoardSelection'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceSaveButton } from '../../soundStories/components'
@@ -63,7 +63,7 @@ WorkspaceSidebarComponent.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  activeStory: getActiveStoryName(state)
+  activeStory: getActiveStory(state)
 })
 
 export const WorkspaceSidebar = connect(

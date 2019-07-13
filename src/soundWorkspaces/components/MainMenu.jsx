@@ -3,14 +3,12 @@ import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MenuIcon from '@material-ui/icons/Menu'
-import PropTypes from 'prop-types'
 import React from 'react'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
 import { categoryStore } from '../../soundCategories'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
-import { getActiveStoryName } from '../selectors'
 import { OpenLibraryButton } from '../../soundLibraries/components'
 import { withStyles } from '@material-ui/core/styles'
 import { WorkspaceLoadFromButton } from './WorkspaceLoadFromButton'
@@ -46,14 +44,12 @@ class MainMenuComponent extends React.Component {
   }
 
   render () {
-    const { activeStory, classes } = this.props
+    const { classes } = this.props
     const { drawerOpen } = this.state
     return (
       <React.Fragment>
         <Button onClick={this.handleMenuOpen}>
           <MenuIcon />
-          {' '}
-          {activeStory}
         </Button>
         <SwipeableDrawer
           open={drawerOpen}
@@ -81,16 +77,10 @@ class MainMenuComponent extends React.Component {
 }
 
 MainMenuComponent.propTypes = {
-  activeStory: PropTypes.string,
   classes: Classes.isRequired
 }
 
-MainMenuComponent.defaultProps = {
-  activeStory: null
-}
-
 const mapStateToProps = state => ({
-  activeStory: getActiveStoryName(state),
   isEmpty: categoryStore.isEmpty(state)
 })
 

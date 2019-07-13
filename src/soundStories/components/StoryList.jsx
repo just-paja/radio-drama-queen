@@ -5,7 +5,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import { connect } from 'react-redux'
-import { getActiveStoryName } from '../../soundWorkspaces/selectors'
+import { getActiveStory } from '../../soundWorkspaces/selectors'
 import { StoryListItem } from './StoryListItem'
 import { StoryCreateButton } from './StoryCreateButton'
 import { storyRoutines } from '../actions'
@@ -59,7 +59,7 @@ class StoryListComponent extends React.Component {
 }
 
 StoryListComponent.propTypes = {
-  activeStory: PropTypes.string,
+  activeStory: PropTypes.object,
   stories: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDataRequest: PropTypes.func.isRequired,
   onStorySelect: PropTypes.func.isRequired
@@ -70,7 +70,7 @@ StoryListComponent.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  activeStory: getActiveStoryName(state),
+  activeStory: getActiveStory(state),
   stories: storyStore.getAll(state)
 })
 

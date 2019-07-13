@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
-import { getActiveStoryName, getWorkspaceView } from '../selectors'
+import { getActiveStory, getWorkspaceView } from '../selectors'
 import { withStyles } from '@material-ui/core/styles'
 import { workspaceRoutines } from '../actions'
 import {
@@ -83,7 +83,7 @@ class WorkspaceSelectionComponent extends Component {
 }
 
 WorkspaceSelectionComponent.propTypes = {
-  activeStory: PropTypes.string,
+  activeStory: PropTypes.object,
   className: PropTypes.string,
   classes: Classes.isRequired,
   onViewSelect: PropTypes.func.isRequired,
@@ -96,7 +96,7 @@ WorkspaceSelectionComponent.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  activeStory: getActiveStoryName(state),
+  activeStory: getActiveStory(state),
   view: getWorkspaceView(state)
 })
 

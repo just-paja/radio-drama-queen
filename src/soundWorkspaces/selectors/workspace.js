@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
-
 import { boardStore } from '../../soundBoards'
+import { createSelector } from 'reselect'
+import { storyStore } from '../../soundStories'
 
 const getWorkspacesState = state => state.soundWorkspaces
 const getUiState = state => getWorkspacesState(state).ui
@@ -30,7 +30,8 @@ export const getWorkspaceView = createSelector(
   state => state.view
 )
 
-export const getActiveStoryName = createSelector(
+export const getActiveStory = createSelector(
+  storyStore.getAll,
   getUiState,
-  state => state.story
+  (stories, uiState) => stories.find(story => story.uuid === uiState.story)
 )

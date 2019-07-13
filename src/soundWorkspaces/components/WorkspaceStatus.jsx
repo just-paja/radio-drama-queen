@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import WarningIcon from '@material-ui/icons/Warning'
 
+import { ActiveStory } from './ActiveStory'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { soundStore } from '../../sounds'
@@ -71,6 +72,7 @@ const WorkspaceStatusComponent = ({
   <header className={classes.header}>
     <MainMenu />
     <WorkspaceSelection />
+    <ActiveStory />
     <StopAllButton className={classes.stopAllButton} />
     <span className={classes.icons}>
       <LibraryStat number={playingSounds} icon={PlayArrowIcon} title='Playing' />
