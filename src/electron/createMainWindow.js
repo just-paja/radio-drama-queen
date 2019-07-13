@@ -26,6 +26,7 @@ export function createMainWindow (development) {
   const soundManager = new SoundManager()
   const storyManager = new StoryManager()
 
+  messenger.handleAction(soundRoutines.edit, handlers.soundEdit(soundManager))
   messenger.handleAction(soundRoutines.read, handlers.soundRead(soundManager))
   messenger.handleAction(soundRoutines.register, handlers.soundRegister(soundManager))
   messenger.handleAction(storyRoutines.create, handlers.saveStory(storyManager))

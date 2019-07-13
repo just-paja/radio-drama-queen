@@ -13,6 +13,9 @@ function filterUnique (item, index, src) {
 }
 
 function normalizeFormat (formatStr) {
+  if (!formatStr) {
+    throw new Error('Unrecognized format')
+  }
   if (formatStr === 'MP1') {
     return 'mp3'
   }

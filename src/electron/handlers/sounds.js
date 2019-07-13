@@ -10,6 +10,16 @@ export function soundRegister (soundManager) {
   }
 }
 
+export function soundEdit (soundManager) {
+  return function (messenger, routine, action) {
+    return soundManager.editSound(action.payload)
+      .then(sound => messenger.sendMessage(routine.success(sound)))
+      .catch(error => {
+        messenger.sendMessage(routine.failure(error.message, action.payload.uuid))
+      })
+  }
+}
+
 export function soundRead (soundManager) {
   return (messenger, routine, action) =>
     soundManager.getSoundDataUrl(action.payload)

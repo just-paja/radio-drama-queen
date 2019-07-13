@@ -26,8 +26,10 @@ function ignoreFile (file) {
   return ignore
 }
 
+allowModule('fluent-ffmpeg')
 allowModule('fs-jetpack')
 allowModule('request')
+allowModule('tmp-promise')
 
 module.exports = {
   makers: [

@@ -1,5 +1,5 @@
-import { SoundStorage } from './SoundStorage'
 import { PATH_WORKERS } from './paths'
+import { SoundStorage } from './SoundStorage'
 
 const generateUuid = require('uuid/v4')
 const path = require('path')
@@ -13,6 +13,11 @@ const readSoundMetaData = workerpool.pool(path.join(
 const readSoundDataUrl = workerpool.pool(path.join(
   PATH_WORKERS,
   'readSoundDataUrl.js'
+))
+
+const updateSound = workerpool.pool(path.join(
+  PATH_WORKERS,
+  'updateSound.js'
 ))
 
 /**
@@ -53,6 +58,11 @@ export class SoundManager {
     return this.storage
       .storeLocally(soundData)
       .then(this.readSoundMetaData)
+  }
+
+  editSound (soundData) {
+    return updateSound.exec('updateSound', [soundData])
+      .then(() => this.describeSound(soundData))
   }
 
   getSoundDataUrl (soundData) {
