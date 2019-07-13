@@ -4,8 +4,14 @@ import { renderWithDnd } from '../../../mock'
 import { WorkspaceView } from '..'
 
 describe('WorkspaceView component', () => {
-  it('renders sidebar', () => {
-    const comp = renderWithDnd(<WorkspaceView />)
+  it('renders sidebar in board view', () => {
+    const comp = renderWithDnd(<WorkspaceView />, {
+      soundWorkspaces: {
+        ui: {
+          view: 'VIEW_BOARD'
+        }
+      }
+    })
     expect(comp).toContainMatchingElement('WorkspaceSidebar')
   })
 

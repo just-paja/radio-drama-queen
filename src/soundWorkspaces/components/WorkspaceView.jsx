@@ -30,12 +30,17 @@ const styles = theme => ({
   }
 })
 
-function renderContent (empty, board, view) {
+function renderContent (classes, empty, board, view) {
   if (view === VIEW_LIBRARY) {
     return <SoundGalleryView />
   }
   if (view === VIEW_BOARD) {
-    return <SoundBoardView board={board} />
+    return (
+      <div className={classes.view}>
+        <WorkspaceSidebar />
+        <SoundBoardView board={board} />
+      </div>
+    )
   }
   if (view === VIEW_STORIES) {
     return <StoryView />
@@ -47,10 +52,7 @@ function WorkspaceViewComponent ({ classes, board, empty, view }) {
   return (
     <div className={classes.withHeader}>
       <WorkspaceStatus />
-      <div className={classes.view}>
-        <WorkspaceSidebar />
-        {renderContent(empty, board, view)}
-      </div>
+      {renderContent(classes, empty, board, view)}
       <BoardRenameDialog />
       <CategoryRenameDialog />
     </div>
