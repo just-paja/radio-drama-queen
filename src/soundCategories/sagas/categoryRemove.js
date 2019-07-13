@@ -1,5 +1,6 @@
 import { all, put, select, takeEvery } from 'redux-saga/effects'
 import { CategoryRenameDialog } from '../components'
+import { closeDialog } from '../../dialogs'
 import { categoryRoutines } from '../actions'
 import { getCategoryPlayingStatus, getCategorySoundUuids } from '../selectors'
 import { reflectRoutine } from '../../sagas/reflect'
@@ -17,13 +18,8 @@ function * handleCategoryRemove () {
   })
 }
 
-function * handleCategoryRenameSuccessDialog () {
-  yield takeEvery(categoryRoutines.rename.SUCCESS, function * () {
-    yield put(CategoryRenameDialog.close())
-  })
-}
 export default [
+  closeDialog(categoryRoutines.rename, CategoryRenameDialog),
   handleCategoryRemove,
-  handleCategoryRenameSuccessDialog,
   reflectRoutine(categoryRoutines.rename)
 ]

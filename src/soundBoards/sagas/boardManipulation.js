@@ -5,6 +5,7 @@ import { BoardRenameDialog } from '../components'
 import { boardRoutines } from '../actions'
 import { boardStore } from '../store'
 import { categoryRoutines } from '../../soundCategories'
+import { closeDialog } from '../../dialogs'
 import { getBoardCategoryUuids } from '../selectors'
 import { reflectRoutine } from '../../sagas/reflect'
 
@@ -22,12 +23,6 @@ function * handleBoardCreate () {
   })
 }
 
-function * handleBoardRenameSuccessDialog () {
-  yield takeEvery(boardRoutines.rename.SUCCESS, function * () {
-    yield put(BoardRenameDialog.close())
-  })
-}
-
 function * handleBoardRemove () {
   yield takeEvery(boardRoutines.remove.TRIGGER, function * ({ payload }) {
     const categories = yield select(getBoardCategoryUuids, payload)
@@ -37,7 +32,7 @@ function * handleBoardRemove () {
 }
 
 export default [
-  handleBoardRenameSuccessDialog,
+  closeDialog(boardRoutines.rename, BoardRenameDialog),
   handleBoardCreate,
   handleBoardRemove,
   reflectRoutine(boardRoutines.rename)

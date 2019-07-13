@@ -1,11 +1,12 @@
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
+import { closeDialog } from '../dialogs'
 import { FORM_STORY_CREATE } from './constants'
 import { getFormValues } from 'redux-form'
 import { isSoundUsed } from '../soundCategories/selectors'
 import { matchSoundLoadFinish } from '../sounds/sagas'
 import { passRequest, request } from '../ipcActionPipe'
 import { soundRoutines, soundStore } from '../sounds'
-import { StoryCreateDialog } from './components'
+import { StoryCreateDialog, StoryRenameDialog } from './components'
 import { storyRoutines } from './actions'
 
 function stripMemoryState ({ form, soundGallery, ...state }) {
@@ -27,12 +28,6 @@ function * handleStoryCreate () {
   yield takeEvery(storyRoutines.create.TRIGGER, function * () {
     const values = yield select(getFormValues(FORM_STORY_CREATE))
     yield request(storyRoutines.create, values)
-  })
-}
-
-function * handleStoryCreateSuccess () {
-  yield takeEvery(storyRoutines.create.SUCCESS, function * () {
-    yield put(StoryCreateDialog.close())
   })
 }
 
@@ -61,9 +56,10 @@ function * handleSoundReload () {
 }
 
 export default [
+  closeDialog(storyRoutines.create, StoryCreateDialog),
+  closeDialog(storyRoutines.rename, StoryRenameDialog),
   handleSoundReload,
   handleStoryCreate,
-  handleStoryCreateSuccess,
   handleStorySave,
   passRequest(storyRoutines.list),
   passRequest(storyRoutines.load),
