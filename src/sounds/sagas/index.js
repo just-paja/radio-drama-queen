@@ -1,3 +1,4 @@
+import soundEdit from './soundEdit'
 import soundLoad from './soundLoad'
 import soundPlay from './soundPlay'
 import soundRegister from './soundRegister'
@@ -10,6 +11,7 @@ import soundVolumeChange from './soundVolumeChange'
 export * from './soundLoad'
 
 export default [
+  ...soundEdit,
   ...soundLoad,
   ...soundPlay,
   ...soundRegister,

@@ -14,7 +14,7 @@ export const soundStore = createEntityStore('sounds', {
     uuid: null,
     valid: false
   },
-  providedBy: [soundRoutines.register],
+  providedBy: [soundRoutines.register, soundRoutines.edit],
   on: {
     [soundRoutines.play.TRIGGER]: turnOn('playing'),
     [soundRoutines.play.FAILURE]: (state, action) => ({

@@ -1,6 +1,7 @@
 import { createEntityRoutines } from '../entities/actions'
 
 export const soundRoutines = createEntityRoutines('SOUND', [
+  'EDIT',
   'LOAD',
   'LOOP_OFF',
   'LOOP_ON',
