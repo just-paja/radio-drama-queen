@@ -34,6 +34,9 @@ class StoryListComponent extends React.Component {
         <Typography variant='h2' gutterBottom>
           Saved stories
         </Typography>
+        <Typography variant='body2' gutterBottom>
+          Pick a story to start playing sounds
+        </Typography>
         <List>
           {stories.map(story => (
             <StoryListItem
