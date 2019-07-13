@@ -32,6 +32,7 @@ export function createMainWindow (development) {
   messenger.handleAction(storyRoutines.list, handlers.listStories(storyManager))
   messenger.handleAction(storyRoutines.load, handlers.loadStory(storyManager))
   messenger.handleAction(storyRoutines.remove, handlers.removeStory(storyManager))
+  messenger.handleAction(storyRoutines.rename, handlers.renameStory(storyManager))
   messenger.handleAction(storyRoutines.save, handlers.saveStory(storyManager))
 
   // TODO: Handle sound load

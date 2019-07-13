@@ -67,5 +67,6 @@ export default [
   handleStorySave,
   passRequest(storyRoutines.list),
   passRequest(storyRoutines.load),
-  passRequest(storyRoutines.remove)
+  passRequest(storyRoutines.remove),
+  passRequest(storyRoutines.rename)
 ]

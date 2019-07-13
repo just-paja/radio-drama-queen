@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TextFields from '@material-ui/icons/TextFields'
 
+import { StoryRenameDialog } from './StoryRenameDialog'
 import { connect } from 'react-redux'
 import { ContextMenuControl } from '../../components'
 import { Children } from '../../proptypes'
@@ -27,6 +28,7 @@ class StoryContextMenuComponent extends React.Component {
     return (
       <ContextMenuControl
         options={[
+          { icon: TextFields, label: 'Rename', onClick: this.handleRename },
           { icon: Delete, label: 'Remove', onClick: this.handleRemove }
         ]}
       >
@@ -44,7 +46,8 @@ StoryContextMenuComponent.propTypes = {
 const mapStateToProps = undefined
 
 const mapDispatchToProps = {
-  onRemove: storyRoutines.remove
+  onRemove: storyRoutines.remove,
+  onRename: StoryRenameDialog.open
 }
 
 export const StoryContextMenu = connect(

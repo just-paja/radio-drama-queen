@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
-import { StoryList } from '../../soundStories/components'
+import { StoryList, StoryRenameDialog } from '../../soundStories/components'
 import { connect } from 'react-redux'
 import { Center } from '../../components'
 
 const StoryViewComponent = ({ classes }) => (
   <Center>
     <StoryList />
+    <StoryRenameDialog />
   </Center>
 )
 

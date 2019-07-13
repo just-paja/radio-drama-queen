@@ -41,6 +41,14 @@ export class StoryManager {
       .then(() => uuid)
   }
 
+  renameStory (story) {
+    return this.loadStory(story.uuid)
+      .then(data => this.saveStory({
+        ...data,
+        name: story.name
+      }))
+  }
+
   saveStory (story) {
     const uuid = story.uuid || generateUuid()
     const data = { ...story, uuid }
