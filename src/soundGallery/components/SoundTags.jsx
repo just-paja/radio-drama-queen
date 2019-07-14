@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Classes } from '../../proptypes'
-import { SoundTag as SoundTagType } from '../../soundTags/proptypes'
 import { SoundTag } from '../../soundTags/components'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -36,7 +35,7 @@ const SoundTagsComponent = ({ classes, onTagClick, tags }) => (
 SoundTagsComponent.propTypes = {
   classes: Classes.isRequired,
   onTagClick: PropTypes.func.isRequired,
-  tags: PropTypes.arrayOf(SoundTagType).isRequired
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export const SoundTags = withStyles(styles)(SoundTagsComponent)
