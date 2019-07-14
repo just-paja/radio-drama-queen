@@ -34,7 +34,17 @@ function normalizeStoryState (state, story) {
   if (!entities) {
     return {
       ...state,
-      ...nextState
+      ...nextState,
+      entities: {
+        ...state.entities,
+        boards: [],
+        categories: [],
+        dialogs: [],
+        libraries: [],
+        modules: [],
+        sounds: [],
+        tags: []
+      }
     }
   }
   const { stories, ...otherEntities } = entities
