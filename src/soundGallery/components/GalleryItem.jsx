@@ -46,8 +46,8 @@ class GalleryItemComponent extends Component {
   }
 
   handleTagAdd (tag) {
-    const { onAddTag, target } = this.props
-    onAddTag(tag, { target })
+    const { onAddTag, target: { board, category } } = this.props
+    onAddTag({ board, category, tag })
   }
 
   handlePlayClick () {
