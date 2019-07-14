@@ -71,7 +71,7 @@
     "@electron-forge/plugin-webpack": "^6.0.0-beta.39",
     "@electron-forge/publisher-github": "^6.0.0-beta.39",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "10.0.1",
     "babel-loader": "^8.0.5",
     "electron": "^5.0.6",
     "electron-installer-debian": "^2.0.0",
@@ -89,7 +89,7 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
     "redux-saga-tester": "^1.0.497",
-    "standard": "^13.0.2"
+    "standard": "^12.0.1"
   },
   "standard": {
     "env": [
