@@ -15,7 +15,6 @@ function selectStory (state, action) {
 }
 
 const ui = handleActions({
-  [storyRoutines.create.SUCCESS]: selectStory,
   [storyRoutines.load.SUCCESS]: selectStory,
   [workspaceRoutines.wipe.TRIGGER]: state => ({
     ...state,
