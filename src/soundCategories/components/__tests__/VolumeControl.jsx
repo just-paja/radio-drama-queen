@@ -11,7 +11,7 @@ describe('VolumeControl component', () => {
         volume={0.5}
       />
     )
-    expect(comp.find('Slider')).toHaveLength(1)
+    expect(comp.find('ForwardRef(Slider)')).toHaveLength(1)
   })
 
   it('renders slider with zero value given the sound is muted', () => {
@@ -22,7 +22,7 @@ describe('VolumeControl component', () => {
         muted
       />
     )
-    expect(comp.find('Slider')).toHaveProp('value', 0)
+    expect(comp.find('ForwardRef(Slider)')).toHaveProp('value', 0)
   })
 
   it('renders slider with actual value given the sound is not muted', () => {
@@ -33,7 +33,7 @@ describe('VolumeControl component', () => {
         muted={false}
       />
     )
-    expect(comp.find('Slider')).toHaveProp('value', 0.5)
+    expect(comp.find('ForwardRef(Slider)')).toHaveProp('value', 0.5)
   })
 
   it('triggers onChange on volume slider change', () => {
@@ -44,7 +44,7 @@ describe('VolumeControl component', () => {
         volume={0.5}
       />
     )
-    comp.find('Slider').props().onChange()
+    comp.find('ForwardRef(Slider)').props().onChange()
     expect(onChange).toHaveBeenCalled()
   })
 })
