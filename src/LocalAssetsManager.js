@@ -2,14 +2,12 @@ import hash from 'hash.js'
 import { PATH_CACHE } from './electron/paths'
 
 let fs
-let electron
 let jetpack
 let request
 
 const loadDependencies = () => {
   if (global && global.require) {
     fs = global.require('fs')
-    electron = global.require('electron')
     jetpack = global.require('fs-jetpack')
     request = global.require('request')
   }

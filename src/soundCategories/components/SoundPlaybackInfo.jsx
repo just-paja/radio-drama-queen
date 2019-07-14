@@ -36,7 +36,9 @@ const styles = theme => ({
 
 class SoundPlaybackInfoComponent extends React.Component {
   animationFrameId = null
+
   audio = null
+
   state = { position: 0 }
 
   constructor (props) {

@@ -52,6 +52,7 @@ export function createMainWindow (development) {
     mainWindow.webContents.openDevTools()
   }
 
+  // eslint-disable-next-line no-undef
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
   return mainWindow
 }

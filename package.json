@@ -9,7 +9,7 @@
     "start": "electron-forge start",
     "build": "npm run make",
     "make": "electron-forge publish --dry-run",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "postinstall": "sudo chown root node_modules/electron/dist/chrome-sandbox; sudo chmod 4755 node_modules/electron/dist/chrome-sandbox",
     "publish": "electron-forge publish --from-dry-run"
   },
@@ -81,6 +81,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jest-enzyme": "^7.0.2",
+    "jest-runner-standard": "0.0.12",
     "node-abi": "^2.9.0",
     "node-loader": "^0.6.0",
     "react-dnd-test-backend": "^7.6.0",
