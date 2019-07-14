@@ -3,7 +3,6 @@ import { createEntityStore } from '../entities'
 import { libraryRoutines } from './actions'
 
 export const libraryStore = createEntityStore('libraries', {
-  identAttr: 'url',
   initialState: {
     loading: false,
     name: null,
