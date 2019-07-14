@@ -2,8 +2,12 @@ export function filterUnique (item, index, src) {
   return src.indexOf(item) === index
 }
 
+function flat (arrays) {
+  return arrays.reduce((acc, arr) => acc.concat(arr), [])
+}
+
 export function mergeArrays (...args) {
-  return args.flat().filter(item => item).filter(filterUnique)
+  return flat(args).filter(item => item).filter(filterUnique)
 }
 
 function getIdentifier (payload, identAttr) {
