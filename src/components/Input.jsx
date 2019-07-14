@@ -7,7 +7,16 @@ import TextField from '@material-ui/core/TextField'
 import AppError from './AppError'
 import InputFeedback from './InputFeedback'
 
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+  container: {
+    marginTop: theme.spacing(1)
+  }
+})
+
 const Input = ({
+  classes,
   input,
   type,
   label,
@@ -20,11 +29,11 @@ const Input = ({
   as: As = TextField,
   ...props
 }) => (
-  <FormGroup>
+  <FormGroup className={classes.container}>
     <FormControl error={!!(touched && error)}>
       <As
-        {...props}
         {...input}
+        {...props}
         error={!!(touched && error)}
         label={label}
         placeholder={placeholder}
@@ -43,7 +52,10 @@ const Input = ({
 )
 
 Input.propTypes = {
-  as: PropTypes.func,
+  as: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object
+  ]),
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     value: PropTypes.any
@@ -65,4 +77,4 @@ Input.defaultProps = {
   type: ''
 }
 
-export default Input
+export default withStyles(styles)(Input)

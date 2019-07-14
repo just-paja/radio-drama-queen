@@ -6,6 +6,8 @@ const { BrowserWindow } = require('electron')
 const BackendMessenger = require('./BackendMessenger')
 const handlers = require('./handlers')
 
+const { libraryRoutines } = require('../soundLibraries/actions')
+const { moduleRoutines } = require('../soundModules/actions')
 const { soundRoutines } = require('../sounds/actions')
 const { storyRoutines } = require('../soundStories/actions')
 
@@ -26,6 +28,8 @@ export function createMainWindow (development) {
   const soundManager = new SoundManager()
   const storyManager = new StoryManager()
 
+  messenger.handleAction(libraryRoutines.load, handlers.loadLibrary())
+  messenger.handleAction(moduleRoutines.load, handlers.loadModule())
   messenger.handleAction(soundRoutines.edit, handlers.soundEdit(soundManager))
   messenger.handleAction(soundRoutines.read, handlers.soundRead(soundManager))
   messenger.handleAction(soundRoutines.register, handlers.soundRegister(soundManager))

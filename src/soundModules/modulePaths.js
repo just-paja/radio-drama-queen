@@ -1,7 +1,7 @@
 import dirname from 'path-dirname'
 import URL from 'url-parse'
 
-const MANIFEST_FILE = 'manifest.json'
+import { MANIFEST_FILE } from './constants'
 
 const basename = path => path
   .replace(/\\/g, '/')

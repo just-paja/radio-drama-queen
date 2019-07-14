@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { OpenLibraryDialog } from '../components'
 
 const mapStateToProps = () => ({
-  children: 'Download Library',
+  children: 'Add library',
   icon: CloudDownload
 })
 

@@ -14,7 +14,7 @@ const GalleryEmptyComponent = ({ onLibraryOpen }) => (
       The sound library stores all the sounds. You can browse and filter here.
     </Typography>
     <LabelButton onClick={onLibraryOpen} icon={CloudDownload}>
-      Download Library
+      Add Library
     </LabelButton>
   </CanvasMessage>
 )

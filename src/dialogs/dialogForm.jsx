@@ -14,6 +14,7 @@ import { isDialogOpen } from './store'
 export function dialogForm ({
   dialog,
   initialValues,
+  mapStateToProps,
   onSubmit,
   submitLabel = 'Save',
   title
@@ -63,11 +64,14 @@ export function dialogForm ({
       }
     }
 
-    function mapStateToProps (state, ownProps) {
-      return {
+    function mapInnerStateToProps (state, ownProps) {
+      const componentState = {
         initialValues: initialValues && initialValues(state, ownProps),
         open: isDialogOpen(state, dialog)
       }
+      return mapStateToProps
+        ? { ...componentState, ...mapStateToProps(state, ownProps) }
+        : componentState
     }
 
     function closeDialog (meta) {
@@ -83,7 +87,7 @@ export function dialogForm ({
       onSubmit
     }
 
-    const DialogComponent = connect(mapStateToProps, mapDispatchToProps)(BoardDialog)
+    const DialogComponent = connect(mapInnerStateToProps, mapDispatchToProps)(BoardDialog)
     DialogComponent.close = closeDialog
     DialogComponent.open = openDialog
     return DialogComponent

@@ -1,32 +1,14 @@
-import { call, put, takeEvery, select } from '@redux-saga/core/effects'
+import { call, takeEvery } from '@redux-saga/core/effects'
 import { createQueue } from 'redux-saga-job-queue'
-import { downloadConfig } from '../../LocalAssetsManager'
 import { moduleRoutines } from '../actions'
-import { moduleStore } from '../store'
+import { request } from '../../ipcActionPipe'
 
 let queue
 
 const isQueueRunning = () => queue && !queue.isFinished()
 
-function * loadModuleConfig ({ payload: moduleName }) {
-  const module = yield select(moduleStore.getFirst, moduleName)
-  if (module) {
-    const { name, url } = module
-    yield put(moduleRoutines.load.request(name))
-
-    try {
-      const moduleConfig = yield call(downloadConfig, url)
-      yield put(moduleRoutines.load.success({
-        ...moduleConfig,
-        name,
-        url
-      }))
-    } catch (error) {
-      yield put(moduleRoutines.load.failure(name, error))
-    } finally {
-      yield put(moduleRoutines.load.fulfill(name))
-    }
-  }
+function * loadModuleConfig ({ payload }) {
+  yield request(moduleRoutines.load, payload)
 }
 
 function * handleModuleLoad () {

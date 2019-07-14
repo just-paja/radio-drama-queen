@@ -1,23 +1,55 @@
-import Input from '../../components/Input'
 import React from 'react'
 
 import { dialogForm } from '../../dialogs'
-import { Field } from 'redux-form'
-import { FORM_LIBRARY_OPEN } from '../constants'
+import { DRIVER_OPTIONS, DRIVER_LOCAL, DRIVER_REMOTE, FORM_LIBRARY_OPEN } from '../constants'
+import { Field, formValueSelector } from 'redux-form'
+import { InputToggleButton } from '../../components'
 import { libraryRoutines } from '../actions'
+import { RemoteLibraryForm } from './RemoteLibraryForm'
+import { LocalLibraryForm } from './LocalLibraryForm'
 
-const OpenLibraryDialogComponent = () => (
-  <Field
-    autoFocus
-    component={Input}
-    label='Library definition URL'
-    name='url'
-    type='url'
-  />
-)
+function renderForm (driver) {
+  if (driver === DRIVER_REMOTE) {
+    return <RemoteLibraryForm />
+  }
+  if (driver === DRIVER_LOCAL) {
+    return <LocalLibraryForm />
+  }
+  return null
+}
+
+function OpenLibraryDialogComponent ({ driver }) {
+  return (
+    <React.Fragment>
+      <Field
+        component={InputToggleButton}
+        name='driver'
+        options={DRIVER_OPTIONS}
+        exclusive
+      />
+      {renderForm(driver)}
+    </React.Fragment>
+  )
+}
+
+OpenLibraryDialogComponent.defaultProps = {
+  driver: DRIVER_LOCAL
+}
+
+const getFormValue = formValueSelector(FORM_LIBRARY_OPEN)
+
+function mapStateToProps (state) {
+  return {
+    driver: getFormValue(state, 'driver')
+  }
+}
 
 export const OpenLibraryDialog = dialogForm({
   dialog: FORM_LIBRARY_OPEN,
   onSubmit: libraryRoutines.load,
-  title: 'Download sound libary'
+  initialValues: () => ({
+    driver: DRIVER_LOCAL
+  }),
+  mapStateToProps,
+  title: 'Add sound library'
 })(OpenLibraryDialogComponent)
