@@ -129,6 +129,7 @@ function Option (props) {
       }}
       {...props.innerProps}
     >
+      {props.data.isNew && 'Create '}
       {props.children}
     </MenuItem>
   )
@@ -231,7 +232,6 @@ export function InputSelect ({ label, options, value, ...selectProps }) {
       zIndex: 9999
     })
   }
-
   return (
     <div className={classes.root}>
       <NoSsr>

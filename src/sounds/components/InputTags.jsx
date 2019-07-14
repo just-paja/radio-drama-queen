@@ -9,8 +9,16 @@ const InputTagsComponent = ({ ...props }) => (
   <Input
     {...props}
     as={InputSelect}
+    isClearable={false}
+    isCreatable
+    getNewOptionData={(inputValue, optionLabel) => ({
+      name: optionLabel,
+      title: inputValue,
+      isNew: true
+    })}
     getOptionLabel={option => option.title}
     getOptionValue={option => option.name}
+    formatCreateLabel={inputValue => `Create ${inputValue}`}
     isMulti
   />
 )
