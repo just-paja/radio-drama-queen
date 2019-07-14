@@ -4,6 +4,7 @@ import { FORM_LIBRARY_OPEN } from '../constants'
 import { getModuleShape, moduleRoutines } from '../../soundModules'
 import { startSubmit, stopSubmit, formValueSelector } from 'redux-form'
 import { libraryRoutines } from '../actions'
+import { OpenLibraryDialog } from '../components'
 
 const getLibraryOpenValues = formValueSelector(FORM_LIBRARY_OPEN)
 
@@ -38,6 +39,7 @@ function * handleLibraryLoadSuccess () {
       { name: moduleName }
     )))))
     yield all(rootModule.modules.map(moduleName => put(moduleRoutines.load(moduleName))))
+    yield put(OpenLibraryDialog.close())
   })
 }
 
