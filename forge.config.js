@@ -4,6 +4,8 @@ const allowedPatterns = [
   /package.json/,
   /[/\\]\.webpack($|[/\\]).*$/,
   /[/\\]src($|[/\\]electron($|[/\\].+))/,
+  /[/\\]src($|[/\\]soundLibraries($|[/\\]constants))/,
+  /[/\\]src($|[/\\]soundModules($|[/\\]constants))/,
   /[/\\]src($|[/\\]workers($|[/\\].+))/
 ]
 
@@ -32,6 +34,7 @@ allowModule('request')
 allowModule('tmp-promise')
 
 module.exports = {
+  main: '.webpack/main',
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
