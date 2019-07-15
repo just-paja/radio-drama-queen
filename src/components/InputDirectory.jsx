@@ -4,8 +4,6 @@ import React from 'react'
 
 import { withStyles } from '@material-ui/core/styles'
 
-const { dialog } = require('electron').remote
-
 const styles = {
   container: {
     alignItems: 'baseline',
@@ -32,6 +30,7 @@ export class InputDirectoryComponent extends React.Component {
   }
 
   handleButtonClick (event) {
+    const { dialog } = require('electron').remote
     const path = dialog.showOpenDialog({
       properties: ['openDirectory']
     })
