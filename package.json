@@ -48,6 +48,7 @@
     "redux-saga-restart": "^1.0.0",
     "request": "^2.88.0",
     "reselect": "^4.0.0",
+    "serialize-error": "^4.1.0",
     "tmp-promise": "^2.0.2",
     "url-parse": "^1.4.7",
     "uuid": "^3.3.2",

@@ -10,17 +10,19 @@ class BackendMessenger {
     this.subscribeToIpc()
   }
 
+  handleIncomingAction (action) {
+    if (action.type.includes('FAILURE')) {
+      console.log('in', action.type, JSON.stringify(action))
+    }
+    Promise.all(
+      this.listeners
+        .filter(listener => listener.matchesAction(action))
+        .map(listener => listener.run(action, this))
+    ).then(results => results.map(this.sendMessage))
+  }
+
   subscribeToIpc () {
-    ipcMain.on('frontendSays', (event, action) => {
-      if (action.type.includes('FAILURE')) {
-        console.log('in', action.type, JSON.stringify(action))
-      }
-      Promise.all(
-        this.listeners
-          .filter(listener => listener.matchesAction(action))
-          .map(listener => listener.run(action))
-      ).then(results => results.map(this.sendMessage))
-    })
+    ipcMain.on('frontendSays', (event, action) => this.handleIncomingAction(action))
   }
 
   sendMessage (action) {
