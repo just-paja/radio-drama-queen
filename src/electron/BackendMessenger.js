@@ -1,20 +1,12 @@
 const { ipcMain } = require('electron')
-
-const resolveListener = (matcher, action) => {
-  if (typeof matcher === 'string') {
-    return action.type === matcher
-  }
-  if (matcher instanceof Function) {
-    return Boolean(matcher(action))
-  }
-  return false
-}
+const { MessageListener } = require('./MessageListener')
 
 class BackendMessenger {
   constructor (targetWindow, debug) {
     this.window = targetWindow
     this.debug = debug
     this.listeners = []
+    this.sendMessage = this.sendMessage.bind(this)
     this.subscribeToIpc()
   }
 
@@ -23,19 +15,11 @@ class BackendMessenger {
       if (action.type.includes('FAILURE')) {
         console.log('in', action.type, JSON.stringify(action))
       }
-      this.listeners.forEach((listener) => {
-        const matches = resolveListener(listener.matcher, action)
-        if (matches) {
-          const handleError = routine => error => this.sendMessage(
-            listener.routine.failure(action.meta && action.meta.uuid, error.message)
-          )
-          try {
-            listener.action(this, listener.routine, action).catch(handleError)
-          } catch (error) {
-            handleError(error)
-          }
-        }
-      })
+      Promise.all(
+        this.listeners
+          .filter(listener => listener.matchesAction(action))
+          .map(listener => listener.run(action))
+      ).then(results => results.map(this.sendMessage))
     })
   }
 
@@ -48,9 +32,9 @@ class BackendMessenger {
     }))
   }
 
-  handleAction (routine, action) {
-    this.listeners.push({ matcher: routine.REQUEST, routine, action })
-  };
+  handleAction (routine, requestHandler) {
+    this.listeners.push(new MessageListener(routine, requestHandler))
+  }
 }
 
 module.exports = BackendMessenger

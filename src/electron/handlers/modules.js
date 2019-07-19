@@ -8,9 +8,6 @@ const readModule = workerpool.pool(path.join(
   'readModule.js'
 ))
 
-export function loadModule () {
-  return (messenger, routine, action) =>
-    readModule.exec('readModule', [action.payload])
-      .then(stories => messenger.sendMessage(routine.success(stories)))
-      .catch(error => messenger.sendMessage(routine.failure(error.message)))
+export function loadModule (action) {
+  return readModule.exec('readModule', [action.payload])
 }
