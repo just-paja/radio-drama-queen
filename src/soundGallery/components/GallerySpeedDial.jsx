@@ -1,12 +1,21 @@
 import DashboardIcon from '@material-ui/icons/Dashboard'
+import LibraryMusic from '@material-ui/icons/LibraryMusic'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 import SceneSpeedDial from '../../components/SceneSpeedDial'
 
-const GallerySpeedDialComponent = ({ onBoardCreate }) => (
+import { OpenLibraryDialog } from '../../soundLibraries/components'
+import { connect } from 'react-redux'
+
+const GallerySpeedDialComponent = ({ onBoardCreate, onLibraryOpen }) => (
   <SceneSpeedDial label='Sound Gallery Speed Dial'>
+    <SpeedDialAction
+      icon={<LibraryMusic />}
+      onClick={onLibraryOpen}
+      tooltipTitle='Add library'
+    />
     <SpeedDialAction
       icon={<DashboardIcon />}
       onClick={onBoardCreate}
@@ -16,7 +25,15 @@ const GallerySpeedDialComponent = ({ onBoardCreate }) => (
 )
 
 GallerySpeedDialComponent.propTypes = {
-  onBoardCreate: PropTypes.func.isRequired
+  onBoardCreate: PropTypes.func.isRequired,
+  onLibraryOpen: PropTypes.func.isRequired
 }
 
-export const GallerySpeedDial = GallerySpeedDialComponent
+const mapDispatchToProps = {
+  onLibraryOpen: OpenLibraryDialog.open
+}
+
+export const GallerySpeedDial = connect(
+  undefined,
+  mapDispatchToProps
+)(GallerySpeedDialComponent)

@@ -1,4 +1,4 @@
-import { createEntityRoutines } from '../entities'
+import { createEntityRoutines } from 'redux-entity-routines'
 
 export const boardRoutines = createEntityRoutines('BOARD', [
   'CREATE',

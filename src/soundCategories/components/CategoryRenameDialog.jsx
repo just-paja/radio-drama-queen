@@ -18,7 +18,7 @@ const CategoryRenameDialogComponent = () => (
 
 export const CategoryRenameDialog = dialogForm({
   dialog: FORM_CATEGORY_RENAME,
-  initialValues: state => categoryStore.getFirst(state, getDialogMeta(state, FORM_CATEGORY_RENAME)),
+  initialValues: state => categoryStore.getObject(state, getDialogMeta(state, FORM_CATEGORY_RENAME)),
   onSubmit: categoryRoutines.rename,
   title: 'Rename category'
 })(CategoryRenameDialogComponent)

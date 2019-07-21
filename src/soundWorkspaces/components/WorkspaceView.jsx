@@ -2,27 +2,18 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { BoardRenameDialog } from '../../soundBoards/components'
-import { CategoryRenameDialog } from '../../soundCategories/components'
+import { CategoryRenameDialog, SoundAddDialog } from '../../soundCategories/components'
 import { connect } from 'react-redux'
-import { getActiveBoardUuid, getWorkspaceView } from '../selectors'
+import { getActiveBoardUuid, getFocusedCategory, getWorkspaceView } from '../selectors'
 import { isGalleryEmpty } from '../../soundGallery/selectors'
 import { SoundBoardView } from './SoundBoardView'
 import { SoundGalleryView } from './SoundGalleryView'
 import { StoryView } from './StoryView'
 import { VIEW_BOARD, VIEW_LIBRARY, VIEW_STORIES } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
-import { WorkspaceSidebar } from './WorkspaceSidebar'
 import { WorkspaceStatus } from './WorkspaceStatus'
 
 const styles = theme => ({
-  sidebar: {
-    minWidth: theme.spacing(24)
-  },
-  view: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 1
-  },
   withHeader: {
     display: 'flex',
     flexDirection: 'column',
@@ -30,17 +21,12 @@ const styles = theme => ({
   }
 })
 
-function renderContent (classes, empty, board, view) {
+function renderContent (empty, board, view) {
   if (view === VIEW_LIBRARY) {
     return <SoundGalleryView />
   }
   if (view === VIEW_BOARD) {
-    return (
-      <div className={classes.view}>
-        <WorkspaceSidebar />
-        <SoundBoardView board={board} />
-      </div>
-    )
+    return <SoundBoardView board={board} />
   }
   if (view === VIEW_STORIES) {
     return <StoryView />
@@ -48,12 +34,13 @@ function renderContent (classes, empty, board, view) {
   return null
 }
 
-function WorkspaceViewComponent ({ classes, board, empty, view }) {
+function WorkspaceViewComponent ({ classes, board, empty, focusedCategory, view }) {
   return (
     <div className={classes.withHeader}>
       <WorkspaceStatus />
-      {renderContent(classes, empty, board, view)}
+      {renderContent(empty, board, view)}
       <BoardRenameDialog />
+      <SoundAddDialog board={board} focusedCategory={focusedCategory} />
       <CategoryRenameDialog />
     </div>
   )
@@ -75,6 +62,7 @@ WorkspaceViewComponent.defaultProps = {
 
 const mapStateToProps = state => ({
   board: getActiveBoardUuid(state),
+  focusedCategory: getFocusedCategory(state),
   empty: isGalleryEmpty(state),
   view: getWorkspaceView(state)
 })

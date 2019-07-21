@@ -5,7 +5,7 @@ import { soundRoutines } from '../../sounds'
 
 function * handleCategoryLoopToggle () {
   yield takeEvery(categoryRoutines.toggleLoop.TRIGGER, function * ({ payload: categoryUuid }) {
-    const category = yield select(categoryStore.getFirst, categoryUuid)
+    const category = yield select(categoryStore.getObject, categoryUuid)
     if (category) {
       yield put(category.loop
         ? soundRoutines.loopOff(category.sounds)

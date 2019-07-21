@@ -1,4 +1,5 @@
-import { createEntityStore } from '../entities'
+import { createSelector } from 'reselect'
+import { createEntityStore } from 'redux-entity-routines'
 import { dialogRoutines } from './actions'
 
 export const dialogStore = createEntityStore('dialogs', {
@@ -13,6 +14,11 @@ export const dialogStore = createEntityStore('dialogs', {
     })
   }
 })
+
+export const isAnyDialogOpen = createSelector(
+  dialogStore.getAll,
+  dialogs => dialogs.some(dialog => dialog.open)
+)
 
 export function isDialogOpen (state, dialog) {
   return dialogStore.getFlag(state, dialog, 'open')

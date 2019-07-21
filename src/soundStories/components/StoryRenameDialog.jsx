@@ -19,7 +19,7 @@ const StoryRenameDialogComponent = () => (
 
 export const StoryRenameDialog = dialogForm({
   dialog: FORM_STORY_RENAME,
-  initialValues: state => storyStore.getFirst(state, getDialogMeta(state, FORM_STORY_RENAME)),
+  initialValues: state => storyStore.getObject(state, getDialogMeta(state, FORM_STORY_RENAME)),
   onSubmit: firstArg(storyRoutines.rename),
   title: 'Rename story'
 })(StoryRenameDialogComponent)

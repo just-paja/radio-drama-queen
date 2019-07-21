@@ -8,7 +8,7 @@ import { tagStore } from '../../soundTags'
 
 function * handleTagAdd () {
   yield takeEvery(boardRoutines.tagAdd.TRIGGER, function * ({ payload: { uuid, tag } }) {
-    const tagObject = yield select(tagStore.getFirst, tag)
+    const tagObject = yield select(tagStore.getObject, tag)
     if (tagObject) {
       const sounds = yield select(getAllUnusedSoundsByTag, tag)
       const soundUuids = sounds.map(sound => sound.uuid)

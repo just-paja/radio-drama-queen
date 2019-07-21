@@ -1,9 +1,9 @@
-import { createEntityStore } from '../entities'
+import { createEntityStore } from 'redux-entity-routines'
 import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { moduleRoutines } from './actions'
 
 export const moduleStore = createEntityStore('modules', {
-  identAttr: 'name',
+  identAttr: 'url',
   initialState: {
     loading: false,
     name: null,

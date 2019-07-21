@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 
 import { CategoryItemMenu } from './CategoryItemMenu'
 import { connect } from 'react-redux'
 import { DragSource } from 'react-dnd'
+import { focusable } from '../../components'
 import { Sound } from '../../sounds/proptypes'
 import { SoundName, SoundStatusIcon } from '../../sounds/components'
 import { SoundPlaybackInfo } from './SoundPlaybackInfo'
@@ -53,10 +54,18 @@ const styles = theme => ({
   }
 })
 
-class CategoryItemComponent extends Component {
+class CategoryItemComponent extends React.PureComponent {
   constructor () {
     super()
+    this.handleFocus = this.handleFocus.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
+  }
+
+  handleFocus (event) {
+    event.stopPropagation()
+    if (!this.props.focused) {
+      this.props.onFocus(this.props.sound.uuid)
+    }
   }
 
   handleToggle () {
@@ -67,6 +76,7 @@ class CategoryItemComponent extends Component {
     const {
       categoryUuid,
       classes,
+      focusableRef,
       connectDragSource,
       search,
       sound
@@ -77,6 +87,8 @@ class CategoryItemComponent extends Component {
         disabled={Boolean(sound.error)}
         onClick={this.handleToggle}
         onContextMenu={this.handleContextMenuOpen}
+        onFocus={this.handleFocus}
+        ref={focusableRef}
       >
         <span className={classes.identification}>
           <SoundStatusIcon
@@ -142,10 +154,11 @@ const collect = (connectDrag, monitor) => ({
 })
 
 const mapStateToProps = (state, { uuid }) => ({
-  sound: soundStore.getFirst(state, uuid)
+  sound: soundStore.getObject(state, uuid)
 })
 
 const mapDispatchToProps = {
+  onFocus: soundRoutines.focus,
   onToggle: soundRoutines.toggle
 }
 
@@ -157,5 +170,5 @@ export const CategoryItem = connect(
   soundItem,
   collect
 )(withStyles(styles)(
-  CategoryItemComponent
+  focusable(CategoryItemComponent)
 )))

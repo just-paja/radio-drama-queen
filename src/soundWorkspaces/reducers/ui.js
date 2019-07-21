@@ -1,39 +1,46 @@
-import { handleActions } from 'redux-actions'
 import { boardRoutines } from '../../soundBoards'
+import { categoryRoutines } from '../../soundCategories'
+import { combineReducers } from 'redux'
+import { handleActions } from 'redux-actions'
+import { soundRoutines } from '../../sounds'
 import { storyRoutines } from '../../soundStories'
 import { VIEW_BOARD, VIEW_STORIES } from '../constants'
 import { workspaceRoutines } from '../actions'
 
-const initialState = {
-  story: null,
-  board: null,
-  view: VIEW_STORIES
-}
+const board = handleActions({
+  [workspaceRoutines.wipe.TRIGGER]: () => null,
+  [boardRoutines.remove.TRIGGER]: (state, action) => action.payload === state ? null : state,
+  [workspaceRoutines.selectBoard.TRIGGER]: (state, action) => action.payload
+}, null)
 
-function selectStory (state, action) {
-  return { ...state, story: action.payload.uuid }
-}
+const category = handleActions({
+  [categoryRoutines.create.SUCCESS]: (state, action) => action.payload.uuid,
+  [categoryRoutines.focus.TRIGGER]: (state, action) => action.payload,
+  [categoryRoutines.remove.TRIGGER]: (state, action) => state === action.payload ? null : state
+}, null)
 
-const ui = handleActions({
-  [storyRoutines.load.SUCCESS]: selectStory,
-  [workspaceRoutines.wipe.TRIGGER]: state => ({
-    ...state,
-    board: null
-  }),
-  [boardRoutines.remove.TRIGGER]: (state, action) => (
-    action.payload === state.board
-      ? { ...state, board: null }
-      : state
-  ),
-  [workspaceRoutines.selectBoard.TRIGGER]: (state, action) => ({
-    ...state,
-    view: VIEW_BOARD,
-    board: action.payload
-  }),
-  [workspaceRoutines.selectView.TRIGGER]: (state, action) => ({
-    ...state,
-    view: action.payload === null && state.board ? VIEW_BOARD : action.payload
-  })
-}, initialState)
+const sound = handleActions({
+  [categoryRoutines.focus.TRIGGER]: (state, action) => null,
+  [soundRoutines.focus.TRIGGER]: (state, action) => action.payload,
+  [categoryRoutines.soundRemove.TRIGGER]: (state, action) => state === action.payload.sound ? null : state,
+  [soundRoutines.unload.TRIGGER]: (state, action) => state === action.payload ? null : state
+}, null)
 
-export default ui
+const story = handleActions({
+  [storyRoutines.load.SUCCESS]: (state, action) => action.payload.uuid
+}, null)
+
+const view = handleActions({
+  [workspaceRoutines.selectBoard.TRIGGER]: () => VIEW_BOARD,
+  [workspaceRoutines.selectView.TRIGGER]: (state, action) => (
+    action.payload === null && state.board ? VIEW_BOARD : action.payload
+  )
+}, VIEW_STORIES)
+
+export default combineReducers({
+  board,
+  category,
+  sound,
+  story,
+  view
+})

@@ -8,6 +8,7 @@ import { CategoryRenameDialog } from './CategoryRenameDialog'
 import { categoryRoutines } from '../actions'
 import { connect } from 'react-redux'
 import { ContextMenuUncontrolled, ContextMenuItem } from '../../components'
+import { SoundAddDialog } from './SoundAddDialog'
 
 class CategoryContextMenuComponent extends React.Component {
   constructor () {
@@ -18,7 +19,7 @@ class CategoryContextMenuComponent extends React.Component {
   }
 
   handleAddSound () {
-    this.props.onSoundPickerOpen({
+    this.props.onSoundAdd({
       board: this.props.boardUuid,
       category: this.props.uuid
     })
@@ -47,13 +48,14 @@ CategoryContextMenuComponent.propTypes = {
   boardUuid: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
   onRename: PropTypes.func.isRequired,
-  onSoundPickerOpen: PropTypes.func.isRequired,
+  onSoundAdd: PropTypes.func.isRequired,
   uuid: PropTypes.string.isRequired
 }
 
 const mapDispatchToProps = {
   onRemove: categoryRoutines.remove,
-  onRename: CategoryRenameDialog.open
+  onRename: CategoryRenameDialog.open,
+  onSoundAdd: SoundAddDialog.open
 }
 
 export const CategoryContextMenu = connect(

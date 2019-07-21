@@ -1,0 +1,11 @@
+{
+  "id": "/Translations",
+  "additionalProperties": false,
+  "type": "object",
+  "minProperties": 1,
+  "patternProperties": {
+    "^[a-z]{3}$": {
+      "type": "string"
+    }
+  }
+}

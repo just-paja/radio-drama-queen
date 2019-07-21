@@ -5,7 +5,7 @@ import { matchSoundLoadFinish } from '../../sounds/sagas/soundLoad'
 import { soundRoutines, soundStore } from '../../sounds'
 
 function * playAndForget ({ payload: soundUuid }) {
-  const sound = yield select(soundStore.getFirst, soundUuid)
+  const sound = yield select(soundStore.getObject, soundUuid)
   if (sound) {
     if (sound.playing) {
       yield put(soundRoutines.stop(soundUuid))

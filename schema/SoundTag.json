@@ -1,0 +1,14 @@
+{
+  "id": "/SoundTag",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "/ObjectName"
+    },
+    "translations": {
+      "$ref": "/Translations"
+    }
+  },
+  "required": ["name", "translations"]
+}

@@ -1,4 +1,3 @@
-import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -24,7 +23,7 @@ const GalleryItemListComponent = ({
   sounds,
   target
 }) => (
-  <Paper className={classes.body}>
+  <div className={classes.body}>
     {sounds.map(sound => (
       <GalleryItem
         key={sound.uuid}
@@ -35,7 +34,7 @@ const GalleryItemListComponent = ({
         target={target}
       />
     ))}
-  </Paper>
+  </div>
 )
 
 GalleryItemListComponent.displayName = 'GalleryItemList'

@@ -1,4 +1,4 @@
-import { createEntityStore } from '../entities'
+import { createEntityStore } from 'redux-entity-routines'
 import { createSelector } from 'reselect'
 import { storyRoutines } from './actions'
 

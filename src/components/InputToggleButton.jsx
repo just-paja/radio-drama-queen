@@ -3,7 +3,13 @@ import React from 'react'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
+import { Options } from '../proptypes'
+
 export class InputToggleButton extends React.Component {
+  static propTypes = {
+    options: Options.isRequired
+  }
+
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)

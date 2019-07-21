@@ -2,7 +2,8 @@ import CloudDownload from '@material-ui/icons/CloudDownload'
 import LabelButton from '../../components/LabelButton'
 
 import { connect } from 'react-redux'
-import { OpenLibraryDialog } from '../components'
+import { noArgs } from '../../components'
+import { OpenLibraryDialog } from './OpenLibraryDialog'
 
 const mapStateToProps = () => ({
   children: 'Add library',
@@ -10,7 +11,7 @@ const mapStateToProps = () => ({
 })
 
 const mapDispatchToProps = {
-  onClick: OpenLibraryDialog.open
+  onClick: noArgs(OpenLibraryDialog.open)
 }
 
 export const OpenLibraryButton = connect(

@@ -1,5 +1,5 @@
 import { boardRoutines } from './actions'
-import { createEntityStore } from '../entities'
+import { createEntityStore } from 'redux-entity-routines'
 
 export const boardStore = createEntityStore('boards', {
   providedBy: [

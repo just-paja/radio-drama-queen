@@ -1,5 +1,5 @@
 import { categoryRoutines } from './actions'
-import { createEntityStore } from '../entities'
+import { createEntityStore } from 'redux-entity-routines'
 import { createSelector } from 'reselect'
 import { changeParam, toggle, turnOff } from 'react-saga-rest'
 import { idCollection } from '../collections'
@@ -25,6 +25,6 @@ export const categoryStore = createEntityStore('categories', {
 })
 
 export const getCategoryName = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.name
 )

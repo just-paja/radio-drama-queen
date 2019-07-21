@@ -1,13 +1,28 @@
 import { remove } from 'diacritics'
 
-export const clearSearch = search => remove(search)
-  .trim()
-  .replace(/[\s]/g, '-')
-  .replace(/[-]+/g, '-')
+function filterNonEmpty (item) {
+  return Boolean(item)
+}
+
+function filterUnique (item, index, src) {
+  return src.indexOf(item) === index
+}
+
+export const clearSearch = search => {
+  if (!search) {
+    return ''
+  }
+  return remove(search)
+    .trim()
+    .replace(/[\s]/g, '-')
+    .replace(/[-]+/g, '-')
+}
 
 export const splitSearchPatterns = search => clearSearch(search)
   .toLowerCase()
   .split('-')
+  .filter(filterNonEmpty)
+  .filter(filterUnique)
 
 export const stringSearch = (sample, search, inclusive = false) => {
   const cleanSearch = splitSearchPatterns(search)

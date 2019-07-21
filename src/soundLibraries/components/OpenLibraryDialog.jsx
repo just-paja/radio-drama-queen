@@ -51,5 +51,6 @@ export const OpenLibraryDialog = dialogForm({
     driver: DRIVER_LOCAL
   }),
   mapStateToProps,
+  submitLabel: 'Add Library',
   title: 'Add sound library'
 })(OpenLibraryDialogComponent)

@@ -31,7 +31,8 @@ const getAppPath = (...args) => {
 const PATH_CACHE = getPath('Cache')
 const PATH_EXE = getAppPath('exe')
 const PATH_STORIES = getPath('Stories')
-const PATH_WORKERS = jetpack.path(PATH_EXE, 'src', 'workers')
+const PATH_ELECTRON = jetpack.path(PATH_EXE, 'src', 'electron')
+const PATH_WORKERS = jetpack.path(PATH_ELECTRON, 'workers')
 
 module.exports = {
   getAppPath,
@@ -41,6 +42,7 @@ module.exports = {
   PATH_EXE,
   PATH_FALLBACK_ROOT,
   PATH_STORIES,
+  PATH_ELECTRON,
   PATH_WORKERS,
   removeLocalProtocol,
   splitNameFromExtension

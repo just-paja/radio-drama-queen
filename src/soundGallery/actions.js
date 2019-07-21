@@ -1,4 +1,10 @@
 import { createRoutine } from '../actions/routines'
+import { createEntityRoutines } from 'redux-entity-routines'
+
+export const browseRoutines = createEntityRoutines('GALLERY_BROWSE', [
+  'SELECT_LIBRARY',
+  'SELECT_MODULE'
+], true)
 
 export const gallerySound = createRoutine('GALLERY_SOUND', [
   'PLAY'

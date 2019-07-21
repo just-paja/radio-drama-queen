@@ -11,7 +11,7 @@ import { StoryCreateDialog, StoryRenameDialog } from './components'
 import { storyRoutines } from './actions'
 
 function stripMemoryState ({ form, soundGallery, ...state }) {
-  const story = storyStore.getFirst(state, state.soundWorkspaces.ui.story)
+  const story = storyStore.getObject(state, state.soundWorkspaces.ui.story)
   return {
     ...state,
     name: story.name,

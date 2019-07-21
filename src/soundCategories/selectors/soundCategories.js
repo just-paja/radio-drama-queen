@@ -20,7 +20,7 @@ export const getCategoryListUuids = createSelector(
 )
 
 export const getCategory = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category
 )
 
@@ -32,44 +32,44 @@ export const getCategoryByName = createSelector(
 )
 
 export const getCategoryBoardUuid = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.board
 )
 
 export const getCategorySoundUuids = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.sounds
 )
 
 export const getCategorySounds = createSelector(
-  [categoryStore.getFirst, soundStore.getAll],
+  [categoryStore.getObject, soundStore.getAll],
   (category, soundList) => soundList.filter(
     sound => category.sounds.indexOf(sound.uuid) !== -1
   )
 )
 
 export const getCategoryEditStatus = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.edit
 )
 
 export const getCategoryLoopStatus = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.loop
 )
 
 export const getCategoryMutedStatus = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.muted
 )
 
 export const getCategoryExclusiveStatus = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.exclusive
 )
 
 export const getCategorySoundPlayingUuids = createSelector(
-  [categoryStore.getFirst, soundStore.getAll],
+  [categoryStore.getObject, soundStore.getAll],
   (category, allSounds) => category.sounds
     .filter((uuid) => {
       const sound = allSounds.find(filterSound => filterSound.uuid === uuid)
@@ -78,14 +78,14 @@ export const getCategorySoundPlayingUuids = createSelector(
 )
 
 export const getCategoryPlayingStatus = createSelector(
-  [categoryStore.getFirst, soundStore.getAll],
+  [categoryStore.getObject, soundStore.getAll],
   (category, allSounds) => allSounds
     .filter(sound => category.sounds.indexOf(sound.uuid) !== -1)
     .some(sound => sound.playing)
 )
 
 export const getCategoryVolume = createSelector(
-  categoryStore.getFirst,
+  categoryStore.getObject,
   category => category.volume
 )
 

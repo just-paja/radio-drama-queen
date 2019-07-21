@@ -11,45 +11,62 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   container: {
-    marginTop: theme.spacing(1)
+    ':not(:first-child)': {
+      marginTop: theme.spacing(1)
+    }
   }
 })
 
-const Input = ({
-  classes,
-  input,
-  type,
-  label,
-  placeholder,
-  meta: {
-    touched,
-    error,
-    warning
-  },
-  as: As = TextField,
-  ...props
-}) => (
-  <FormGroup className={classes.container}>
-    <FormControl error={!!(touched && error)}>
-      <As
-        {...input}
-        {...props}
-        error={!!(touched && error)}
-        label={label}
-        placeholder={placeholder}
-        type={type}
-        value={input.value}
-      />
-      {touched && (
-        (error || warning) ? (
-          <InputFeedback type={warning ? 'warning' : 'error'}>
-            <AppError error={error || warning} />
-          </InputFeedback>
-        ) : null
-      )}
-    </FormControl>
-  </FormGroup>
-)
+class Input extends React.Component {
+  constructor (props) {
+    super(props)
+    this.inputRef = React.createRef()
+  }
+
+  focus () {
+    this.inputRef.current.focus()
+  }
+
+  render () {
+    const {
+      classes,
+      input,
+      type,
+      label,
+      placeholder,
+      meta: {
+        touched,
+        error,
+        warning
+      },
+      as: As = TextField,
+      ...props
+    } = this.props
+    return (
+      <FormGroup className={classes.container}>
+        <FormControl error={touched ? error : null}>
+          <As
+            {...input}
+            {...props}
+            error={touched ? error : null}
+            label={label}
+            placeholder={placeholder}
+            inputRef={this.inputRef}
+            type={type}
+            value={input.value}
+          />
+          {touched && (
+            (error || warning) ? (
+              <InputFeedback type={warning ? 'warning' : 'error'}>
+                <AppError error={error || warning} />
+              </InputFeedback>
+            ) : null
+          )}
+        </FormControl>
+      </FormGroup>
+    )
+  }
+}
 
 Input.propTypes = {
   as: PropTypes.oneOfType([

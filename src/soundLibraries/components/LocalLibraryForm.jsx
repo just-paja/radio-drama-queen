@@ -2,13 +2,13 @@ import Input from '../../components/Input'
 import React from 'react'
 
 import { Field } from 'redux-form'
-import { InputDirectory } from '../../components/InputDirectory'
+import { InputLibrary } from '../../components/InputLibrary'
 
 export const LocalLibraryForm = () => (
   <Field
     autoFocus
     component={Input}
-    as={InputDirectory}
+    as={InputLibrary}
     label='Library location'
     name='directory'
   />

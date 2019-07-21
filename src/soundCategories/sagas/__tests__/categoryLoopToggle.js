@@ -30,14 +30,14 @@ describe('categoryLoopToggle saga', () => {
     sagaTester.runAll(sagas)
     sagaTester.dispatch(categoryRoutines.toggleLoop('category-1'))
     expect(sagaTester.getState()).toHaveProperty('entities.sounds', [
-      {
+      expect.objectContaining({
         uuid: 'sound-1',
         loop: true
-      },
-      {
+      }),
+      expect.objectContaining({
         uuid: 'sound-2',
         loop: true
-      }
+      })
     ])
   })
 
@@ -68,14 +68,14 @@ describe('categoryLoopToggle saga', () => {
     sagaTester.runAll(sagas)
     sagaTester.dispatch(categoryRoutines.toggleLoop('category-1'))
     expect(sagaTester.getState()).toHaveProperty('entities.sounds', [
-      {
+      expect.objectContaining({
         uuid: 'sound-1',
         loop: false
-      },
-      {
+      }),
+      expect.objectContaining({
         uuid: 'sound-2',
         loop: false
-      }
+      })
     ])
   })
 

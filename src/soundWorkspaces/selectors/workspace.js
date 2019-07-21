@@ -35,3 +35,13 @@ export const getActiveStory = createSelector(
   getUiState,
   (stories, uiState) => stories.find(story => story.uuid === uiState.story)
 )
+
+export const getFocusedCategory = createSelector(
+  getUiState,
+  state => state.category
+)
+
+export const getFocusedSound = createSelector(
+  getUiState,
+  state => state.sound
+)

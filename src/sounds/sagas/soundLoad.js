@@ -96,7 +96,7 @@ export function * loadSoundResource (uuid, resource) {
 
 function * handleSoundLoad () {
   yield takeEvery(soundRoutines.load.TRIGGER, function * ({ payload: uuid }) {
-    const sound = yield select(soundStore.getFirst, uuid)
+    const sound = yield select(soundStore.getObject, uuid)
     if (sound && !sound.valid) {
       yield call(loadSoundInQueue, uuid, sound)
     }

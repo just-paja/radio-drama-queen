@@ -1,4 +1,4 @@
-import { createEntityStore } from '../entities'
+import { createEntityStore } from 'redux-entity-routines'
 import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { soundRoutines } from './actions'
 

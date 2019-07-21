@@ -9,9 +9,9 @@ import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { connect } from 'react-redux'
 
 const GalleryEmptyComponent = ({ onLibraryOpen }) => (
-  <CanvasMessage heading='Sound library is empty!'>
+  <CanvasMessage heading='Sound gallery is empty!'>
     <Typography gutterBottom>
-      The sound library stores all the sounds. You can browse and filter here.
+      The sound gallery stores all the sounds. You can browse and filter here.
     </Typography>
     <LabelButton onClick={onLibraryOpen} icon={CloudDownload}>
       Add Library

@@ -21,3 +21,13 @@ export const Sound = PropTypes.shape({
   playing: PropTypes.bool,
   valid: PropTypes.bool
 })
+
+export const Option = PropTypes.shape({
+  label: PropTypes.node,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
+})
+
+export const Options = PropTypes.arrayOf(Option)

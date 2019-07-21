@@ -74,8 +74,8 @@ GalleryTargetComponent.defaultProps = {
 
 function mapStateToProps (state, { board, category }) {
   return {
-    board: boardStore.getFirst(state, board),
-    category: categoryStore.getFirst(state, category)
+    board: boardStore.getObject(state, board),
+    category: categoryStore.getObject(state, category)
   }
 }
 

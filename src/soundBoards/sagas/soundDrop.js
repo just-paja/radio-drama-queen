@@ -8,7 +8,7 @@ import { getSoundCategories } from '../../soundCategories/selectors'
 function * handleBoardSoundDrop () {
   yield takeEvery(boardRoutines.soundDrop.TRIGGER, function * ({ payload: boardUuid, meta: dropTarget }) {
     const dropItem = dropTarget.getItem()
-    const board = yield select(boardStore.getFirst, boardUuid)
+    const board = yield select(boardStore.getObject, boardUuid)
 
     if (board) {
       const targetCategory = yield call(createTargetCategory, boardUuid)

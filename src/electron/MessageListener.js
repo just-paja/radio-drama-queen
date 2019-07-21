@@ -7,9 +7,10 @@ class MessageListener {
   }
 
   getErrorHandler (payload) {
-    return (error) => this.routine.failure(error instanceof Error
-      ? serializeError(error)
-      : error)
+    return error => this.routine.failure(
+      payload,
+      error instanceof Error ? serializeError(error) : error
+    )
   }
 
   matchesAction (action) {

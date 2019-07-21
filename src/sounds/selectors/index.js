@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 import { getFlag } from 'react-saga-rest'
 import { soundStore } from '../store'
 
-export const getSoundPlayingStatus = getFlag(soundStore.getFirst, 'playing')
-export const getSoundLoopStatus = getFlag(soundStore.getFirst, 'loop')
+export const getSoundPlayingStatus = getFlag(soundStore.getObject, 'playing')
+export const getSoundLoopStatus = getFlag(soundStore.getObject, 'loop')
 
 export const getPlayingSounds = createSelector(
   soundStore.getAll,

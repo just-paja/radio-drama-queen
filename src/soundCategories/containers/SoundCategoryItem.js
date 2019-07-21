@@ -16,7 +16,7 @@ const collect = (connectDrag, monitor) => ({
 })
 
 const mapStateToProps = (state, { uuid }) => ({
-  sound: soundStore.getFirst(state, uuid)
+  sound: soundStore.getObject(state, uuid)
 })
 
 const mapDispatchToProps = {

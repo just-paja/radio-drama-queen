@@ -14,13 +14,22 @@ const styles = theme => ({
 const BoardCategoryComponent = ({
   classes,
   children,
+  focused,
+  focusedSound,
   onSoundPickerOpen,
   uuid
 }) => (
   <Grid xs={12} sm={6} md={4} lg={3} xl={2} item elevation={0}>
     <div className={classes.gridItem}>
       {uuid
-        ? <Category onSoundPickerOpen={onSoundPickerOpen} uuid={uuid} />
+        ? (
+          <Category
+            focused={!focusedSound && focused}
+            focusedSound={focusedSound}
+            onSoundPickerOpen={onSoundPickerOpen}
+            uuid={uuid}
+          />
+        )
         : children
       }
     </div>
@@ -33,6 +42,7 @@ BoardCategoryComponent.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
   ]),
+  focused: PropTypes.bool,
   onSoundPickerOpen: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   uuid: PropTypes.string
@@ -40,6 +50,7 @@ BoardCategoryComponent.propTypes = {
 
 BoardCategoryComponent.defaultProps = {
   children: null,
+  focused: false,
   uuid: null
 }
 

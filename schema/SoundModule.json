@@ -1,0 +1,29 @@
+{
+  "id": "/SoundModule",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "/ObjectName"
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "/SoundModuleUrl"
+      }
+    },
+    "sounds": {
+      "type": "array",
+      "items": {
+        "$ref": "/SoundUrl"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "$ref": "/SoundTag"
+      }
+    }
+  },
+  "required": ["name", "modules"]
+}

@@ -40,7 +40,10 @@ function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    onRemove: () => dispatchProps.onRemove(ownProps.categoryUuid, ownProps.soundUuid)
+    onRemove: () => dispatchProps.onRemove({
+      uuid: ownProps.categoryUuid,
+      sound: ownProps.soundUuid
+    })
   }
 }
 

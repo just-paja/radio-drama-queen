@@ -1,20 +1,64 @@
+const jetpack = require('fs-jetpack')
 const path = require('path')
 
 const { MANIFEST_FILE } = require('../soundModules/constants')
+const { moduleIgnore, soundExtensions, RDQ_MANIFEST_FILE } = require('./constants')
 
-function formatLocalModule (parent, name) {
-  return {
-    directory: path.join(parent.directory, name),
-    driver: parent.driver,
-    name
-  }
+function filterModuleDirectory (node) {
+  return (
+    node.type === 'dir' &&
+    node.name.indexOf('.') !== 0 &&
+    moduleIgnore.indexOf(node.name) === -1
+  )
+}
+
+function isSound (name) {
+  return soundExtensions.some(ext => name.endsWith(ext))
 }
 
 function formatLocalSound (parent, soundFile) {
   return {
+    library: parent.library ? parent.library : parent.url,
+    module: parent.library ? parent.url : null,
     name: soundFile,
     path: `file://${path.join(parent.directory, soundFile)}`
   }
+}
+
+function readLocalModuleChildren (module) {
+  return jetpack.listAsync(module.directory)
+    .then(nodes => Promise.all(nodes.map(node => jetpack.inspectAsync(jetpack.path(module.directory, node)))))
+    .then(fileList => Promise.all(fileList
+      .filter(filterModuleDirectory)
+      .map(item => readLocalModule(module, {
+        library: module.library || module.url,
+        name: item.name,
+        parent: module.library ? module.url : null
+      }))
+    ).then(modules => Object.assign({}, module, {
+      modules,
+      sounds: fileList
+        .filter(item => item.type === 'file' && isSound(item.name))
+        .map(item => formatLocalSound(module, item.name))
+    })))
+}
+
+function readLocalModule (parent, module) {
+  const directory = parent
+    ? path.join(parent.directory, module.name)
+    : module.directory
+  const lib = Object.assign({}, module, {
+    directory: directory,
+    driver: module.driver || (parent && parent.driver),
+    name: module.name || path.basename(directory),
+    url: `file://${directory}`
+  })
+  const manifestPath = jetpack.path(lib.directory, RDQ_MANIFEST_FILE)
+  return jetpack.readAsync(manifestPath, 'json')
+    .then(manifest => manifest
+      ? Object.assign({}, lib, manifest)
+      : lib)
+    .then(readLocalModuleChildren)
 }
 
 function getHttpDirName (remoteUrl) {
@@ -62,10 +106,11 @@ function formatRemoteSounds (data) {
 }
 
 module.exports = {
-  formatLocalModule,
-  formatLocalSound,
+  filterModuleDirectory,
   formatRemoteModules,
   formatRemoteSounds,
   getHttpDirName,
+  isSound,
+  readLocalModule,
   resolveModuleUrl
 }

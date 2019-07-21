@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import Grid from '@material-ui/core/Grid'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 
 import { BoardCategory } from './BoardCategory'
@@ -29,18 +29,6 @@ const styles = theme => ({
   }
 })
 
-const renderCategories = (gridClasses, categories, onSoundPickerOpen) => (
-  <Grid alignItems='flex-start' className={gridClasses} container>
-    {categories.map(categoryUuid => (
-      <BoardCategory
-        key={categoryUuid}
-        onSoundPickerOpen={onSoundPickerOpen}
-        uuid={categoryUuid}
-      />
-    ))}
-  </Grid>
-)
-
 const renderSnackbar = (isOver, canDrop) => (
   <Snackbar
     open={canDrop && isOver}
@@ -49,7 +37,7 @@ const renderSnackbar = (isOver, canDrop) => (
   />
 )
 
-class BoardComponent extends Component {
+class BoardComponent extends React.PureComponent {
   constructor () {
     super()
     this.handleSoundPickerOpen = this.handleSoundPickerOpen.bind(this)
@@ -62,6 +50,36 @@ class BoardComponent extends Component {
     })
   }
 
+  isFocused (categoryUuid, categoryIndex) {
+    const { focusedCategory } = this.props
+    return (
+      focusedCategory === categoryUuid ||
+      (!focusedCategory && categoryIndex === 0)
+    )
+  }
+
+  renderCategories () {
+    const {
+      categories,
+      classes,
+      focusedSound,
+      onSoundPickerOpen
+    } = this.props
+    return (
+      <Grid alignItems='flex-start' className={classes.gridSpacing} container>
+        {categories.map((categoryUuid, index) => (
+          <BoardCategory
+            focused={this.isFocused(categoryUuid, index)}
+            focusedSound={focusedSound}
+            key={categoryUuid}
+            onSoundPickerOpen={onSoundPickerOpen}
+            uuid={categoryUuid}
+          />
+        ))}
+      </Grid>
+    )
+  }
+
   render () {
     const {
       canDrop,
@@ -69,7 +87,6 @@ class BoardComponent extends Component {
       classes,
       connectDropTarget,
       isOver,
-      onSoundPickerOpen,
       uuid
     } = this.props
     // Wrapping div is necessary for react-dnd
@@ -80,7 +97,7 @@ class BoardComponent extends Component {
         })}
       >
         {categories.length > 0
-          ? renderCategories(classes.gridSpacing, categories, onSoundPickerOpen)
+          ? this.renderCategories()
           : <BoardEmpty board={uuid} />
         }
         {renderSnackbar(isOver, canDrop)}
@@ -99,6 +116,7 @@ BoardComponent.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   connectDropTarget: PropTypes.func.isRequired,
+  focusedCategory: PropTypes.string,
   isOver: PropTypes.bool,
   onSoundPickerOpen: PropTypes.func.isRequired,
   showCreateForm: PropTypes.bool,
@@ -107,6 +125,7 @@ BoardComponent.propTypes = {
 
 BoardComponent.defaultProps = {
   canDrop: false,
+  focusedCategory: null,
   isOver: false,
   showCreateForm: false
 }

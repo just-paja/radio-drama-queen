@@ -5,17 +5,16 @@ import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { GalleryEmpty } from './GalleryEmpty'
 import { GalleryItemList } from './GalleryItemList'
-import { GallerySearch } from './GallerySearch'
 import { GallerySpeedDial } from './GallerySpeedDial'
-import { GalleryTarget } from './GalleryTarget'
-import { GalleryTarget as GalleryTargetProp } from '../proptypes'
-import { getGalleryTarget } from '../selectors'
+import { GalleryTree } from './GalleryTree'
 import { soundStore } from '../../sounds'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   box: {
-    flexGrow: 1
+    display: 'flex',
+    flexGrow: 1,
+    flexDirection: 'row'
   },
   layout: {
     margin: 'auto',
@@ -23,6 +22,15 @@ const styles = theme => ({
     paddingTop: 2 * theme.spacing(1)
   }
 })
+
+function renderEmpty (onConfigOpen, onLibraryOpen) {
+  return (
+    <GalleryEmpty
+      onConfigOpen={onConfigOpen}
+      onLibraryOpen={onLibraryOpen}
+    />
+  )
+}
 
 const GalleryComponent = ({
   classes,
@@ -37,27 +45,15 @@ const GalleryComponent = ({
 }) => {
   let content
   if (librarySize === 0) {
-    content = (
-      <GalleryEmpty
-        onConfigOpen={onConfigOpen}
-        onLibraryOpen={onLibraryOpen}
-      />
-    )
+    content = renderEmpty(onConfigOpen, onLibraryOpen)
   } else {
     content = (
       <div className={classes.box}>
-        <GalleryTarget
-          board={target.board}
-          category={target.category}
-          onGoBack={onGoBack}
+        <GalleryTree />
+        <GalleryItemList
+          onSoundAdd={onAddSound}
+          onTagAdd={onAddTag}
         />
-        <div className={classes.layout}>
-          <GallerySearch />
-          <GalleryItemList
-            onSoundAdd={onAddSound}
-            onTagAdd={onAddTag}
-          />
-        </div>
       </div>
     )
   }
@@ -78,9 +74,7 @@ GalleryComponent.propTypes = {
   onAddTag: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onConfigOpen: PropTypes.func.isRequired,
-  onGoBack: PropTypes.func.isRequired,
-  onLibraryOpen: PropTypes.func.isRequired,
-  target: GalleryTargetProp
+  onLibraryOpen: PropTypes.func.isRequired
 }
 
 GalleryComponent.defaultProps = {
@@ -89,8 +83,7 @@ GalleryComponent.defaultProps = {
 
 function mapStateToProps (state) {
   return {
-    librarySize: soundStore.getSize(state),
-    target: getGalleryTarget(state)
+    librarySize: soundStore.getSize(state)
   }
 }
 

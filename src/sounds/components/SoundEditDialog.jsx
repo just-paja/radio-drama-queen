@@ -28,10 +28,10 @@ const SoundEditDialogComponent = () => (
 export const SoundEditDialog = dialogForm({
   dialog: FORM_SOUND_EDIT,
   initialValues: (state) => {
-    const sound = soundStore.getFirst(state, getDialogMeta(state, FORM_SOUND_EDIT))
+    const sound = soundStore.getObject(state, getDialogMeta(state, FORM_SOUND_EDIT))
     return sound ? {
       ...sound,
-      tags: sound.tags.map(tag => tagStore.getFirst(state, tag))
+      tags: sound.tags.map(tag => tagStore.getObject(state, tag))
     } : sound
   },
   onSubmit: soundRoutines.edit,

@@ -64,7 +64,7 @@ SoundTagComponent.defaultProps = {
 
 function mapStateToProps (state, { tag }) {
   return {
-    tag: tagStore.getFirst(state, tag)
+    tag: tagStore.getObject(state, tag)
   }
 }
 

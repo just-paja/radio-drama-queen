@@ -1,4 +1,5 @@
 export * from './actions'
+export * from './boardDialog'
 export * from './dialogForm'
 export * from './sagas'
 export * from './store'

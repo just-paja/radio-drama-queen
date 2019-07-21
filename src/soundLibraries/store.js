@@ -1,9 +1,11 @@
 import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
-import { createEntityStore } from '../entities'
+import { createEntityStore } from 'redux-entity-routines'
 import { libraryRoutines } from './actions'
 
 export const libraryStore = createEntityStore('libraries', {
+  identAttr: 'url',
   initialState: {
+    directory: null,
     loading: false,
     name: null,
     url: null

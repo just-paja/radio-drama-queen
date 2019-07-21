@@ -1,5 +1,5 @@
 import { createRoutine } from '../actions/routines'
-import { createEntityRoutines } from '../entities'
+import { createEntityRoutines } from 'redux-entity-routines'
 
 export const workspaceRoutines = createEntityRoutines('WORKSPACE', [
   'ADD_SOUND',

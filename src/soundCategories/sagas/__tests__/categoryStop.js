@@ -88,14 +88,14 @@ describe('categoryStop saga', () => {
     sagaTester.runAll(sagas)
     sagaTester.dispatch(categoryRoutines.stop('category-1', 'sound-2'))
     expect(sagaTester.getState()).toHaveProperty('entities.sounds', [
-      {
+      expect.objectContaining({
         uuid: 'sound-1',
         playing: false
-      },
-      {
+      }),
+      expect.objectContaining({
         uuid: 'sound-2',
         playing: true
-      }
+      })
     ])
   })
 })

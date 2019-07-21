@@ -11,12 +11,15 @@ import Snackbar from '@material-ui/core/Snackbar'
 import { CategoryContextMenu } from './CategoryContextMenu'
 import { CategoryControls } from './CategoryControls'
 import { CategoryItem } from './CategoryItem'
-import { categoryRoutines } from '../actions'
 import { CategoryName } from './CategoryName'
+import { categoryRoutines } from '../actions'
 import { connect } from 'react-redux'
 import { connectSoundDropTarget } from '../../sounds/containers'
+import { focusable } from '../../components'
+import { categoryStore, getCategoryName } from '../store'
+import { SoundAddDialog } from './SoundAddDialog'
+import { soundRoutines } from '../../sounds/actions'
 import { withStyles } from '@material-ui/core/styles'
-import { getCategoryName } from '../store'
 import {
   getCategoryBoardUuid,
   getCategoryEditStatus,
@@ -59,13 +62,129 @@ const styles = theme => ({
   }
 })
 
-class CategoryComponent extends React.Component {
+class CategoryComponent extends React.PureComponent {
+  constructor (props) {
+    super(props)
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+  }
+
+  get focusedIndex () {
+    return this.props.sounds.findIndex(soundUuid => soundUuid === this.props.focusedSound)
+  }
+
+  deleteFocusedItem () {
+    const { category, focusedSound } = this.props
+    if (focusedSound) {
+      this.props.onSoundRemove({
+        uuid: category.uuid,
+        sound: focusedSound
+      })
+    } else if (this.props.sounds.length === 0) {
+      this.props.onRemove(category.uuid)
+    }
+  }
+
+  focusSoundIndex (soundIndex) {
+    const soundUuid = this.props.sounds[soundIndex]
+    if (soundUuid && this.props.focusedSound !== soundUuid) {
+      this.props.onSoundFocus(soundUuid)
+    }
+  }
+
+  focusFirst () {
+    this.focusSoundIndex(0)
+  }
+
+  focusLast () {
+    this.focusSoundIndex(this.props.sounds.length - 1)
+  }
+
+  handleKeyDown (event) {
+    if (event.key === 'ArrowDown') {
+      this.moveDown()
+    } else if (event.key === 'ArrowUp') {
+      this.moveUp()
+    } else if (event.key === 'End') {
+      this.focusLast()
+    } else if (event.key === 'Home') {
+      this.focusFirst()
+    } else if (event.key === 'Delete') {
+      this.deleteFocusedItem()
+    } else if (['a', 'A'].includes(event.key)) {
+      event.preventDefault()
+      this.openSoundAddDialog()
+    } else if (['e', 'E'].includes(event.key)) {
+      this.props.onExclusiveToggle(this.props.uuid)
+    } else if (['l', 'L'].includes(event.key)) {
+      this.props.onLoopToggle(this.props.uuid)
+    } else if (['m', 'M'].includes(event.key)) {
+      this.props.onMuteToggle(this.props.uuid)
+    } else if (['s', 'S'].includes(event.key)) {
+      this.props.onStop(this.props.uuid)
+    } else if (event.key === '+') {
+      this.increaseVolume()
+    } else if (event.key === '-') {
+      this.decreaseVolume()
+    }
+  }
+
+  handleFocus () {
+    if (!this.props.focused) {
+      this.props.onFocus(this.props.uuid)
+    }
+  }
+
+  decreaseVolume () {
+    const { category } = this.props
+    if (category.volume > 0) {
+      this.props.onVolumeChange(category.uuid, Math.max(category.volume - 5, 0))
+    }
+  }
+
+  increaseVolume () {
+    const { category } = this.props
+    if (category.volume < 100) {
+      this.props.onVolumeChange(category.uuid, Math.min(category.volume + 5, 100))
+    }
+  }
+
+  moveDown () {
+    const { focusedSound, sounds } = this.props
+    if (!focusedSound) {
+      this.focusSoundIndex(0)
+    }
+    const nextPosition = this.focusedIndex + 1
+    if (nextPosition < sounds.length) {
+      this.focusSoundIndex(nextPosition)
+    }
+  }
+
+  moveUp () {
+    const { focusedSound, sounds } = this.props
+    if (!focusedSound) {
+      this.focusSoundIndex(sounds.length - 1)
+    }
+    const nextPosition = this.focusedIndex - 1
+    if (nextPosition >= 0) {
+      this.focusSoundIndex(nextPosition)
+    } else {
+      this.handleFocus()
+    }
+  }
+
+  openSoundAddDialog () {
+    this.props.onSoundAdd()
+  }
+
   render () {
     const {
       boardUuid,
       canDrop,
       classes,
       connectDropTarget,
+      focusedSound,
+      focusableRef,
       isOver,
       name,
       onSoundPickerOpen,
@@ -79,6 +198,9 @@ class CategoryComponent extends React.Component {
           className={classnames(classes.card, {
             [classes.canDrop]: isOver && canDrop
           })}
+          onFocus={this.handleFocus}
+          onKeyDown={this.handleKeyDown}
+          ref={focusableRef}
           tabIndex={0}
         >
           <CardContent className={classes.cardPadding}>
@@ -93,7 +215,11 @@ class CategoryComponent extends React.Component {
             <List className={classes.soundList} dense>
               {sounds.map(soundUuid => (
                 <ListItem className={classes.removePadding} key={soundUuid}>
-                  <CategoryItem categoryUuid={uuid} uuid={soundUuid} />
+                  <CategoryItem
+                    categoryUuid={uuid}
+                    focused={focusedSound === soundUuid}
+                    uuid={soundUuid}
+                  />
                 </ListItem>
               ))}
             </List>
@@ -124,9 +250,12 @@ CategoryComponent.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   edit: PropTypes.bool,
+  focusedSound: PropTypes.string,
   isOver: PropTypes.bool,
   name: PropTypes.string,
   onSoundPickerOpen: PropTypes.func.isRequired,
+  onSoundRemove: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.string).isRequired,
   uuid: PropTypes.string.isRequired
 }
@@ -140,13 +269,24 @@ CategoryComponent.defaultProps = {
 
 const mapStateToProps = (state, { uuid }) => ({
   boardUuid: getCategoryBoardUuid(state, uuid),
+  category: categoryStore.getObject(state, uuid),
   edit: getCategoryEditStatus(state, uuid),
   name: getCategoryName(state, uuid),
   sounds: getCategorySoundUuids(state, uuid)
 })
 
 const mapDispatchToProps = {
-  onDrop: categoryRoutines.soundDrop
+  onDrop: categoryRoutines.soundDrop,
+  onExclusiveToggle: categoryRoutines.toggleExclusive,
+  onFocus: categoryRoutines.focus,
+  onLoopToggle: categoryRoutines.toggleLoop,
+  onMuteToggle: categoryRoutines.toggleMute,
+  onSoundAdd: SoundAddDialog.open,
+  onSoundFocus: soundRoutines.focus,
+  onSoundRemove: categoryRoutines.soundRemove,
+  onStop: categoryRoutines.stop,
+  onRemove: categoryRoutines.remove,
+  onVolumeChange: categoryRoutines.setVolume
 }
 
 CategoryComponent.displayName = 'Category'
@@ -154,4 +294,8 @@ CategoryComponent.displayName = 'Category'
 export const Category = connect(
   mapStateToProps,
   mapDispatchToProps
-)(connectSoundDropTarget(withStyles(styles)(CategoryComponent)))
+)(connectSoundDropTarget(
+  withStyles(styles)(
+    focusable(CategoryComponent)
+  )
+))

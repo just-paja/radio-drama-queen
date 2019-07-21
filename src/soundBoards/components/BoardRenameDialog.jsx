@@ -18,7 +18,7 @@ const BoardRenameDialogComponent = () => (
 
 export const BoardRenameDialog = dialogForm({
   dialog: FORM_BOARD_RENAME,
-  initialValues: state => boardStore.getFirst(state, getDialogMeta(state, FORM_BOARD_RENAME)),
+  initialValues: state => boardStore.getObject(state, getDialogMeta(state, FORM_BOARD_RENAME)),
   onSubmit: boardRoutines.rename,
   title: 'Rename board'
 })(BoardRenameDialogComponent)

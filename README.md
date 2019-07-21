@@ -33,3 +33,7 @@ Each category has controls for volume, loop, sound exclusivity and a stop button
 ### Sound storage
 
 You define where the sounds are stored. For the moment, only remotely stored libaries are supported as it is convenient for other team members who can download the library without sharing large zipfiles.
+
+### Sound library file
+
+The sound library file is a classic text/json
