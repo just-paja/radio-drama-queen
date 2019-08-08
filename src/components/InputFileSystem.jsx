@@ -1,3 +1,4 @@
+// import Button from '@material-ui/core/Button'
 import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -55,9 +56,14 @@ export class InputFileSystemComponent extends React.Component {
       filters,
       properties: this.mode
     })
-    if (path) {
-      this.handleChange(event, path[0])
-    }
+    path.then((result) => {
+      if (!result.canceled) {
+        const target = result.filePaths[0]
+        if (target) {
+          this.handleChange(event, target)
+        }
+      }
+    })
   }
 
   render () {

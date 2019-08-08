@@ -1,3 +1,10 @@
+const ignore = [
+  '<rootDir>/.webpack',
+  '<rootDir>/build',
+  '<rootDir>/out',
+  '<rootDir>/node_modules'
+]
+
 module.exports = {
   projects: [
     {
@@ -6,7 +13,7 @@ module.exports = {
       testMatch: [
         '<rootDir>/**/*.{js,jsx}'
       ],
-      testPathIgnorePatterns: ['<rootDir>/out', '<rootDir>/build', '<rootDir>/node_modules']
+      testPathIgnorePatterns: ignore
     },
     {
       displayName: 'app',
@@ -14,7 +21,7 @@ module.exports = {
         '<rootDir>/jest.setup.js'
       ],
       setupFilesAfterEnv: ['jest-enzyme/lib/index.js'],
-      testPathIgnorePatterns: ['<rootDir>/out', '<rootDir>/build', '<rootDir>/node_modules'],
+      testPathIgnorePatterns: ignore,
       collectCoverageFrom: [
         'src/**/*.{js,jsx}'
       ],
