@@ -29,15 +29,15 @@
     "howler": "^2.1.2",
     "iso-639-1": "^2.1.0",
     "jsonschema": "^1.2.4",
-    "music-metadata": "^4.2.1",
+    "music-metadata": "^4.2.3",
     "path-dirname": "^1.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
+    "react": "^16.9.0",
     "react-dnd": "^7.6.0",
     "react-dnd-html5-backend": "^7.6.0",
     "react-dnd-multi-backend": "^3.2.1",
     "react-dnd-touch-backend": "^0.8.3",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.9.0",
     "react-keyboard-event-handler": "^1.5.1",
     "react-redux": "^7.1.0",
     "react-saga-rest": "^1.1.8",
@@ -89,11 +89,11 @@
     "node-abi": "^2.10.0",
     "node-loader": "^0.6.0",
     "react-dnd-test-backend": "^7.6.0",
-    "react-test-renderer": "^16.8.6",
+    "react-test-renderer": "^16.9.0",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
-    "redux-saga-tester": "^1.0.517",
-    "standard": "^12.0.1"
+    "redux-saga-tester": "^1.0.518",
+    "standard": "^13.1.0"
   },
   "standard": {
     "env": [
