@@ -38,18 +38,6 @@ const renderSnackbar = (isOver, canDrop) => (
 )
 
 class BoardComponent extends React.PureComponent {
-  constructor () {
-    super()
-    this.handleSoundPickerOpen = this.handleSoundPickerOpen.bind(this)
-  }
-
-  handleSoundPickerOpen () {
-    const { uuid, onSoundPickerOpen } = this.props
-    onSoundPickerOpen({
-      board: uuid
-    })
-  }
-
   isFocused (categoryUuid, categoryIndex) {
     const { focusedCategory } = this.props
     return (
@@ -101,10 +89,7 @@ class BoardComponent extends React.PureComponent {
           : <BoardEmpty board={uuid} />
         }
         {renderSnackbar(isOver, canDrop)}
-        <BoardSpeedDial
-          boardUuid={uuid}
-          onSoundAdd={this.handleSoundPickerOpen}
-        />
+        <BoardSpeedDial boardUuid={uuid} />
       </div>
     )
   };
@@ -118,7 +103,6 @@ BoardComponent.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   focusedCategory: PropTypes.string,
   isOver: PropTypes.bool,
-  onSoundPickerOpen: PropTypes.func.isRequired,
   showCreateForm: PropTypes.bool,
   uuid: PropTypes.string
 }
