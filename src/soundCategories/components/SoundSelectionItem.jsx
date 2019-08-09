@@ -5,8 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Classes } from '../../proptypes'
-import { focusable } from '../../components'
-import { HighlightText } from './HighlightText'
+import { HighlightText, focusable } from '../../components'
 import { Sound } from '../../sounds/proptypes'
 import { withStyles } from '@material-ui/core/styles'
 

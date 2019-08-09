@@ -2,8 +2,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
 import { Classes } from '../proptypes'
+import { HighlightText } from './HighlightText'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   item: {
@@ -19,6 +20,10 @@ const styles = theme => ({
     paddingRight: theme.spacing(2),
     paddingTop: 0
   },
+  shortcut: {
+    fontWeight: 'bold',
+    textDecoration: 'underline'
+  },
   icon: {
     width: theme.spacing(2),
     height: theme.spacing(2),
@@ -33,6 +38,12 @@ class ContextMenuItemComponent extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
+  get highlights () {
+    return this.props.shortcuts
+      ? this.props.shortcuts.filter(key => key.length === 1)
+      : null
+  }
+
   handleClick () {
     this.props.onClick()
     if (this.props.onClose) {
@@ -45,7 +56,11 @@ class ContextMenuItemComponent extends React.Component {
     return (
       <MenuItem className={classes.item} onClick={this.handleClick}>
         <Icon className={classes.icon} />
-        <div>{label}</div>
+        <HighlightText
+          highlightClass={classes.shortcut}
+          text={label}
+          searchFragments={this.highlights}
+        />
       </MenuItem>
     )
   }
@@ -54,14 +69,16 @@ class ContextMenuItemComponent extends React.Component {
 ContextMenuItemComponent.displaName = 'ContextMenuItem'
 ContextMenuItemComponent.propTypes = {
   classes: Classes.isRequired,
-  onClick: PropTypes.func.isRequired,
   icon: PropTypes.object.isRequired,
-  label: PropTypes.node.isRequired
+  label: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  shortcuts: PropTypes.arrayOf(PropTypes.string)
 }
 
 ContextMenuItemComponent.defaultProps = {
   anchorEl: null,
-  children: null
+  children: null,
+  shortcuts: null
 }
 
 export const ContextMenuItem = withStyles(styles)(ContextMenuItemComponent)

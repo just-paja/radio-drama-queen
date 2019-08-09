@@ -5,8 +5,7 @@ import TextFields from '@material-ui/icons/TextFields'
 
 import { StoryRenameDialog } from './StoryRenameDialog'
 import { connect } from 'react-redux'
-import { ContextMenuControl } from '../../components'
-import { Children } from '../../proptypes'
+import { ContextMenuWithOptions } from '../../components'
 import { storyRoutines } from '../actions'
 
 class StoryContextMenuComponent extends React.Component {
@@ -17,30 +16,38 @@ class StoryContextMenuComponent extends React.Component {
   }
 
   handleRemove () {
-    this.props.onRemove(this.props.storyUuid)
+    this.props.onRemove(this.props.story.uuid)
   }
 
   handleRename () {
-    this.props.onRename(this.props.storyUuid)
+    this.props.onRename(this.props.story.uuid)
   }
 
   render () {
     return (
-      <ContextMenuControl
+      <ContextMenuWithOptions
         options={[
-          { icon: TextFields, label: 'Rename', onClick: this.handleRename },
-          { icon: Delete, label: 'Remove', onClick: this.handleRemove }
+          {
+            icon: TextFields,
+            label: 'Rename',
+            onClick: this.handleRename,
+            shortcuts: ['r']
+          },
+          {
+            icon: Delete,
+            label: 'Delete',
+            onClick: this.handleRemove,
+            shortcuts: ['d', 'delete']
+          }
         ]}
-      >
-        {this.props.children}
-      </ContextMenuControl>
+        {...this.props}
+      />
     )
   }
 }
 
 StoryContextMenuComponent.propTypes = {
-  children: Children.isRequired,
-  storyUuid: PropTypes.string.isRequired
+  story: PropTypes.object.isRequired
 }
 
 const mapStateToProps = undefined

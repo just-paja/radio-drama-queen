@@ -17,7 +17,7 @@ class StoryListComponent extends React.Component {
   }
 
   renderContent () {
-    const { activeStory, onStorySelect, stories } = this.props
+    const { activeStory, focusedStory, onStorySelect, stories } = this.props
     if (stories.length === 0) {
       return (
         <CanvasMessage heading='No recent stories'>
@@ -40,6 +40,7 @@ class StoryListComponent extends React.Component {
         <List>
           {stories.map(story => (
             <StoryListItem
+              focused={story.uuid === focusedStory}
               key={story.uuid}
               selected={activeStory && activeStory.uuid === story.uuid}
               story={story}
@@ -63,6 +64,7 @@ class StoryListComponent extends React.Component {
 
 StoryListComponent.propTypes = {
   activeStory: PropTypes.object,
+  focusedStory: PropTypes.string,
   stories: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDataRequest: PropTypes.func.isRequired,
   onStorySelect: PropTypes.func.isRequired

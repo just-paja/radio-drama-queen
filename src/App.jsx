@@ -12,7 +12,7 @@ import { theme } from './theme'
 import { ThemeProvider, withStyles } from '@material-ui/styles'
 import { WorkspaceLoadDialog, WorkspaceSaveDialog, WorkspaceView } from './soundWorkspaces/components'
 
-const styles = {
+const styles = theme => ({
   '@global': {
     body: {
       margin: 0,
@@ -24,7 +24,8 @@ const styles = {
       display: 'flex',
       flexGrow: 1,
       flexDirection: 'column'
-    }
+    },
+    ':focus': theme.components.focus
   },
   app: {
     minHeight: '100%',
@@ -32,25 +33,28 @@ const styles = {
     flexDirection: 'column',
     flexGrow: 1
   }
-}
+})
+
+const ThemedApp = withStyles(styles)(({ classes }) => (
+  <div className={classes.app}>
+    <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
+      <WorkspaceView />
+      <OpenLibraryDialog />
+      <SoundEditDialog />
+      <StoryCreateDialog />
+      <WorkspaceLoadDialog />
+      <WorkspaceSaveDialog />
+    </DragDropContextProvider>
+  </div>
+))
 
 class App extends React.Component {
   render () {
-    const { classes, store } = this.props
     return (
       <ThemeProvider theme={theme}>
-        <div className={classes.app}>
-          <Provider store={store}>
-            <DragDropContextProvider backend={MultiBackend(HTML5toTouch)}>
-              <WorkspaceView />
-              <OpenLibraryDialog />
-              <SoundEditDialog />
-              <StoryCreateDialog />
-              <WorkspaceLoadDialog />
-              <WorkspaceSaveDialog />
-            </DragDropContextProvider>
-          </Provider>
-        </div>
+        <Provider store={this.props.store}>
+          <ThemedApp />
+        </Provider>
       </ThemeProvider>
     )
   }
@@ -61,4 +65,4 @@ App.propTypes = {
   store: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(App)
+export default App

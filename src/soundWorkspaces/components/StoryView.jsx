@@ -1,30 +1,34 @@
 import React from 'react'
 
-import { StoryList, StoryRenameDialog } from '../../soundStories/components'
-import { connect } from 'react-redux'
 import { Center } from '../../components'
+import { StoryList, StoryRenameDialog } from '../../soundStories/components'
+import { StoryShortcuts } from './StoryShortcuts'
 
-const StoryViewComponent = ({ classes }) => (
-  <Center>
-    <StoryList />
-    <StoryRenameDialog />
-  </Center>
-)
+export class StoryView extends React.PureComponent {
+  constructor (props) {
+    super(props)
+    this.handleStoryFocus = this.handleStoryFocus.bind(this)
+  }
 
-StoryViewComponent.displayName = 'StoryView'
-StoryViewComponent.propTypes = {
+  state = {
+    focusedStory: null
+  }
+
+  handleStoryFocus (focusedStory) {
+    this.setState({ focusedStory })
+  }
+
+  render () {
+    const { focusedStory } = this.state
+    return (
+      <Center>
+        <StoryList focusedStory={focusedStory} />
+        <StoryRenameDialog />
+        <StoryShortcuts
+          focusedStory={focusedStory}
+          onFocus={this.handleStoryFocus}
+        />
+      </Center>
+    )
+  }
 }
-
-StoryViewComponent.defaultProps = {
-}
-
-const mapStateToProps = state => ({
-})
-
-const mapDispatchToProps = {
-}
-
-export const StoryView = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StoryViewComponent)

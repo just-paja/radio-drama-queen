@@ -30,10 +30,15 @@ export const getWorkspaceView = createSelector(
   state => state.view
 )
 
+export const getActiveStoryUuid = createSelector(
+  getUiState,
+  uiState => uiState.story
+)
+
 export const getActiveStory = createSelector(
   storyStore.getAll,
-  getUiState,
-  (stories, uiState) => stories.find(story => story.uuid === uiState.story)
+  getActiveStoryUuid,
+  (stories, storyUuid) => stories.find(story => story.uuid === storyUuid)
 )
 
 export const getFocusedCategory = createSelector(

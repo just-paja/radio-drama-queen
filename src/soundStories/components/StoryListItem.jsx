@@ -1,8 +1,8 @@
-import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import { ListItem, focusable, withContextMenu } from '../../components'
 import { StoryContextMenu } from './StoryContextMenu'
 
 class StoryListItemComponent extends React.Component {
@@ -16,31 +16,35 @@ class StoryListItemComponent extends React.Component {
   }
 
   render () {
-    const { selected, story } = this.props
+    const { focusableRef, selected, story, onContextMenu } = this.props
     return (
-      <StoryContextMenu storyUuid={story.uuid}>
-        <ListItem
-          button
-          onClick={this.handleClick}
-          selected={selected}
-        >
-          <ListItemText>
-            {story.name || story.uuid}
-          </ListItemText>
-        </ListItem>
-      </StoryContextMenu>
+      <ListItem
+        button
+        ref={focusableRef}
+        onClick={this.handleClick}
+        onContextMenu={onContextMenu}
+        selected={selected}
+      >
+        <ListItemText>
+          {story.name || story.uuid}
+        </ListItemText>
+      </ListItem>
     )
   }
 }
 
 StoryListItemComponent.propTypes = {
+  focusableRef: PropTypes.object.isRequired,
   selected: PropTypes.bool,
   story: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  onContextMenu: PropTypes.func.isRequired
 }
 
 StoryListItemComponent.defaultProps = {
   selected: false
 }
 
-export const StoryListItem = StoryListItemComponent
+export const StoryListItem = withContextMenu({
+  menuComponent: StoryContextMenu
+})(focusable(StoryListItemComponent))

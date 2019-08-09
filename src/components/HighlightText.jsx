@@ -5,9 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   highlight: {
-    '& > span': {
-      background: theme.palette.secondary.light
-    }
+    background: theme.palette.secondary.light
   }
 })
 
@@ -80,31 +78,38 @@ function getFrags (text, searchFragments) {
     }, [])
 }
 
-function renderHighlightedFrags (text, frags) {
+function renderHighlightedFrags (text, frags, highlightClass) {
   return frags.map((frag, index) => frag.highlight
-    ? <span key={`${frag.text}-${frag.index}`}>{text.substr(frag.index, frag.text.length)}</span>
-    : frag.text
+    ? (
+      <span
+        className={highlightClass}
+        key={`${frag.text}-${frag.index}`}
+      >
+        {text.substr(frag.index, frag.text.length)}
+      </span>
+    ) : frag.text
   )
 }
 
-function renderHighlights (text, searchFragments) {
+function renderHighlights (text, searchFragments, highlightClass) {
   const frags = getFrags(text, searchFragments)
   return frags.length
-    ? renderHighlightedFrags(text, frags)
+    ? renderHighlightedFrags(text, frags, highlightClass)
     : text
 }
 
-function HighlightTextComponent ({ classes, searchFragments, text }) {
+function HighlightTextComponent ({ classes, highlightClass, searchFragments, text }) {
   return (
-    <span className={classes.highlight}>
+    <span>
       {searchFragments && searchFragments.length
-        ? renderHighlights(text, searchFragments)
+        ? renderHighlights(text, searchFragments, highlightClass || classes.highlight)
         : text}
     </span>
   )
 }
 
 HighlightTextComponent.propTypes = {
+  highlightClass: PropTypes.string,
   text: PropTypes.string.isRequired,
   searchFragments: PropTypes.arrayOf(PropTypes.string)
 }

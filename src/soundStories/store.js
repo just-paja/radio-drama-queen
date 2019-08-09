@@ -25,3 +25,8 @@ export const getActiveStory = createSelector(
   state => state.soundWorkspaces.ui,
   state => state.story
 )
+
+export const getStoryUuids = createSelector(
+  storyStore.getAll,
+  stories => stories.map(story => story.uuid)
+)

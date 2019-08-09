@@ -7,7 +7,7 @@ import { categoryRoutines } from '../../soundCategories'
 import { connect } from 'react-redux'
 import { getFocusedCategory, getFocusedSound } from '../selectors'
 import { isAnyDialogOpen } from '../../dialogs'
-import { noArgs } from '../../components'
+import { ListShortcuts, noArgs } from '../../components'
 import { workspaceRoutines } from '../actions'
 
 class BoardShortcutsComponent extends React.PureComponent {
@@ -76,7 +76,7 @@ class BoardShortcutsComponent extends React.PureComponent {
   }
 
   render () {
-    const { onBoardCreate, openDialogs } = this.props
+    const { categories, focusedCategory, onBoardCreate, openDialogs } = this.props
     if (openDialogs) {
       return null
     }
@@ -92,15 +92,12 @@ class BoardShortcutsComponent extends React.PureComponent {
           handleKeys={['c']}
           onKeyEvent={this.createCategory}
         />
-        <KeyboardEventHandler
-          handleFocusableElements
-          handleKeys={['left']}
-          onKeyEvent={this.prevCategory}
-        />
-        <KeyboardEventHandler
-          handleFocusableElements
-          handleKeys={['right']}
-          onKeyEvent={this.nextCategory}
+        <ListShortcuts
+          disabled={openDialogs}
+          horizontal
+          focused={focusedCategory}
+          items={categories}
+          onFocus={this.props.onCategoryFocus}
         />
         <KeyboardEventHandler
           handleFocusableElements
@@ -127,7 +124,7 @@ BoardShortcutsComponent.propTypes = {
   board: PropTypes.string,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardRemove: PropTypes.func.isRequired,
-  openDialogs: PropTypes.bool,
+  openDialogs: PropTypes.bool
 }
 
 BoardShortcutsComponent.defaultProps = {
