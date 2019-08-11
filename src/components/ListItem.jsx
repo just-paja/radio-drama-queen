@@ -9,6 +9,14 @@ const styles = theme => ({
       backgroundColor: 'transparent',
       ...theme.components.focus
     }
+  },
+  selected: {
+    '&.MuiListItem-root': {
+      background: theme.palette.body.main,
+      borderColor: theme.palette.body.selected,
+      borderWidth: 1,
+      borderStyle: 'solid'
+    }
   }
 })
 

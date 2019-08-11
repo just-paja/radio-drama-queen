@@ -5,10 +5,17 @@ import { createMuiTheme } from '@material-ui/core/styles'
 const borderSize = 1
 const borderStyle = 'solid'
 
-const primaryAction = Color('#3f51b5')
+const primaryAction = Color('#3967B0')
 const forbiddenAction = Color('#ff0000')
 
+const bodyDisplay = Color('#060606')
 const infoDisplay = Color('#2f2f2f')
+
+const body = {
+  contrastText: bodyDisplay.string(),
+  main: 'transparent',
+  selected: primaryAction.lighten(0.66).string()
+}
 
 const primary = {
   contrastText: '#fff',
@@ -43,6 +50,7 @@ function getBorderStyle (color, direction) {
 
 export const theme = createMuiTheme({
   palette: {
+    body,
     infoData,
     primary,
     dropTarget: dropTargetColor,
