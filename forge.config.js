@@ -23,7 +23,7 @@ function ignoreFile (file) {
   }
   const ignore = !allowedPatterns.some(pattern => pattern.test(file))
   if (!ignore) {
-    console.log(file)
+    console.log('Ignoring', file)
   }
   return ignore
 }

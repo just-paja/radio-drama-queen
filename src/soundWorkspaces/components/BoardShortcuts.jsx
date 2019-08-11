@@ -119,7 +119,7 @@ class BoardShortcutsComponent extends React.PureComponent {
   }
 }
 
-BoardShortcutsComponent.displayName = 'SoundBoardView'
+BoardShortcutsComponent.displayName = 'BoardShortcuts'
 BoardShortcutsComponent.propTypes = {
   board: PropTypes.string,
   onBoardCreate: PropTypes.func.isRequired,

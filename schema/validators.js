@@ -2,7 +2,7 @@ const jetpack = require('fs-jetpack')
 const path = require('path')
 const SoundModule = require('./SoundModule')
 
-const { RDQ_MANIFEST_FILE, RDQ_EXTENSION_MODULE } = require('../src/electron/constants')
+const { MANIFEST_FILE, EXTENSION_MODULE } = require('../src/electron/libraries/constants')
 const { Validator } = require('jsonschema')
 
 const objects = [
@@ -27,16 +27,16 @@ function validateModule (mod) {
 }
 
 function getModulePath (parentUrl, moduleUrl) {
-  return path.join(parentUrl, moduleUrl, RDQ_MANIFEST_FILE)
+  return path.join(parentUrl, moduleUrl, MANIFEST_FILE)
 }
 
-const testModuleExtension = new RegExp(`.${RDQ_EXTENSION_MODULE}$`)
+const testModuleExtension = new RegExp(`.${EXTENSION_MODULE}$`)
 
 function validateDeep (file, parentName) {
   const base = path.dirname(file)
   const dirName = path.basename(base)
   const mod = jetpack.read(file, 'json')
-  let modName = parentName ? `${parentName}/${dirName}` : (mod ? mod.name : path.basename(dirName))
+  const modName = parentName ? `${parentName}/${dirName}` : (mod ? mod.name : path.basename(dirName))
   if (!mod) {
     if (!parentName) {
       throw new Error(`Source file "${file}" was not found`)
@@ -54,7 +54,7 @@ function validateDeep (file, parentName) {
   let errors = validateModule(mod)
   if (!file.match(testModuleExtension)) {
     errors.unshift({
-      message: `"${path.basename(file)}" does not have radio drama queen extension: ${RDQ_EXTENSION_MODULE}`,
+      message: `"${path.basename(file)}" does not have radio drama queen extension: ${EXTENSION_MODULE}`,
       instance: {
         name: modName
       }
