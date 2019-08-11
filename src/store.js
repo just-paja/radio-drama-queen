@@ -12,7 +12,7 @@ export const sagaMiddleware = createSagaMiddleware()
 const DEVELOPMENT = process.env.NODE_ENV === 'development'
 let store
 
-export default function configureStore (initialState = {}) {
+export function configureStore (initialState = {}) {
   const middlewares = []
 
   middlewares.push(sagaMiddleware)

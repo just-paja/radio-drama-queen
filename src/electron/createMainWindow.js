@@ -9,6 +9,7 @@ const { libraryRoutines } = require('../soundLibraries/actions')
 const { moduleRoutines } = require('../soundModules/actions')
 const { soundRoutines } = require('../sounds/actions')
 const { storyRoutines } = require('../soundStories/actions')
+const { configureBackendStore } = require('./store')
 
 export function createMainWindow (development) {
   const mainWindow = new BrowserWindow({
@@ -23,7 +24,8 @@ export function createMainWindow (development) {
     }
   })
 
-  const messenger = new BackendMessenger(mainWindow, development)
+  const store = configureBackendStore()
+  const messenger = new BackendMessenger(mainWindow, store, development)
   const soundManager = new SoundManager()
 
   messenger.handleAction(libraryRoutines.load, handlers.loadLibrary)

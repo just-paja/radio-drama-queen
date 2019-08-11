@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import sagas from './sagas'
 
-import configureStore from './store'
+import { configureStore } from './store'
 
 const store = configureStore({})
 

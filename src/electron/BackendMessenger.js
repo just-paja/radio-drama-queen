@@ -2,8 +2,9 @@ const { ipcMain } = require('electron')
 const { MessageListener } = require('./MessageListener')
 
 class BackendMessenger {
-  constructor (targetWindow, debug) {
+  constructor (targetWindow, store, debug) {
     this.window = targetWindow
+    this.store = store
     this.debug = debug
     this.listeners = []
     this.sendMessage = this.sendMessage.bind(this)
@@ -14,6 +15,7 @@ class BackendMessenger {
     if (action.type.includes('FAILURE')) {
       console.log('in', action.type, JSON.stringify(action))
     }
+    this.store.dispatch(action)
     Promise.all(
       this.listeners
         .filter(listener => listener.matchesAction(action))
@@ -29,6 +31,7 @@ class BackendMessenger {
     if (action.type.includes('FAILURE')) {
       console.log('out', action.type, JSON.stringify(action))
     }
+    this.store.dispatch(action)
     this.window.webContents.send('backendSays', Object.assign({}, action, {
       timestamp: new Date()
     }))
