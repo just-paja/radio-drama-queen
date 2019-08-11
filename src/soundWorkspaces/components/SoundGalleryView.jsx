@@ -3,8 +3,9 @@ import React from 'react'
 
 import { boardRoutines } from '../../soundBoards'
 import { connect } from 'react-redux'
-import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { Gallery } from '../../soundGallery/components'
+import { GalleryShortcuts } from './GalleryShortcuts'
+import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { workspaceRoutines, workspaceLoad } from '../actions'
 
 const SoundGalleryViewComponent = ({
@@ -15,14 +16,17 @@ const SoundGalleryViewComponent = ({
   onGalleryGoBack,
   onLibraryOpen
 }) => (
-  <Gallery
-    onAddSound={onAddSoundToBoard}
-    onAddTag={onAddTagToBoard}
-    onBoardCreate={onBoardCreate}
-    onConfigOpen={onConfigOpen}
-    onGoBack={onGalleryGoBack}
-    onLibraryOpen={onLibraryOpen}
-  />
+  <React.Fragment>
+    <Gallery
+      onAddSound={onAddSoundToBoard}
+      onAddTag={onAddTagToBoard}
+      onBoardCreate={onBoardCreate}
+      onConfigOpen={onConfigOpen}
+      onGoBack={onGalleryGoBack}
+      onLibraryOpen={onLibraryOpen}
+    />
+    <GalleryShortcuts />
+  </React.Fragment>
 )
 
 SoundGalleryViewComponent.displayName = 'SoundGalleryView'

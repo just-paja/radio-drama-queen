@@ -26,7 +26,6 @@ class ModuleListItemComponent extends React.Component {
 
   handleClick () {
     this.props.onSelect({
-      libraryUrl: this.props.module.library,
       moduleUrl: this.props.module.url
     })
   }
