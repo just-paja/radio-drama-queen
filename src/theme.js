@@ -33,7 +33,6 @@ const infoData = {
 }
 
 const cardBorderColor = 'rgba(0, 0, 0, .08)'
-const hoverColor = 'rgba(0, 0, 0, .08)'
 const dropTargetColor = 'rgba(0, 0, 0, .32)'
 const interactionOverlayColor = 'rgba(0, 0, 0, .16)'
 const listSeparatorColor = 'rgba(0, 0, 0, .04)'
@@ -67,10 +66,7 @@ export const theme = createMuiTheme({
     focus: {
       outlineColor: focusOutlineColor,
       outlineStyle: 'solid',
-      outlineWidth: 1,
-      '&:hover': {
-        backgroundColor: hoverColor
-      }
+      outlineWidth: 1
     },
     listSeparator: getBorderStyle(listSeparatorColor, 'top')
   }
