@@ -28,10 +28,14 @@ const styles = theme => ({
     height: theme.spacing(4.5)
   },
   selected: {
-    color: '#fff !important'
+    '&.MuiToggleButton-root': {
+      color: theme.palette.infoData.selected
+    }
   },
   disabled: {
-    color: 'rgba(255,0,0,.33) !important'
+    '&.MuiToggleButton-root': {
+      color: theme.palette.infoData.forbidden
+    }
   },
   icon: {
     fontSize: theme.spacing(2.5)

@@ -25,8 +25,8 @@ import {
 
 const styles = theme => ({
   header: {
-    background: '#2f2f2f',
-    color: 'white',
+    background: theme.palette.infoData.main,
+    color: theme.palette.infoData.contrastText,
     cursor: 'default',
     display: 'flex',
     fontSize: theme.typography.fontSize,

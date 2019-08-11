@@ -1,7 +1,29 @@
+import Color from 'color'
+
 import { createMuiTheme } from '@material-ui/core/styles'
 
 const borderSize = 1
 const borderStyle = 'solid'
+
+const primaryAction = Color('#3f51b5')
+const forbiddenAction = Color('#ff0000')
+
+const infoDisplay = Color('#2f2f2f')
+
+const primary = {
+  contrastText: '#fff',
+  dark: primaryAction.darken(0.33).string(),
+  light: primaryAction.lighten(0.33).string(),
+  main: primaryAction.string()
+}
+
+const infoData = {
+  contrastText: infoDisplay.negate().string(),
+  dark: infoDisplay.darken(0.33).string(),
+  forbidden: forbiddenAction.darken(0.33).string(),
+  main: infoDisplay.string(),
+  selected: infoDisplay.negate().lighten(0.33).string()
+}
 
 const cardBorderColor = 'rgba(0, 0, 0, .08)'
 const hoverColor = 'rgba(0, 0, 0, .08)'
@@ -21,6 +43,8 @@ function getBorderStyle (color, direction) {
 
 export const theme = createMuiTheme({
   palette: {
+    infoData,
+    primary,
     dropTarget: dropTargetColor,
     interactionOverlay: interactionOverlayColor,
     listSeparator: listSeparatorColor

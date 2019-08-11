@@ -19,9 +19,9 @@ const styles = theme => ({
   },
   stat: {
     alignItems: 'center',
-    color: '#fff',
+    color: theme.palette.infoData.contrastText,
     border: 'none',
-    backgroundColor: 'rgba(0,0,0,.33)',
+    backgroundColor: theme.palette.infoData.dark,
     borderRadius: theme.spacing(1 / 2),
     boxSizing: 'content-box',
     fontSize: theme.spacing(7 / 4),
