@@ -14,15 +14,11 @@ export function sortModules (a, b) {
 
 export const getModules = createSelector(
   moduleStore.getCollection,
-  (state, libraryUrl) => libraryUrl,
-  (state, libraryUrl, parentUrl) => parentUrl,
-  (modules, libraryUrl, parentUrl) => {
-    const possibleModules = libraryUrl
-      ? modules.filter(module => (
-        module.library === libraryUrl &&
-        module.parent === parentUrl
-      ))
-      : modules.slice()
+  (state, parentUrl) => parentUrl,
+  (modules, parentUrl) => {
+    const possibleModules = parentUrl
+      ? modules.filter(module => module.parent === parentUrl)
+      : modules.filter(module => !module.parent)
     return possibleModules.sort(sortModules)
   }
 )

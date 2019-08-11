@@ -4,7 +4,6 @@ import React from 'react'
 import { browseRoutines } from '../actions'
 import { connect } from 'react-redux'
 import { getBrowserLibrary, getBrowserModule } from '../selectors'
-import { LibraryList } from '../../soundLibraries/components'
 import { ModuleList } from '../../soundModules/components'
 import { SoundModule } from '../../soundModules/proptypes'
 import { withStyles } from '@material-ui/core/styles'
@@ -33,15 +32,8 @@ function GalleryTreeComponent ({
   return (
     <div className={classes.box}>
       <div className={classes.column}>
-        <LibraryList
-          onSelect={onLibrarySelect}
-          selected={selectedLibrary}
-        />
-      </div>
-      <div className={classes.column}>
         <ModuleList
           onSelect={onModuleSelect}
-          library={selectedLibrary}
           selected={selectedModule}
         />
       </div>

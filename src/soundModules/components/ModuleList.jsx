@@ -21,7 +21,6 @@ class ModuleListComponent extends React.Component {
 
   handleNavigateToParent () {
     this.props.onSelect({
-      libraryUrl: this.props.selected.library,
       moduleUrl: this.props.selected.parent
     })
   }
@@ -59,13 +58,12 @@ ModuleListComponent.propTypes = {
 }
 
 ModuleListComponent.defaultProps = {
-  library: null,
   parentModule: null,
   selected: null
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  modules: getModules(state, ownProps.library, ownProps.selected && ownProps.selected.url)
+  modules: getModules(state, ownProps.selected && ownProps.selected.url)
 })
 
 export const ModuleList = connect(

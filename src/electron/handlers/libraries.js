@@ -12,11 +12,7 @@ const readLibrary = workerpool.pool(path.join(
 export function loadLibrary (action, messenger) {
   return readLibrary.exec('readLibrary', [action.payload])
     .then((library) => {
-      if (library.modules) {
-        library.modules.forEach(module => messenger.handleIncomingAction(
-          moduleRoutines.load.request(module)
-        ))
-      }
+      messenger.handleIncomingAction(moduleRoutines.load.request(library))
       return library
     })
 }
