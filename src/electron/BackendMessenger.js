@@ -35,6 +35,8 @@ class BackendMessenger {
     this.window.webContents.send('backendSays', Object.assign({}, action, {
       timestamp: new Date()
     }))
+
+    console.log(this.store.getState())
   }
 
   handleAction (routine, requestHandler) {
