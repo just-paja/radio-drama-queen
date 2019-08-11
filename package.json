@@ -15,9 +15,9 @@
   },
   "main": ".webpack/main",
   "dependencies": {
-    "@material-ui/core": "^4.3.1",
+    "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
-    "@material-ui/lab": "^4.0.0-alpha.22",
+    "@material-ui/lab": "^4.0.0-alpha.23",
     "camelcase": "^5.3.1",
     "classnames": "^2.2.6",
     "color": "^3.1.2",
@@ -30,7 +30,7 @@
     "howler": "^2.1.2",
     "iso-639-1": "^2.1.0",
     "jsonschema": "^1.2.4",
-    "music-metadata": "^4.2.3",
+    "music-metadata": "^4.2.4",
     "path-dirname": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -93,7 +93,7 @@
     "react-test-renderer": "^16.9.0",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
-    "redux-saga-tester": "^1.0.518",
+    "redux-saga-tester": "^1.0.519",
     "standard": "^13.1.0"
   },
   "standard": {
