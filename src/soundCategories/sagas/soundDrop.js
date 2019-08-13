@@ -9,14 +9,14 @@ function * handleCategorySoundDrop () {
 
     if (category) {
       const soundCategories = yield select(getSoundCategories, dropItem.uuid)
-      yield all(soundCategories.map(soundCategory => put(categoryRoutines.soundRemove({
-        uuid: soundCategory.uuid,
-        sound: dropItem.uuid
-      }))))
       yield put(categoryRoutines.soundAdd({
         uuid: category.uuid,
         sound: dropItem.uuid
       }))
+      yield all(soundCategories.map(soundCategory => put(categoryRoutines.soundRemove({
+        uuid: soundCategory.uuid,
+        sound: dropItem.uuid
+      }))))
     }
   })
 }

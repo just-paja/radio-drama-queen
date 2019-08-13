@@ -2,7 +2,7 @@ import { all, put, select, takeEvery } from 'redux-saga/effects'
 import { CategoryRenameDialog } from '../components'
 import { closeDialog } from '../../dialogs'
 import { categoryRoutines } from '../actions'
-import { getCategoryPlayingStatus, getCategorySoundUuids } from '../selectors'
+import { getSoundCategories, getCategoryPlayingStatus, getCategorySoundUuids } from '../selectors'
 import { reflectRoutine } from '../../sagas/reflect'
 import { soundRoutines } from '../../sounds'
 
@@ -18,8 +18,18 @@ function * handleCategoryRemove () {
   })
 }
 
+function * handleSoundRemove () {
+  yield takeEvery(categoryRoutines.soundRemove.TRIGGER, function * ({ payload }) {
+    const categories = yield select(getSoundCategories, payload.sound)
+    if (categories.length === 0) {
+      yield put(soundRoutines.unload(payload.sound))
+    }
+  })
+}
+
 export default [
   closeDialog(categoryRoutines.rename, CategoryRenameDialog),
   handleCategoryRemove,
+  handleSoundRemove,
   reflectRoutine(categoryRoutines.rename)
 ]
