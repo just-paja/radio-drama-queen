@@ -87,6 +87,7 @@
     "jest": "^24.8.0",
     "jest-enzyme": "^7.1.0",
     "jest-runner-standard": "0.0.13",
+    "jest-watch-select-projects": "^0.1.2",
     "node-abi": "^2.10.0",
     "node-loader": "^0.6.0",
     "react-dnd-test-backend": "^7.6.0",

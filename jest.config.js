@@ -34,5 +34,6 @@ module.exports = {
         '^.+\\.(js|jsx)$': 'babel-jest'
       }
     }
-  ]
+  ],
+  watchPlugins: ['jest-watch-select-projects']
 }
