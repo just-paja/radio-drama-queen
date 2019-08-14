@@ -11,7 +11,11 @@ import { ModuleListItem } from './ModuleListItem'
 import { SoundModule } from '../proptypes'
 import { withStyles } from '@material-ui/core/styles'
 
-const styles = theme => ({})
+const styles = theme => ({
+  list: {
+    width: '100%'
+  }
+})
 
 class ModuleListComponent extends React.Component {
   constructor (props) {
@@ -26,9 +30,9 @@ class ModuleListComponent extends React.Component {
   }
 
   render () {
-    const { modules, onSelect, selected } = this.props
+    const { classes, modules, onSelect, selected } = this.props
     return (
-      <List>
+      <List className={classes.list}>
         {selected && (
           <ListItem button onClick={this.handleNavigateToParent}>
             <ListItemText>
