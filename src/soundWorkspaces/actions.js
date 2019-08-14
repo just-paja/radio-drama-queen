@@ -1,4 +1,3 @@
-import { createRoutine } from '../actions/routines'
 import { createEntityRoutines } from 'redux-entity-routines'
 
 export const workspaceRoutines = createEntityRoutines('WORKSPACE', [
@@ -10,7 +9,7 @@ export const workspaceRoutines = createEntityRoutines('WORKSPACE', [
   'WIPE'
 ])
 
-export const workspaceLoad = createRoutine('WORKSPACE_LOAD', [
+export const workspaceLoad = createEntityRoutines('WORKSPACE_LOAD', [
   'DESTINATION_CHANGE',
   'DIALOG_HIDE',
   'DIALOG_OPEN',

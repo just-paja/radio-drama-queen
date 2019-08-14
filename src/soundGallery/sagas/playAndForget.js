@@ -18,7 +18,7 @@ function * playAndForget ({ payload: soundUuid }) {
 }
 
 function * handleSoundPlay () {
-  yield takeEvery(gallerySound.PLAY, playAndForget)
+  yield takeEvery(gallerySound.play.TRIGGER, playAndForget)
 }
 
 export default [
