@@ -1,10 +1,10 @@
 import ArrowUpward from '@material-ui/icons/ArrowUpward'
-import LabelButton from '../../components/LabelButton'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
+import { LabelButton } from '../../components/LabelButton'
 import { moduleStore } from '../store'
 import { SoundModule } from '../proptypes'
 import { withStyles } from '@material-ui/core/styles'

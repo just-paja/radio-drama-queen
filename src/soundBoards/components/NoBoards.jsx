@@ -1,12 +1,12 @@
 import CanvasMessage from '../../components/CanvasMessage'
 import Dashboard from '@material-ui/icons/Dashboard'
-import LabelButton from '../../components/LabelButton'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import { boardRoutines } from '../actions'
 import { connect } from 'react-redux'
+import { LabelButton } from '../../components/LabelButton'
 
 const NoBoardsComponent = ({ onBoardCreate, onLibraryOpen }) => (
   <CanvasMessage heading='No boards!'>

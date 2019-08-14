@@ -1,6 +1,7 @@
 export * from './args'
 export * from './Center'
 export * from './AppError'
+export * from './LabelButton'
 export * from './ContextMenu'
 export * from './ContextMenuControl'
 export * from './ContextMenuItem'

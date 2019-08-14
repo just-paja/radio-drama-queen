@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Delete from '@material-ui/icons/Delete'
 
-import LabelButton from './LabelButton'
+import { LabelButton } from './LabelButton'
 
 const DeleteButton = ({ children, ...props }) => (
   <LabelButton icon={Delete} {...props}>

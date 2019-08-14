@@ -1,12 +1,12 @@
 import CanvasMessage from '../../components/CanvasMessage'
 import CloudDownload from '@material-ui/icons/CloudDownload'
-import LabelButton from '../../components/LabelButton'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
-import { OpenLibraryDialog } from '../../soundLibraries/components'
 import { connect } from 'react-redux'
+import { LabelButton } from '../../components/LabelButton'
+import { OpenLibraryDialog } from '../../soundLibraries/components'
 
 const GalleryEmptyComponent = ({ onLibraryOpen }) => (
   <CanvasMessage heading='Sound gallery is empty!'>

@@ -11,7 +11,7 @@ const styles = theme => ({
   }
 })
 
-const LabelButton = ({
+const LabelButtonComponent = ({
   children,
   buttonComponent: ButtonComponent,
   icon: IconComponent,
@@ -19,12 +19,12 @@ const LabelButton = ({
   ...props
 }) => (
   <ButtonComponent {...props}>
-    <IconComponent className={classnames(classes.leftIcon)} />
+    {IconComponent && <IconComponent className={classnames(classes.leftIcon)} />}
     {children}
   </ButtonComponent>
 )
 
-LabelButton.propTypes = {
+LabelButtonComponent.propTypes = {
   buttonComponent: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object
@@ -37,12 +37,13 @@ LabelButton.propTypes = {
   icon: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object
-  ]).isRequired
+  ])
 }
 
-LabelButton.defaultProps = {
+LabelButtonComponent.defaultProps = {
   buttonComponent: Button,
-  children: null
+  children: null,
+  icon: null
 }
 
-export default withStyles(styles)(LabelButton)
+export const LabelButton = withStyles(styles)(LabelButtonComponent)

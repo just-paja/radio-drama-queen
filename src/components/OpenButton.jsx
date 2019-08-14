@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import FolderOpen from '@material-ui/icons/FolderOpen'
 
-import LabelButton from './LabelButton'
+import { LabelButton } from './LabelButton'
 
 const OpenButton = ({ children, ...props }) => (
   <LabelButton icon={FolderOpen} {...props}>

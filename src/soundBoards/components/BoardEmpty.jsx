@@ -1,11 +1,11 @@
 import CanvasMessage from '../../components/CanvasMessage'
-import LabelButton from '../../components/LabelButton'
 import List from '@material-ui/icons/List'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import { boardRoutines } from '../actions'
 import { connect } from 'react-redux'
+import { LabelButton } from '../../components/LabelButton'
 
 const BoardEmptyComponent = ({ onCategoryCreate }) => (
   <CanvasMessage heading='No sound categories!'>

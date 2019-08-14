@@ -1,7 +1,7 @@
-import LabelButton from '../../components/LabelButton'
 import Create from '@material-ui/icons/Create'
 
 import { connect } from 'react-redux'
+import { LabelButton } from '../../components/LabelButton'
 import { noArgs } from '../../components'
 import { StoryCreateDialog } from './StoryCreateDialog'
 
