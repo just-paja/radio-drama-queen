@@ -32,9 +32,7 @@ const story = handleActions({
 
 const view = handleActions({
   [workspaceRoutines.selectBoard.TRIGGER]: () => VIEW_BOARD,
-  [workspaceRoutines.selectView.TRIGGER]: (state, action) => (
-    action.payload === null && state.board ? VIEW_BOARD : action.payload
-  )
+  [workspaceRoutines.selectView.TRIGGER]: (state, action) => action.payload || state
 }, VIEW_STORIES)
 
 export default combineReducers({
