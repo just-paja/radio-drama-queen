@@ -11,7 +11,6 @@ const countFlags = (selector, flag) => createSelector(
 
 export const countMemorySounds = countFlags(soundStore.getAll, 'valid')
 export const countErrorSounds = countFlags(soundStore.getAll, 'error')
-export const countPlayingSounds = countFlags(soundStore.getAll, 'playing')
 
 export const countBoardSounds = createSelector(
   [soundStore.getAll, categoryStore.getAll],

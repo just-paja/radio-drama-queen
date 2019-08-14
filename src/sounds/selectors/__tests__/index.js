@@ -1,33 +1,24 @@
 import * as selectors from '..'
 
 describe('sounds selectors', () => {
-  it('getSoundPlayingStatus returns true when sound is playing', () => {
+  it('countPlayingSounds returns amount of playing sounds', () => {
     const state = {
       entities: {
         sounds: [
           {
-            uuid: 'foo',
-            url: 'http://example.com/test',
+            uuid: 'sound-1',
+            playing: true
+          },
+          {
+            uuid: 'sound-2'
+          },
+          {
+            uuid: 'sound-3',
             playing: true
           }
         ]
       }
     }
-    expect(selectors.getSoundPlayingStatus(state, 'foo')).toEqual(true)
-  })
-
-  it('getSoundLoopStatus returns true when sound is playing', () => {
-    const state = {
-      entities: {
-        sounds: [
-          {
-            uuid: 'foo',
-            url: 'http://example.com/test',
-            playing: true
-          }
-        ]
-      }
-    }
-    expect(selectors.getSoundPlayingStatus(state, 'foo')).toEqual(true)
+    expect(selectors.countPlayingSounds(state)).toBe(2)
   })
 })

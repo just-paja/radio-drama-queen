@@ -11,7 +11,7 @@ import WarningIcon from '@material-ui/icons/Warning'
 import { ActiveStory } from './ActiveStory'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
-import { soundRoutines, soundStore } from '../../sounds'
+import { countPlayingSounds, soundRoutines, soundStore } from '../../sounds'
 import { LibraryStat } from './LibraryStat'
 import { WorkspaceSelection } from './WorkspaceSelection'
 import { withStyles } from '@material-ui/core/styles'
@@ -19,7 +19,6 @@ import {
   countBoardSounds,
   countErrorSounds,
   countMemorySounds,
-  countPlayingSounds,
   countTags
 } from '../selectors'
 

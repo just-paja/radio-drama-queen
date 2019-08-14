@@ -82,27 +82,6 @@ describe('soundWorkspaces stats selectors', () => {
     expect(selectors.countErrorSounds(state)).toBe(2)
   })
 
-  it('countPlayingSounds returns amount of errored sounds', () => {
-    const state = {
-      entities: {
-        sounds: [
-          {
-            uuid: 'sound-1',
-            playing: true
-          },
-          {
-            uuid: 'sound-2'
-          },
-          {
-            uuid: 'sound-3',
-            playing: true
-          }
-        ]
-      }
-    }
-    expect(selectors.countPlayingSounds(state)).toBe(2)
-  })
-
   it('countTags returns sound tag amount', () => {
     const state = {
       entities: {
