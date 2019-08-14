@@ -1,12 +1,11 @@
 import FormControl from '@material-ui/core/FormControl'
 import FormGroup from '@material-ui/core/FormGroup'
+import InputFeedback from './InputFeedback'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 
-import AppError from './AppError'
-import InputFeedback from './InputFeedback'
-
+import { AppError } from './AppError'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({

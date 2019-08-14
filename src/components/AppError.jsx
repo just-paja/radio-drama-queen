@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const AppError = ({ error }) => {
+export function AppError ({ error }) {
   if (!error) {
     return null
   }
@@ -25,5 +25,3 @@ AppError.propTypes = {
 AppError.defaultProps = {
   error: null
 }
-
-export default AppError
