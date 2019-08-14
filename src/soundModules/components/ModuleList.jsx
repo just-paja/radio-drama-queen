@@ -1,5 +1,3 @@
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import List from '@material-ui/core/List'
 import PropTypes from 'prop-types'
 import React from 'react'

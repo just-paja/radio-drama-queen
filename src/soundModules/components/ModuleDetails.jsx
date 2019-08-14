@@ -1,14 +1,10 @@
 import ArrowUpward from '@material-ui/icons/ArrowUpward'
 import LabelButton from '../../components/LabelButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
-import { getModules } from '../selectors'
 import { moduleStore } from '../store'
 import { SoundModule } from '../proptypes'
 import { withStyles } from '@material-ui/core/styles'
@@ -57,7 +53,7 @@ ModuleDetailsComponent.displayName = 'ModuleDetails'
 ModuleDetailsComponent.propTypes = {
   classes: Classes.isRequired,
   onSelect: PropTypes.func.isRequired,
-  selectedModule: SoundModule.isRequired,
+  selectedModule: SoundModule.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => ({
