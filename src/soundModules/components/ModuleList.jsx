@@ -7,6 +7,7 @@ import React from 'react'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
 import { getModules } from '../selectors'
+import { ModuleDetails } from './ModuleDetails'
 import { ModuleListItem } from './ModuleListItem'
 import { SoundModule } from '../proptypes'
 import { withStyles } from '@material-ui/core/styles'
@@ -17,38 +18,28 @@ const styles = theme => ({
   }
 })
 
-class ModuleListComponent extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handleNavigateToParent = this.handleNavigateToParent.bind(this)
-  }
-
-  handleNavigateToParent () {
-    this.props.onSelect({
-      moduleUrl: this.props.selected.parent
-    })
-  }
-
+class ModuleListComponent extends React.PureComponent {
   render () {
-    const { classes, modules, onSelect, selected } = this.props
+    const { classes, modules, onSelect, selectedModule } = this.props
     return (
-      <List className={classes.list}>
-        {selected && (
-          <ListItem button onClick={this.handleNavigateToParent}>
-            <ListItemText>
-              ...
-            </ListItemText>
-          </ListItem>
-        )}
-        {modules.map(module => (
-          <ModuleListItem
-            key={module.url}
+      <React.Fragment>
+        {selectedModule && (
+          <ModuleDetails
+            selectedModule={selectedModule}
             onSelect={onSelect}
-            module={module}
-            selected={selected && module.url === selected.url}
           />
-        ))}
-      </List>
+        )}
+        <List className={classes.list}>
+          {modules.map(module => (
+            <ModuleListItem
+              key={module.url}
+              onSelect={onSelect}
+              module={module}
+              selectedModule={selectedModule && module.url === selectedModule.url}
+            />
+          ))}
+        </List>
+      </React.Fragment>
     )
   }
 }
@@ -57,17 +48,17 @@ ModuleListComponent.displayName = 'ModuleList'
 ModuleListComponent.propTypes = {
   classes: Classes.isRequired,
   modules: PropTypes.arrayOf(SoundModule).isRequired,
-  selected: SoundModule,
+  selectedModule: SoundModule,
   onSelect: PropTypes.func.isRequired
 }
 
 ModuleListComponent.defaultProps = {
   parentModule: null,
-  selected: null
+  selectedModule: null
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  modules: getModules(state, ownProps.selected && ownProps.selected.url)
+  modules: getModules(state, ownProps.selectedModule && ownProps.selectedModule.url)
 })
 
 export const ModuleList = connect(

@@ -16,9 +16,10 @@ const styles = (theme) => ({
   column: {
     background: '#f0f0f0',
     display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1,
-    maxWidth: theme.spacing(24),
-    minWidth: theme.spacing(16)
+    maxWidth: theme.spacing(64),
+    minWidth: theme.spacing(24)
   }
 })
 
@@ -34,7 +35,7 @@ function GalleryTreeComponent ({
       <div className={classes.column}>
         <ModuleList
           onSelect={onModuleSelect}
-          selected={selectedModule}
+          selectedModule={selectedModule}
         />
       </div>
     </div>
