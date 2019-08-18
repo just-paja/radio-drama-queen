@@ -24,9 +24,6 @@ module.exports = {
         'jest-enzyme/lib/index.js'
       ],
       testPathIgnorePatterns: ignore,
-      collectCoverageFrom: [
-        'src/**/*.{js,jsx}'
-      ],
       coveragePathIgnorePatterns: [
         '/node_modules/',
         '/locales/',
@@ -37,6 +34,9 @@ module.exports = {
         '^.+\\.(js|jsx)$': 'babel-jest'
       }
     }
+  ],
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx}'
   ],
   watchPlugins: ['jest-watch-select-projects']
 }
