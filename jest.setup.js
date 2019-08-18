@@ -7,3 +7,5 @@ configure({ adapter: new Adapter() })
 console.error = err => {
   throw err
 }
+
+global.postMessage = null

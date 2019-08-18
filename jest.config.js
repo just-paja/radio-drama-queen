@@ -20,7 +20,9 @@ module.exports = {
       setupFiles: [
         '<rootDir>/jest.setup.js'
       ],
-      setupFilesAfterEnv: ['jest-enzyme/lib/index.js'],
+      setupFilesAfterEnv: [
+        'jest-enzyme/lib/index.js'
+      ],
       testPathIgnorePatterns: ignore,
       collectCoverageFrom: [
         'src/**/*.{js,jsx}'
@@ -28,7 +30,8 @@ module.exports = {
       coveragePathIgnorePatterns: [
         '/node_modules/',
         '/locales/',
-        '/constants/'
+        '/constants/',
+        '/mock/'
       ],
       transform: {
         '^.+\\.(js|jsx)$': 'babel-jest'

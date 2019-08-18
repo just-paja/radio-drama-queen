@@ -5,19 +5,9 @@ const generateUuid = require('uuid/v4')
 const path = require('path')
 const workerpool = require('workerpool')
 
-const readSoundMetaData = workerpool.pool(path.join(
+const soundWorker = workerpool.pool(path.join(
   PATH_WORKERS,
-  'readSoundMetaData.js'
-))
-
-const readSoundDataUrl = workerpool.pool(path.join(
-  PATH_WORKERS,
-  'readSoundDataUrl.js'
-))
-
-const updateSound = workerpool.pool(path.join(
-  PATH_WORKERS,
-  'updateSound.js'
+  'sounds.js'
 ))
 
 /**
@@ -33,7 +23,7 @@ export class SoundManager {
   }
 
   readSoundMetaData (soundData) {
-    return readSoundMetaData.exec('readSoundMetaData', [soundData])
+    return soundWorker.exec('readSoundMetaData', [soundData])
   }
 
   /**
@@ -61,11 +51,11 @@ export class SoundManager {
   }
 
   editSound (soundData) {
-    return updateSound.exec('updateSound', [soundData])
+    return soundWorker.exec('updateSound', [soundData])
       .then(() => this.describeSound(soundData))
   }
 
   getSoundDataUrl (soundData) {
-    return readSoundDataUrl.exec('readSoundDataUrl', [soundData])
+    return soundWorker.exec('readSoundDataUrl', [soundData])
   }
 }

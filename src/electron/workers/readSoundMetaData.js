@@ -1,6 +1,5 @@
 const iso639 = require('iso-639-1')
 const musicMetadata = require('music-metadata')
-const workerpool = require('workerpool')
 const path = require('path')
 
 const { remove } = require('diacritics')
@@ -26,11 +25,19 @@ function normalizeFormat (formatStr) {
   return formatStr.toLowerCase()
 }
 
+function removeExt (fileName) {
+  const split = fileName.split('.')
+  if (split.length > 1) {
+    split.pop()
+  }
+  return split.join('.')
+}
+
 function normalizeName (soundData, metaData) {
   if (metaData.common.title) {
     return metaData.common.title
   }
-  return path.basename(soundData.path)
+  return removeExt(path.basename(soundData.path))
 }
 
 function normalizeLanguage (header) {
@@ -80,21 +87,23 @@ function normalizeTags (metaData) {
     }))), [])
 }
 
-workerpool.worker({
-  readSoundMetaData: (soundData) => {
-    if (!soundData) {
-      return Promise.reject(new Error('You must pass some sound data'))
-    }
-
-    return musicMetadata.parseFile(soundData.cachePath, {
-      native: true,
-      skipCovers: true
-    }).then(data => ({
-      ...soundData,
-      duration: data.format.duration,
-      format: normalizeFormat(data.format.codec),
-      name: normalizeName(soundData, data),
-      tags: normalizeTags(data)
-    }))
+function readSoundMetaData (soundData) {
+  if (!soundData) {
+    return Promise.reject(new Error('You must pass some sound data'))
   }
-})
+
+  return musicMetadata.parseFile(soundData.cachePath, {
+    native: true,
+    skipCovers: true
+  }).then(data => ({
+    ...soundData,
+    duration: data.format.duration,
+    format: normalizeFormat(data.format.codec),
+    name: normalizeName(soundData, data),
+    tags: normalizeTags(data)
+  }))
+}
+
+module.exports = {
+  readSoundMetaData
+}
