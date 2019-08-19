@@ -1,8 +1,8 @@
-import workerpool from 'workerpool'
+const workerpool = require('workerpool')
 
-import { readSoundDataUrl } from './readSoundDataUrl'
-import { readSoundMetaData } from './readSoundMetaData'
-import { updateSound } from './updateSound'
+const { readSoundDataUrl } = require('./readSoundDataUrl')
+const { readSoundMetaData } = require('./readSoundMetaData')
+const { updateSound } = require('./updateSound')
 
 workerpool.worker({
   readSoundDataUrl,

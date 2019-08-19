@@ -19,25 +19,18 @@ function normalizeFormat (formatStr) {
   if (formatStr === 'MP1') {
     return 'mp3'
   }
-  if (formatStr.indexOf('vorbis')) {
+  if (formatStr.indexOf('vorbis') !== -1) {
     return 'ogg'
   }
   return formatStr.toLowerCase()
 }
 
 function removeExt (fileName) {
-  const split = fileName.split('.')
-  if (split.length > 1) {
-    split.pop()
-  }
-  return split.join('.')
+  return fileName.replace(/\.[^/.]+$/, '')
 }
 
 function normalizeName (soundData, metaData) {
-  if (metaData.common.title) {
-    return metaData.common.title
-  }
-  return removeExt(path.basename(soundData.path))
+  return metaData.common.title || removeExt(path.basename(soundData.path))
 }
 
 function normalizeLanguage (header) {
@@ -92,16 +85,18 @@ function readSoundMetaData (soundData) {
     return Promise.reject(new Error('You must pass some sound data'))
   }
 
-  return musicMetadata.parseFile(soundData.cachePath, {
+  return musicMetadata.parseFile(soundData.cachePath || soundData.path, {
     native: true,
     skipCovers: true
-  }).then(data => ({
-    ...soundData,
-    duration: data.format.duration,
-    format: normalizeFormat(data.format.codec),
-    name: normalizeName(soundData, data),
-    tags: normalizeTags(data)
-  }))
+  }).then(function (data) {
+    return {
+      ...soundData,
+      duration: data.format.duration,
+      format: normalizeFormat(data.format.codec),
+      name: normalizeName(soundData, data),
+      tags: normalizeTags(data)
+    }
+  })
 }
 
 module.exports = {
