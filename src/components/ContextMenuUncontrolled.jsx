@@ -27,7 +27,7 @@ class ContextMenuUncontrolledComponent extends React.Component {
   render () {
     const { children } = this.props
     return (
-      <React.Fragment>
+      <>
         <IconButton onClick={this.handleMenuOpen}>
           <MoreVert />
         </IconButton>
@@ -37,7 +37,7 @@ class ContextMenuUncontrolledComponent extends React.Component {
         >
           {children}
         </ContextMenu>
-      </React.Fragment>
+      </>
     )
   }
 }

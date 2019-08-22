@@ -12,21 +12,21 @@ import { workspaceRoutines } from '../actions'
 class WorkspaceShortcutsComponent extends React.PureComponent {
   constructor (props) {
     super(props)
-    this.moveLeft = this.moveLeft.bind(this)
-    this.moveRight = this.moveRight.bind(this)
+    this.handleMoveLeft = this.handleMoveLeft.bind(this)
+    this.handleMoveRight = this.handleMoveRight.bind(this)
   }
 
   get viewIndex () {
     return VIEW_CYCLE.indexOf(this.props.view)
   }
 
-  moveLeft () {
+  handleMoveLeft () {
     if (this.viewIndex > 0 && this.props.activeStory) {
       this.selectViewByIndex(this.viewIndex - 1)
     }
   }
 
-  moveRight () {
+  handleMoveRight () {
     if (this.viewIndex < VIEW_CYCLE.length - 1 && this.props.activeStory) {
       this.selectViewByIndex(this.viewIndex + 1)
     }
@@ -44,18 +44,18 @@ class WorkspaceShortcutsComponent extends React.PureComponent {
       return null
     }
     return (
-      <React.Fragment>
+      <>
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['ctrl+left']}
-          onKeyEvent={this.moveLeft}
+          onKeyEvent={this.handleMoveLeft}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['ctrl+right']}
-          onKeyEvent={this.moveRight}
+          onKeyEvent={this.handleMoveRight}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

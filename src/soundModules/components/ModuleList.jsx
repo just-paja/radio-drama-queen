@@ -20,7 +20,7 @@ class ModuleListComponent extends React.PureComponent {
   render () {
     const { classes, modules, onSelect, selectedModule } = this.props
     return (
-      <React.Fragment>
+      <>
         {selectedModule && (
           <ModuleDetails
             selectedModule={selectedModule}
@@ -37,7 +37,7 @@ class ModuleListComponent extends React.PureComponent {
             />
           ))}
         </List>
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -59,10 +59,10 @@ const GalleryComponent = ({
   }
 
   return (
-    <React.Fragment>
+    <>
       {content}
       <GallerySpeedDial onBoardCreate={onBoardCreate} />
-    </React.Fragment>
+    </>
   )
 }
 

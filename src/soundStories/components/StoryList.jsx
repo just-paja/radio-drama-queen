@@ -30,7 +30,7 @@ class StoryListComponent extends React.Component {
       )
     }
     return (
-      <React.Fragment>
+      <>
         <Typography variant='h2' gutterBottom>
           Saved stories
         </Typography>
@@ -49,15 +49,15 @@ class StoryListComponent extends React.Component {
           ))}
         </List>
         <StoryCreateButton />
-      </React.Fragment>
+      </>
     )
   }
 
   render () {
     return (
-      <React.Fragment>
+      <>
         {this.renderContent()}
-      </React.Fragment>
+      </>
     )
   }
 }

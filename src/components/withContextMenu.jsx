@@ -25,7 +25,7 @@ export function withContextMenu ({ menuComponent: MenuComponent }) {
         const { anchorEl } = this.state
         const { focused, ...other } = this.props
         return (
-          <React.Fragment>
+          <>
             <Component
               onContextMenu={this.handleMenuOpen}
               focused={anchorEl ? false : this.props.focused}
@@ -37,7 +37,7 @@ export function withContextMenu ({ menuComponent: MenuComponent }) {
               onOpen={this.handleMenuOpen}
               {...other}
             />
-          </React.Fragment>
+          </>
         )
       }
     }

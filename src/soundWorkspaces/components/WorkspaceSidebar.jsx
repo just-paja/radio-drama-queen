@@ -43,9 +43,9 @@ function WorkspaceSidebarComponent ({ activeStory, classes, board, view }) {
       <div className={classes.sticky}>
         <div className={classes.overlay}>
           {activeStory && (
-            <React.Fragment>
+            <>
               <SoundBoardSelection />
-            </React.Fragment>
+            </>
           )}
         </div>
       </div>

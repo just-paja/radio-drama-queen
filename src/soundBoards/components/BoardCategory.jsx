@@ -29,9 +29,7 @@ const BoardCategoryComponent = ({
             onSoundPickerOpen={onSoundPickerOpen}
             uuid={uuid}
           />
-        )
-        : children
-      }
+        ) : children}
     </div>
   </Grid>
 )

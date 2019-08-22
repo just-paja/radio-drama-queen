@@ -25,6 +25,7 @@ const ContextMenuWithOptionsComponent = ({ anchorEl, options, classes, onClose }
         icon={option.icon}
         key={option.label}
         label={option.label}
+        // eslint-disable-next-line react/jsx-handler-names
         onClick={option.onClick}
         onClose={onClose}
         shortcuts={option.shortcuts}

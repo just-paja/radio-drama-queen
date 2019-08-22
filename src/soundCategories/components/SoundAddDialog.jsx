@@ -39,13 +39,13 @@ class SoundAddDialogComponent extends React.Component {
 
   constructor (props) {
     super(props)
-    this.focusSound = this.focusSound.bind(this)
+    this.handleFocusSound = this.handleFocusSound.bind(this)
     this.handleSoundAdd = this.handleSoundAdd.bind(this)
-    this.moveDown = this.moveDown.bind(this)
-    this.moveUp = this.moveUp.bind(this)
-    this.resetFocus = this.resetFocus.bind(this)
+    this.handleMoveDown = this.handleMoveDown.bind(this)
+    this.handleMoveUp = this.handleMoveUp.bind(this)
+    this.handleResetFocus = this.handleResetFocus.bind(this)
     this.searchInputRef = React.createRef()
-    this.submitForm = this.submitForm.bind(this)
+    this.handleSubmitForm = this.handleSubmitForm.bind(this)
   }
 
   get focusedSoundUuid () {
@@ -69,7 +69,7 @@ class SoundAddDialogComponent extends React.Component {
     this.searchInputRef.current.ref.current.ref.current.focus()
   }
 
-  focusSound (focusedSound) {
+  handleFocusSound (focusedSound) {
     this.setState({ focusedSound })
   }
 
@@ -88,7 +88,7 @@ class SoundAddDialogComponent extends React.Component {
     }
   }
 
-  submitForm () {
+  handleSubmitForm () {
     // if (this.focusedSoundUuid) {
     //   this.handleSoundAdd(this.focusedSoundUuid)
     // }
@@ -96,7 +96,7 @@ class SoundAddDialogComponent extends React.Component {
     this.props.onClose()
   }
 
-  moveDown () {
+  handleMoveDown () {
     const { sounds } = this.props
     if (this.state.focusedSound === null) {
       if (sounds.length) {
@@ -107,17 +107,17 @@ class SoundAddDialogComponent extends React.Component {
     }
   }
 
-  moveUp () {
+  handleMoveUp () {
     if (this.state.focusedSound !== null) {
       if (this.state.focusedSound === 0) {
-        this.resetFocus()
+        this.handleResetFocus()
       } else {
         this.setState({ focusedSound: this.state.focusedSound - 1 })
       }
     }
   }
 
-  resetFocus () {
+  handleResetFocus () {
     this.setState({ focusedSound: null })
   }
 
@@ -141,7 +141,7 @@ class SoundAddDialogComponent extends React.Component {
             component={Input}
             label='Filter sounds'
             name='filter'
-            onFocus={this.resetFocus}
+            onFocus={this.handleResetFocus}
             ref={this.searchInputRef}
             forwardRef
           />
@@ -152,24 +152,24 @@ class SoundAddDialogComponent extends React.Component {
             component={SoundSelection}
             focusedSound={this.focusedSoundUuid}
             name='sounds'
-            onSoundFocus={this.focusSound}
+            onSoundFocus={this.handleFocusSound}
             onSoundAdd={this.handleSoundAdd}
           />
         </div>
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['down']}
-          onKeyEvent={this.moveDown}
+          onKeyEvent={this.handleMoveDown}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['up']}
-          onKeyEvent={this.moveUp}
+          onKeyEvent={this.handleMoveUp}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['enter']}
-          onKeyEvent={this.submitForm}
+          onKeyEvent={this.handleSubmitForm}
         />
       </Form>
     )

@@ -35,7 +35,7 @@ class ContextMenuControlComponent extends React.Component {
   render () {
     const { children, options } = this.props
     return (
-      <React.Fragment>
+      <>
         {React.Children.map(children, child => React.cloneElement(child, { onContextMenu: this.handleMenuOpen }))}
         <ContextMenu
           anchorEl={this.state.anchorEl}
@@ -43,7 +43,7 @@ class ContextMenuControlComponent extends React.Component {
         >
           {options && options.map(option => <ContextMenuItem {...option} key={option.label} />)}
         </ContextMenu>
-      </React.Fragment>
+      </>
     )
   }
 }

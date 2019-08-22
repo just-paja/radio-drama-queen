@@ -231,14 +231,14 @@ class CategoryComponent extends React.PureComponent {
       </div>
     )
     return (
-      <React.Fragment>
+      <>
         {droppable}
         <Snackbar
           open={canDrop && isOver}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           message={`Drop audio files here to add to category ${categoryName}`}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

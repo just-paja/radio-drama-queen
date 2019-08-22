@@ -13,12 +13,12 @@ import { workspaceRoutines } from '../actions'
 class BoardShortcutsComponent extends React.PureComponent {
   constructor (props) {
     super(props)
-    this.createCategory = this.createCategory.bind(this)
-    this.nextBoard = this.nextBoard.bind(this)
-    this.nextCategory = this.nextCategory.bind(this)
-    this.prevBoard = this.prevBoard.bind(this)
-    this.prevCategory = this.prevCategory.bind(this)
-    this.removeBoard = this.removeBoard.bind(this)
+    this.handleCategoryCreate = this.handleCategoryCreate.bind(this)
+    this.handleNextBoard = this.handleNextBoard.bind(this)
+    this.handleNextCategory = this.handleNextCategory.bind(this)
+    this.handlePrevBoard = this.handlePrevBoard.bind(this)
+    this.handlePrevCategory = this.handlePrevCategory.bind(this)
+    this.handleRemoveBoard = this.handleRemoveBoard.bind(this)
   }
 
   get boardIndex () {
@@ -31,7 +31,7 @@ class BoardShortcutsComponent extends React.PureComponent {
     return categories.indexOf(focusedCategory)
   }
 
-  createCategory () {
+  handleCategoryCreate () {
     if (this.props.board) {
       this.props.onCategoryCreate(this.props.board)
     }
@@ -51,23 +51,23 @@ class BoardShortcutsComponent extends React.PureComponent {
     }
   }
 
-  nextBoard () {
+  handleNextBoard () {
     this.focusBoardIndex(this.boardIndex + 1)
   }
 
-  nextCategory () {
+  handleNextCategory () {
     this.focusCategoryIndex(this.categoryIndex + 1)
   }
 
-  prevBoard () {
+  handlePrevBoard () {
     this.focusBoardIndex(this.boardIndex - 1)
   }
 
-  prevCategory () {
+  handlePrevCategory () {
     this.focusCategoryIndex(this.categoryIndex - 1)
   }
 
-  removeBoard () {
+  handleRemoveBoard () {
     const { board, categories, focusedCategory, onBoardRemove } = this.props
     const hasFocusedCategory = categories.length && (!focusedCategory || categories.indexOf(focusedCategory) !== -1)
     if (!hasFocusedCategory && board && categories.length === 0) {
@@ -81,7 +81,7 @@ class BoardShortcutsComponent extends React.PureComponent {
       return null
     }
     return (
-      <React.Fragment>
+      <>
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['b']}
@@ -90,7 +90,7 @@ class BoardShortcutsComponent extends React.PureComponent {
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['c']}
-          onKeyEvent={this.createCategory}
+          onKeyEvent={this.handleCategoryCreate}
         />
         <ListShortcuts
           disabled={openDialogs}
@@ -102,19 +102,19 @@ class BoardShortcutsComponent extends React.PureComponent {
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['pagedown']}
-          onKeyEvent={this.nextBoard}
+          onKeyEvent={this.handleNextBoard}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['pageup']}
-          onKeyEvent={this.prevBoard}
+          onKeyEvent={this.handlePrevBoard}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['delete']}
-          onKeyEvent={this.removeBoard}
+          onKeyEvent={this.handleRemoveBoard}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

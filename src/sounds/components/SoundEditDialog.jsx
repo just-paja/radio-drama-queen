@@ -10,7 +10,7 @@ import { soundStore } from '../store'
 import { tagStore } from '../../soundTags/store'
 
 const SoundEditDialogComponent = () => (
-  <React.Fragment>
+  <>
     <Field
       autoFocus
       component={Input}
@@ -22,7 +22,7 @@ const SoundEditDialogComponent = () => (
       label='Tags'
       name='tags'
     />
-  </React.Fragment>
+  </>
 )
 
 export const SoundEditDialog = dialogForm({

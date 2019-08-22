@@ -10,13 +10,13 @@ import { SoundBoardSelectionItem } from './SoundBoardSelectionItem'
 
 const SoundBoardSelectionComponent = ({ activeBoard, boards }) => (
   <List>
-    {boards.map(board =>
+    {boards.map(board => (
       <SoundBoardSelectionItem
         board={board}
         key={board.uuid}
         selected={board.uuid === activeBoard}
       />
-    )}
+    ))}
   </List>
 )
 

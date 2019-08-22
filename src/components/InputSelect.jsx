@@ -178,6 +178,7 @@ function MultiValue (props) {
       className={classnames(props.selectProps.classes.chip, {
         [props.selectProps.classes.chipFocused]: props.isFocused
       })}
+      // eslint-disable-next-line react/jsx-handler-names
       onDelete={props.removeProps.onClick}
       deleteIcon={<CancelIcon {...props.removeProps} />}
     />

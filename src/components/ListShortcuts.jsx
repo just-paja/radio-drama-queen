@@ -5,10 +5,10 @@ import KeyboardEventHandler from 'react-keyboard-event-handler'
 export class ListShortcuts extends React.PureComponent {
   constructor (props) {
     super(props)
-    this.selectFirst = this.selectFirst.bind(this)
-    this.selectLast = this.selectLast.bind(this)
-    this.selectNext = this.selectNext.bind(this)
-    this.selectPrev = this.selectPrev.bind(this)
+    this.handleSelectFirst = this.handleSelectFirst.bind(this)
+    this.handleSelectLast = this.handleSelectLast.bind(this)
+    this.handleSelectNext = this.handleSelectNext.bind(this)
+    this.handleSelectPrev = this.handleSelectPrev.bind(this)
   }
 
   get currentIndex () {
@@ -24,19 +24,19 @@ export class ListShortcuts extends React.PureComponent {
     this.props.onFocus(this.props.items[index])
   }
 
-  selectFirst () {
+  handleSelectFirst () {
     this.handleFocus(0)
   }
 
-  selectLast () {
+  handleSelectLast () {
     this.handleFocus(this.maxIndex)
   }
 
-  selectNext () {
+  handleSelectNext () {
     this.handleFocus(Math.min(this.maxIndex, this.currentIndex + 1))
   }
 
-  selectPrev () {
+  handleSelectPrev () {
     this.handleFocus(Math.max(0, this.currentIndex - 1))
   }
 
@@ -46,28 +46,28 @@ export class ListShortcuts extends React.PureComponent {
       return null
     }
     return (
-      <React.Fragment>
+      <>
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['home']}
-          onKeyEvent={this.selectFirst}
+          onKeyEvent={this.handleSelectFirst}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['end']}
-          onKeyEvent={this.selectLast}
+          onKeyEvent={this.handleSelectLast}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={[horizontal ? 'left' : 'up']}
-          onKeyEvent={this.selectPrev}
+          onKeyEvent={this.handleSelectPrev}
         />
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={[horizontal ? 'right' : 'down']}
-          onKeyEvent={this.selectNext}
+          onKeyEvent={this.handleSelectNext}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

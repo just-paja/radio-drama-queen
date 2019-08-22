@@ -25,7 +25,7 @@ describe('BoardCategory component', () => {
     const markup = (
       <BoardCategory
         onSoundPickerOpen={() => {}}
-        uuid={'foo'}
+        uuid='foo'
       />
     )
     const comp = renderWithDnd(markup, state)

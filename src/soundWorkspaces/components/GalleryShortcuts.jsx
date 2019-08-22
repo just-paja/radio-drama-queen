@@ -14,13 +14,13 @@ class GalleryShortcutsComponent extends React.PureComponent {
       return null
     }
     return (
-      <React.Fragment>
+      <>
         <KeyboardEventHandler
           handleFocusableElements
           handleKeys={['l']}
           onKeyEvent={onLibraryAdd}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

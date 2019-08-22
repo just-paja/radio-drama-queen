@@ -20,7 +20,7 @@ function renderForm (driver) {
 
 function OpenLibraryDialogComponent ({ driver }) {
   return (
-    <React.Fragment>
+    <>
       <Field
         component={InputToggleButton}
         name='driver'
@@ -28,7 +28,7 @@ function OpenLibraryDialogComponent ({ driver }) {
         exclusive
       />
       {renderForm(driver)}
-    </React.Fragment>
+    </>
   )
 }
 

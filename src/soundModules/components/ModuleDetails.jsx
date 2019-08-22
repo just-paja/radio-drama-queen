@@ -19,10 +19,10 @@ const styles = theme => ({
 class ModuleDetailsComponent extends React.Component {
   constructor (props) {
     super(props)
-    this.navigateToParent = this.navigateToParent.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
   }
 
-  navigateToParent () {
+  handleButtonClick () {
     this.props.onSelect({
       moduleUrl: this.props.selectedModule.parent
     })
@@ -31,11 +31,11 @@ class ModuleDetailsComponent extends React.Component {
   render () {
     const { classes, parentModule, selectedModule } = this.props
     return (
-      <React.Fragment>
+      <>
         <LabelButton
           icon={ArrowUpward}
           className={classes.box}
-          onClick={this.navigateToParent}
+          onClick={this.handleButtonClick}
         >
           {parentModule ? parentModule.name : 'Root'}
         </LabelButton>
@@ -44,7 +44,7 @@ class ModuleDetailsComponent extends React.Component {
           <div>Sounds: {selectedModule.sounds.length}</div>
           <div>Driver: {selectedModule.driver}</div>
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

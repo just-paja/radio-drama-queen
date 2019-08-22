@@ -59,7 +59,7 @@ class CategoryControlsComponent extends Component {
   render () {
     const { classes, exclusive, loop, muted, playing, volume } = this.props
     return (
-      <React.Fragment>
+      <>
         <VolumeControl
           muted={muted}
           onChange={this.handleVolumeChange}
@@ -75,7 +75,7 @@ class CategoryControlsComponent extends Component {
           />
           <VolumeToggleButton onClick={this.handleMuteToggle} muted={muted} />
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

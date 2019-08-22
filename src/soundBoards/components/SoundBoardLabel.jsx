@@ -15,10 +15,10 @@ const SoundBoardLabel = ({ board, classes }) => (
   <span>
     {board.name}
     {board.playing ? (
-      <React.Fragment>
+      <>
         {' '}
         <Audiotrack className={classes.iconSize} />
-      </React.Fragment>
+      </>
     ) : null}
   </span>
 )

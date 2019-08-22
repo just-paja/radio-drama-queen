@@ -86,8 +86,7 @@ class BoardComponent extends React.PureComponent {
       >
         {categories.length > 0
           ? this.renderCategories()
-          : <BoardEmpty board={uuid} />
-        }
+          : <BoardEmpty board={uuid} />}
         {renderSnackbar(isOver, canDrop)}
         <BoardSpeedDial boardUuid={uuid} />
       </div>

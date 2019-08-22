@@ -16,7 +16,7 @@ const SoundGalleryViewComponent = ({
   onGalleryGoBack,
   onLibraryOpen
 }) => (
-  <React.Fragment>
+  <>
     <Gallery
       onAddSound={onAddSoundToBoard}
       onAddTag={onAddTagToBoard}
@@ -26,7 +26,7 @@ const SoundGalleryViewComponent = ({
       onLibraryOpen={onLibraryOpen}
     />
     <GalleryShortcuts />
-  </React.Fragment>
+  </>
 )
 
 SoundGalleryViewComponent.displayName = 'SoundGalleryView'
