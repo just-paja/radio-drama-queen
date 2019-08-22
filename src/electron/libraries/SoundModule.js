@@ -34,7 +34,9 @@ class SoundModule {
   }
 
   updateFromManifest (manifest) {
-    this.name = manifest.name
+    if (manifest) {
+      this.name = manifest.name
+    }
   }
 }
 

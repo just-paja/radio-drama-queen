@@ -44,9 +44,7 @@ class LocalModule extends SoundModule {
   }
 
   readManifest () {
-    if (!this.name) {
-      this.name = path.basename(this.directory)
-    }
+    this.name = path.basename(this.directory)
     const manifestPath = jetpack.path(this.directory, MANIFEST_FILE)
     return jetpack.readAsync(manifestPath, 'json').then(this.updateFromManifest)
   }
