@@ -18,6 +18,14 @@ describe('LocalModule driver', () => {
     })
   })
 
+  it('readModule returns remote driver', () => {
+    return LocalModule.readModule({
+      url: getFixtureUrl('flat')
+    }).then(soundModule => {
+      expect(soundModule).toHaveProperty('driver', 'local')
+    })
+  })
+
   it('readModule returns flat list of sounds', () => {
     return LocalModule.readModule({
       url: getFixtureUrl('flat')

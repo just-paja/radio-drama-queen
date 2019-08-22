@@ -1,5 +1,9 @@
 {
   "name": "Manifest Test Module",
+  "modules": [
+    "more-silence",
+    "silence"
+  ],
   "sounds": [
     "format.mp3"
   ]

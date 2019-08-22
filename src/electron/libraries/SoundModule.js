@@ -13,7 +13,12 @@ class SoundModule {
 
   url = null
 
-  constructor ({ library, name, parent, url }) {
+  constructor ({
+    library = null,
+    name = null,
+    parent = null,
+    url
+  }) {
     this.library = library
     this.name = name
     this.parent = parent
