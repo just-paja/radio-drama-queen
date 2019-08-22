@@ -20,6 +20,11 @@ module.exports = [
     use: 'babel-loader'
   },
   {
+    test: /\.(js|jsx)$/,
+    include: /node_modules\/workerpool/,
+    use: 'babel-loader'
+  },
+  {
     test: /\.css$/,
     use: [
       'style-loader'

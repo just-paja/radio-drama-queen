@@ -8,4 +8,6 @@ console.error = err => {
   throw err
 }
 
+// Required for workerpool to switch to node mode
+global.Window = undefined
 global.postMessage = null

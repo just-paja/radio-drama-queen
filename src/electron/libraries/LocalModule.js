@@ -33,6 +33,7 @@ class LocalModule extends SoundModule {
 
   filterModuleDirectory (node) {
     return (
+      node &&
       node.type === 'dir' &&
       node.name.indexOf('.') !== 0 &&
       moduleIgnore.indexOf(node.name) === -1
@@ -85,7 +86,7 @@ class LocalModule extends SoundModule {
 
   readSounds (fileList) {
     this.sounds = fileList
-      .filter(item => item.type === 'file' && this.isSound(item.name))
+      .filter(item => item && item.type === 'file' && this.isSound(item.name))
       .map((item) => ({
         library: this.library ? this.library : this.url,
         module: this.url,

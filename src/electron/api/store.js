@@ -1,4 +1,4 @@
-import reducers from '../reducers'
+import reducers from '../../reducers'
 
 import { createStore } from 'redux'
 

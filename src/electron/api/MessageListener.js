@@ -24,7 +24,7 @@ class MessageListener {
         .then(this.routine.success)
         .catch(handleError)
     } catch (error) {
-      handleError(error)
+      return Promise.resolve(handleError(error))
     }
   }
 }

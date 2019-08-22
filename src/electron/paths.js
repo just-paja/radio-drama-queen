@@ -15,7 +15,7 @@ const splitNameFromExtension = (url) => {
   }
 }
 
-const PATH_FALLBACK_ROOT = '/radio-drama-queen'
+const PATH_FALLBACK_ROOT = jetpack.path(__dirname, '..', '..')
 
 const getPath = (...args) => {
   return jetpack.path(process.env.HOME, '.config', 'radio-drama-queen', ...args)

@@ -1,17 +1,18 @@
 import soundGallery from '../soundGallery/reducers'
 import soundWorkspaces from '../soundWorkspaces/reducers'
 
-import { boardStore } from '../soundBoards'
-import { categoryStore } from '../soundCategories'
+import { boardStore } from '../soundBoards/store'
+import { categoryStore } from '../soundCategories/store'
 import { combineReducers } from 'redux'
 import { createEntitiesReducer, operations } from 'redux-entity-routines'
-import { dialogStore } from '../dialogs'
-import { libraryStore } from '../soundLibraries'
-import { moduleStore } from '../soundModules'
+import { dialogStore } from '../dialogs/store'
+import { libraryStore } from '../soundLibraries/store'
+import { moduleStore } from '../soundModules/store'
 import { reducer as form } from 'redux-form'
-import { soundStore } from '../sounds'
-import { storyRoutines, storyStore } from '../soundStories'
-import { tagStore } from '../soundTags'
+import { soundStore } from '../sounds/store'
+import { storyRoutines } from '../soundStories/actions'
+import { storyStore } from '../soundStories/store'
+import { tagStore } from '../soundTags/store'
 
 const appReducer = combineReducers({
   entities: createEntitiesReducer(
@@ -60,7 +61,7 @@ function normalizeStoryState (state, story) {
 }
 
 export default (state, action) => {
-  if (action.type === storyRoutines.load.SUCCESS) {
+  if (action && action.type === storyRoutines.load.SUCCESS) {
     return appReducer(normalizeStoryState(state, action.payload), action)
   }
   return appReducer(state, action)

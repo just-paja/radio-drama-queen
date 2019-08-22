@@ -4,7 +4,7 @@ workspace_root: &workspace_root
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:10-stretch
+    - image: circleci/node:12-stretch
 
 onMaster: &onMaster
   branches:

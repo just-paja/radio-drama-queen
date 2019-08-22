@@ -1,5 +1,3 @@
-export * from './BackendMessenger'
 export * from './createMainWindow'
 export * from './runMain'
-export * from './SoundManager'
 export * from './SoundStorage'

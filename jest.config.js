@@ -25,8 +25,7 @@ module.exports = {
       ],
       testPathIgnorePatterns: ignore,
       coveragePathIgnorePatterns: [
-        '/node_modules/',
-        '/locales/',
+        ...ignore,
         '/constants/',
         '/mock/'
       ],

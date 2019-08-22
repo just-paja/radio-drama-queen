@@ -15,8 +15,6 @@ const {
  * sounds in memory. Each of its public methods returns a promise.
  */
 export class SoundStorage {
-  pathHome = PATH_CACHE
-
   /**
    * Returns universal cache path where to save temporary sounds from
    * the network
@@ -25,7 +23,7 @@ export class SoundStorage {
   getCachePath (url) {
     const { extension } = splitNameFromExtension(url)
     const sum = hash.sha256().update(url).digest('hex')
-    return jetpack.path(this.pathHome, `${sum}.${extension}`)
+    return jetpack.path(PATH_CACHE, `${sum}.${extension}`)
   }
 
   /**

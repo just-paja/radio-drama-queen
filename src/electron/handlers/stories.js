@@ -1,14 +1,7 @@
-const { PATH_STORIES, PATH_WORKERS } = require('../paths')
+const { PATH_STORIES } = require('../paths')
 
 const generateUuid = require('uuid/v4')
 const jetpack = require('fs-jetpack')
-const path = require('path')
-const workerpool = require('workerpool')
-
-const readStory = workerpool.pool(path.join(
-  PATH_WORKERS,
-  'readStory.js'
-))
 
 function storyUuidToFile (uuid) {
   return `${uuid}.json`
@@ -22,14 +15,14 @@ function fileToStoryUuid (file) {
   return file.substr(0, file.length - 5)
 }
 
-export function listStories () {
+export function listStories (action, messenger) {
   return jetpack.listAsync(PATH_STORIES)
     .then(files => files ? files.map(fileToStoryUuid) : [])
-    .then(uuids => Promise.all(uuids.map(uuid => readStory.exec('readStory', [uuid]))))
+    .then(uuids => Promise.all(uuids.map(uuid => messenger.exec('readStory', [uuid]))))
 }
 
-export function loadStory ({ payload }) {
-  return readStory.exec('readStory', [payload])
+export function loadStory ({ payload }, messenger) {
+  return messenger.exec('readStory', [payload])
 }
 
 export function removeStory ({ payload }) {

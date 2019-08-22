@@ -2,13 +2,18 @@ const { ipcMain } = require('electron')
 const { MessageListener } = require('./MessageListener')
 
 class BackendMessenger {
-  constructor (targetWindow, store, debug) {
+  constructor (targetWindow, store, workerPool, debug) {
     this.window = targetWindow
     this.store = store
+    this.workerPool = workerPool
     this.debug = debug
     this.listeners = []
     this.sendMessage = this.sendMessage.bind(this)
-    this.subscribeToIpc()
+    // this.subscribeToIpc()
+  }
+
+  dispatch (action) {
+    this.handleIncomingAction(action)
   }
 
   handleIncomingAction (action) {
@@ -16,7 +21,7 @@ class BackendMessenger {
       console.log('in', action.type, JSON.stringify(action))
     }
     this.store.dispatch(action)
-    Promise.all(
+    return Promise.all(
       this.listeners
         .filter(listener => listener.matchesAction(action))
         .map(listener => listener.run(action, this))
@@ -35,12 +40,15 @@ class BackendMessenger {
     this.window.webContents.send('backendSays', Object.assign({}, action, {
       timestamp: new Date()
     }))
-
-    console.log(this.store.getState())
+    return action
   }
 
   handleAction (routine, requestHandler) {
     this.listeners.push(new MessageListener(routine, requestHandler))
+  }
+
+  terminate () {
+    this.workerPool.terminate()
   }
 }
 
