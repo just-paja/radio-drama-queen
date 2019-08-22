@@ -5,13 +5,13 @@ import { soundRoutines } from '../../sounds/actions'
 import path from 'path'
 import workerpool from 'workerpool'
 
-const readModule = workerpool.pool(path.join(
+const workers = workerpool.pool(path.join(
   PATH_WORKERS,
-  'readModule.js'
+  'modules.js'
 ))
 
 export function loadModule (action, messenger) {
-  return readModule.exec('readModule', [action.payload])
+  return workers.exec('readModule', [action.payload])
     .then((module) => {
       if (module.modules) {
         module.modules.forEach(module => messenger.handleIncomingAction(
