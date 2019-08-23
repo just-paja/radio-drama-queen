@@ -1,18 +1,4 @@
 class SoundModule {
-  driver = null
-
-  library = null
-
-  modules = []
-
-  name = null
-
-  parent = null
-
-  sounds = []
-
-  url = null
-
   constructor ({
     library = null,
     name = null,
@@ -44,6 +30,14 @@ class SoundModule {
     }
   }
 }
+
+SoundModule.prototype.driver = null
+SoundModule.prototype.library = null
+SoundModule.prototype.modules = []
+SoundModule.prototype.name = null
+SoundModule.prototype.parent = null
+SoundModule.prototype.sounds = []
+SoundModule.prototype.url = null
 
 module.exports = {
   SoundModule

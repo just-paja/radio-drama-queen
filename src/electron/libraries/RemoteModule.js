@@ -15,8 +15,6 @@ class RemoteModule extends SoundModule {
     return (new this(payload)).readContents().then(mod => mod.toJson())
   }
 
-  driver = DRIVER_REMOTE
-
   get baseName () {
     return this.getHttpDirName(this.url)
   }
@@ -71,6 +69,8 @@ class RemoteModule extends SoundModule {
       : []
   }
 }
+
+RemoteModule.prototype.driver = DRIVER_REMOTE
 
 module.exports = {
   RemoteModule

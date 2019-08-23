@@ -15,8 +15,6 @@ class LocalModule extends SoundModule {
     return (new this(payload)).readContents().then(mod => mod.toJson())
   }
 
-  driver = DRIVER_LOCAL
-
   constructor (props) {
     super(props)
     this.inspectFsNodes = this.inspectFsNodes.bind(this)
@@ -95,6 +93,8 @@ class LocalModule extends SoundModule {
       }))
   }
 }
+
+LocalModule.prototype.driver = DRIVER_LOCAL
 
 module.exports = {
   LocalModule
