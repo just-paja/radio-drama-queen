@@ -4,6 +4,7 @@ import boardFocus from './boardFocus'
 import openEmptyStory from './openEmptyStory'
 import showBoardOnCreate from './showBoardOnCreate'
 import soundPicker from './soundPicker'
+import workspaceState from './workspaceState'
 
 export default [
   ...addSoundToGrid,
@@ -11,5 +12,6 @@ export default [
   ...boardFocus,
   ...openEmptyStory,
   ...showBoardOnCreate,
-  ...soundPicker
+  ...soundPicker,
+  ...workspaceState
 ]

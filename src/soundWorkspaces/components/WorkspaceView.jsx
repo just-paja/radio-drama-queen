@@ -10,8 +10,9 @@ import { SoundGalleryView } from './SoundGalleryView'
 import { StoryView } from './StoryView'
 import { VIEW_BOARD, VIEW_LIBRARY, VIEW_STORIES } from '../constants'
 import { withStyles } from '@material-ui/core/styles'
-import { WorkspaceStatus } from './WorkspaceStatus'
+import { workspaceRoutines } from '../actions'
 import { WorkspaceShortcuts } from './WorkspaceShortcuts'
+import { WorkspaceStatus } from './WorkspaceStatus'
 
 const styles = theme => ({
   withHeader: {
@@ -21,6 +22,10 @@ const styles = theme => ({
   }
 })
 class WorkspaceViewComponent extends React.PureComponent {
+  componentDidMount() {
+    this.props.onLoad()
+  }
+
   renderView () {
     const { board, view } = this.props
     if (view === VIEW_LIBRARY) {
@@ -36,7 +41,10 @@ class WorkspaceViewComponent extends React.PureComponent {
   }
 
   render () {
-    const { classes, board, focusedCategory } = this.props
+    const { classes, board, focusedCategory, initialized } = this.props
+    if (!initialized) {
+      return null
+    }
     return (
       <div className={classes.withHeader}>
         <WorkspaceStatus />
@@ -65,9 +73,15 @@ WorkspaceViewComponent.defaultProps = {
 const mapStateToProps = state => ({
   board: getActiveBoardUuid(state),
   focusedCategory: getFocusedCategory(state),
+  initialized: workspaceRoutines.load.isInitialized(state),
   view: getWorkspaceView(state)
 })
 
+const mapDispatchToProps = {
+  onLoad: workspaceRoutines.load
+}
+
 export const WorkspaceView = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(styles)(WorkspaceViewComponent))

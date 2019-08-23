@@ -13,6 +13,7 @@ import { soundStore } from '../sounds/store'
 import { storyRoutines } from '../soundStories/actions'
 import { storyStore } from '../soundStories/store'
 import { tagStore } from '../soundTags/store'
+import { workspaceRoutines } from '../soundWorkspaces/actions'
 
 const appReducer = combineReducers({
   entities: createEntitiesReducer(
@@ -61,6 +62,9 @@ function normalizeStoryState (state, story) {
 }
 
 export default (state, action) => {
+  if (action && action.type === workspaceRoutines.load.SUCCESS) {
+    return action.payload
+  }
   if (action && action.type === storyRoutines.load.SUCCESS) {
     return appReducer(normalizeStoryState(state, action.payload), action)
   }

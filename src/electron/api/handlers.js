@@ -9,6 +9,7 @@ const { moduleRoutines } = require('../../soundModules/actions')
 const { PATH_WORKERS } = require('../paths')
 const { soundRoutines } = require('../../sounds/actions')
 const { storyRoutines } = require('../../soundStories/actions')
+const { workspaceRoutines } = require('../../soundWorkspaces/actions')
 
 export function configureApi (window, development) {
   const store = configureBackendStore()
@@ -34,6 +35,7 @@ export function configureApi (window, development) {
   messenger.handleAction(storyRoutines.remove, handlers.removeStory)
   messenger.handleAction(storyRoutines.rename, handlers.renameStory)
   messenger.handleAction(storyRoutines.save, handlers.saveStory)
+  messenger.handleAction(workspaceRoutines.load, handlers.getState)
 
   return messenger
 }

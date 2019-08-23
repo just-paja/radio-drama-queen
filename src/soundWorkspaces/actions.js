@@ -4,6 +4,7 @@ export const workspaceRoutines = createEntityRoutines('WORKSPACE', [
   'ADD_SOUND',
   'ADD_TAG',
   'GO_BACK',
+  'LOAD',
   'SELECT_BOARD',
   'SELECT_VIEW',
   'WIPE'
