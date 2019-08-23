@@ -14,7 +14,7 @@ function storyUuidToFilePath (uuid) {
 function listStories () {
   return jetpack.listAsync(PATH_STORIES)
     .then(files => files ? files.map(fileToStoryUuid) : [])
-    .then(uuids => Promise.all(uuids.map(uuid => readStory(uuid))))
+    .then(uuids => Promise.all(uuids.map(readStory)))
 }
 
 function readStory (uuid) {

@@ -9,7 +9,7 @@ class BackendMessenger {
     this.debug = debug
     this.listeners = []
     this.sendMessage = this.sendMessage.bind(this)
-    // this.subscribeToIpc()
+    this.subscribeToIpc()
   }
 
   dispatch (action) {

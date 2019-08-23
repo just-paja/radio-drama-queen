@@ -1,19 +1,11 @@
-export function listStories (action, messenger) {
-  return messenger.exec('listStories', [])
+function passPayload (workerName) {
+  return function (action, messenger) {
+    return messenger.workerPool.exec(workerName, [action.payload])
+  }
 }
 
-export function loadStory ({ payload }, messenger) {
-  return messenger.exec('readStory', [payload])
-}
-
-export function removeStory ({ payload }, messenger) {
-  return messenger.exec('removeStory', [payload])
-}
-
-export function renameStory ({ payload }, messenger) {
-  return messenger.exec('renameStory', [payload])
-}
-
-export function saveStory ({ payload }, messenger) {
-  return messenger.exec('saveStory', [payload])
-}
+export const listStories = passPayload('listStories')
+export const loadStory = passPayload('readStory')
+export const removeStory = passPayload('removeStory')
+export const renameStory = passPayload('renameStory')
+export const saveStory = passPayload('saveStory')
