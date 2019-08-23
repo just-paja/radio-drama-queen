@@ -2,6 +2,7 @@ const BackendMessenger = require('./BackendMessenger')
 const handlers = require('../handlers')
 const workerpool = require('workerpool')
 
+const { boardRoutines } = require('../../soundBoards/actions')
 const { configureBackendStore } = require('./store')
 const { libraryRoutines } = require('../../soundLibraries/actions')
 const { moduleRoutines } = require('../../soundModules/actions')
@@ -19,6 +20,9 @@ export function configureApi (window, development) {
     development
   )
 
+  messenger.handleAction(boardRoutines.create, handlers.createBoard)
+  messenger.handleAction(boardRoutines.remove, handlers.removeBoard)
+  messenger.handleAction(boardRoutines.rename, handlers.renameBoard)
   messenger.handleAction(libraryRoutines.load, handlers.loadLibrary)
   messenger.handleAction(moduleRoutines.load, handlers.loadModule)
   messenger.handleAction(soundRoutines.edit, handlers.soundEdit)

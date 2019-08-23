@@ -1,8 +1,4 @@
-function passPayload (workerName) {
-  return function (action, messenger) {
-    return messenger.workerPool.exec(workerName, [action.payload])
-  }
-}
+import { passPayload } from './workerConnection'
 
 export const listStories = passPayload('listStories')
 export const loadStory = passPayload('readStory')

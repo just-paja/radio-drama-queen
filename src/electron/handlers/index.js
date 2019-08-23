@@ -1,3 +1,4 @@
+export * from './boards'
 export * from './libraries'
 export * from './modules'
 export * from './sounds'

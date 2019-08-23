@@ -16,6 +16,10 @@ class BackendMessenger {
     this.handleIncomingAction(action)
   }
 
+  getState() {
+    return this.store.getState()
+  }
+
   handleIncomingAction (action) {
     if (action.type.includes('FAILURE')) {
       console.log('in', action.type, JSON.stringify(action))
