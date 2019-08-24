@@ -1,3 +1,4 @@
 export function getState (app, action) {
-  return Promise.resolve(app.getState())
+  const { entities, soundWorkspaces } = app.state
+  return Promise.resolve({ entities, soundWorkspaces })
 }

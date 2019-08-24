@@ -3,7 +3,26 @@ import { startSubmit, stopSubmit, getFormValues } from 'redux-form'
 
 export const ipcRenderer = global.require && global.require('electron').ipcRenderer
 
+function isSerializable (val) {
+  return (
+    typeof val === 'undefined' ||
+    typeof val === 'string' ||
+    typeof val === 'boolean' ||
+    typeof val === 'number' ||
+    Array.isArray(val) ||
+    val.constructor === Object
+  )
+}
+
 export function say (action) {
+  /* We check that action payload is serializable to help developers prevent
+   * undetectable lockdowns caused by passing React Synthetic Events to the
+   * ipcRenderer. This is just a shallow check, it is also possible to do
+   * recursive checks, but it would be more expensive.
+   */
+  if (!isSerializable(action.payload)) {
+    throw new Error('Attempted to transmit unserializable payload')
+  }
   if (ipcRenderer) {
     return ipcRenderer.send('frontendSays', action)
   }
@@ -12,10 +31,15 @@ export function say (action) {
 export function * request (routine, payload, matcher) {
   const action = routine.request(payload)
   yield put(action)
-  say(action)
-  const result = routine
-    ? yield take(matcher || [routine.SUCCESS, routine.FAILURE])
-    : null
+  let result
+  try {
+    say(action)
+    result = routine
+      ? yield take(matcher || [routine.SUCCESS, routine.FAILURE])
+      : null
+  } catch (e) {
+    yield put(routine.failure(e))
+  }
   yield put(routine.fulfill(payload))
   return result
 }

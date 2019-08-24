@@ -1,5 +1,5 @@
 const { BrowserWindow } = require('electron')
-const { configureApi } = require('./api')
+const { startBackend } = require('./api')
 
 export function createMainWindow (development) {
   const mainWindow = new BrowserWindow({
@@ -14,7 +14,7 @@ export function createMainWindow (development) {
     }
   })
 
-  configureApi(mainWindow)
+  startBackend(mainWindow, development)
 
   mainWindow.removeMenu()
   mainWindow.setMenuBarVisibility(false)

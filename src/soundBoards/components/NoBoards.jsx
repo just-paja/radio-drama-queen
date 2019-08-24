@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { boardRoutines } from '../actions'
 import { connect } from 'react-redux'
 import { LabelButton } from '../../components/LabelButton'
+import { noArgs } from '../../components'
 
 const NoBoardsComponent = ({ onBoardCreate, onLibraryOpen }) => (
   <CanvasMessage heading='No boards!'>
@@ -26,7 +27,7 @@ NoBoardsComponent.propTypes = {
 
 const mapStateToProps = undefined
 const mapDispatchToProps = {
-  onBoardCreate: boardRoutines.create
+  onBoardCreate: noArgs(boardRoutines.create)
 }
 
 export const NoBoards = connect(

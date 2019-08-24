@@ -33,7 +33,7 @@ const appReducer = combineReducers({
 })
 
 function normalizeStoryState (state, story) {
-  const { name, uuid, entities, ...nextState } = story
+  const { name, uuid, entities, operations, ...nextState } = story
   if (!entities) {
     return {
       ...state,
@@ -63,7 +63,7 @@ function normalizeStoryState (state, story) {
 
 export default (state, action) => {
   if (action && action.type === workspaceRoutines.load.SUCCESS) {
-    return action.payload
+    return appReducer({ ...state, ...action.payload }, action)
   }
   if (action && action.type === storyRoutines.load.SUCCESS) {
     return appReducer(normalizeStoryState(state, action.payload), action)
