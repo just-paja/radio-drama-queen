@@ -11,7 +11,7 @@ export default [
   ...addTagToBoard,
   ...boardFocus,
   ...openEmptyStory,
-  // ...showBoardOnCreate,
+  ...showBoardOnCreate,
   ...soundPicker,
   ...workspaceState
 ]
