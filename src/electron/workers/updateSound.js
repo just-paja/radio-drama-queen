@@ -10,7 +10,7 @@ const logger = {
   warn: (...args) => console.warn(...args)
 }
 
-function updateSound (soundData) {
+function updateSound (config, soundData) {
   if (!soundData) {
     return Promise.reject(new Error('You must pass some sound data'))
   }

@@ -1,4 +1,4 @@
-import { configureApi } from '..'
+import { startBackend } from '..'
 import { storyRoutines } from '../../../soundStories/actions'
 
 import jetpack from 'fs-jetpack'
@@ -14,7 +14,7 @@ function getLocalUrl (...fixturePath) {
 }
 
 describe('Stories handler', () => {
-  let api = null
+  let app = null
   let targetWindow = null
 
   beforeEach(() => {
@@ -23,22 +23,17 @@ describe('Stories handler', () => {
         send: jest.fn()
       }
     }
-    api = configureApi(targetWindow)
+    app = startBackend(targetWindow)
   })
 
   afterEach(() => {
-    api.terminate()
+    app.terminate()
   })
 
-  it('listStories loads list of stories', () => {
-    return api.handleIncomingAction(storyRoutines.list.request()).then(results => {
-      expect(results).toContainEqual(
-        storyRoutines.list.success(expect.objectContaining({
-          driver: 'local',
-          name: 'Manifest Test Module',
-          url: getLocalUrl('manifest')
-        }))
-      )
+  it('listStories returns empty array given story directory does not exist', () => {
+    app.config.paths.stories = getLocalUrl('nonexistent-story-folder')
+    return app.handleIncomingAction(storyRoutines.list.request()).then(results => {
+      expect(results).toContainEqual(storyRoutines.list.success([]))
     })
   })
 })

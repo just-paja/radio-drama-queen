@@ -1,6 +1,6 @@
 const jetpack = require('fs-jetpack')
 
-function readSoundDataUrl (soundData) {
+function readSoundDataUrl (config, soundData) {
   if (!soundData) {
     return Promise.reject(new Error('You must provide sound data'))
   }

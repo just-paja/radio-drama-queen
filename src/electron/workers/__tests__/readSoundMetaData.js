@@ -8,7 +8,7 @@ describe('readSoundMetaData worker', () => {
   })
 
   it('prefers sound cache path over path', () => {
-    return readSoundMetaData({
+    return readSoundMetaData({}, {
       cachePath: jetpack.path(__dirname, 'fixtures', 'id3-v2-title.mp3'),
       path: jetpack.path(__dirname, 'fixtures', 'no-tags.mp3')
     }).then((sound) => {
@@ -18,7 +18,7 @@ describe('readSoundMetaData worker', () => {
 
   describe('with mp3', () => {
     it('returns sound duration', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', '1.044-second.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('duration', 1.044)
@@ -26,7 +26,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns mp3 as sound format', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'format.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('format', 'mp3')
@@ -34,7 +34,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns ID3v1 title tag as sound name', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-v1-title.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('name', 'ID3 v1 Title')
@@ -42,7 +42,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns ID3v2 title tag as sound name given title is truthy', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-mixed-title.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('name', 'ID3 v2 Title')
@@ -50,7 +50,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns ID3v2 title tag as sound name given v1 and v2 titles are truthy', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-v2-title.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('name', 'ID3 v2 Title')
@@ -58,7 +58,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns sound file name as sound name given title is falsy', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'no-tags.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('name', 'no-tags')
@@ -66,7 +66,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns ID3v1 comment tag as sound comment', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-v1-comment.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('tags', [
@@ -77,7 +77,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns ID3v2 comment tag as sound comment', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-v2-comment.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('tags', [
@@ -88,7 +88,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('returns mixed comment tag as comment given v1 and v2 comments are truthy', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-mixed-comment.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('tags', [
@@ -100,7 +100,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('reads TXXX:COMM header for tags', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-v2-txxx-comm-header.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('tags', [
@@ -111,7 +111,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('reads TXXX:TXXX:COMM (duplicated txxx) header for tags', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'id3-v2-txxx-txxx-comm-header.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('tags', [
@@ -122,7 +122,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('treats mp1 files as mp3 codec', () => {
-      return readSoundMetaData({
+      return readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'mp1.mp3')
       }).then((sound) => {
         expect(sound).toHaveProperty('format', 'mp3')
@@ -130,7 +130,7 @@ describe('readSoundMetaData worker', () => {
     })
 
     it('throws error when given blank file', () => {
-      return expect(readSoundMetaData({
+      return expect(readSoundMetaData({}, {
         path: jetpack.path(__dirname, 'fixtures', 'blank-file.mp3')
       })).rejects.toThrow('Unrecognized format')
     })

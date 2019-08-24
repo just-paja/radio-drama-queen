@@ -1,5 +1,5 @@
 export function passPayload (workerName) {
-  return function (action, messenger) {
-    return messenger.workerPool.exec(workerName, [action.payload])
+  return function (app, action) {
+    return app.workOn(workerName, action.payload)
   }
 }

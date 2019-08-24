@@ -1,9 +1,9 @@
 import { moduleRoutines } from '../../soundModules/actions'
 
-export function loadLibrary (action, messenger) {
-  return messenger.workerPool.exec('readLibrary', [action.payload])
+export function loadLibrary (app, action) {
+  return app.workOn('readLibrary', action.payload)
     .then((library) => {
-      messenger.dispatch(moduleRoutines.load.request(library))
+      app.dispatch(moduleRoutines.load.request(library))
       return library
     })
 }

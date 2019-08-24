@@ -6,6 +6,11 @@ import { WorkspaceView } from '..'
 describe('WorkspaceView component', () => {
   it('renders sidebar in board view', () => {
     const comp = renderWithDnd(<WorkspaceView />, {
+      operations: {
+        'WORKSPACE/LOAD': {
+          initialized: true
+        }
+      },
       soundWorkspaces: {
         ui: {
           view: 'VIEW_BOARD'
@@ -24,6 +29,11 @@ describe('WorkspaceView component', () => {
             uuid: 's1'
           }
         ]
+      },
+      operations: {
+        'WORKSPACE/LOAD': {
+          initialized: true
+        }
       },
       soundWorkspaces: {
         ui: {
@@ -47,6 +57,11 @@ describe('WorkspaceView component', () => {
             uuid: 's1'
           }
         ]
+      },
+      operations: {
+        'WORKSPACE/LOAD': {
+          initialized: true
+        }
       },
       soundWorkspaces: {
         ui: {

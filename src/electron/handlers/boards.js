@@ -1,10 +1,9 @@
 import generateUuid from 'uuid/v4'
 
-import { passPayload } from './workerConnection'
 import { boardStore } from '../../soundBoards/store'
 
-export function createBoard(action, messenger) {
-  const boards = boardStore.getAll(messenger.getState())
+export function createBoard (app, action) {
+  const boards = boardStore.getAll(app.getState())
   const maxNumber = boards.reduce((number, board) => {
     const boardNumber = parseInt(board.name.split(' ').pop(), 10)
     return isNaN(boardNumber) || boardNumber < number ? number : boardNumber
@@ -15,10 +14,10 @@ export function createBoard(action, messenger) {
   })
 }
 
-export function renameBoard(action) {
+export function renameBoard (app, action) {
   return Promise.resolve(action.payload)
 }
 
-export function removeBoard(action) {
+export function removeBoard (app, action) {
   return Promise.resolve(action.payload)
 }

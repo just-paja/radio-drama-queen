@@ -5,18 +5,18 @@ const { SoundModule } = require('./SoundModule')
 const { DRIVER_LOCAL, MANIFEST_FILE, moduleIgnore, soundExtensions } = require('./constants')
 
 class LocalModule extends SoundModule {
-  static readLibrary (payload) {
-    return this.readModule({
+  static readLibrary (config, payload) {
+    return this.readModule(config, {
       url: `file://${payload.directory}`
     })
   }
 
-  static readModule (payload) {
-    return (new this(payload)).readContents().then(mod => mod.toJson())
+  static readModule (config, payload) {
+    return (new this(config, payload)).readContents().then(mod => mod.toJson())
   }
 
-  constructor (props) {
-    super(props)
+  constructor (config, props) {
+    super(config, props)
     this.inspectFsNodes = this.inspectFsNodes.bind(this)
     this.readContents = this.readContents.bind(this)
     this.readFiles = this.readFiles.bind(this)

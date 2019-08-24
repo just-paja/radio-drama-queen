@@ -1,10 +1,11 @@
 class SoundModule {
-  constructor ({
+  constructor (config, {
     library = null,
     name = null,
     parent = null,
     url
   }) {
+    this.config = config
     this.library = library
     this.name = name
     this.parent = parent
@@ -31,6 +32,7 @@ class SoundModule {
   }
 }
 
+SoundModule.prototype.config = {}
 SoundModule.prototype.driver = null
 SoundModule.prototype.library = null
 SoundModule.prototype.modules = []

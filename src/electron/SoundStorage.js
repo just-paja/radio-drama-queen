@@ -1,29 +1,21 @@
-const fs = require('fs')
-const hash = require('hash.js')
+const path = require('path')
 const jetpack = require('fs-jetpack')
-const request = require('request')
 
-const {
-  isLocalPath,
-  PATH_CACHE,
-  removeLocalProtocol,
-  splitNameFromExtension
-} = require('./paths')
+const { cacheFile } = require('./jsonCache')
+const { isLocalPath, removeLocalProtocol } = require('./paths')
 
-/**
- * Class responsible for dispatching the sound actions and retaining all the
- * sounds in memory. Each of its public methods returns a promise.
- */
 export class SoundStorage {
-  /**
-   * Returns universal cache path where to save temporary sounds from
-   * the network
-   * @return string
-   */
-  getCachePath (url) {
-    const { extension } = splitNameFromExtension(url)
-    const sum = hash.sha256().update(url).digest('hex')
-    return jetpack.path(PATH_CACHE, `${sum}.${extension}`)
+  constructor (config) {
+    this.config = config
+  }
+
+  getCachePath (soundData) {
+    const fileName = path.basename(soundData.path)
+    const cacheRoot = this.config.paths.cache
+    const libraryDir = this.hashUrl(this.libraryUrl)
+    const modulePath = jetpack.path(...soundData.module.split(soundData.library).join('').split('/'))
+    console.log(jetpack.path(cacheRoot, libraryDir, modulePath, fileName))
+    return jetpack.path(cacheRoot, libraryDir, modulePath, fileName)
   }
 
   /**
@@ -38,52 +30,20 @@ export class SoundStorage {
         cachePath: removeLocalProtocol(soundData.path)
       }))
     }
-
-    const cachePath = this.getCachePath(soundData.path)
-
+    const cachePath = this.getCachePath(soundData)
     if (jetpack.exists(cachePath) === 'file') {
       return Promise.resolve(Object.assign({}, soundData, {
         cachePath
       }))
     }
-
     return this.downloadSound(soundData).then(this.readSoundMetaData)
   }
 
-  /**
-   * Download sound from remote URL into cache path.
-   *
-   * @return Promise Sound metadata with cachePath
-   */
   downloadSound (soundData) {
     const { path } = soundData
-    const cachePath = this.getCachePath(path)
-    return new Promise((resolve, reject) => {
-      let res
-      const stream = fs.createWriteStream(cachePath)
-      const failAndCleanUp = (error) => {
-        stream.close()
-        return jetpack.removeAsync(cachePath)
-          .then(() => reject(error))
-          .catch(reject)
-      }
-      request(path)
-        .on('response', (response) => {
-          res = response
-        })
-        .pipe(stream)
-        .on('finish', () => {
-          if (!res) {
-            failAndCleanUp(new Error(`Did not get any response! ${path}`))
-          } else if (res.statusCode < 200 || res.statusCode > 299) {
-            failAndCleanUp(new Error(`Server returned status code ${res.statusCode}! ${path}`))
-          } else {
-            resolve(Object.assign({}, soundData, {
-              cachePath
-            }))
-          }
-        })
-        .on('error', failAndCleanUp)
-    })
+    const cachePath = this.getCachePath(soundData)
+    return cacheFile(cachePath, path).then(cachePath => Object.assign({}, soundData, {
+      cachePath
+    }))
   }
 }

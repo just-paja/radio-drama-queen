@@ -1,4 +1,4 @@
-import { configureApi } from '..'
+import { startBackend } from '..'
 import { moduleRoutines } from '../../../soundModules/actions'
 
 import jetpack from 'fs-jetpack'
@@ -14,7 +14,7 @@ function getLocalUrl (...fixturePath) {
 }
 
 describe('Module handler', () => {
-  let api = null
+  let app = null
   let targetWindow = null
 
   beforeEach(() => {
@@ -23,16 +23,16 @@ describe('Module handler', () => {
         send: jest.fn()
       }
     }
-    api = configureApi(targetWindow)
+    app = startBackend(targetWindow)
   })
 
   afterEach(() => {
-    api.terminate()
+    app.terminate()
   })
 
   it('loadModule loads module using local driver', () => {
-    jest.spyOn(api, 'dispatch').mockImplementation(() => {})
-    return api.handleIncomingAction(moduleRoutines.load.request({
+    jest.spyOn(app, 'dispatch').mockImplementation(() => {})
+    return app.handleIncomingAction(moduleRoutines.load.request({
       driver: 'local',
       url: getLocalUrl('manifest')
     })).then(results => {

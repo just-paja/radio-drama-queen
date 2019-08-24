@@ -1,11 +1,11 @@
 const { getDriver } = require('../libraries')
 
-function readLibrary (payload) {
-  return getDriver(payload.driver).readLibrary(payload)
+function readLibrary (config, payload) {
+  return getDriver(payload.driver).readLibrary(config, payload)
 }
 
-function readModule (payload) {
-  return getDriver(payload.driver).readModule(payload)
+function readModule (config, payload) {
+  return getDriver(payload.driver).readModule(config, payload)
 }
 
 module.exports = {

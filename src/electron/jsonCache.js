@@ -1,17 +1,7 @@
-const hash = require('hash.js')
 const jetpack = require('fs-jetpack')
 const request = require('request')
 
-const { PATH_CACHE } = require('../electron/paths')
-
-function getCachePath (url) {
-  const sum = hash.sha256().update(url).digest('hex')
-  return jetpack.path(PATH_CACHE, `${sum}.json`)
-}
-
-function cacheFile (url) {
-  const cachePath = getCachePath(url)
-
+function cacheFile (cachePath, url) {
   if (jetpack.exists(cachePath) === 'file') {
     return Promise.resolve(cachePath)
   }
@@ -44,6 +34,5 @@ function cacheFile (url) {
 }
 
 module.exports = {
-  getCachePath,
   cacheFile
 }

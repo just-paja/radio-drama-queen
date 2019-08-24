@@ -11,7 +11,7 @@ function getFixtureUrl (...fixturePath) {
 
 describe('LocalModule driver', () => {
   it('readLibrary reads module as a library', () => {
-    return LocalModule.readLibrary({
+    return LocalModule.readLibrary({}, {
       directory: getFixtureDirectory('flat')
     }).then(soundModule => {
       expect(soundModule).toHaveProperty('name', 'flat')
@@ -19,7 +19,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule returns remote driver', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('flat')
     }).then(soundModule => {
       expect(soundModule).toHaveProperty('driver', 'local')
@@ -27,7 +27,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule returns flat list of sounds', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('flat')
     }).then(soundModule => {
       expect(soundModule).toHaveProperty('sounds', [
@@ -45,7 +45,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule uses directory name given manifest is missing', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('flat')
     }).then(soundModule => {
       expect(soundModule).toHaveProperty('name', 'flat')
@@ -53,7 +53,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule reads module name from manifest', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('manifest')
     }).then(soundModule => {
       expect(soundModule).toHaveProperty('name', 'Manifest Test Module')
@@ -61,7 +61,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule reads list of submodules', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('nested')
     }).then(soundModule => {
       expect(soundModule).toHaveProperty('modules', [
@@ -76,7 +76,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule ignores hidden directories', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('nested')
     }).then(soundModule => {
       expect(soundModule.modules).not.toContain([
@@ -88,7 +88,7 @@ describe('LocalModule driver', () => {
   })
 
   it('readModule ignores node_modules', () => {
-    return LocalModule.readModule({
+    return LocalModule.readModule({}, {
       url: getFixtureUrl('nested')
     }).then(soundModule => {
       expect(soundModule.modules).not.toContain([

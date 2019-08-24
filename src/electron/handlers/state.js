@@ -1,3 +1,3 @@
-export function getState(action, messenger) {
-  return Promise.resolve(messenger.getState())
+export function getState (app, action) {
+  return Promise.resolve(app.getState())
 }

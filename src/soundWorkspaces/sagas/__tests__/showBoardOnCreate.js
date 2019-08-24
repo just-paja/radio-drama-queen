@@ -4,11 +4,6 @@ import boardSagas from '../../../soundBoards/sagas'
 import { getSagaTester } from '../../../mock'
 import { boardRoutines } from '../../../soundBoards'
 
-jest.mock('uuid/v4', () => ({
-  __esModule: true,
-  default: () => 'uuid-test'
-}))
-
 describe('showBoardOnCreate saga', () => {
   afterEach(() => {
     jest.clearAllMocks()
@@ -25,8 +20,9 @@ describe('showBoardOnCreate saga', () => {
     })
     sagaTester.runAll(sagas)
     sagaTester.runAll(boardSagas)
-    sagaTester.dispatch(boardRoutines.create({
-      name: 'foo'
+    sagaTester.dispatch(boardRoutines.create.success({
+      name: 'foo',
+      uuid: 'uuid-test'
     }))
     expect(sagaTester.getState().soundWorkspaces.ui).toMatchObject({
       board: 'uuid-test',

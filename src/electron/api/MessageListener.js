@@ -17,10 +17,10 @@ class MessageListener {
     return this.routine.REQUEST === action.type
   }
 
-  run (action, messenger) {
+  run (app, action) {
     const handleError = this.getErrorHandler(action.payload)
     try {
-      return this.handleRequest(action, messenger)
+      return this.handleRequest(app, action)
         .then(this.routine.success)
         .catch(handleError)
     } catch (error) {

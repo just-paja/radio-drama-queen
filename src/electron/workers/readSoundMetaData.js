@@ -80,7 +80,7 @@ function normalizeTags (metaData) {
     }))), [])
 }
 
-function readSoundMetaData (soundData) {
+function readSoundMetaData (config, soundData) {
   if (!soundData) {
     return Promise.reject(new Error('You must pass some sound data'))
   }

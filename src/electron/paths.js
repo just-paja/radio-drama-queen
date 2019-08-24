@@ -17,10 +17,6 @@ const splitNameFromExtension = (url) => {
 
 const PATH_FALLBACK_ROOT = jetpack.path(__dirname, '..', '..')
 
-const getPath = (...args) => {
-  return jetpack.path(process.env.HOME, '.config', 'radio-drama-queen', ...args)
-}
-
 const getAppPath = (...args) => {
   if (electron && electron.app) {
     return electron.app.getAppPath(...args)
@@ -28,20 +24,14 @@ const getAppPath = (...args) => {
   return PATH_FALLBACK_ROOT
 }
 
-const PATH_CACHE = getPath('Cache')
 const PATH_EXE = getAppPath('exe')
-const PATH_STORIES = getPath('Stories')
 const PATH_ELECTRON = jetpack.path(PATH_EXE, 'src', 'electron')
 const PATH_WORKERS = jetpack.path(PATH_ELECTRON, 'workers')
 
 module.exports = {
-  getAppPath,
-  getPath,
   isLocalPath,
-  PATH_CACHE,
   PATH_EXE,
   PATH_FALLBACK_ROOT,
-  PATH_STORIES,
   PATH_ELECTRON,
   PATH_WORKERS,
   removeLocalProtocol,

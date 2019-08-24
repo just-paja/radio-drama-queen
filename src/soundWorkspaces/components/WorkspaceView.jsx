@@ -22,7 +22,7 @@ const styles = theme => ({
   }
 })
 class WorkspaceViewComponent extends React.PureComponent {
-  componentDidMount() {
+  componentDidMount () {
     this.props.onLoad()
   }
 

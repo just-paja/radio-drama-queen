@@ -2,23 +2,23 @@ import { SoundStorage } from '../SoundStorage'
 
 const generateUuid = require('uuid/v4')
 
-export function soundRegister (action, messenger) {
-  const soundStorage = new SoundStorage()
+export function soundRegister (app, action) {
+  const soundStorage = new SoundStorage(app.config)
   const soundInput = action.payload.uuid ? action.payload : {
     ...action.payload,
     uuid: generateUuid()
   }
   return soundStorage.storeLocally(soundInput)
-    .then(sound => messenger.workerPool.exec('readSoundMetaData', [sound]))
+    .then(sound => app.workOn('readSoundMetaData', sound))
 }
 
-export function soundEdit (action, messenger) {
-  return messenger.workerPool.exec('updateSound', [action.payload])
-    .then(() => messenger.workerPool.exec('readSoundMetaData', [action.payload]))
+export function soundEdit (app, action) {
+  return app.workOn('updateSound', action.payload)
+    .then(() => app.workOn('readSoundMetaData', action.payload))
 }
 
-export function soundRead (action, messenger) {
-  return messenger.workerPool.exec('readSoundDataUrl', [action.payload])
+export function soundRead (app, action) {
+  return app.workOn('readSoundDataUrl', action.payload)
     .then(dataUrl => ({
       dataUrl,
       uuid: action.payload.uuid

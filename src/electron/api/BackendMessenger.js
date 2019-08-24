@@ -2,33 +2,22 @@ const { ipcMain } = require('electron')
 const { MessageListener } = require('./MessageListener')
 
 class BackendMessenger {
-  constructor (targetWindow, store, workerPool, debug) {
-    this.window = targetWindow
-    this.store = store
-    this.workerPool = workerPool
-    this.debug = debug
+  constructor (app) {
+    this.app = app
     this.listeners = []
     this.sendMessage = this.sendMessage.bind(this)
     this.subscribeToIpc()
-  }
-
-  dispatch (action) {
-    this.handleIncomingAction(action)
-  }
-
-  getState() {
-    return this.store.getState()
   }
 
   handleIncomingAction (action) {
     if (action.type.includes('FAILURE')) {
       console.log('in', action.type, JSON.stringify(action))
     }
-    this.store.dispatch(action)
+    this.app.store.dispatch(action)
     return Promise.all(
       this.listeners
         .filter(listener => listener.matchesAction(action))
-        .map(listener => listener.run(action, this))
+        .map(listener => listener.run(this.app, action))
     ).then(results => results.map(this.sendMessage))
   }
 
@@ -40,8 +29,8 @@ class BackendMessenger {
     if (action.type.includes('FAILURE')) {
       console.log('out', action.type, JSON.stringify(action))
     }
-    this.store.dispatch(action)
-    this.window.webContents.send('backendSays', Object.assign({}, action, {
+    this.app.dispatch(action)
+    this.app.mainWindow.webContents.send('backendSays', Object.assign({}, action, {
       timestamp: new Date()
     }))
     return action
@@ -49,10 +38,6 @@ class BackendMessenger {
 
   handleAction (routine, requestHandler) {
     this.listeners.push(new MessageListener(routine, requestHandler))
-  }
-
-  terminate () {
-    this.workerPool.terminate()
   }
 }
 
