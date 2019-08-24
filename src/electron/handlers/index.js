@@ -1,4 +1,5 @@
 export * from './boards'
+export * from './categories'
 export * from './libraries'
 export * from './modules'
 export * from './sounds'

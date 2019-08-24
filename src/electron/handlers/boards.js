@@ -1,13 +1,10 @@
 import generateUuid from 'uuid/v4'
 
 import { boardStore } from '../../soundBoards/store'
+import { getLargestNameNumber } from './naming'
 
 export function createBoard (app, action) {
-  const boards = boardStore.getAll(app.state)
-  const maxNumber = boards.reduce((number, board) => {
-    const boardNumber = parseInt(board.name.split(' ').pop(), 10)
-    return isNaN(boardNumber) || boardNumber < number ? number : boardNumber
-  }, 0)
+  const maxNumber = getLargestNameNumber(boardStore.getAll(app.state))
   return Promise.resolve({
     name: `Board ${maxNumber + 1}`,
     uuid: generateUuid()

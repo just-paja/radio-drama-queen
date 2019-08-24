@@ -1,9 +1,9 @@
 import { all, put, select, takeEvery } from 'redux-saga/effects'
 import { CategoryRenameDialog } from '../components'
-import { closeDialog } from '../../dialogs'
 import { categoryRoutines } from '../actions'
+import { closeDialog } from '../../dialogs'
 import { getSoundCategories, getCategoryPlayingStatus, getCategorySoundUuids } from '../selectors'
-import { reflectRoutine } from '../../sagas/reflect'
+import { passRequest } from '../../ipcActionPipe'
 import { soundRoutines } from '../../sounds'
 
 function * handleCategoryRemove () {
@@ -14,7 +14,6 @@ function * handleCategoryRemove () {
       yield put(categoryRoutines.stop(payload))
     }
     yield all(sounds.map(soundUuid => put(soundRoutines.unload(soundUuid))))
-    yield put(categoryRoutines.remove.success(payload))
   })
 }
 
@@ -31,5 +30,12 @@ export default [
   closeDialog(categoryRoutines.rename, CategoryRenameDialog),
   handleCategoryRemove,
   handleSoundRemove,
-  reflectRoutine(categoryRoutines.rename)
+  passRequest(categoryRoutines.create),
+  passRequest(categoryRoutines.remove),
+  passRequest(categoryRoutines.rename),
+  passRequest(categoryRoutines.toggleExclusive),
+  passRequest(categoryRoutines.toggleLoop),
+  passRequest(categoryRoutines.toggleMute),
+  passRequest(categoryRoutines.setVolume),
+  passRequest(categoryRoutines.unmute)
 ]

@@ -1,8 +1,20 @@
 import { categoryRoutines } from './actions'
 import { createEntityStore } from 'redux-entity-routines'
 import { createSelector } from 'reselect'
-import { changeParam, toggle, turnOff } from 'react-saga-rest'
+import { toggle, turnOff } from 'react-saga-rest'
 import { idCollection } from '../collections'
+
+function updateParam (param) {
+  return function (state, action) {
+    if (state[param] !== action.payload[param]) {
+      return {
+        ...state,
+        [param]: action.payload[param]
+      }
+    }
+    return state
+  }
+}
 
 export const categoryStore = createEntityStore('categories', {
   initialState: {
@@ -11,16 +23,28 @@ export const categoryStore = createEntityStore('categories', {
     path: '',
     volume: 50
   },
-  providedBy: [categoryRoutines.create, categoryRoutines.rename],
+  providedBy: [
+    categoryRoutines.create,
+    categoryRoutines.rename,
+    categoryRoutines.setVolume,
+    categoryRoutines.soundAdd,
+    categoryRoutines.soundRemove,
+    categoryRoutines.toggleExclusive,
+    categoryRoutines.toggleLoop,
+    categoryRoutines.toggleMute,
+    categoryRoutines.unmute
+  ],
   deletedBy: [categoryRoutines.remove],
   on: {
-    [categoryRoutines.setVolume.TRIGGER]: changeParam('volume', 'meta'),
-    [categoryRoutines.soundAdd.TRIGGER]: idCollection.addPayload('sounds', 'sound'),
-    [categoryRoutines.soundRemove.TRIGGER]: idCollection.removePayload('sounds', 'sound'),
-    [categoryRoutines.toggleExclusive.TRIGGER]: toggle('exclusive'),
-    [categoryRoutines.toggleMute.TRIGGER]: toggle('muted'),
-    [categoryRoutines.toggleLoop.SUCCESS]: toggle('loop'),
-    [categoryRoutines.unmute.TRIGGER]: turnOff('muted')
+    [categoryRoutines.setVolume.TRIGGER]: updateParam('volume'),
+    [categoryRoutines.setVolume.REQUEST]: updateParam('volume'),
+    [categoryRoutines.soundAdd.REQUEST]: idCollection.addPayload('sounds', 'sound'),
+    [categoryRoutines.soundRemove.REQUEST]: idCollection.removePayload('sounds', 'sound'),
+    [categoryRoutines.toggleExclusive.REQUEST]: toggle('exclusive'),
+    [categoryRoutines.toggleMute.REQUEST]: toggle('muted'),
+    [categoryRoutines.toggleLoop.REQUEST]: toggle('loop'),
+    [categoryRoutines.rename.REQUEST]: updateParam('name'),
+    [categoryRoutines.unmute.REQUEST]: turnOff('muted')
   }
 })
 

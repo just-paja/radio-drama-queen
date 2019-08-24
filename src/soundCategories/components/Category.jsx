@@ -187,7 +187,6 @@ class CategoryComponent extends React.PureComponent {
       focusableRef,
       isOver,
       name,
-      onSoundPickerOpen,
       sounds,
       uuid
     } = this.props
@@ -209,7 +208,6 @@ class CategoryComponent extends React.PureComponent {
               <CategoryContextMenu
                 boardUuid={boardUuid}
                 uuid={uuid}
-                onSoundPickerOpen={onSoundPickerOpen}
               />
             </div>
             <List className={classes.soundList} dense>
@@ -253,7 +251,6 @@ CategoryComponent.propTypes = {
   focusedSound: PropTypes.string,
   isOver: PropTypes.bool,
   name: PropTypes.string,
-  onSoundPickerOpen: PropTypes.func.isRequired,
   onSoundRemove: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.string).isRequired,

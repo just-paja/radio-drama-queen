@@ -45,7 +45,10 @@ class CategoryControlsComponent extends Component {
   }
 
   handleVolumeChange (value) {
-    this.props.onVolumeChange(this.props.uuid, value)
+    this.props.onVolumeChange({
+      uuid: this.props.uuid,
+      volume: value
+    })
   }
 
   handleMuteToggle () {

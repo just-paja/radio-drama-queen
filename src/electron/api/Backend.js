@@ -3,6 +3,7 @@ const handlers = require('../handlers')
 const jetpack = require('fs-jetpack')
 const workerpool = require('workerpool')
 
+const { categoryRoutines } = require('../../soundCategories/actions')
 const { boardRoutines } = require('../../soundBoards/actions')
 const { configureBackendStore } = require('./store')
 const { libraryRoutines } = require('../../soundLibraries/actions')
@@ -55,6 +56,14 @@ export class Backend {
   }
 
   connectActions () {
+    this.messenger.handleAction(categoryRoutines.create, handlers.createCategory)
+    this.messenger.handleAction(categoryRoutines.remove, handlers.removeCategory)
+    this.messenger.handleAction(categoryRoutines.rename, handlers.renameCategory)
+    this.messenger.handleAction(categoryRoutines.setVolume, handlers.setCategoryVolume)
+    this.messenger.handleAction(categoryRoutines.toggleExclusive, handlers.toggleCategoryExclusive)
+    this.messenger.handleAction(categoryRoutines.toggleLoop, handlers.toggleCategoryLoop)
+    this.messenger.handleAction(categoryRoutines.toggleMute, handlers.toggleCategoryMute)
+    this.messenger.handleAction(categoryRoutines.unmute, handlers.unmuteCategory)
     this.messenger.handleAction(boardRoutines.create, handlers.createBoard)
     this.messenger.handleAction(boardRoutines.remove, handlers.removeBoard)
     this.messenger.handleAction(boardRoutines.rename, handlers.renameBoard)

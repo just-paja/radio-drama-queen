@@ -4,15 +4,13 @@ import { put, select, takeEvery } from 'redux-saga/effects'
 import { soundRoutines } from '../../sounds'
 
 function * handleCategoryLoopToggle () {
-  yield takeEvery(categoryRoutines.toggleLoop.TRIGGER, function * ({ payload: categoryUuid }) {
-    const category = yield select(categoryStore.getObject, categoryUuid)
+  yield takeEvery(categoryRoutines.toggleLoop.SUCCESS, function * ({ payload: { uuid } }) {
+    const category = yield select(categoryStore.getObject, uuid)
     if (category) {
       yield put(category.loop
         ? soundRoutines.loopOff(category.sounds)
         : soundRoutines.loopOn(category.sounds))
-      yield put(categoryRoutines.toggleLoop.success(categoryUuid))
     }
-    yield put(categoryRoutines.toggleLoop.fulfill(categoryUuid))
   })
 }
 
