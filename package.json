@@ -78,7 +78,7 @@
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "create-test-server": "^3.0.1",
-    "electron": "^6.0.3",
+    "electron": "^6.0.4",
     "electron-installer-debian": "^2.0.0",
     "electron-installer-redhat": "^2.0.0",
     "electron-react-devtools": "^0.5.3",
@@ -95,7 +95,7 @@
     "react-test-renderer": "^16.9.0",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
-    "redux-saga-tester": "^1.0.530",
+    "redux-saga-tester": "^1.0.531",
     "standard": "^14.0.2"
   },
   "standard": {
