@@ -90,12 +90,13 @@ describe('CategoryControls component', () => {
     expect(comp.find('SoundCategoryExclusiveButton')).toHaveProp('exclusive', true)
   })
 
-  it('dispatches onLoopToggle when loop button is clicked', () => {
+  it('dispatches loopOn when loop button is clicked', () => {
     const state = {
       entities: {
         categories: [
           {
             exclusive: false,
+            loop: false,
             uuid: 'category-1',
             volume: 0.5
           }
@@ -104,7 +105,25 @@ describe('CategoryControls component', () => {
     }
     const comp = renderWithContainers(<CategoryControls uuid='category-1' />, state)
     comp.find('SoundCategoryLoopButton').simulate('click')
-    expect(comp.store.getActions()).toContainEqual(categoryRoutines.toggleLoop('category-1'))
+    expect(comp.store.getActions()).toContainEqual(categoryRoutines.loopOn('category-1'))
+  })
+
+  it('dispatches loopOff when loop button is clicked', () => {
+    const state = {
+      entities: {
+        categories: [
+          {
+            exclusive: false,
+            loop: true,
+            uuid: 'category-1',
+            volume: 0.5
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<CategoryControls uuid='category-1' />, state)
+    comp.find('SoundCategoryLoopButton').simulate('click')
+    expect(comp.store.getActions()).toContainEqual(categoryRoutines.loopOff('category-1'))
   })
 
   it('dispatches onStop when stop button is clicked', () => {
@@ -145,10 +164,13 @@ describe('CategoryControls component', () => {
     }
     const comp = renderWithContainers(<CategoryControls uuid='category-1' />, state)
     comp.find('VolumeControl').props().onChange(0.75)
-    expect(comp.store.getActions()).toContainEqual(categoryRoutines.setVolume('category-1', 0.75))
+    expect(comp.store.getActions()).toContainEqual(categoryRoutines.setVolume({
+      uuid: 'category-1',
+      volume: 0.75
+    }))
   })
 
-  it('dispatches onMuteToggle when volume gets muted', () => {
+  it('dispatches onMute when volume gets muted', () => {
     const state = {
       entities: {
         categories: [
@@ -162,10 +184,10 @@ describe('CategoryControls component', () => {
     }
     const comp = renderWithContainers(<CategoryControls uuid='category-1' />, state)
     comp.find('VolumeToggleButton').simulate('click')
-    expect(comp.store.getActions()).toContainEqual(categoryRoutines.toggleMute('category-1'))
+    expect(comp.store.getActions()).toContainEqual(categoryRoutines.mute('category-1'))
   })
 
-  it('dispatches onExclusiveToggle when exclusive button is clicked', () => {
+  it('dispatches exclusiveOn when exclusive button is clicked', () => {
     const state = {
       entities: {
         categories: [
@@ -179,6 +201,23 @@ describe('CategoryControls component', () => {
     }
     const comp = renderWithContainers(<CategoryControls uuid='category-1' />, state)
     comp.find('SoundCategoryExclusiveButton').simulate('click')
-    expect(comp.store.getActions()).toContainEqual(categoryRoutines.toggleExclusive('category-1'))
+    expect(comp.store.getActions()).toContainEqual(categoryRoutines.exclusiveOn('category-1'))
+  })
+
+  it('dispatches exclusiveOff when exclusive button is clicked', () => {
+    const state = {
+      entities: {
+        categories: [
+          {
+            exclusive: true,
+            uuid: 'category-1',
+            volume: 0.5
+          }
+        ]
+      }
+    }
+    const comp = renderWithContainers(<CategoryControls uuid='category-1' />, state)
+    comp.find('SoundCategoryExclusiveButton').simulate('click')
+    expect(comp.store.getActions()).toContainEqual(categoryRoutines.exclusiveOff('category-1'))
   })
 })

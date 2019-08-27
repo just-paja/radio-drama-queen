@@ -1,4 +1,3 @@
-import categoryLoopToggle from './categoryLoopToggle'
 import categoryManipulation from './categoryManipulation'
 import categorySoundPlay from './categorySoundPlay'
 import categoryStop from './categoryStop'
@@ -8,7 +7,6 @@ import soundDrop from './soundDrop'
 import soundLoad from './soundLoad'
 
 export default [
-  ...categoryLoopToggle,
   ...categoryManipulation,
   ...categorySoundPlay,
   ...categoryStop,

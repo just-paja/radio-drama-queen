@@ -11,6 +11,14 @@ describe('idCollection reducers', () => {
     expect(result.items).toContain('foo')
   })
 
+  it('addPayload creates collection given it does not exist', () => {
+    const state = {}
+    const result = idCollection.addPayload('items')(state, {
+      payload: 'foo'
+    })
+    expect(result).toHaveProperty('items', ['foo'])
+  })
+
   it('addPayload returns previous state when it already contains payload', () => {
     const state = {
       items: ['foo', 'bar']

@@ -217,7 +217,7 @@ export const SoundAddDialog = boardDialog({
   mapDispatchToProps,
   mergeProps
 })(reduxForm({
-  form: FORM_SOUND_ADD,
+  form: FORM_SOUND_ADD
 })(
   withStyles(styles)(SoundAddDialogComponent)
 ))

@@ -23,6 +23,9 @@ import { withStyles } from '@material-ui/core/styles'
 import {
   getCategoryBoardUuid,
   getCategoryEditStatus,
+  getCategoryExclusiveStatus,
+  getCategoryLoopStatus,
+  getCategoryMutedStatus,
   getCategorySoundUuids
 } from '../selectors'
 
@@ -115,11 +118,11 @@ class CategoryComponent extends React.PureComponent {
       event.preventDefault()
       this.openSoundAddDialog()
     } else if (['e', 'E'].includes(event.key)) {
-      this.props.onExclusiveToggle(this.props.uuid)
+      this.handleExclusiveToggle()
     } else if (['l', 'L'].includes(event.key)) {
-      this.props.onLoopToggle(this.props.uuid)
+      this.handleLoopToggle()
     } else if (['m', 'M'].includes(event.key)) {
-      this.props.onMuteToggle(this.props.uuid)
+      this.handleMuteToggle()
     } else if (['s', 'S'].includes(event.key)) {
       this.props.onStop(this.props.uuid)
     } else if (event.key === '+') {
@@ -127,6 +130,24 @@ class CategoryComponent extends React.PureComponent {
     } else if (event.key === '-') {
       this.decreaseVolume()
     }
+  }
+
+  handleExclusiveToggle () {
+    this.toggle('exclusive', 'onExclusiveOn', 'onExclusiveOff')
+  }
+
+  handleLoopToggle () {
+    this.toggle('loop', 'onLoopOn', 'onLoopOff')
+  }
+
+  handleMuteToggle () {
+    this.toggle('muted', 'onMute', 'onUnmute')
+  }
+
+  toggle (prop, onOn, onOff) {
+    return this.props[prop]
+      ? this.props[onOff](this.props.uuid)
+      : this.props[onOn](this.props.uuid)
   }
 
   handleFocus () {
@@ -268,21 +289,27 @@ const mapStateToProps = (state, { uuid }) => ({
   boardUuid: getCategoryBoardUuid(state, uuid),
   category: categoryStore.getObject(state, uuid),
   edit: getCategoryEditStatus(state, uuid),
+  exclusive: getCategoryExclusiveStatus(state, uuid),
+  loop: getCategoryLoopStatus(state, uuid),
+  muted: getCategoryMutedStatus(state, uuid),
   name: getCategoryName(state, uuid),
   sounds: getCategorySoundUuids(state, uuid)
 })
 
 const mapDispatchToProps = {
   onDrop: categoryRoutines.soundDrop,
-  onExclusiveToggle: categoryRoutines.toggleExclusive,
+  onExclusiveOff: categoryRoutines.exclusiveOff,
+  onExclusiveOn: categoryRoutines.exclusiveOn,
   onFocus: categoryRoutines.focus,
-  onLoopToggle: categoryRoutines.toggleLoop,
-  onMuteToggle: categoryRoutines.toggleMute,
+  onLoopOff: categoryRoutines.loopOff,
+  onLoopOn: categoryRoutines.loopOn,
+  onMute: categoryRoutines.mute,
+  onRemove: categoryRoutines.remove,
   onSoundAdd: SoundAddDialog.open,
   onSoundFocus: soundRoutines.focus,
   onSoundRemove: categoryRoutines.soundRemove,
   onStop: categoryRoutines.stop,
-  onRemove: categoryRoutines.remove,
+  onUnmute: categoryRoutines.unmute,
   onVolumeChange: categoryRoutines.setVolume
 }
 

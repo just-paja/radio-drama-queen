@@ -18,11 +18,13 @@ function returnCategory (app, action) {
 }
 
 export const addSoundToCategory = returnCategory
+export const categoryExclusiveOff = returnCategory
+export const categoryExclusiveOn = returnCategory
+export const categoryLoopOff = returnCategory
+export const categoryLoopOn = returnCategory
+export const muteCategory = returnCategory
 export const removeCategory = returnCategory
 export const removeSoundFromCategory = returnCategory
 export const renameCategory = returnCategory
 export const setCategoryVolume = returnCategory
-export const toggleCategoryExclusive = returnCategory
-export const toggleCategoryLoop = returnCategory
-export const toggleCategoryMute = returnCategory
 export const unmuteCategory = returnCategory

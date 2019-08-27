@@ -1,15 +1,11 @@
-export const addPayload = (collectionName, path) => (state, action) => {
-  const value = path ? action.payload[path] : action.payload
-  if (state[collectionName].indexOf(value) !== -1) {
-    return state
+export function addPayload (collectionName, path) {
+  return function (state, action) {
+    const value = path ? action.payload[path] : action.payload
+    const source = state[collectionName] || []
+    return source.indexOf(value) === -1
+      ? Object.assign({}, state, { [collectionName]: source.concat(value) })
+      : state
   }
-  return ({
-    ...state,
-    [collectionName]: [
-      ...state[collectionName],
-      value
-    ]
-  })
 }
 
 export const removePayload = (collectionName, path) => (state, action) => {

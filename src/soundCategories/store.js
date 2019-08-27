@@ -1,8 +1,8 @@
 import { categoryRoutines } from './actions'
 import { createEntityStore } from 'redux-entity-routines'
 import { createSelector } from 'reselect'
-import { toggle, turnOff } from 'react-saga-rest'
 import { idCollection } from '../collections'
+import { turnOn, turnOff } from 'react-saga-rest'
 
 function updateParam (param) {
   return function (state, action) {
@@ -25,25 +25,29 @@ export const categoryStore = createEntityStore('categories', {
   },
   providedBy: [
     categoryRoutines.create,
+    categoryRoutines.exclusiveOff,
+    categoryRoutines.exclusiveOn,
+    categoryRoutines.loopOff,
+    categoryRoutines.loopOn,
+    categoryRoutines.mute,
     categoryRoutines.rename,
     categoryRoutines.setVolume,
     categoryRoutines.soundAdd,
     categoryRoutines.soundRemove,
-    categoryRoutines.toggleExclusive,
-    categoryRoutines.toggleLoop,
-    categoryRoutines.toggleMute,
     categoryRoutines.unmute
   ],
   deletedBy: [categoryRoutines.remove],
   on: {
-    [categoryRoutines.setVolume.TRIGGER]: updateParam('volume'),
+    [categoryRoutines.exclusiveOff.REQUEST]: turnOff('exclusive'),
+    [categoryRoutines.exclusiveOn.REQUEST]: turnOn('exclusive'),
+    [categoryRoutines.loopOff.REQUEST]: turnOff('loop'),
+    [categoryRoutines.loopOn.REQUEST]: turnOn('loop'),
+    [categoryRoutines.mute.REQUEST]: turnOn('muted'),
+    [categoryRoutines.rename.REQUEST]: updateParam('name'),
     [categoryRoutines.setVolume.REQUEST]: updateParam('volume'),
+    [categoryRoutines.setVolume.TRIGGER]: updateParam('volume'),
     [categoryRoutines.soundAdd.REQUEST]: idCollection.addPayload('sounds', 'sound'),
     [categoryRoutines.soundRemove.REQUEST]: idCollection.removePayload('sounds', 'sound'),
-    [categoryRoutines.toggleExclusive.REQUEST]: toggle('exclusive'),
-    [categoryRoutines.toggleMute.REQUEST]: toggle('muted'),
-    [categoryRoutines.toggleLoop.REQUEST]: toggle('loop'),
-    [categoryRoutines.rename.REQUEST]: updateParam('name'),
     [categoryRoutines.unmute.REQUEST]: turnOff('muted')
   }
 })

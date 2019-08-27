@@ -10,11 +10,15 @@ function * setCategorySoundsVolume (category, volume) {
   }
 }
 
-function * handleCategoryMuteToggle () {
-  yield takeEvery(categoryRoutines.toggleMute.SUCCESS, function * ({ payload: { uuid } }) {
-    const muted = yield select(getCategoryMutedStatus, uuid)
-    const volume = muted ? 0 : yield select(getCategoryVolume, uuid)
-    yield call(setCategorySoundsVolume, uuid, volume)
+function * handleCategoryMute () {
+  yield takeEvery(categoryRoutines.mute.SUCCESS, function * ({ payload: { uuid } }) {
+    yield call(setCategorySoundsVolume, uuid, 0)
+  })
+}
+
+function * handleCategoryUnmute () {
+  yield takeEvery(categoryRoutines.unmute.SUCCESS, function * ({ payload: { uuid } }) {
+    yield call(setCategorySoundsVolume, uuid, yield select(getCategoryVolume, uuid))
   })
 }
 
@@ -29,5 +33,6 @@ function * handleCategoryVolumeChange () {
 
 export default [
   handleCategoryVolumeChange,
-  handleCategoryMuteToggle
+  handleCategoryMute,
+  handleCategoryUnmute
 ]

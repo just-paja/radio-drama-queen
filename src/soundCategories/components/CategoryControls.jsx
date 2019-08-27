@@ -36,10 +36,6 @@ class CategoryControlsComponent extends Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this)
   }
 
-  handleLoopToggle () {
-    this.props.onLoopToggle(this.props.uuid)
-  }
-
   handleStop () {
     this.props.onStop(this.props.uuid)
   }
@@ -51,12 +47,22 @@ class CategoryControlsComponent extends Component {
     })
   }
 
+  toggle (prop, onOn, onOff) {
+    return this.props[prop]
+      ? this.props[onOff](this.props.uuid)
+      : this.props[onOn](this.props.uuid)
+  }
+
+  handleLoopToggle () {
+    this.toggle('loop', 'onLoopOn', 'onLoopOff')
+  }
+
   handleMuteToggle () {
-    this.props.onMuteToggle(this.props.uuid)
+    this.toggle('muted', 'onMute', 'onUnmute')
   }
 
   handleExclusiveToggle () {
-    this.props.onExclusiveToggle(this.props.uuid)
+    this.toggle('exclusive', 'onExclusiveOn', 'onExclusiveOff')
   }
 
   render () {
@@ -89,10 +95,13 @@ CategoryControlsComponent.propTypes = {
   exclusive: PropTypes.bool,
   loop: PropTypes.bool,
   muted: PropTypes.bool,
-  onExclusiveToggle: PropTypes.func.isRequired,
-  onLoopToggle: PropTypes.func.isRequired,
-  onMuteToggle: PropTypes.func.isRequired,
+  onExclusiveOff: PropTypes.func.isRequired,
+  onExclusiveOn: PropTypes.func.isRequired,
+  onLoopOff: PropTypes.func.isRequired,
+  onLoopOn: PropTypes.func.isRequired,
+  onMute: PropTypes.func.isRequired,
   onStop: PropTypes.func.isRequired,
+  onUnmute: PropTypes.func.isRequired,
   onVolumeChange: PropTypes.func.isRequired,
   playing: PropTypes.bool,
   uuid: PropTypes.string.isRequired,
@@ -115,10 +124,13 @@ const mapStateToProps = (state, { uuid }) => ({
 })
 
 const mapDispatchToProps = {
-  onExclusiveToggle: categoryRoutines.toggleExclusive,
-  onLoopToggle: categoryRoutines.toggleLoop,
-  onMuteToggle: categoryRoutines.toggleMute,
+  onExclusiveOff: categoryRoutines.exclusiveOff,
+  onExclusiveOn: categoryRoutines.exclusiveOn,
+  onLoopOff: categoryRoutines.loopOff,
+  onLoopOn: categoryRoutines.loopOn,
+  onMute: categoryRoutines.mute,
   onStop: categoryRoutines.stop,
+  onUnmute: categoryRoutines.unmute,
   onVolumeChange: categoryRoutines.setVolume
 }
 
