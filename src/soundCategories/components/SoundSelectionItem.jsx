@@ -60,7 +60,7 @@ class SoundSelectionItemComponent extends React.PureComponent {
     if (event.key === ' ') {
       preventEventBubbling(event)
       this.handleSelect()
-    } if (['a', 'A', 'Enter'].includes(event.key)) {
+    } if (['a', 'A'].includes(event.key)) {
       preventEventBubbling(event)
       this.handleAdd()
     }

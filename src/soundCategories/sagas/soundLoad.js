@@ -1,18 +1,30 @@
 import { categoryRoutines } from '../actions'
 import { getSoundCategories } from '../selectors'
-import { call, put, select, takeEvery } from '@redux-saga/core/effects'
+import { all, call, put, select, takeEvery } from '@redux-saga/core/effects'
 import { soundRoutines, soundStore } from '../../sounds'
 import { categoryStore } from '../store'
 
-function * handleSoundAdd () {
-  yield takeEvery(categoryRoutines.soundAdd.TRIGGER, function * ({ payload: { uuid, sound } }) {
-    const soundObj = yield select(soundStore.getObject, sound)
-    if (soundObj.valid) {
-      yield call(useCategorySettings, uuid, sound)
+function acceptArray (saga) {
+  return function * (action) {
+    if (action.payload instanceof Array) {
+      yield all(action.payload.map(payload => call(saga, { ...action, payload })))
     } else {
-      yield put(soundRoutines.load(sound))
+      yield call(saga, action)
     }
-  })
+  }
+}
+
+function * handleSoundAdd () {
+  yield takeEvery(categoryRoutines.soundAdd.REQUEST, acceptArray(addSound))
+}
+
+function * addSound ({ payload: { uuid, sound } }) {
+  const soundObj = yield select(soundStore.getObject, sound)
+  if (soundObj && soundObj.valid) {
+    yield call(useCategorySettings, uuid, sound)
+  } else {
+    yield put(soundRoutines.load(sound))
+  }
 }
 
 function * useCategorySettings (categoryUuid, soundUuid) {

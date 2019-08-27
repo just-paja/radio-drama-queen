@@ -10,6 +10,7 @@ export function boardDialog ({
   fullScreen,
   mapDispatchToProps,
   mapStateToProps,
+  mergeProps,
   title,
   ...directProps
 }) {
@@ -56,7 +57,11 @@ export function boardDialog ({
       onClose: closeDialog
     }
 
-    const DialogComponent = connect(mapInnerStateToProps, mapInnerDispatchToProps)(BoardDialog)
+    const DialogComponent = connect(
+      mapInnerStateToProps,
+      mapInnerDispatchToProps,
+      mergeProps
+    )(BoardDialog)
     DialogComponent.close = closeDialog
     DialogComponent.open = openDialog
     return DialogComponent

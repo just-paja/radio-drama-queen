@@ -184,7 +184,29 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = {
   addToBoard: boardRoutines.soundAdd,
-  addToCategory: categoryRoutines.soundAdd
+  addToCategory: categoryRoutines.soundAdd,
+  onSubmit: categoryRoutines.soundAdd
+}
+
+function submitSoundList (focusedCategory, onSubmit) {
+  return function (values) {
+    console.log(values)
+    if (values && values.sounds && values.sounds.length) {
+      return onSubmit(values.sounds.map(sound => ({
+        uuid: focusedCategory,
+        sound
+      })))
+    }
+  }
+}
+
+function mergeProps (stateProps, dispatchProps, ownProps) {
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    onSubmit: submitSoundList(ownProps.focusedCategory, dispatchProps.onSubmit)
+  }
 }
 
 export const SoundAddDialog = boardDialog({
@@ -193,9 +215,9 @@ export const SoundAddDialog = boardDialog({
   submitLabel: 'Add sound',
   mapStateToProps,
   mapDispatchToProps,
-  onSubmit: values => categoryRoutines.soundAdd(values.sounds)
+  mergeProps
 })(reduxForm({
-  form: FORM_SOUND_ADD
+  form: FORM_SOUND_ADD,
 })(
   withStyles(styles)(SoundAddDialogComponent)
 ))
