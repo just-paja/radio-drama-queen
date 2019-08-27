@@ -17,7 +17,9 @@ function returnCategory (app, action) {
   return Promise.resolve(categoryStore.getObject(app.state, action.payload.uuid || action.payload))
 }
 
+export const addSoundToCategory = returnCategory
 export const removeCategory = returnCategory
+export const removeSoundFromCategory = returnCategory
 export const renameCategory = returnCategory
 export const setCategoryVolume = returnCategory
 export const toggleCategoryExclusive = returnCategory

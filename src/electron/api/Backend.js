@@ -56,17 +56,19 @@ export class Backend {
   }
 
   connectActions () {
+    this.messenger.handleAction(boardRoutines.create, handlers.createBoard)
+    this.messenger.handleAction(boardRoutines.remove, handlers.removeBoard)
+    this.messenger.handleAction(boardRoutines.rename, handlers.renameBoard)
     this.messenger.handleAction(categoryRoutines.create, handlers.createCategory)
     this.messenger.handleAction(categoryRoutines.remove, handlers.removeCategory)
     this.messenger.handleAction(categoryRoutines.rename, handlers.renameCategory)
     this.messenger.handleAction(categoryRoutines.setVolume, handlers.setCategoryVolume)
+    this.messenger.handleAction(categoryRoutines.soundAdd, handlers.addSoundToCategory)
+    this.messenger.handleAction(categoryRoutines.soundRemove, handlers.removeSoundFromCategory)
     this.messenger.handleAction(categoryRoutines.toggleExclusive, handlers.toggleCategoryExclusive)
     this.messenger.handleAction(categoryRoutines.toggleLoop, handlers.toggleCategoryLoop)
     this.messenger.handleAction(categoryRoutines.toggleMute, handlers.toggleCategoryMute)
     this.messenger.handleAction(categoryRoutines.unmute, handlers.unmuteCategory)
-    this.messenger.handleAction(boardRoutines.create, handlers.createBoard)
-    this.messenger.handleAction(boardRoutines.remove, handlers.removeBoard)
-    this.messenger.handleAction(boardRoutines.rename, handlers.renameBoard)
     this.messenger.handleAction(libraryRoutines.load, handlers.loadLibrary)
     this.messenger.handleAction(moduleRoutines.load, handlers.loadModule)
     this.messenger.handleAction(soundRoutines.edit, handlers.soundEdit)

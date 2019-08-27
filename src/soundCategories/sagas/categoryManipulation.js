@@ -33,9 +33,11 @@ export default [
   passRequest(categoryRoutines.create),
   passRequest(categoryRoutines.remove),
   passRequest(categoryRoutines.rename),
+  passRequest(categoryRoutines.setVolume),
+  passRequest(categoryRoutines.soundAdd),
+  passRequest(categoryRoutines.soundRemove),
   passRequest(categoryRoutines.toggleExclusive),
   passRequest(categoryRoutines.toggleLoop),
   passRequest(categoryRoutines.toggleMute),
-  passRequest(categoryRoutines.setVolume),
   passRequest(categoryRoutines.unmute)
 ]

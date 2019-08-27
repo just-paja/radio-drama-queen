@@ -9,6 +9,8 @@ function * playAndForget ({ payload: soundUuid }) {
   if (sound) {
     if (sound.playing) {
       yield put(soundRoutines.stop(soundUuid))
+    } else if (sound.valid) {
+      yield put(soundRoutines.play(soundUuid))
     } else {
       yield put(soundRoutines.load(soundUuid))
       yield take(matchSoundLoadFinish(soundRoutines.load, soundUuid))
