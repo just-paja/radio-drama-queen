@@ -5,10 +5,7 @@ import { getBoardTargetCategory } from '../selectors'
 
 function * handleBoardCategoryCreate () {
   yield takeEvery(boardRoutines.createCategory.TRIGGER, function * ({ payload: board }) {
-    return yield put(categoryRoutines.create({
-      name: 'Unnamed',
-      board
-    }))
+    return yield put(categoryRoutines.create({ board }))
   })
 }
 
