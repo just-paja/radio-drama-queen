@@ -24,16 +24,22 @@ export const splitSearchPatterns = search => clearSearch(search)
   .filter(filterNonEmpty)
   .filter(filterUnique)
 
+function getRelevance (sample, searchPatterns, inclusive) {
+  const results = searchPatterns.map((pattern, patternIndex, array) => {
+    const searchIndex = sample.search(pattern)
+    const resultIndexScore = Math.sign(searchIndex) * (searchPatterns.length - patternIndex)
+    const substrIndexScore = searchIndex >= 0 ? sample.length - searchIndex : 0
+    return Math.max(0, resultIndexScore + substrIndexScore)
+  })
+  return (inclusive || results.every(num => num > 0))
+    ? results.reduce((aggr, num) => aggr + num)
+    : 0
+}
+
 export const stringSearch = (sample, search, inclusive = false) => {
-  const cleanSearch = splitSearchPatterns(search)
-  const cleanSample = remove(sample.toLowerCase())
-  const results = cleanSearch.map(pattern => cleanSample.search(pattern))
-  const searchResult = {
-    relevant: inclusive
-      ? results.some(item => item !== -1)
-      : results.every(item => item !== -1),
-    results,
-    searchSamples: cleanSearch
-  }
-  return searchResult
+  return getRelevance(
+    remove(sample.toLowerCase()),
+    splitSearchPatterns(search),
+    inclusive
+  )
 }
