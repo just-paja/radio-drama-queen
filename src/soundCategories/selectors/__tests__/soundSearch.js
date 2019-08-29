@@ -5,6 +5,34 @@ describe('soundSearch selectors', () => {
     return { soundAdd: { values: { filter } } }
   }
 
+  it('getFilteredSounds skips already used in a category', () => {
+    const state = {
+      form: mockFilterValue('horse'),
+      entities: {
+        categories: [
+          {
+            uuid: 'category-1',
+            sounds: ['sound-1']
+          }
+        ],
+        tags: [],
+        sounds: [
+          {
+            uuid: 'sound-1',
+            name: 'Horse snort',
+            tags: []
+          },
+          {
+            uuid: 'sound-2',
+            name: 'Dog bark',
+            tags: []
+          }
+        ]
+      }
+    }
+    expect(getFilteredSounds(state)).toEqual([])
+  })
+
   it('getFilteredSounds skips sounds not matching one word search', () => {
     const state = {
       form: mockFilterValue('cat'),
