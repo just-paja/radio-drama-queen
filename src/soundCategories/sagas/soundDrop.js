@@ -13,10 +13,13 @@ function * handleCategorySoundDrop () {
         uuid: category.uuid,
         sound: dropItem.uuid
       }))
-      yield all(soundCategories.map(soundCategory => put(categoryRoutines.soundRemove({
-        uuid: soundCategory.uuid,
-        sound: dropItem.uuid
-      }))))
+      yield all(soundCategories
+        .filter(soundCategory => soundCategory.uuid !== category.uuid)
+        .map(soundCategory => put(categoryRoutines.soundRemove({
+          uuid: soundCategory.uuid,
+          sound: dropItem.uuid
+        })))
+      )
     }
   })
 }
