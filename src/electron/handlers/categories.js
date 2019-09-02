@@ -27,8 +27,8 @@ export function addSoundToCategory (app, action) {
   return app.getPlaybackWindow(action.payload.uuid)
     .soundAdd(sound.cachePath)
     .then(response => ({
-      ...response.payload,
-      cachePath: sound.cachePath
+      uuid: action.payload.uuid,
+      sound: sound.uuid
     }))
 }
 

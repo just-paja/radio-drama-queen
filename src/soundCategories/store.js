@@ -32,7 +32,6 @@ export const categoryStore = createEntityStore('categories', {
     categoryRoutines.mute,
     categoryRoutines.rename,
     categoryRoutines.setVolume,
-    categoryRoutines.soundAdd,
     categoryRoutines.soundRemove,
     categoryRoutines.unmute
   ],

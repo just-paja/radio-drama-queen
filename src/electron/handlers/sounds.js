@@ -1,4 +1,5 @@
 import { SoundStorage } from '../SoundStorage'
+import { soundStore } from '../../sounds/store'
 
 const generateUuid = require('uuid/v4')
 
@@ -23,4 +24,15 @@ export function soundRead (app, action) {
       dataUrl,
       uuid: action.payload.uuid
     }))
+}
+
+export function soundPlay (app, action) {
+  const sound = soundStore.getObject(app.state, action.payload)
+  const cachePath = sound.cachePath
+  return Promise.all(
+    Object.keys(app.playbackWindows)
+      .map(categoryUuid => app.playbackWindows[categoryUuid])
+      .filter(window => window.hasSound(cachePath))
+      .map(window => window.soundPlay(cachePath))
+  )
 }

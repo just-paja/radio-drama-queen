@@ -5,7 +5,7 @@ const generateUuid = require('uuid/v4')
 
 const WINDOW_CONFIG = {
   height: 1,
-  // show: false,
+  show: false,
   title: 'Radio Drama Queen playback',
   width: 1,
   webPreferences: {
@@ -26,6 +26,10 @@ export class PlaybackWindow {
     this.window = null
   }
 
+  hasSound (cachePath) {
+    return this.sounds.indexOf(cachePath) !== -1
+  }
+
   openWindow () {
     this.window = new BrowserWindow(WINDOW_CONFIG)
     this.window.removeMenu()
@@ -33,7 +37,7 @@ export class PlaybackWindow {
       // eslint-disable-next-line no-undef
       .loadURL(PLAYBACK_WINDOW_WEBPACK_ENTRY)
       .then(() => {
-        this.window.webContents.openDevTools()
+        // this.window.webContents.openDevTools()
         this.listen()
         return this.request(playbackRoutines.setCategoryUuid, { category: this.categoryUuid })
       })

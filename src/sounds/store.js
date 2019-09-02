@@ -37,9 +37,9 @@ export const soundStore = createEntityStore('sounds', {
     [soundRoutines.load.FAILURE]: fetchFailure,
     [soundRoutines.load.FULFILL]: turnOff('loading')
   },
-  collectionRoutines: {
+  collectionReducers: {
     [categoryRoutines.soundAdd.SUCCESS]: (state, action) => {
-      const soundIndex = state.find(item => item.cachePath === action.payload.cachePath)
+      const soundIndex = state.findIndex(item => item.uuid === action.payload.sound)
       if (soundIndex !== -1) {
         const sound = state[soundIndex]
         const nextState = state.slice()
@@ -49,7 +49,7 @@ export const soundStore = createEntityStore('sounds', {
       return state
     },
     [categoryRoutines.soundAdd.FULFILL]: (state, action) => {
-      const soundIndex = state.find(item => item.cachePath === action.payload.uuid)
+      const soundIndex = state.findIndex(item => item.uuid === action.payload.sound)
       if (soundIndex !== -1) {
         const sound = state[soundIndex]
         const nextState = state.slice()
@@ -59,7 +59,7 @@ export const soundStore = createEntityStore('sounds', {
       return state
     },
     [categoryRoutines.soundAdd.REQUEST]: (state, action) => {
-      const soundIndex = state.find(item => item.uuid === action.payload.sound)
+      const soundIndex = state.findIndex(item => item.uuid === action.payload.sound)
       if (soundIndex !== -1) {
         const sound = state[soundIndex]
         const nextState = state.slice()
