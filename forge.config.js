@@ -86,6 +86,11 @@ module.exports = {
               html: './src/index.html',
               js: './src/index.js',
               name: 'main_window'
+            },
+            {
+              html: './src/playback/index.html',
+              js: './src/playback/index.js',
+              name: 'playback_window'
             }
           ]
         }

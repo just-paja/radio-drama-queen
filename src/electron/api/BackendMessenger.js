@@ -36,7 +36,7 @@ class BackendMessenger {
     return action
   }
 
-  handleAction (routine, requestHandler) {
+  handleRequest (routine, requestHandler) {
     this.listeners.push(new MessageListener(routine, requestHandler))
   }
 }

@@ -4,7 +4,6 @@ import categoryStop from './categoryStop'
 import categoryTagAdd from './categoryTagAdd'
 import categoryVolume from './categoryVolume'
 import soundDrop from './soundDrop'
-import soundLoad from './soundLoad'
 
 export default [
   ...categoryManipulation,
@@ -12,6 +11,5 @@ export default [
   ...categoryStop,
   ...categoryTagAdd,
   ...categoryVolume,
-  ...soundDrop,
-  ...soundLoad
+  ...soundDrop
 ]

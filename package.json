@@ -32,6 +32,7 @@
     "jsonschema": "^1.2.4",
     "music-metadata": "^4.3.1",
     "path-dirname": "^1.0.2",
+    "pizzicato": "^0.6.4",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dnd": "^7.6.0",

@@ -3,21 +3,23 @@ const handlers = require('../handlers')
 const jetpack = require('fs-jetpack')
 const workerpool = require('workerpool')
 
-const { categoryRoutines } = require('../../soundCategories/actions')
 const { boardRoutines } = require('../../soundBoards/actions')
+const { categoryRoutines } = require('../../soundCategories/actions')
 const { configureBackendStore } = require('./store')
 const { libraryRoutines } = require('../../soundLibraries/actions')
 const { moduleRoutines } = require('../../soundModules/actions')
 const { PATH_WORKERS } = require('../paths')
+const { PlaybackWindow } = require('./PlaybackWindow')
 const { soundRoutines } = require('../../sounds/actions')
 const { storyRoutines } = require('../../soundStories/actions')
 const { workspaceRoutines } = require('../../soundWorkspaces/actions')
 
 export class Backend {
   constructor (mainWindow, development) {
-    this.mainWindow = mainWindow
-    this.development = development
     this.config = {}
+    this.development = development
+    this.mainWindow = mainWindow
+    this.playbackWindows = {}
   }
 
   get state () {
@@ -83,6 +85,20 @@ export class Backend {
     this.messenger.handleAction(storyRoutines.rename, handlers.renameStory)
     this.messenger.handleAction(storyRoutines.save, handlers.saveStory)
     this.messenger.handleAction(workspaceRoutines.load, handlers.getState)
+  }
+
+  createPlaybackWindow (category) {
+    this.playbackWindows[category] = new PlaybackWindow(this, category)
+    return this.playbackWindows[category].openWindow()
+  }
+
+  getPlaybackWindow (category) {
+    return this.playbackWindows[category]
+  }
+
+  removePlaybackWindow (category) {
+    this.playbackWindows[category].closeWindow()
+    this.playbackWindows[category] = null
   }
 
   dispatch (action) {
