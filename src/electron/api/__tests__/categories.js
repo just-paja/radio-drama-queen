@@ -1,22 +1,16 @@
 import { startBackend } from '..'
 import { categoryRoutines } from '../../../soundCategories/actions'
+import { BrowserWindow } from 'electron'
 
-jest.mock('electron', () => ({
-  ipcMain: {
-    on: jest.fn()
-  }
-}))
+jest.mock('electron', () => require('../../../mock/electron'))
 
 describe('Categories handler', () => {
   let app = null
   let targetWindow = null
 
   beforeEach(() => {
-    targetWindow = {
-      webContents: {
-        send: jest.fn()
-      }
-    }
+    global.PLAYBACK_WINDOW_WEBPACK_ENTRY = '/'
+    targetWindow = new BrowserWindow()
     app = startBackend(targetWindow)
   })
 
@@ -24,7 +18,7 @@ describe('Categories handler', () => {
     app.terminate()
   })
 
-  it('createCategory creates new category', () => {
+  it.only('createCategory creates new category', () => {
     return app.handleIncomingAction(categoryRoutines.create.request()).then(results => {
       expect(app.state).toHaveProperty('entities.categories', [
         expect.objectContaining({

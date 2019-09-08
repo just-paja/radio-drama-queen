@@ -2,82 +2,106 @@ import { Group, Sound } from 'pizzicato'
 import { ipcRenderer } from 'electron'
 import { playbackRoutines } from './actions'
 
-let category = null
-const group = new Group()
-const requestHandlers = {}
-const sounds = {}
+export class CategoryPlayer {
+  category = null
+  group = new Group()
+  requestHandlers = {}
+  sounds = {}
 
-function send (action) {
-  return ipcRenderer.send('playbackSays', action)
-}
-
-function handleRequest (routine, handler) {
-  requestHandlers[routine.REQUEST] = function (action) {
-    return handler(action)
-      .then(payload => send(routine.success({ ...payload, category })))
-      .catch(error => send(routine.failure(action.payload, error)))
+  constructor () {
+    this.listen()
   }
-}
 
-function requireSound (handler) {
-  return function (action) {
+  createSoundFromUrl (dataUrl) {
+    let pizziSound
     return new Promise((resolve, reject) => {
-      const sound = sounds[action.payload.cachePath]
-      if (sound) {
-        return handler(action, sound)
+      pizziSound = new Sound(dataUrl, (error) => {
+        if (error) {
+          reject(error)
+        }
+        resolve()
+      })
+    }).then(() => pizziSound)
+  }
+
+  listen () {
+    ipcRenderer.on('backendSays', (event, action) => {
+      if (this.requestHandlers[action.type]) {
+        this.requestHandlers[action.type](action)
       }
-      return Promise.reject(new Error(`Sound "${action.payload}" does not exist`))
     })
   }
+
+  send (action) {
+    return ipcRenderer.send('playbackSays', action)
+  }
+
+  handleRequest (routine, handler) {
+    this.requestHandlers[routine.REQUEST] = (action) => {
+      return handler.call(this, action)
+        .then(payload => this.send(routine.success({ ...payload, category: this.category })))
+        .catch(error => this.send(routine.failure(action.payload, error)))
+    }
+  }
 }
 
-handleRequest(playbackRoutines.soundAdd, action => new Promise((resolve, reject) => {
-  const pizziSound = new Sound(action.payload.dataUrl, (error) => {
-    if (error) {
-      return reject(error)
-    }
-    sounds[action.payload.cachePath] = pizziSound
-    group.addSound(pizziSound)
-    return resolve(action.payload.cachePath)
-  })
-}))
-
-handleRequest(playbackRoutines.setCategoryUuid, (action) => {
-  category = action.payload.category
-  return Promise.resolve(action.payload)
-})
-
-handleRequest(playbackRoutines.setVolume, (action) => {
-  group.volume = action.payload.volume
-  return Promise.resolve(action.payload)
-})
-
-handleRequest(playbackRoutines.soundPlay, requireSound((action, sound) => {
-  sound.play()
-  return Promise.resolve(action.payload)
-}))
-
-handleRequest(playbackRoutines.soundRemove, requireSound((action, sound) => {
-  sound.stop()
-  group.removeSound(sound)
-  return Promise.resolve(action.payload)
-}))
-
-handleRequest(playbackRoutines.soundStop, requireSound((action, sound) => {
-  sound.stop()
-  return Promise.resolve(action.payload)
-}))
-
-handleRequest(playbackRoutines.categoryStop, requireSound((action, sound) => {
-  group.stop()
-  return Promise.resolve(action.payload)
-}))
-
 export function startPlayer () {
-  send({ type: 'loaded' })
-  ipcRenderer.on('backendSays', (event, action) => {
-    if (requestHandlers[action.type]) {
-      requestHandlers[action.type](action)
+  function requireSound (handler) {
+    return function (action) {
+      return new Promise((resolve, reject) => {
+        const sound = this.sounds[action.payload.cachePath]
+        if (sound) {
+          return handler(action, sound)
+        }
+        return Promise.reject(new Error(`Sound "${action.payload}" does not exist`))
+      })
+    }
+  }
+
+  const player = new CategoryPlayer()
+
+  player.handleRequest(playbackRoutines.soundAdd, function (action) {
+    try {
+      return this.createSoundFromUrl(action.payload.dataUrl).then((sound) => {
+        this.sounds[action.payload.cachePath] = sound
+        this.group.addSound(sound)
+        return action.payload.cachePath
+      })
+    } catch (e) {
+      return Promise.reject(e)
     }
   })
+
+  player.handleRequest(playbackRoutines.setCategoryUuid, function (action) {
+    this.category = action.payload.category
+    return Promise.resolve(action.payload)
+  })
+
+  player.handleRequest(playbackRoutines.setVolume, function (action) {
+    this.group.volume = action.payload.volume
+    return Promise.resolve(action.payload)
+  })
+
+  player.handleRequest(playbackRoutines.soundPlay, requireSound(function (action, sound) {
+    this.sound.play()
+    return Promise.resolve(action.payload)
+  }))
+
+  player.handleRequest(playbackRoutines.soundRemove, requireSound(function (action, sound) {
+    this.sound.stop()
+    this.group.removeSound(sound)
+    return Promise.resolve(action.payload)
+  }))
+
+  player.handleRequest(playbackRoutines.soundStop, requireSound(function (action, sound) {
+    this.sound.stop()
+    return Promise.resolve(action.payload)
+  }))
+
+  player.handleRequest(playbackRoutines.categoryStop, requireSound(function (action, sound) {
+    this.group.stop()
+    return Promise.resolve(action.payload)
+  }))
+
+  return player
 }
