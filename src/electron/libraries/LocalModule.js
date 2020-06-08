@@ -2,7 +2,12 @@ const jetpack = require('fs-jetpack')
 const path = require('path')
 
 const { SoundModule } = require('./SoundModule')
-const { DRIVER_LOCAL, MANIFEST_FILE, moduleIgnore, soundExtensions } = require('./constants')
+const {
+  DRIVER_LOCAL,
+  MANIFEST_FILE,
+  moduleIgnore,
+  soundExtensions
+} = require('./constants')
 
 class LocalModule extends SoundModule {
   static readLibrary (config, payload) {
@@ -12,7 +17,7 @@ class LocalModule extends SoundModule {
   }
 
   static readModule (config, payload) {
-    return (new this(config, payload)).readContents().then(mod => mod.toJson())
+    return new this(config, payload).readContents().then(mod => mod.toJson())
   }
 
   constructor (config, props) {
@@ -50,21 +55,21 @@ class LocalModule extends SoundModule {
 
   inspectFsNodes (nodes) {
     return Promise.all(
-      nodes.map(node => jetpack.inspectAsync(jetpack.path(this.directory, node)))
+      nodes.map(node =>
+        jetpack.inspectAsync(jetpack.path(this.directory, node))
+      )
     )
   }
 
   readContents () {
-    return Promise.all([
-      this.readManifest(),
-      this.readFiles()
-    ]).then(() => this)
+    return Promise.all([this.readManifest(), this.readFiles()]).then(() => this)
   }
 
   readFiles () {
-    return jetpack.listAsync(this.directory)
+    return jetpack
+      .listAsync(this.directory)
       .then(this.inspectFsNodes)
-      .then((fileList) => {
+      .then(fileList => {
         this.readModules(fileList)
         this.readSounds(fileList)
         return this
@@ -72,20 +77,18 @@ class LocalModule extends SoundModule {
   }
 
   readModules (fileList) {
-    this.modules = fileList
-      .filter(this.filterModuleDirectory)
-      .map((item) => ({
-        driver: this.driver,
-        library: this.library || this.url,
-        parent: this.url,
-        url: `file://${jetpack.path(this.directory, item.name)}`
-      }))
+    this.modules = fileList.filter(this.filterModuleDirectory).map(item => ({
+      driver: this.driver,
+      library: this.library || this.url,
+      parent: this.url,
+      url: `file://${jetpack.path(this.directory, item.name)}`
+    }))
   }
 
   readSounds (fileList) {
     this.sounds = fileList
       .filter(item => item && item.type === 'file' && this.isSound(item.name))
-      .map((item) => ({
+      .map(item => ({
         library: this.library ? this.library : this.url,
         module: this.url,
         name: item.name,

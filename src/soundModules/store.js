@@ -9,6 +9,16 @@ export const moduleStore = createEntityStore('modules', {
     name: null,
     url: null
   },
+  belongsTo: [
+    {
+      collection: 'libraries',
+      attr: 'library'
+    },
+    {
+      collection: 'modules',
+      attr: 'parent'
+    }
+  ],
   providedBy: [moduleRoutines.load, moduleRoutines.register],
   on: {
     [moduleRoutines.load.FAILURE]: fetchFailure,

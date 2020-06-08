@@ -5,7 +5,7 @@ const isLocalPath = path => path.indexOf('file:') === 0
 
 const removeLocalProtocol = path => path.substr(7)
 
-const splitNameFromExtension = (url) => {
+const splitNameFromExtension = url => {
   const fileParts = url.split('/')
   const fileName = fileParts[fileParts.length - 1]
   const fileNameParts = fileName.split('.')
@@ -26,7 +26,7 @@ const getAppPath = (...args) => {
 
 const PATH_EXE = getAppPath('exe')
 const PATH_ELECTRON = jetpack.path(PATH_EXE, 'src', 'electron')
-const PATH_WORKERS = jetpack.path(PATH_ELECTRON, 'workers')
+const PATH_WORKERS = jetpack.path(PATH_ELECTRON, 'workers', 'index.js')
 
 module.exports = {
   isLocalPath,

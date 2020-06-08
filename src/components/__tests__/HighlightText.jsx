@@ -63,7 +63,7 @@ describe('HighlightText component', () => {
     expect(comp).toIncludeText('Starting Skoda 120')
   })
 
-  it.only('wraps all "a"s in span', () => {
+  it('wraps all "a"s in span', () => {
     const comp = mount(
       <HighlightText
         text='Starting Skoda 120'

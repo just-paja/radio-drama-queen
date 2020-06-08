@@ -1,4 +1,4 @@
-const serializeError = require('serialize-error')
+const { serializeError } = require('serialize-error')
 
 class MessageListener {
   constructor (routine, handleRequest) {
@@ -6,25 +6,19 @@ class MessageListener {
     this.routine = routine
   }
 
-  getErrorHandler (payload) {
-    return error => this.routine.failure(
-      payload,
-      error instanceof Error ? serializeError(error) : error
-    )
+  handleError (error, payload) {
+    return this.routine.failure(serializeError(error), payload)
   }
 
   matchesAction (action) {
     return this.routine.REQUEST === action.type
   }
 
-  run (app, action) {
-    const handleError = this.getErrorHandler(action.payload)
+  async run (app, action) {
     try {
-      return this.handleRequest(app, action)
-        .then(this.routine.success)
-        .catch(handleError)
+      return this.routine.success(await this.handleRequest(app, action))
     } catch (error) {
-      return Promise.resolve(handleError(error))
+      return this.handleError(error, action.payload)
     }
   }
 }

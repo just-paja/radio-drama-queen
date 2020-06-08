@@ -1,23 +1,15 @@
-import soundEdit from './soundEdit'
-import soundLoad from './soundLoad'
-import soundPlay from './soundPlay'
-import soundRegister from './soundRegister'
-import soundStop from './soundStop'
-import soundStopAll from './soundStopAll'
-import soundToggle from './soundToggle'
-import soundUnload from './soundUnload'
-import soundVolumeChange from './soundVolumeChange'
+import { closeDialog } from '../../dialogs'
+import { passRequest } from '../../ipcActionPipe'
+import { SoundEditDialog } from '../components'
+import { soundRoutines } from '../actions'
 
-export * from './soundLoad'
+import soundToggle from './soundToggle'
 
 export default [
-  ...soundEdit,
-  ...soundLoad,
-  ...soundPlay,
-  ...soundRegister,
-  ...soundStop,
-  ...soundStopAll,
-  ...soundToggle,
-  ...soundUnload,
-  ...soundVolumeChange
+  closeDialog(soundRoutines.edit, SoundEditDialog),
+  passRequest(soundRoutines.edit),
+  passRequest(soundRoutines.play),
+  passRequest(soundRoutines.stop),
+  passRequest(soundRoutines.stopAll),
+  ...soundToggle
 ]

@@ -15,11 +15,12 @@ export class CategoryPlayer {
   createSoundFromUrl (dataUrl) {
     let pizziSound
     return new Promise((resolve, reject) => {
-      pizziSound = new Sound(dataUrl, (error) => {
+      pizziSound = new Sound(dataUrl, error => {
         if (error) {
           reject(error)
+        } else {
+          resolve()
         }
-        resolve()
       })
     }).then(() => pizziSound)
   }
@@ -37,71 +38,91 @@ export class CategoryPlayer {
   }
 
   handleRequest (routine, handler) {
-    this.requestHandlers[routine.REQUEST] = (action) => {
-      return handler.call(this, action)
-        .then(payload => this.send(routine.success({ ...payload, category: this.category })))
-        .catch(error => this.send(routine.failure(action.payload, error)))
+    this.requestHandlers[routine.REQUEST] = async action => {
+      try {
+        const payload = await handler.call(this, action)
+        return this.send(
+          routine.success({ ...payload, category: this.category })
+        )
+      } catch (error) {
+        return this.send(routine.failure(error, action.payload))
+      }
     }
   }
 }
 
 export function startPlayer () {
   function requireSound (handler) {
-    return function (action) {
-      return new Promise((resolve, reject) => {
+    return async function (action) {
+      if (action.payload) {
         const sound = this.sounds[action.payload.cachePath]
         if (sound) {
-          return handler(action, sound)
+          return await handler.call(this, action, sound)
         }
-        return Promise.reject(new Error(`Sound "${action.payload}" does not exist`))
-      })
+        throw new Error(`Sound "${action.payload.cachePath}" does not exist`)
+      }
     }
   }
 
   const player = new CategoryPlayer()
 
-  player.handleRequest(playbackRoutines.soundAdd, function (action) {
-    try {
-      return this.createSoundFromUrl(action.payload.dataUrl).then((sound) => {
-        this.sounds[action.payload.cachePath] = sound
-        this.group.addSound(sound)
-        return action.payload.cachePath
-      })
-    } catch (e) {
-      return Promise.reject(e)
-    }
+  player.handleRequest(playbackRoutines.soundAdd, async function (action) {
+    const sound = await this.createSoundFromUrl(action.payload.dataUrl)
+    this.sounds[action.payload.cachePath] = sound
+    this.group.addSound(sound)
+    return action.payload
   })
 
-  player.handleRequest(playbackRoutines.setCategoryUuid, function (action) {
+  player.handleRequest(playbackRoutines.setCategoryUuid, async function (
+    action
+  ) {
     this.category = action.payload.category
-    return Promise.resolve(action.payload)
+    return action.payload
   })
 
-  player.handleRequest(playbackRoutines.setVolume, function (action) {
+  player.handleRequest(playbackRoutines.setVolume, async function (action) {
     this.group.volume = action.payload.volume
-    return Promise.resolve(action.payload)
+    return action.payload
   })
 
-  player.handleRequest(playbackRoutines.soundPlay, requireSound(function (action, sound) {
-    this.sound.play()
-    return Promise.resolve(action.payload)
-  }))
+  player.handleRequest(
+    playbackRoutines.soundPlay,
+    requireSound(async function (action, sound) {
+      sound.play()
+      return action.payload
+    })
+  )
 
-  player.handleRequest(playbackRoutines.soundRemove, requireSound(function (action, sound) {
-    this.sound.stop()
-    this.group.removeSound(sound)
-    return Promise.resolve(action.payload)
-  }))
+  player.handleRequest(
+    playbackRoutines.soundRemove,
+    requireSound(async function soundRemove (action, sound) {
+      sound.stop()
+      this.group.removeSound(sound)
+      this.sounds = Object.entries(this.sounds)
+        .filter(([key, value]) => key !== action.payload.cachePath)
+        .reduce(
+          (acc, [key, value]) => ({
+            ...acc,
+            [key]: value
+          }),
+          {}
+        )
+      return action.payload
+    })
+  )
 
-  player.handleRequest(playbackRoutines.soundStop, requireSound(function (action, sound) {
-    this.sound.stop()
-    return Promise.resolve(action.payload)
-  }))
+  player.handleRequest(
+    playbackRoutines.soundStop,
+    requireSound(async function (action, sound) {
+      sound.stop()
+      return action.payload
+    })
+  )
 
-  player.handleRequest(playbackRoutines.categoryStop, requireSound(function (action, sound) {
+  player.handleRequest(playbackRoutines.categoryStop, async function (action) {
     this.group.stop()
-    return Promise.resolve(action.payload)
-  }))
+    return action.payload
+  })
 
   return player
 }

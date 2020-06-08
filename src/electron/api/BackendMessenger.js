@@ -9,20 +9,24 @@ class BackendMessenger {
     this.subscribeToIpc()
   }
 
-  handleIncomingAction (action) {
+  async handleIncomingAction (action) {
     if (action.type.includes('FAILURE')) {
       console.log('in', action.type, JSON.stringify(action))
     }
     this.app.store.dispatch(action)
-    return Promise.all(
-      this.listeners
-        .filter(listener => listener.matchesAction(action))
-        .map(listener => listener.run(this.app, action))
-    ).then(results => results.map(this.sendMessage))
+    const matchingListeners = this.listeners.filter(listener =>
+      listener.matchesAction(action)
+    )
+    const results = await Promise.all(
+      matchingListeners.map(listener => listener.run(this.app, action))
+    )
+    return results.map(this.sendMessage)
   }
 
   subscribeToIpc () {
-    ipcMain.on('frontendSays', (event, action) => this.handleIncomingAction(action))
+    ipcMain.on('frontendSays', (event, action) =>
+      this.handleIncomingAction(action)
+    )
   }
 
   sendMessage (action) {
@@ -30,9 +34,12 @@ class BackendMessenger {
       console.log('out', action.type, JSON.stringify(action))
     }
     this.app.dispatch(action)
-    this.app.mainWindow.webContents.send('backendSays', Object.assign({}, action, {
-      timestamp: new Date()
-    }))
+    this.app.mainWindow.webContents.send(
+      'backendSays',
+      Object.assign({}, action, {
+        timestamp: new Date()
+      })
+    )
     return action
   }
 

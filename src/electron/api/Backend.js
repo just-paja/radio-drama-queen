@@ -58,34 +58,44 @@ export class Backend {
   }
 
   connectActions () {
-    this.messenger.handleRequest(boardRoutines.create, handlers.createBoard)
-    this.messenger.handleRequest(boardRoutines.remove, handlers.removeBoard)
-    this.messenger.handleRequest(boardRoutines.rename, handlers.renameBoard)
-    this.messenger.handleRequest(categoryRoutines.create, handlers.createCategory)
-    this.messenger.handleRequest(categoryRoutines.exclusiveOff, handlers.categoryExclusiveOff)
-    this.messenger.handleRequest(categoryRoutines.exclusiveOn, handlers.categoryExclusiveOn)
-    this.messenger.handleRequest(categoryRoutines.loopOff, handlers.categoryLoopOff)
-    this.messenger.handleRequest(categoryRoutines.loopOn, handlers.categoryLoopOn)
-    this.messenger.handleRequest(categoryRoutines.mute, handlers.muteCategory)
-    this.messenger.handleRequest(categoryRoutines.remove, handlers.removeCategory)
-    this.messenger.handleRequest(categoryRoutines.rename, handlers.renameCategory)
-    this.messenger.handleRequest(categoryRoutines.setVolume, handlers.setCategoryVolume)
-    this.messenger.handleRequest(categoryRoutines.soundAdd, handlers.addSoundToCategory)
-    this.messenger.handleRequest(categoryRoutines.soundRemove, handlers.removeSoundFromCategory)
-    this.messenger.handleRequest(categoryRoutines.unmute, handlers.unmuteCategory)
-    this.messenger.handleRequest(libraryRoutines.load, handlers.loadLibrary)
-    this.messenger.handleRequest(moduleRoutines.load, handlers.loadModule)
-    this.messenger.handleRequest(soundRoutines.edit, handlers.soundEdit)
-    this.messenger.handleRequest(soundRoutines.play, handlers.soundPlay)
-    this.messenger.handleRequest(soundRoutines.read, handlers.soundRead)
-    this.messenger.handleRequest(soundRoutines.register, handlers.soundRegister)
-    this.messenger.handleRequest(storyRoutines.create, handlers.saveStory)
-    this.messenger.handleRequest(storyRoutines.list, handlers.listStories)
-    this.messenger.handleRequest(storyRoutines.load, handlers.loadStory)
-    this.messenger.handleRequest(storyRoutines.remove, handlers.removeStory)
-    this.messenger.handleRequest(storyRoutines.rename, handlers.renameStory)
-    this.messenger.handleRequest(storyRoutines.save, handlers.saveStory)
-    this.messenger.handleRequest(workspaceRoutines.load, handlers.getState)
+    const msg = this.messenger
+    msg.handleRequest(boardRoutines.create, handlers.createBoard)
+    msg.handleRequest(boardRoutines.remove, handlers.removeBoard)
+    msg.handleRequest(boardRoutines.rename, handlers.renameBoard)
+    msg.handleRequest(categoryRoutines.create, handlers.createCategory)
+    msg.handleRequest(
+      categoryRoutines.exclusiveOff,
+      handlers.categoryExclusiveOff
+    )
+    msg.handleRequest(
+      categoryRoutines.exclusiveOn,
+      handlers.categoryExclusiveOn
+    )
+    msg.handleRequest(categoryRoutines.loopOff, handlers.categoryLoopOff)
+    msg.handleRequest(categoryRoutines.loopOn, handlers.categoryLoopOn)
+    msg.handleRequest(categoryRoutines.mute, handlers.muteCategory)
+    msg.handleRequest(categoryRoutines.remove, handlers.removeCategory)
+    msg.handleRequest(categoryRoutines.rename, handlers.renameCategory)
+    msg.handleRequest(categoryRoutines.setVolume, handlers.setCategoryVolume)
+    msg.handleRequest(categoryRoutines.soundAdd, handlers.addSoundToCategory)
+    msg.handleRequest(
+      categoryRoutines.soundRemove,
+      handlers.removeSoundFromCategory
+    )
+    msg.handleRequest(categoryRoutines.unmute, handlers.unmuteCategory)
+    msg.handleRequest(libraryRoutines.load, handlers.loadLibrary)
+    msg.handleRequest(moduleRoutines.load, handlers.loadModule)
+    msg.handleRequest(soundRoutines.edit, handlers.soundEdit)
+    msg.handleRequest(soundRoutines.play, handlers.soundPlay)
+    msg.handleRequest(soundRoutines.read, handlers.soundRead)
+    msg.handleRequest(soundRoutines.register, handlers.soundRegister)
+    msg.handleRequest(storyRoutines.create, handlers.saveStory)
+    msg.handleRequest(storyRoutines.list, handlers.listStories)
+    msg.handleRequest(storyRoutines.load, handlers.loadStory)
+    msg.handleRequest(storyRoutines.remove, handlers.removeStory)
+    msg.handleRequest(storyRoutines.rename, handlers.renameStory)
+    msg.handleRequest(storyRoutines.save, handlers.saveStory)
+    msg.handleRequest(workspaceRoutines.load, handlers.getState)
   }
 
   createPlaybackWindow (category) {
@@ -112,7 +122,7 @@ export class Backend {
 
   terminate () {
     this.workerPool.terminate()
-    Object.keys(this.playbackWindows).forEach((categoryUuid) => {
+    Object.keys(this.playbackWindows).forEach(categoryUuid => {
       if (this.playbackWindows[categoryUuid]) {
         this.playbackWindows[categoryUuid].closeWindow()
         this.playbackWindows[categoryUuid] = null

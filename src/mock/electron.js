@@ -5,19 +5,17 @@ class PubSub {
     this.handlers.push(resolve)
   }
 
-  send (channel, ...args) {
-    console.log('SEND', channel, args, this.handlers)
-    this.handlers.forEach((handler) => {
-      handler(...args)
-    })
+  async send (channel, ...args) {
+    // console.log('SEND', channel, args, this.handlers)
+    for (const handler of this.handlers) {
+      await handler(...args)
+    }
   }
 }
 
-class WebContents extends PubSub {
-}
+class WebContents extends PubSub {}
 
-class IPC extends PubSub {
-}
+class IPC extends PubSub {}
 
 module.exports = {
   ipcMain: new IPC(),

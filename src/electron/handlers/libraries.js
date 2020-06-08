@@ -1,9 +1,7 @@
 import { moduleRoutines } from '../../soundModules/actions'
 
-export function loadLibrary (app, action) {
-  return app.workOn('readLibrary', action.payload)
-    .then((library) => {
-      app.dispatch(moduleRoutines.load.request(library))
-      return library
-    })
+export async function loadLibrary (app, action) {
+  const library = await app.workOn('readLibrary', action.payload)
+  app.dispatch(moduleRoutines.load.request(library))
+  return library
 }

@@ -32,17 +32,23 @@ describe('Module handler', () => {
 
   it('loadModule loads module using local driver', () => {
     jest.spyOn(app, 'dispatch').mockImplementation(() => {})
-    return app.handleIncomingAction(moduleRoutines.load.request({
-      driver: 'local',
-      url: getLocalUrl('manifest')
-    })).then(results => {
-      expect(results).toContainEqual(
-        moduleRoutines.load.success(expect.objectContaining({
+    return app
+      .handleIncomingAction(
+        moduleRoutines.load.request({
           driver: 'local',
-          name: 'Manifest Test Module',
           url: getLocalUrl('manifest')
-        }))
+        })
       )
-    })
+      .then(results => {
+        expect(results).toContainEqual(
+          moduleRoutines.load.success(
+            expect.objectContaining({
+              driver: 'local',
+              name: 'Manifest Test Module',
+              url: getLocalUrl('manifest')
+            })
+          )
+        )
+      })
   })
 })

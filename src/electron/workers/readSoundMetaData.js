@@ -12,11 +12,13 @@ function filterUnique (item, index, src) {
   return src.indexOf(item) === index
 }
 
+const mp3Codecs = ['mp1', 'mpeg 1 layer 1', 'mpeg 1 layer 3']
+
 function normalizeFormat (formatStr) {
   if (!formatStr) {
     throw new Error('Unrecognized format')
   }
-  if (formatStr === 'MP1') {
+  if (mp3Codecs.includes(formatStr.toLowerCase())) {
     return 'mp3'
   }
   if (formatStr.indexOf('vorbis') !== -1) {
@@ -34,13 +36,16 @@ function normalizeName (soundData, metaData) {
 }
 
 function normalizeLanguage (header) {
-  if (!header || !header.value || !header.value.language || header.value.language === 'XXX') {
+  if (
+    !header ||
+    !header.value ||
+    !header.value.language ||
+    header.value.language === 'XXX'
+  ) {
     return 'eng'
   }
   const lang = header.value.language.toLowerCase()
-  return iso639.getName(lang)
-    ? lang
-    : 'eng'
+  return iso639.getName(lang) ? lang : 'eng'
 }
 
 function normalizeHeaderValue (header) {
@@ -52,32 +57,45 @@ function normalizeHeaderValue (header) {
   return ''
 }
 
-const COMMENT_TAGS = ['COMM', 'TXXX', 'TXXX:COMM', 'comment', 'TIT1']
+const COMMENT_TAGS = [
+  'COMM',
+  'COMM:COMM',
+  'COMM:TXXX:COMM',
+  'TXXX',
+  'TXXX:COMM',
+  'comment',
+  'TIT1'
+]
 
 function normalizeTags (metaData) {
-  const languageTags = Object
-    .keys(metaData.native)
+  const languageTags = Object.values(metaData.native)
     .reduce(
-      (acc, version) => acc.concat(metaData.native[version]
-        .filter(header => COMMENT_TAGS.indexOf(header.id) !== -1))
-      , []
-    ).reduce((acc, header) => {
+      (acc, headers) =>
+        acc.concat(headers.filter(header => COMMENT_TAGS.includes(header.id))),
+      []
+    )
+    .reduce((acc, header) => {
       const value = normalizeHeaderValue(header)
       const language = normalizeLanguage(header)
       return {
         ...acc,
-        [language]: [
-          ...(acc[language] || []),
-          ...value.split(',')
-        ].map(str => str.trim()).filter(filterNonEmpty).filter(filterUnique)
+        [language]: [...(acc[language] || []), ...value.split(',')]
+          .map(str => str.trim())
+          .filter(filterNonEmpty)
+          .filter(filterUnique)
       }
     }, {})
-  return Object.keys(languageTags)
-    .reduce((acc, language) => acc.concat(languageTags[language].map((tagStr) => ({
-      language,
-      name: `${remove(tagStr).toLowerCase()}-${language}`,
-      title: tagStr
-    }))), [])
+  return Object.keys(languageTags).reduce(
+    (acc, language) =>
+      acc.concat(
+        languageTags[language].map(tagStr => ({
+          language,
+          name: `${remove(tagStr).toLowerCase()}-${language}`,
+          title: tagStr
+        }))
+      ),
+    []
+  )
 }
 
 function readSoundMetaData (config, soundData) {
@@ -85,18 +103,20 @@ function readSoundMetaData (config, soundData) {
     return Promise.reject(new Error('You must pass some sound data'))
   }
 
-  return musicMetadata.parseFile(soundData.cachePath || soundData.path, {
-    native: true,
-    skipCovers: true
-  }).then(function (data) {
-    return {
-      ...soundData,
-      duration: data.format.duration,
-      format: normalizeFormat(data.format.codec),
-      name: normalizeName(soundData, data),
-      tags: normalizeTags(data)
-    }
-  })
+  return musicMetadata
+    .parseFile(soundData.cachePath || soundData.path, {
+      native: true,
+      skipCovers: true
+    })
+    .then(function (data) {
+      return {
+        ...soundData,
+        duration: data.format.duration,
+        format: normalizeFormat(data.format.codec),
+        name: normalizeName(soundData, data),
+        tags: normalizeTags(data)
+      }
+    })
 }
 
 module.exports = {

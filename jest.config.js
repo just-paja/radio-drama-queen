@@ -10,32 +10,24 @@ module.exports = {
     {
       displayName: 'lint',
       runner: 'jest-runner-standard',
-      testMatch: [
-        '<rootDir>/**/*.{js,jsx}'
-      ],
+      testMatch: ['<rootDir>/**/*.{js,jsx}'],
       testPathIgnorePatterns: ignore
     },
     {
       displayName: 'app',
-      setupFiles: [
-        '<rootDir>/jest.setup.js'
-      ],
-      setupFilesAfterEnv: [
-        'jest-enzyme/lib/index.js'
-      ],
+      setupFiles: ['<rootDir>/jest.setup.js'],
+      setupFilesAfterEnv: ['jest-enzyme/lib/index.js'],
       testPathIgnorePatterns: ignore,
-      coveragePathIgnorePatterns: [
-        ...ignore,
-        '/constants/',
-        '/mock/'
-      ],
+      coveragePathIgnorePatterns: [...ignore, '/constants/', '/mock/'],
       transform: {
         '^.+\\.(js|jsx)$': 'babel-jest'
       }
     }
   ],
-  collectCoverageFrom: [
-    'src/**/*.{js,jsx}'
-  ],
-  watchPlugins: ['jest-watch-select-projects']
+  collectCoverageFrom: ['src/**/*.{js,jsx}'],
+  watchPlugins: [
+    'jest-watch-select-projects',
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname'
+  ]
 }

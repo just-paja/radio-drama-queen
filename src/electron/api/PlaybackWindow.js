@@ -30,17 +30,17 @@ export class PlaybackWindow {
     return this.sounds.indexOf(cachePath) !== -1
   }
 
-  openWindow () {
+  async openWindow () {
     this.window = new BrowserWindow(WINDOW_CONFIG)
     this.window.removeMenu()
-    return this.window
+    await this.window
       // eslint-disable-next-line no-undef
       .loadURL(PLAYBACK_WINDOW_WEBPACK_ENTRY)
-      .then(() => {
-        // this.window.webContents.openDevTools()
-        this.listen()
-        return this.request(playbackRoutines.setCategoryUuid, { category: this.categoryUuid })
-      })
+    // this.window.webContents.openDevTools()
+    this.listen()
+    return {
+      category: this.categoryUuid
+    }
   }
 
   handleIncomingAction (action) {
@@ -54,13 +54,18 @@ export class PlaybackWindow {
   }
 
   listen () {
-    this.window.webContents.on('ipc-message', (event, channel, action) => this.handleIncomingAction(action))
+    this.window.webContents.on('ipc-message', (event, channel, action) =>
+      this.handleIncomingAction(action)
+    )
   }
 
   request (routine, payload) {
     const operation = generateUuid()
-    this.window.webContents.send('backendSays', routine.request({ ...payload, operation }))
-    return this.waitFor(operation).then((result) => {
+    this.window.webContents.send(
+      'backendSays',
+      routine.request({ ...payload, operation })
+    )
+    return this.waitFor(operation).then(result => {
       if (result.type === routine.FAILURE) {
         throw routine.payload
       }
@@ -69,7 +74,7 @@ export class PlaybackWindow {
   }
 
   waitFor (operation) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.queue = this.queue.concat([{ operation, resolve }])
     })
   }
@@ -95,7 +100,7 @@ export class PlaybackWindow {
   }
 
   soundAdd (cachePath) {
-    return this.app.workOn('readSoundDataUrl', { cachePath }).then((dataUrl) => {
+    return this.app.workOn('readSoundDataUrl', { cachePath }).then(dataUrl => {
       this.sounds = this.sounds.concat([cachePath])
       this.request(playbackRoutines.soundAdd, {
         cachePath,

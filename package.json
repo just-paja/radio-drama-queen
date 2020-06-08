@@ -53,11 +53,11 @@
     "redux-saga-restart": "^1.0.0",
     "request": "^2.88.2",
     "reselect": "^4.0.0",
-    "serialize-error": "^4.1.0",
+    "serialize-error": "^7.0.1",
     "tmp-promise": "^2.0.2",
     "url-parse": "^1.4.7",
     "uuid": "^3.3.3",
-    "workerpool": "^4.0.0"
+    "workerpool": "^6.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.1",
@@ -90,8 +90,10 @@
     "jest-enzyme": "^7.1.2",
     "jest-runner-standard": "0.0.13",
     "jest-watch-select-projects": "^0.1.2",
+    "jest-watch-typeahead": "^0.6.0",
     "node-abi": "^2.18.0",
     "node-loader": "^0.6.0",
+    "prettier-standard": "^16.3.0",
     "react-dnd-test-backend": "^7.6.0",
     "react-test-renderer": "^16.9.0",
     "redux-logger": "^3.0.6",

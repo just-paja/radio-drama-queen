@@ -4,27 +4,29 @@ import { soundStore } from '../../sounds/store'
 import { categoryStore } from '../../soundCategories/store'
 import { getLargestNameNumber } from './naming'
 
-export function createCategory (app, action) {
+export async function createCategory (app, action) {
   const uuid = generateUuid()
-  return app.createPlaybackWindow(uuid).then(() => {
-    const maxNumber = getLargestNameNumber(categoryStore.getAll(app.state))
-    return Promise.resolve({
-      name: `Unnamed ${maxNumber + 1}`,
-      sounds: [],
-      uuid,
-      ...action.payload
-    })
+  await app.createPlaybackWindow(uuid)
+  const maxNumber = getLargestNameNumber(categoryStore.getAll(app.state))
+  return Promise.resolve({
+    name: `Unnamed ${maxNumber + 1}`,
+    sounds: [],
+    uuid,
+    ...action.payload
   })
 }
 
 function returnCategory (app, action) {
-  return Promise.resolve(categoryStore.getObject(app.state, action.payload.uuid || action.payload))
+  return Promise.resolve(
+    categoryStore.getObject(app.state, action.payload.uuid || action.payload)
+  )
 }
 
 export function addSoundToCategory (app, action) {
   // TODO: Sound add should switch to use cachePath instead of uuid
   const sound = soundStore.getObject(app.state, action.payload.sound)
-  return app.getPlaybackWindow(action.payload.uuid)
+  return app
+    .getPlaybackWindow(action.payload.uuid)
     .soundAdd(sound.cachePath)
     .then(response => ({
       uuid: action.payload.uuid,
