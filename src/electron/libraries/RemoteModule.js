@@ -1,4 +1,4 @@
-const hash = require('hash.js')
+const crypto = require('crypto')
 const jetpack = require('fs-jetpack')
 const path = require('path')
 
@@ -12,7 +12,7 @@ class RemoteModule extends SoundModule {
   }
 
   static readModule (config, payload) {
-    return (new this(config, payload)).readContents().then(mod => mod.toJson())
+    return new this(config, payload).readContents().then(mod => mod.toJson())
   }
 
   get baseName () {
@@ -25,7 +25,12 @@ class RemoteModule extends SoundModule {
 
   get cacheDir () {
     const modulePath = this.parent
-      ? jetpack.path(...this.url.split(this.libraryUrl).join('').split('/'))
+      ? jetpack.path(
+          ...this.url
+            .split(this.libraryUrl)
+            .join('')
+            .split('/')
+        )
       : ''
     const libraryDir = this.hashUrl(this.libraryUrl)
     return jetpack.path(this.config.paths.cache, libraryDir, modulePath)
@@ -36,19 +41,23 @@ class RemoteModule extends SoundModule {
   }
 
   hashUrl (dirName) {
-    return hash.sha256().update(dirName).digest('hex')
+    return crypto
+      .createHash('md5')
+      .update(dirName)
+      .digest('hex')
   }
 
-  readContents () {
-    return jetpack.dirAsync(this.cacheDir)
-      .then(() => cacheFile(this.getCachePath(MANIFEST_FILE), this.url))
-      .then(cachePath => jetpack.readAsync(cachePath, 'json'))
-      .then(manifest => Promise.all([
-        this.updateFromManifest(manifest),
-        this.readModules(manifest),
-        this.readSounds(manifest)
-      ]))
-      .then(() => this)
+  async readContents () {
+    await jetpack.dirAsync(this.cacheDir)
+    const cachePath = this.getCachePath(MANIFEST_FILE)
+    await cacheFile(cachePath, this.url)
+    const manifest = await jetpack.readAsync(cachePath, 'json')
+    await Promise.all([
+      this.updateFromManifest(manifest),
+      this.readModules(manifest),
+      this.readSounds(manifest)
+    ])
+    return this
   }
 
   getHttpDirName (remoteUrl) {
@@ -71,21 +80,23 @@ class RemoteModule extends SoundModule {
   readModules (manifest) {
     this.modules = manifest.modules
       ? manifest.modules.map(name => ({
-        driver: this.driver,
-        name,
-        library: this.libraryUrl,
-        parent: this.url,
-        url: this.resolveModuleUrl(this.baseName, name)
-      }))
+          driver: this.driver,
+          name,
+          library: this.libraryUrl,
+          parent: this.url,
+          url: this.resolveModuleUrl(this.baseName, name)
+        }))
       : []
   }
 
   readSounds (data) {
     this.sounds = data.sounds
       ? data.sounds.map(soundFile => ({
-        name: soundFile,
-        path: this.resolveSoundUrl(this.baseName, soundFile)
-      }))
+          name: soundFile,
+          libraryUrl: this.libraryUrl,
+          module: this.name,
+          path: this.resolveSoundUrl(this.baseName, soundFile)
+        }))
       : []
   }
 }

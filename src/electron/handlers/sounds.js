@@ -1,7 +1,6 @@
 import { SoundStorage } from '../SoundStorage'
 import { soundStore } from '../../sounds/store'
-
-const generateUuid = require('uuid/v4')
+import { generateUuid } from '../uuid'
 
 export function soundRegister (app, action) {
   const soundStorage = new SoundStorage(app.config)

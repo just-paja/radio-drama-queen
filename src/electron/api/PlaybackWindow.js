@@ -1,7 +1,6 @@
 const { BrowserWindow } = require('electron')
 const { playbackRoutines } = require('../../playback/actions')
-
-const generateUuid = require('uuid/v4')
+const { generateUuid } = require('../uuid')
 
 const WINDOW_CONFIG = {
   height: 1,

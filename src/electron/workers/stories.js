@@ -1,4 +1,5 @@
-const generateUuid = require('uuid/v4')
+const { generateUuid } = require('../uuid')
+
 const jetpack = require('fs-jetpack')
 
 function fileToStoryUuid (file) {
@@ -10,14 +11,17 @@ function storyUuidToFilePath (root, uuid) {
 }
 
 function listStories (config) {
-  return jetpack.listAsync(config.paths.stories)
-    .then(files => files ? files.map(fileToStoryUuid) : [])
+  return jetpack
+    .listAsync(config.paths.stories)
+    .then(files => (files ? files.map(fileToStoryUuid) : []))
     .then(uuids => Promise.all(uuids.map(uuid => readStory(config, uuid))))
 }
 
 function readStory (config, uuid) {
   if (!uuid) {
-    return Promise.reject(new Error('Cannot read story. You must provide story uuid!'))
+    return Promise.reject(
+      new Error('Cannot read story. You must provide story uuid!')
+    )
   }
 
   return jetpack
@@ -32,10 +36,12 @@ function removeStory (config, uuid) {
 }
 
 function renameStory (config, { uuid, name }) {
-  return readStory(config, uuid).then(data => saveStory({
-    ...data,
-    name: name
-  }))
+  return readStory(config, uuid).then(data =>
+    saveStory({
+      ...data,
+      name: name
+    })
+  )
 }
 
 function saveStory (config, story) {

@@ -10,7 +10,9 @@ const allowedPatterns = [
 ]
 
 function allowModule (moduleName) {
-  allowedPatterns.push(new RegExp(`[/\\\\]node_modules($|[/\\\\]${moduleName}($|[/\\\\].+))`))
+  allowedPatterns.push(
+    new RegExp(`[/\\\\]node_modules($|[/\\\\]${moduleName}($|[/\\\\].+))`)
+  )
   const packageInfo = require(`${moduleName}/package.json`)
   if (packageInfo.dependencies) {
     Object.keys(packageInfo.dependencies).forEach(allowModule)
@@ -30,7 +32,7 @@ function ignoreFile (file) {
 
 allowModule('fluent-ffmpeg')
 allowModule('fs-jetpack')
-allowModule('request')
+allowModule('node-fetch')
 allowModule('tmp-promise')
 
 module.exports = {
@@ -45,9 +47,7 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: [
-        'darwin'
-      ]
+      platforms: ['darwin']
     },
     {
       name: '@electron-forge/maker-deb',

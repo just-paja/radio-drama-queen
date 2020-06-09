@@ -1,8 +1,7 @@
-import generateUuid from 'uuid/v4'
-
-import { soundStore } from '../../sounds/store'
 import { categoryStore } from '../../soundCategories/store'
+import { generateUuid } from '../uuid'
 import { getLargestNameNumber } from './naming'
+import { soundStore } from '../../sounds/store'
 
 export async function createCategory (app, action) {
   const uuid = generateUuid()

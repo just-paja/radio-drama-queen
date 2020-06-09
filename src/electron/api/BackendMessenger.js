@@ -31,7 +31,8 @@ class BackendMessenger {
 
   sendMessage (action) {
     if (action.type.includes('FAILURE')) {
-      console.log('out', action.type, JSON.stringify(action))
+      console.error('out', action.type, JSON.stringify(action, undefined, 2))
+      console.error(action.payload)
     }
     this.app.dispatch(action)
     this.app.mainWindow.webContents.send(

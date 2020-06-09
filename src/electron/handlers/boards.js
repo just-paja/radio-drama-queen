@@ -1,6 +1,5 @@
-import generateUuid from 'uuid/v4'
-
 import { boardStore } from '../../soundBoards/store'
+import { generateUuid } from '../uuid'
 import { getLargestNameNumber } from './naming'
 
 export function createBoard (app, action) {
