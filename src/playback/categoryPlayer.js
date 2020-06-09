@@ -2,6 +2,8 @@ import { Group, Sound } from 'pizzicato'
 import { ipcRenderer } from 'electron'
 import { playbackRoutines } from './actions'
 
+const MIN_DELAY = 100
+
 export class CategoryPlayer {
   category = null
   group = new Group()
@@ -12,9 +14,9 @@ export class CategoryPlayer {
     this.listen()
   }
 
-  createSoundFromUrl (dataUrl) {
+  async createSoundFromUrl (dataUrl, cachePath) {
     let pizziSound
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       pizziSound = new Sound(dataUrl, error => {
         if (error) {
           reject(error)
@@ -22,7 +24,38 @@ export class CategoryPlayer {
           resolve()
         }
       })
-    }).then(() => pizziSound)
+    })
+    pizziSound.watcher = null
+    const clear = () => clearInterval(pizziSound.watcher)
+    const end = () => {
+      clear()
+      ipcRenderer.send(
+        'playbackSays',
+        playbackRoutines.soundEnd.success({
+          cachePath,
+          position: 0,
+          playing: pizziSound.playing
+        })
+      )
+    }
+    pizziSound.on('play', () => {
+      let position = 0
+      clear()
+      pizziSound.watcher = setInterval(() => {
+        position += MIN_DELAY
+        ipcRenderer.send(
+          'playbackSays',
+          playbackRoutines.soundProgress.success({
+            cachePath,
+            position: position / 1000,
+            playing: pizziSound.playing
+          })
+        )
+      }, MIN_DELAY)
+    })
+    pizziSound.on('stop', end)
+    pizziSound.on('end', end)
+    return pizziSound
   }
 
   listen () {
@@ -67,10 +100,14 @@ export function startPlayer () {
   const player = new CategoryPlayer()
 
   player.handleRequest(playbackRoutines.soundAdd, async function (action) {
-    const sound = await this.createSoundFromUrl(action.payload.dataUrl)
+    const sound = await this.createSoundFromUrl(
+      action.payload.dataUrl,
+      action.payload.cachePath
+    )
     this.sounds[action.payload.cachePath] = sound
     this.group.addSound(sound)
-    return action.payload
+    const { dataUrl, ...payload } = action.payload
+    return payload
   })
 
   player.handleRequest(playbackRoutines.setCategoryUuid, async function (

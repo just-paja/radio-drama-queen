@@ -182,7 +182,7 @@ describe('Categories handler', () => {
       })
   })
 
-  it('soundAdd adds sound uuid to the category', () => {
+  it('soundAdd adds sound cachePath to the category', () => {
     app.state.entities = {
       categories: [
         {
@@ -207,7 +207,7 @@ describe('Categories handler', () => {
       })
   })
 
-  it('soundRemove removes sound uuid from the category', () => {
+  it('soundRemove removes sound cachePath from the category', () => {
     app.state.entities = {
       categories: [
         {

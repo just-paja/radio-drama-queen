@@ -5,7 +5,6 @@ export const Sound = PropTypes.shape({
   loading: PropTypes.bool,
   name: PropTypes.string,
   playing: PropTypes.bool,
-  uuid: PropTypes.string.isRequired,
   valid: PropTypes.bool
 })
 

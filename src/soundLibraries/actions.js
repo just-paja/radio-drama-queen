@@ -1,5 +1,3 @@
-import { createEntityRoutines } from 'redux-entity-routines'
+import { createEntityRoutines } from 'redux-entity-store'
 
-export const libraryRoutines = createEntityRoutines('LIBRARY', [
-  'LOAD'
-])
+export const libraryRoutines = createEntityRoutines('LIBRARY', ['LOAD'])

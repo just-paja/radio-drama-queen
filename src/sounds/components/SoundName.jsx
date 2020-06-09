@@ -3,16 +3,16 @@ import React from 'react'
 
 import { ClassName } from '../../proptypes'
 
-const SoundName = ({ className, name, uuid }) => (
+const SoundName = ({ className, name, cachePath }) => (
   <span className={className}>
-    {name || uuid}
+    {name || cachePath}
   </span>
 )
 
 SoundName.propTypes = {
   className: ClassName,
   name: PropTypes.string,
-  uuid: PropTypes.string.isRequired
+  cachePath: PropTypes.string.isRequired
 }
 
 SoundName.defaultProps = {

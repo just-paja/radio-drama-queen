@@ -1,6 +1,3 @@
-import { createEntityRoutines } from 'redux-entity-routines'
+import { createEntityRoutines } from 'redux-entity-store'
 
-export const dialogRoutines = createEntityRoutines('DIALOG', [
-  'OPEN',
-  'CLOSE'
-])
+export const dialogRoutines = createEntityRoutines('DIALOG', ['OPEN', 'CLOSE'])

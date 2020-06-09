@@ -126,7 +126,7 @@ class SoundAddDialogComponent extends React.Component {
       return null
     }
     const sound = this.props.sounds[soundIndex]
-    return sound ? sound.uuid : null
+    return sound ? sound.cachePath : null
   }
 
   render () {

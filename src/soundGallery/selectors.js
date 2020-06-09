@@ -29,9 +29,7 @@ export const getBrowserLibrary = createSelector(
     if (browser.libraryUrl) {
       return browser.libraryUrl
     }
-    return libraries.length > 0
-      ? libraries[0].url
-      : null
+    return libraries.length > 0 ? libraries[0].url : null
   }
 )
 
@@ -46,7 +44,9 @@ export const getBrowserModuleUrl = createSelector(
   }
 )
 
-export const getBrowserModule = moduleStore.createFindSelector(getBrowserModuleUrl)
+export const getBrowserModule = moduleStore.createFindSelector(
+  getBrowserModuleUrl
+)
 
 const filterModuleSounds = createSelector(
   soundStore.getAll,
@@ -60,7 +60,9 @@ const filterUnusedSounds = createSelector(
   getUsedFilter,
   (sounds, categories, filterUsed) => {
     if (filterUsed) {
-      return sounds.filter(sound => categories.every(category => category.sounds.indexOf(sound.uuid) === -1))
+      return sounds.filter(sound =>
+        categories.every(category => category.sounds.includes(sound.cachePath))
+      )
     }
     return sounds
   }
@@ -69,16 +71,14 @@ const filterUnusedSounds = createSelector(
 function flagSounds (sounds, categories) {
   return sounds.map(sound => ({
     ...sound,
-    isUsed: categories.some(category => category.sounds.indexOf(sound.uuid) !== -1)
+    isUsed: categories.some(category =>
+      category.sounds.includes(sound.cachePath)
+    )
   }))
 }
 
 export const getGallerySoundList = createSelector(
-  [
-    filterUnusedSounds,
-    categoryStore.getAll,
-    getErrorsFilter
-  ],
+  [filterUnusedSounds, categoryStore.getAll, getErrorsFilter],
   (sounds, categories, filterErrors) => {
     let soundsFiltered = sounds
     if (filterErrors) {
@@ -88,7 +88,4 @@ export const getGallerySoundList = createSelector(
   }
 )
 
-export const getGalleryTarget = createSelector(
-  memoizeTarget,
-  state => state
-)
+export const getGalleryTarget = createSelector(memoizeTarget, state => state)

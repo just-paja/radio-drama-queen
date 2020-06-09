@@ -6,14 +6,14 @@ describe('sounds selectors', () => {
       entities: {
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             playing: true
           },
           {
-            uuid: 'sound-2'
+            cachePath: 'sound-2'
           },
           {
-            uuid: 'sound-3',
+            cachePath: 'sound-3',
             playing: true
           }
         ]

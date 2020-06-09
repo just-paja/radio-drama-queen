@@ -1,4 +1,4 @@
-import { createEntityRoutines } from 'redux-entity-routines'
+import { createEntityRoutines } from 'redux-entity-store'
 
 export const playbackRoutines = createEntityRoutines('PLAYBACK', [
   'CATEGORY_PLAY',
@@ -11,7 +11,9 @@ export const playbackRoutines = createEntityRoutines('PLAYBACK', [
   'SET_MUTE_ON',
   'SET_VOLUME',
   'SOUND_ADD',
+  'SOUND_END',
   'SOUND_PLAY',
+  'SOUND_PROGRESS',
   'SOUND_REMOVE',
   'SOUND_STOP'
 ])

@@ -1,7 +1,6 @@
 import formatDuration from 'format-duration'
 import PropTypes from 'prop-types'
 import React from 'react'
-import AudioManager from '../../sounds/AudioManager'
 
 import { Classes } from '../../proptypes'
 import { withStyles } from '@material-ui/core/styles'
@@ -53,7 +52,7 @@ class SoundPlaybackInfoComponent extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.uuid !== this.props.uuid || !this.audio) {
+    if (prevProps.cachePath !== this.props.cachePath || !this.audio) {
       this.readAudio()
     }
     if (!prevProps.playing && this.props.playing) {
@@ -78,7 +77,6 @@ class SoundPlaybackInfoComponent extends React.Component {
   }
 
   readAudio () {
-    this.audio = AudioManager.findByUuid(this.props.uuid)
   }
 
   pipePosition () {
@@ -128,7 +126,7 @@ SoundPlaybackInfoComponent.propTypes = {
   classes: Classes.isRequired,
   duration: PropTypes.number,
   playing: PropTypes.bool,
-  uuid: PropTypes.string.isRequired
+  cachePath: PropTypes.string.isRequired
 }
 
 SoundPlaybackInfoComponent.defaultProps = {

@@ -22,14 +22,13 @@ function returnCategory (app, action) {
 }
 
 export function addSoundToCategory (app, action) {
-  // TODO: Sound add should switch to use cachePath instead of uuid
   const sound = soundStore.getObject(app.state, action.payload.sound)
   return app
     .getPlaybackWindow(action.payload.uuid)
     .soundAdd(sound.cachePath)
     .then(response => ({
       uuid: action.payload.uuid,
-      sound: sound.uuid
+      sound: sound.cachePath
     }))
 }
 

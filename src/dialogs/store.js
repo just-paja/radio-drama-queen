@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect'
-import { createEntityStore } from 'redux-entity-routines'
+import { createEntityStore } from 'redux-entity-store'
 import { dialogRoutines } from './actions'
 
-export const dialogStore = createEntityStore('dialogs', {
-  identAttr: 'ident',
+export const dialogStore = createEntityStore({
+  name: 'dialogs',
+  identSource: 'ident',
   providedBy: [],
   on: {
     [dialogRoutines.close.TRIGGER]: dialog => ({ ...dialog, open: false }),
@@ -15,9 +16,8 @@ export const dialogStore = createEntityStore('dialogs', {
   }
 })
 
-export const isAnyDialogOpen = createSelector(
-  dialogStore.getAll,
-  dialogs => dialogs.some(dialog => dialog.open)
+export const isAnyDialogOpen = createSelector(dialogStore.getAll, dialogs =>
+  dialogs.some(dialog => dialog.open)
 )
 
 export function isDialogOpen (state, dialog) {

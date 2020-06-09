@@ -1,5 +1,5 @@
 import { categoryRoutines } from './actions'
-import { createEntityStore } from 'redux-entity-routines'
+import { createEntityStore } from 'redux-entity-store'
 import { createSelector } from 'reselect'
 import { idCollection } from '../collections'
 import { turnOn, turnOff } from 'react-saga-rest'
@@ -16,7 +16,9 @@ function updateParam (param) {
   }
 }
 
-export const categoryStore = createEntityStore('categories', {
+export const categoryStore = createEntityStore({
+  name: 'categories',
+  identSource: 'uuid',
   initialState: {
     board: null,
     name: '',
@@ -45,8 +47,14 @@ export const categoryStore = createEntityStore('categories', {
     [categoryRoutines.rename.REQUEST]: updateParam('name'),
     [categoryRoutines.setVolume.REQUEST]: updateParam('volume'),
     [categoryRoutines.setVolume.TRIGGER]: updateParam('volume'),
-    [categoryRoutines.soundAdd.REQUEST]: idCollection.addPayload('sounds', 'sound'),
-    [categoryRoutines.soundRemove.REQUEST]: idCollection.removePayload('sounds', 'sound'),
+    [categoryRoutines.soundAdd.REQUEST]: idCollection.addPayload(
+      'sounds',
+      'sound'
+    ),
+    [categoryRoutines.soundRemove.REQUEST]: idCollection.removePayload(
+      'sounds',
+      'sound'
+    ),
     [categoryRoutines.unmute.REQUEST]: turnOff('muted')
   }
 })

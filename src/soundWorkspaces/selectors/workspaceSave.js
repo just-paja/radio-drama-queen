@@ -13,7 +13,8 @@ export const getWorkspaceFilePath = createSelector(
 
 export const getUsedSounds = createSelector(
   [soundStore.getAll, categoryStore.getAll],
-  (sounds, categories) => sounds.filter(
-    sound => categories.some(category => category.sounds.indexOf(sound.uuid) !== -1)
-  )
+  (sounds, categories) =>
+    sounds.filter(sound =>
+      categories.some(category => category.sounds.includes(sound.cachePath))
+    )
 )

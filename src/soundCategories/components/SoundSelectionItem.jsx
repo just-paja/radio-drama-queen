@@ -53,7 +53,7 @@ class SoundSelectionItemComponent extends React.PureComponent {
   }
 
   handleAdd () {
-    this.props.onAdd(this.props.sound.uuid)
+    this.props.onAdd(this.props.sound.cachePath)
   }
 
   handleKeyDown (event) {
@@ -67,7 +67,7 @@ class SoundSelectionItemComponent extends React.PureComponent {
   }
 
   handleSelect () {
-    this.props.onSelect(this.props.sound.uuid)
+    this.props.onSelect(this.props.sound.cachePath)
   }
 
   render () {

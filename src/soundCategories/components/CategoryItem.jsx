@@ -64,12 +64,12 @@ class CategoryItemComponent extends React.PureComponent {
   handleFocus (event) {
     event.stopPropagation()
     if (!this.props.focused) {
-      this.props.onFocus(this.props.sound.uuid)
+      this.props.onFocus(this.props.sound.cachePath)
     }
   }
 
   handleToggle () {
-    this.props.onToggle(this.props.sound.uuid)
+    this.props.onToggle(this.props.sound.cachePath)
   }
 
   render () {
@@ -102,7 +102,7 @@ class CategoryItemComponent extends React.PureComponent {
           <SoundName
             className={classes.name}
             name={sound.name}
-            uuid={sound.uuid}
+            cachePath={sound.cachePath}
             highlight={search}
           />
         </span>
@@ -110,7 +110,7 @@ class CategoryItemComponent extends React.PureComponent {
           <SoundPlaybackInfo
             duration={sound.duration}
             playing={sound.playing}
-            uuid={sound.uuid}
+            cachePath={sound.cachePath}
           />
         </span>
       </button>
@@ -119,7 +119,7 @@ class CategoryItemComponent extends React.PureComponent {
     return (
       <CategoryItemMenu
         categoryUuid={categoryUuid}
-        soundUuid={sound.uuid}
+        soundUuid={sound.cachePath}
       >
         {draggable}
       </CategoryItemMenu>
@@ -153,8 +153,8 @@ const collect = (connectDrag, monitor) => ({
   isDragging: monitor.isDragging()
 })
 
-const mapStateToProps = (state, { uuid }) => ({
-  sound: soundStore.getObject(state, uuid)
+const mapStateToProps = (state, { cachePath }) => ({
+  sound: soundStore.getObject(state, cachePath)
 })
 
 const mapDispatchToProps = {

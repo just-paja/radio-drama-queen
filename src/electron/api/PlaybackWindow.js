@@ -50,6 +50,8 @@ export class PlaybackWindow {
       }
       return [...aggr, handler]
     }, [])
+    this.app.store.dispatch(action)
+    this.app.messenger.sendMessage(action)
   }
 
   listen () {

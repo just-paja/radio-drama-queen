@@ -1,13 +1,12 @@
-import { createEntityRoutines } from 'redux-entity-routines'
+import { createEntityRoutines } from 'redux-entity-store'
 
-export const browseRoutines = createEntityRoutines('GALLERY_BROWSE', [
-  'SELECT_LIBRARY',
-  'SELECT_MODULE'
-], true)
+export const browseRoutines = createEntityRoutines(
+  'GALLERY_BROWSE',
+  ['SELECT_LIBRARY', 'SELECT_MODULE'],
+  true
+)
 
-export const gallerySound = createEntityRoutines('GALLERY_SOUND', [
-  'PLAY'
-])
+export const gallerySound = createEntityRoutines('GALLERY_SOUND', ['PLAY'])
 
 export const gallerySearch = createEntityRoutines('GALLERY_SEARCH', [
   'CLEAR',

@@ -1,4 +1,4 @@
-import { createEntityRoutines } from 'redux-entity-routines'
+import { createEntityRoutines } from 'redux-entity-store'
 
 export const soundRoutines = createEntityRoutines('SOUND', [
   'EDIT',
@@ -9,6 +9,7 @@ export const soundRoutines = createEntityRoutines('SOUND', [
   'PLAY',
   'READ',
   'REGISTER',
+  'PROGRESS',
   'SET_NAME',
   'SET_TAGS',
   'SET_VOLUME_GROUP',

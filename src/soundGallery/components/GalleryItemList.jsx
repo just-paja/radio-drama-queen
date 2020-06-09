@@ -26,7 +26,7 @@ const GalleryItemListComponent = ({
   <div className={classes.body}>
     {sounds.map(sound => (
       <GalleryItem
-        key={sound.uuid}
+        key={sound.cachePath}
         onPlay={onSoundPlay}
         onAdd={onSoundAdd}
         onAddTag={onTagAdd}

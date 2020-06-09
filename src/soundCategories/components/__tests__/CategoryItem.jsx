@@ -12,7 +12,7 @@ describe('CategoryItem component', () => {
           {
             loading: false,
             playing: true,
-            uuid: 'sound-1'
+            cachePath: 'sound-1'
           }
         ]
       }
@@ -33,7 +33,7 @@ describe('CategoryItem component', () => {
             name: 'The Sound of Silence',
             loading: false,
             playing: true,
-            uuid: 'sound-1'
+            cachePath: 'sound-1'
           }
         ]
       }
@@ -50,7 +50,7 @@ describe('CategoryItem component', () => {
             error: new Error('Test!'),
             loading: false,
             playing: true,
-            uuid: 'sound-1'
+            cachePath: 'sound-1'
           }
         ]
       }
@@ -59,7 +59,7 @@ describe('CategoryItem component', () => {
     expect(comp.find('button')).toHaveProp('disabled', true)
   })
 
-  it('given error is not empty, it does not dispatche sound toggle with sound uuid when clicked', () => {
+  it('given error is not empty, it does not dispatche sound toggle with sound cachePath when clicked', () => {
     const state = {
       entities: {
         sounds: [
@@ -67,7 +67,7 @@ describe('CategoryItem component', () => {
             error: new Error('Test!'),
             loading: false,
             playing: true,
-            uuid: 'sound-1'
+            cachePath: 'sound-1'
           }
         ]
       }
@@ -77,14 +77,14 @@ describe('CategoryItem component', () => {
     expect(comp.store.getActions()).not.toContainEqual(soundRoutines.toggle('sound-1'))
   })
 
-  it('given error is empty, it dispatches sound toggle with sound uuid when clicked', () => {
+  it('given error is empty, it dispatches sound toggle with sound cachePath when clicked', () => {
     const state = {
       entities: {
         sounds: [
           {
             loading: false,
             playing: true,
-            uuid: 'sound-1'
+            cachePath: 'sound-1'
           }
         ]
       }

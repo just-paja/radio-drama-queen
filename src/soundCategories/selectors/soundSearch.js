@@ -53,7 +53,11 @@ function getTagExt (sound, tags) {
 const getUnusedSounds = createSelector(
   soundStore.getAll,
   categoryStore.getAll,
-  (sounds, categories) => sounds.filter(sound => !categories.some(category => category.sounds.includes(sound.uuid)))
+  (sounds, categories) =>
+    sounds.filter(
+      sound =>
+        !categories.some(category => category.sounds.includes(sound.cachePath))
+    )
 )
 
 export const getFilteredSounds = createSelector(
@@ -65,8 +69,11 @@ export const getFilteredSounds = createSelector(
     let soundsFiltered = sounds
     if (search) {
       soundsFiltered = soundsFiltered
-        .map((sound) => {
-          const relevance = stringSearch(`${sound.name} ${getTagExt(sound, relevantTags)}`, search)
+        .map(sound => {
+          const relevance = stringSearch(
+            `${sound.name} ${getTagExt(sound, relevantTags)}`,
+            search
+          )
           return {
             ...sound,
             relevance

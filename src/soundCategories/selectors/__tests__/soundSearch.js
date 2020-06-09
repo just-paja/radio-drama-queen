@@ -18,12 +18,12 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Horse snort',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Dog bark',
             tags: []
           }
@@ -41,12 +41,12 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Horse snort',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Dog bark',
             tags: []
           }
@@ -64,12 +64,12 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Horse snort',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Dog bark',
             tags: []
           }
@@ -87,21 +87,23 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Horse snort',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Dog bark',
             tags: []
           }
         ]
       }
     }
-    expect(getFilteredSounds(state)).toContainEqual(expect.objectContaining({
-      name: 'Horse snort'
-    }))
+    expect(getFilteredSounds(state)).toContainEqual(
+      expect.objectContaining({
+        name: 'Horse snort'
+      })
+    )
   })
 
   it('getFilteredSounds returns sound matching two word search', () => {
@@ -112,21 +114,23 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Horse snort',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Dog bark',
             tags: []
           }
         ]
       }
     }
-    expect(getFilteredSounds(state)).toContainEqual(expect.objectContaining({
-      name: 'Horse snort'
-    }))
+    expect(getFilteredSounds(state)).toContainEqual(
+      expect.objectContaining({
+        name: 'Horse snort'
+      })
+    )
   })
 
   it('getFilteredSounds returns matching sounds sorted by name relevance to one word search', () => {
@@ -137,12 +141,12 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Breakdown of an engine',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Car engine startup',
             tags: []
           }
@@ -167,12 +171,12 @@ describe('soundSearch selectors', () => {
         tags: [],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Breakdown of a car engine',
             tags: []
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Car engine startup',
             tags: []
           }
@@ -210,12 +214,12 @@ describe('soundSearch selectors', () => {
         ],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Engine breakdown',
             tags: ['eng-car', 'eng-breakdown']
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Engine startup',
             tags: ['eng-car', 'eng-startup']
           }
@@ -254,12 +258,12 @@ describe('soundSearch selectors', () => {
         ],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Engine breakdown',
             tags: ['eng-car', 'eng-breakdown']
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Engine startup',
             tags: ['eng-car', 'eng-startup', 'eng-passenger-car']
           }
@@ -298,12 +302,12 @@ describe('soundSearch selectors', () => {
         ],
         sounds: [
           {
-            uuid: 'sound-1',
+            cachePath: 'sound-1',
             name: 'Engine breakdown',
             tags: ['eng-car', 'eng-breakdown']
           },
           {
-            uuid: 'sound-2',
+            cachePath: 'sound-2',
             name: 'Engine startup',
             tags: ['eng-car', 'eng-startup', 'eng-passenge-car']
           }

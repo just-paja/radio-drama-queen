@@ -24,7 +24,7 @@ function stripMemoryState ({ form, soundGallery, ...state }) {
         duration: sound.duration,
         path: sound.path,
         tags: sound.tags,
-        uuid: sound.uuid
+        cachePath: sound.cachePath
       }))
     }
   }
@@ -45,11 +45,13 @@ function * handleStorySave () {
 
 function * reloadSound (sound) {
   yield put(soundRoutines.register(sound))
-  const result = yield take(matchSoundLoadFinish(soundRoutines.register, sound.uuid))
+  const result = yield take(
+    matchSoundLoadFinish(soundRoutines.register, sound.cachePath)
+  )
   if (result.type === soundRoutines.register.SUCCESS) {
-    if (yield select(isSoundUsed, sound.uuid)) {
-      yield put(soundRoutines.load(sound.uuid))
-      yield take(matchSoundLoadFinish(soundRoutines.load, sound.uuid))
+    if (yield select(isSoundUsed, sound.cachePath)) {
+      yield put(soundRoutines.load(sound.cachePath))
+      yield take(matchSoundLoadFinish(soundRoutines.load, sound.cachePath))
     }
   }
 }

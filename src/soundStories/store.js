@@ -1,9 +1,10 @@
-import { createEntityStore } from 'redux-entity-routines'
+import { createEntityStore } from 'redux-entity-store'
 import { createSelector } from 'reselect'
 import { storyRoutines } from './actions'
 
-export const storyStore = createEntityStore('stories', {
-  identAttr: 'uuid',
+export const storyStore = createEntityStore({
+  name: 'stories',
+  identSource: 'uuid',
   providedBy: [
     storyRoutines.create,
     storyRoutines.list,
@@ -11,9 +12,7 @@ export const storyStore = createEntityStore('stories', {
     storyRoutines.rename,
     storyRoutines.save
   ],
-  deletedBy: [
-    storyRoutines.remove
-  ]
+  deletedBy: [storyRoutines.remove]
 })
 
 export const areStoriesEmpty = createSelector(
@@ -26,7 +25,6 @@ export const getActiveStory = createSelector(
   state => state.story
 )
 
-export const getStoryUuids = createSelector(
-  storyStore.getAll,
-  stories => stories.map(story => story.uuid)
+export const getStoryUuids = createSelector(storyStore.getAll, stories =>
+  stories.map(story => story.uuid)
 )

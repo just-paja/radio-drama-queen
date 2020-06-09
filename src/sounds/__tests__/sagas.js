@@ -1,15 +1,9 @@
-import AudioManager from '../../AudioManager'
-import sagas from '..'
+import sagas from '../sagas'
 
-import { getSagaTester } from '../../../mock'
-import { soundRoutines } from '../../actions'
+import { getSagaTester } from '../../mock'
+import { soundRoutines } from '../actions'
 
 describe('soundToggle saga', () => {
-  beforeEach(() => {
-    jest.spyOn(AudioManager, 'play').mockImplementation()
-    jest.spyOn(AudioManager, 'stop').mockImplementation()
-  })
-
   it('dispatches play action when sound is not playing', () => {
     const sagaTester = getSagaTester({
       entities: {

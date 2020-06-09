@@ -1,10 +1,13 @@
 import { categoryRoutines } from '../soundCategories/actions'
-import { createEntityStore } from 'redux-entity-routines'
+import { createEntityStore } from 'redux-entity-store'
 import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { soundRoutines } from './actions'
+import { playbackRoutines } from '../playback/actions'
 
-export const soundStore = createEntityStore('sounds', {
+export const soundStore = createEntityStore({
+  name: 'sounds',
   hasManyToMany: ['tags'],
+  identSource: 'cachePath',
   initialState: {
     loading: false,
     loop: false,
@@ -12,10 +15,15 @@ export const soundStore = createEntityStore('sounds', {
     path: '',
     playing: false,
     tags: [],
-    uuid: null,
     valid: false
   },
-  providedBy: [soundRoutines.register, soundRoutines.edit],
+  providedBy: [
+    playbackRoutines.soundPlay,
+    playbackRoutines.soundProgress,
+    playbackRoutines.soundStop,
+    soundRoutines.edit,
+    soundRoutines.register
+  ],
   on: {
     [soundRoutines.play.TRIGGER]: turnOn('playing'),
     [soundRoutines.play.FAILURE]: (state, action) => ({
@@ -23,10 +31,6 @@ export const soundStore = createEntityStore('sounds', {
       error: action.payload,
       playing: false
     }),
-    [soundRoutines.play.FULFILL]: turnOff('playing'),
-    [soundRoutines.stop.TRIGGER]: turnOff('playing'),
-    [soundRoutines.loopOn.TRIGGER]: turnOn('loop'),
-    [soundRoutines.loopOff.TRIGGER]: turnOff('loop'),
     [soundRoutines.unload.SUCCESS]: turnOff('valid'),
     [soundRoutines.load.REQUEST]: turnOn('loading'),
     [soundRoutines.load.SUCCESS]: (state, action) => ({
@@ -39,7 +43,9 @@ export const soundStore = createEntityStore('sounds', {
   },
   collectionReducers: {
     [categoryRoutines.soundAdd.SUCCESS]: (state, action) => {
-      const soundIndex = state.findIndex(item => item.uuid === action.payload.sound)
+      const soundIndex = state.findIndex(
+        item => item.cachePath === action.payload.sound
+      )
       if (soundIndex !== -1) {
         const sound = state[soundIndex]
         const nextState = state.slice()
@@ -49,7 +55,9 @@ export const soundStore = createEntityStore('sounds', {
       return state
     },
     [categoryRoutines.soundAdd.FULFILL]: (state, action) => {
-      const soundIndex = state.findIndex(item => item.uuid === action.payload.sound)
+      const soundIndex = state.findIndex(
+        item => item.cachePath === action.payload.sound
+      )
       if (soundIndex !== -1) {
         const sound = state[soundIndex]
         const nextState = state.slice()
@@ -59,7 +67,9 @@ export const soundStore = createEntityStore('sounds', {
       return state
     },
     [categoryRoutines.soundAdd.REQUEST]: (state, action) => {
-      const soundIndex = state.findIndex(item => item.uuid === action.payload.sound)
+      const soundIndex = state.findIndex(
+        item => item.cachePath === action.payload.sound
+      )
       if (soundIndex !== -1) {
         const sound = state[soundIndex]
         const nextState = state.slice()

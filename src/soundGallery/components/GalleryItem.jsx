@@ -41,8 +41,8 @@ class GalleryItemComponent extends Component {
   }
 
   handleAdd () {
-    const { onAdd, sound: { uuid }, target: { board, category } } = this.props
-    onAdd({ board, category, sound: uuid })
+    const { onAdd, sound: { cachePath }, target: { board, category } } = this.props
+    onAdd({ board, category, sound: cachePath })
   }
 
   handleTagAdd (tag) {
@@ -51,14 +51,14 @@ class GalleryItemComponent extends Component {
   }
 
   handlePlayClick () {
-    const { onPlay, sound: { uuid } } = this.props
-    onPlay(uuid)
+    const { onPlay, sound: { cachePath } } = this.props
+    onPlay(cachePath)
   }
 
   render () {
     const { classes, sound } = this.props
     return (
-      <SoundMenu soundUuid={sound.uuid}>
+      <SoundMenu soundUuid={sound.cachePath}>
         <div className={classes.item}>
           <div className={classes.controls}>
             <IconButton disabled={sound.isUsed || sound.error} onClick={this.handleAdd}>

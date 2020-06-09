@@ -73,7 +73,7 @@ class CategoryComponent extends React.PureComponent {
   }
 
   get focusedIndex () {
-    return this.props.sounds.findIndex(soundUuid => soundUuid === this.props.focusedSound)
+    return this.props.sounds.findIndex(cachePath => cachePath === this.props.focusedSound)
   }
 
   deleteFocusedItem () {
@@ -89,9 +89,9 @@ class CategoryComponent extends React.PureComponent {
   }
 
   focusSoundIndex (soundIndex) {
-    const soundUuid = this.props.sounds[soundIndex]
-    if (soundUuid && this.props.focusedSound !== soundUuid) {
-      this.props.onSoundFocus(soundUuid)
+    const cachePath = this.props.sounds[soundIndex]
+    if (cachePath && this.props.focusedSound !== cachePath) {
+      this.props.onSoundFocus(cachePath)
     }
   }
 
@@ -232,12 +232,12 @@ class CategoryComponent extends React.PureComponent {
               />
             </div>
             <List className={classes.soundList} dense>
-              {sounds.map(soundUuid => (
-                <ListItem className={classes.removePadding} key={soundUuid}>
+              {sounds.map(cachePath => (
+                <ListItem className={classes.removePadding} key={cachePath}>
                   <CategoryItem
                     categoryUuid={uuid}
-                    focused={focusedSound === soundUuid}
-                    uuid={soundUuid}
+                    focused={focusedSound === cachePath}
+                    cachePath={cachePath}
                   />
                 </ListItem>
               ))}

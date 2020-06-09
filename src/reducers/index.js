@@ -4,7 +4,7 @@ import soundWorkspaces from '../soundWorkspaces/reducers'
 import { boardStore } from '../soundBoards/store'
 import { categoryStore } from '../soundCategories/store'
 import { combineReducers } from 'redux'
-import { createEntitiesReducer, operations } from 'redux-entity-routines'
+import { connectReducers } from 'redux-entity-store'
 import { dialogStore } from '../dialogs/store'
 import { libraryStore } from '../soundLibraries/store'
 import { moduleStore } from '../soundModules/store'
@@ -16,7 +16,8 @@ import { tagStore } from '../soundTags/store'
 import { workspaceRoutines } from '../soundWorkspaces/actions'
 
 const appReducer = combineReducers({
-  entities: createEntitiesReducer(
+  ...connectReducers(
+    'entities',
     boardStore,
     categoryStore,
     dialogStore,
@@ -27,7 +28,6 @@ const appReducer = combineReducers({
     tagStore
   ),
   form,
-  operations,
   soundGallery,
   soundWorkspaces
 })

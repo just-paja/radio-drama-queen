@@ -7,11 +7,12 @@ function * addTagToCategory ({ payload, meta: { uuid } }) {
   const tag = yield select(tagStore.getObject, payload)
   if (tag) {
     const sounds = yield select(getAllUnusedSoundsByTag, payload)
-    const soundUuids = sounds.map(sound => sound.uuid)
-    yield all(soundUuids.map(soundUuid => put(categoryRoutines.soundAdd(
-      uuid,
-      soundUuid
-    ))))
+    const cachePaths = sounds.map(sound => sound.cachePath)
+    yield all(
+      cachePaths.map(soundCachePath =>
+        put(categoryRoutines.soundAdd(uuid, soundCachePath))
+      )
+    )
   }
 }
 
@@ -19,6 +20,4 @@ function * handleTagAdd () {
   yield takeEvery(categoryRoutines.tagAdd.TRIGGER, addTagToCategory)
 }
 
-export default [
-  handleTagAdd
-]
+export default [handleTagAdd]

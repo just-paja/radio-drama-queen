@@ -1,5 +1,6 @@
-import { createEntityStore } from 'redux-entity-routines'
+import { createEntityStore } from 'redux-entity-store'
 
-export const tagStore = createEntityStore('tags', {
-  identAttr: 'name'
+export const tagStore = createEntityStore({
+  name: 'tags',
+  identSource: 'name'
 })

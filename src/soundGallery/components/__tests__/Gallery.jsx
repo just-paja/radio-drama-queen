@@ -11,7 +11,7 @@ describe('Gallery container', () => {
         sounds: [
           {
             name: 'foo',
-            uuid: 'foo',
+            cachePath: 'foo',
             tags: []
           }
         ]

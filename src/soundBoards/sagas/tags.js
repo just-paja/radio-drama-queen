@@ -7,30 +7,40 @@ import { soundRoutines } from '../../sounds'
 import { tagStore } from '../../soundTags'
 
 function * handleTagAdd () {
-  yield takeEvery(boardRoutines.tagAdd.TRIGGER, function * ({ payload: { uuid, tag } }) {
+  yield takeEvery(boardRoutines.tagAdd.TRIGGER, function * ({
+    payload: { uuid, tag }
+  }) {
     const tagObject = yield select(tagStore.getObject, tag)
     if (tagObject) {
       const sounds = yield select(getAllUnusedSoundsByTag, tag)
-      const soundUuids = sounds.map(sound => sound.uuid)
+      const soundCachePaths = sounds.map(sound => sound.cachePath)
       const categoryName = tagObject.title || tagObject.name
       const category = yield select(getBoardCategoryByName, uuid, categoryName)
       if (category) {
-        yield all(soundUuids.map(soundUuid => put(categoryRoutines.soundAdd({
-          uuid: category.uuid,
-          sound: soundUuid
-        }))))
+        yield all(
+          soundCachePaths.map(cachePath =>
+            put(
+              categoryRoutines.soundAdd({
+                uuid: category.uuid,
+                sound: cachePath
+              })
+            )
+          )
+        )
       } else {
-        yield put(categoryRoutines.create({
-          name: categoryName,
-          board: uuid,
-          sounds: soundUuids
-        }))
+        yield put(
+          categoryRoutines.create({
+            name: categoryName,
+            board: uuid,
+            sounds: soundCachePaths
+          })
+        )
       }
-      yield all(soundUuids.map(soundUuid => put(soundRoutines.load(soundUuid))))
+      yield all(
+        soundCachePaths.map(cachePath => put(soundRoutines.load(cachePath)))
+      )
     }
   })
 }
 
-export default [
-  handleTagAdd
-]
+export default [handleTagAdd]

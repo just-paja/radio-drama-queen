@@ -29,7 +29,7 @@ class SoundSelectionComponent extends React.PureComponent {
     const { sounds } = this.props
     if (prevProps.sounds !== sounds) {
       this.props.input.onChange(
-        this.value.filter(soundUuid => sounds.find(sound => sound.uuid === soundUuid))
+        this.value.filter(cachePath => sounds.find(sound => sound.cachePath === cachePath))
       )
     }
   }
@@ -61,11 +61,11 @@ class SoundSelectionComponent extends React.PureComponent {
     }
   }
 
-  handleSelect (soundUuid) {
+  handleSelect (cachePath) {
     this.props.input.onChange(
-      this.value.includes(soundUuid)
-        ? this.value.filter(uuid => uuid !== soundUuid)
-        : [...this.value, soundUuid]
+      this.value.includes(cachePath)
+        ? this.value.filter(uuid => uuid !== cachePath)
+        : [...this.value, cachePath]
     )
   }
 
@@ -82,10 +82,10 @@ class SoundSelectionComponent extends React.PureComponent {
             onSelect={this.handleSelect}
             searchFragments={searchFragments}
             sound={sound}
-            key={sound.uuid}
-            focused={focusedSound === sound.uuid}
+            key={sound.cachePath}
+            focused={focusedSound === sound.cachePath}
             hoverAble={!focusedSound}
-            selected={this.value.includes(sound.uuid)}
+            selected={this.value.includes(sound.cachePath)}
           />
         ))}
       </div>
