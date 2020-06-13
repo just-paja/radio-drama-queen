@@ -34,82 +34,18 @@ const styles = theme => ({
 })
 
 class SoundPlaybackInfoComponent extends React.Component {
-  animationFrameId = null
-
-  audio = null
-
-  state = { position: 0 }
-
-  constructor (props) {
-    super(props)
-    this.pipePosition = this.pipePosition.bind(this)
-    this.reset = this.reset.bind(this)
-    this.updatePosition = this.updatePosition.bind(this)
-  }
-
-  componentDidMount () {
-    this.readAudio(this.props.uuiid)
-  }
-
-  componentDidUpdate (prevProps) {
-    if (prevProps.cachePath !== this.props.cachePath || !this.audio) {
-      this.readAudio()
-    }
-    if (!prevProps.playing && this.props.playing) {
-      this.queueFrame(this.pipePosition)
-    }
-    if (prevProps.playing && !this.props.playing) {
-      this.cancelNextFrame()
-      this.queueFrame(this.reset)
-    }
-  }
-
-  componentWillUnmount () {
-    this.cancelNextFrame()
-  }
-
-  cancelNextFrame () {
-    global.cancelAnimationFrame(this.animationFrameId)
-  }
-
-  queueFrame (lambda) {
-    this.animationFrameId = global.requestAnimationFrame(lambda)
-  }
-
-  readAudio () {
-  }
-
-  pipePosition () {
-    if (this.audio) {
-      this.updatePosition()
-      if (this.props.playing) {
-        this.queueFrame(this.pipePosition)
-      }
-    }
-  }
-
-  reset () {
-    this.setState({ position: 0 })
-  }
-
-  updatePosition () {
-    this.setState({
-      position: this.audio ? this.audio.sound.seek() : 0
-    })
-  }
-
   render () {
-    const { classes, duration } = this.props
+    const { classes, duration, position } = this.props
     return !duration ? null : (
       <span className={classes.duration}>
         <span className={classes.data}>
-          {formatDuration(this.state.position * 1000)}
+          {formatDuration(position * 1000)}
         </span>
         <span className={classes.progress}>
           <span
             className={classes.indicator}
             style={{
-              transform: `scaleX(${this.state.position / this.props.duration})`
+              transform: `scaleX(${position / duration})`
             }}
           />
         </span>
@@ -125,6 +61,7 @@ SoundPlaybackInfoComponent.displayName = 'SoundPlaybackInfo'
 SoundPlaybackInfoComponent.propTypes = {
   classes: Classes.isRequired,
   duration: PropTypes.number,
+  position: PropTypes.number,
   playing: PropTypes.bool,
   cachePath: PropTypes.string.isRequired
 }

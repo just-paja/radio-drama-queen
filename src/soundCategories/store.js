@@ -1,4 +1,5 @@
 import { categoryRoutines } from './actions'
+import { playbackRoutines } from '../playback/actions'
 import { createEntityStore } from 'redux-entity-store'
 import { createSelector } from 'reselect'
 import { idCollection } from '../collections'
@@ -14,6 +15,11 @@ function updateParam (param) {
     }
     return state
   }
+}
+
+function update (state, action) {
+  console.log(state, action)
+  return { ...state, ...action.payload }
 }
 
 export const categoryStore = createEntityStore({
@@ -39,11 +45,11 @@ export const categoryStore = createEntityStore({
   ],
   deletedBy: [categoryRoutines.remove],
   on: {
-    [categoryRoutines.exclusiveOff.REQUEST]: turnOff('exclusive'),
-    [categoryRoutines.exclusiveOn.REQUEST]: turnOn('exclusive'),
-    [categoryRoutines.loopOff.REQUEST]: turnOff('loop'),
-    [categoryRoutines.loopOn.REQUEST]: turnOn('loop'),
-    [categoryRoutines.mute.REQUEST]: turnOn('muted'),
+    [playbackRoutines.setExclusiveOff]: update,
+    [playbackRoutines.setExclusiveOn]: update,
+    [playbackRoutines.setLoopOff]: update,
+    [playbackRoutines.setLoopOn]: update,
+    [playbackRoutines.setVolume]: update,
     [categoryRoutines.rename.REQUEST]: updateParam('name'),
     [categoryRoutines.setVolume.REQUEST]: updateParam('volume'),
     [categoryRoutines.setVolume.TRIGGER]: updateParam('volume'),
@@ -54,8 +60,7 @@ export const categoryStore = createEntityStore({
     [categoryRoutines.soundRemove.REQUEST]: idCollection.removePayload(
       'sounds',
       'sound'
-    ),
-    [categoryRoutines.unmute.REQUEST]: turnOff('muted')
+    )
   }
 })
 

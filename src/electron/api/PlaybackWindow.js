@@ -13,8 +13,9 @@ const WINDOW_CONFIG = {
 }
 
 export class PlaybackWindow {
-  constructor (app, categoryUuid) {
+  constructor (app, categoryUuid, boardUuid) {
     this.app = app
+    this.boardUuid = boardUuid
     this.categoryUuid = categoryUuid
     this.queue = []
     this.sounds = []
@@ -37,7 +38,12 @@ export class PlaybackWindow {
       .loadURL(PLAYBACK_WINDOW_WEBPACK_ENTRY)
     // this.window.webContents.openDevTools()
     this.listen()
+    await this.request(playbackRoutines.setCategoryUuid, {
+      board: this.boardUuid,
+      uuid: this.categoryUuid
+    })
     return {
+      board: this.boardUuid,
       category: this.categoryUuid
     }
   }
@@ -80,24 +86,32 @@ export class PlaybackWindow {
     })
   }
 
+  setExclusiveOn () {
+    return this.request(playbackRoutines.setExclusiveOn)
+  }
+
+  setExclusiveOff () {
+    return this.request(playbackRoutines.setExclusiveOff)
+  }
+
   setLoopOn () {
-    this.request(playbackRoutines.setLoopOn)
+    return this.request(playbackRoutines.setLoopOn)
   }
 
   setLoopOff () {
-    this.request(playbackRoutines.setLoopOff)
+    return this.request(playbackRoutines.setLoopOff)
   }
 
   setMuteOn () {
-    this.request(playbackRoutines.setMuteOn)
+    return this.request(playbackRoutines.setMuteOn)
   }
 
   setMuteOff () {
-    this.request(playbackRoutines.setMuteOff)
+    return this.request(playbackRoutines.setMuteOff)
   }
 
   setVolume (volume) {
-    this.request(playbackRoutines.setVolume, { volume })
+    return this.request(playbackRoutines.setVolume, { volume })
   }
 
   soundAdd (cachePath) {

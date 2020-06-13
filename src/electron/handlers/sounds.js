@@ -29,11 +29,17 @@ export function soundRead (app, action) {
 }
 
 export function soundPlay (app, action) {
-  const sound = soundStore.getObject(app.state, action.payload)
-  const cachePath = sound.cachePath
   return Promise.all(
     Object.values(app.playbackWindows)
-      .filter(window => window.hasSound(cachePath))
-      .map(window => window.soundPlay(cachePath))
+      .filter(window => window.hasSound(action.payload))
+      .map(window => window.soundPlay(action.payload))
+  )
+}
+
+export function soundStop (app, action) {
+  return Promise.all(
+    Object.values(app.playbackWindows)
+      .filter(window => window.hasSound(action.payload))
+      .map(window => window.soundStop(action.payload))
   )
 }

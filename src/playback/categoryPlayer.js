@@ -5,13 +5,26 @@ import { playbackRoutines } from './actions'
 const MIN_DELAY = 100
 
 export class CategoryPlayer {
-  category = null
+  board = null
+  exclusive = false
   group = new Group()
+  loop = false
   requestHandlers = {}
   sounds = {}
+  uuid = null
 
   constructor () {
     this.listen()
+  }
+
+  getState () {
+    return {
+      exclusive: this.exclusive,
+      loop: this.loop,
+      sounds: Object.keys(this.sounds),
+      uuid: this.uuid,
+      volume: this.group.volume
+    }
   }
 
   async createSoundFromUrl (dataUrl, cachePath) {
@@ -74,9 +87,7 @@ export class CategoryPlayer {
     this.requestHandlers[routine.REQUEST] = async action => {
       try {
         const payload = await handler.call(this, action)
-        return this.send(
-          routine.success({ ...payload, category: this.category })
-        )
+        return this.send(routine.success({ ...payload, category: this.uuid }))
       } catch (error) {
         return this.send(routine.failure(error, action.payload))
       }
@@ -113,7 +124,8 @@ export function startPlayer () {
   player.handleRequest(playbackRoutines.setCategoryUuid, async function (
     action
   ) {
-    this.category = action.payload.category
+    this.board = action.payload.board
+    this.uuid = action.payload.uuid
     return action.payload
   })
 
@@ -159,6 +171,26 @@ export function startPlayer () {
   player.handleRequest(playbackRoutines.categoryStop, async function (action) {
     this.group.stop()
     return action.payload
+  })
+
+  player.handleRequest(playbackRoutines.setExclusiveOn, async function () {
+    this.exclusive = true
+    return this.getState()
+  })
+
+  player.handleRequest(playbackRoutines.setExclusiveOff, async function () {
+    this.exclusive = false
+    return this.getState()
+  })
+
+  player.handleRequest(playbackRoutines.setLoopOn, async function () {
+    this.loop = true
+    return this.getState()
+  })
+
+  player.handleRequest(playbackRoutines.setLoopOff, async function () {
+    this.loop = false
+    return this.getState()
   })
 
   return player

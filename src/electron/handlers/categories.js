@@ -5,7 +5,7 @@ import { soundStore } from '../../sounds/store'
 
 export async function createCategory (app, action) {
   const uuid = generateUuid()
-  await app.createPlaybackWindow(uuid)
+  await app.createPlaybackWindow(uuid, action.board)
   const maxNumber = getLargestNameNumber(categoryStore.getAll(app.state))
   return Promise.resolve({
     name: `Unnamed ${maxNumber + 1}`,
@@ -37,12 +37,21 @@ export function removeCategory (app, action) {
   return returnCategory(app, action)
 }
 
-export const categoryExclusiveOff = returnCategory
-export const categoryExclusiveOn = returnCategory
-export const categoryLoopOff = returnCategory
-export const categoryLoopOn = returnCategory
-export const muteCategory = returnCategory
-export const removeSoundFromCategory = returnCategory
+function windowAction (actionName) {
+  return function (app, action) {
+    const window = app.getPlaybackWindow(action.payload)
+    if (window) {
+      return window[actionName]()
+    }
+  }
+}
+
+export const categoryExclusiveOff = windowAction('setExclusiveOff')
+export const categoryExclusiveOn = windowAction('setExclusiveOn')
+export const categoryLoopOff = windowAction('setLoopOff')
+export const categoryLoopOn = windowAction('setLoopOn')
+export const muteCategory = windowAction('setMuteOn')
+export const removeSoundFromCategory = windowAction('setMuteOff')
 export const renameCategory = returnCategory
-export const setCategoryVolume = returnCategory
-export const unmuteCategory = returnCategory
+export const setCategoryVolume = windowAction('setVolume')
+export const unmuteCategory = windowAction('setMuteOff')

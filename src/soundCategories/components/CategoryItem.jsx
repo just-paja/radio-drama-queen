@@ -109,6 +109,7 @@ class CategoryItemComponent extends React.PureComponent {
         <span className={classes.duration}>
           <SoundPlaybackInfo
             duration={sound.duration}
+            position={sound.position}
             playing={sound.playing}
             cachePath={sound.cachePath}
           />

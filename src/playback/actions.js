@@ -5,6 +5,8 @@ export const playbackRoutines = createEntityRoutines('PLAYBACK', [
   'CATEGORY_REMOVE',
   'CATEGORY_STOP',
   'SET_CATEGORY_UUID',
+  'SET_EXCLUSIVE_OFF',
+  'SET_EXCLUSIVE_ON',
   'SET_LOOP_OFF',
   'SET_LOOP_ON',
   'SET_MUTE_OFF',

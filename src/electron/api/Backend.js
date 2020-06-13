@@ -87,6 +87,7 @@ export class Backend {
     msg.handleRequest(moduleRoutines.load, handlers.loadModule)
     msg.handleRequest(soundRoutines.edit, handlers.soundEdit)
     msg.handleRequest(soundRoutines.play, handlers.soundPlay)
+    msg.handleRequest(soundRoutines.stop, handlers.soundStop)
     msg.handleRequest(soundRoutines.read, handlers.soundRead)
     msg.handleRequest(soundRoutines.register, handlers.soundRegister)
     msg.handleRequest(storyRoutines.create, handlers.saveStory)
@@ -98,8 +99,8 @@ export class Backend {
     msg.handleRequest(workspaceRoutines.load, handlers.getState)
   }
 
-  createPlaybackWindow (category) {
-    this.playbackWindows[category] = new PlaybackWindow(this, category)
+  createPlaybackWindow (category, board) {
+    this.playbackWindows[category] = new PlaybackWindow(this, category, board)
     return this.playbackWindows[category].openWindow()
   }
 
@@ -109,7 +110,9 @@ export class Backend {
 
   removePlaybackWindow (category) {
     this.playbackWindows[category].closeWindow()
-    this.playbackWindows[category] = null
+    this.playbackWindows = Object.entries(this.playbackWindows)
+      .filter(([key, value]) => value && key !== category)
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
   }
 
   dispatch (action) {

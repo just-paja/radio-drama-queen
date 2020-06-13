@@ -54,6 +54,9 @@ class LocalModule extends SoundModule {
   }
 
   inspectFsNodes (nodes) {
+    if (!nodes) {
+      return Promise.resolve([])
+    }
     return Promise.all(
       nodes.map(node =>
         jetpack.inspectAsync(jetpack.path(this.directory, node))

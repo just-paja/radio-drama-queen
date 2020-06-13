@@ -4,6 +4,13 @@ import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { soundRoutines } from './actions'
 import { playbackRoutines } from '../playback/actions'
 
+function update (state, action) {
+  return {
+    ...state,
+    ...action.payload
+  }
+}
+
 export const soundStore = createEntityStore({
   name: 'sounds',
   hasManyToMany: ['tags'],
@@ -17,14 +24,12 @@ export const soundStore = createEntityStore({
     tags: [],
     valid: false
   },
-  providedBy: [
-    playbackRoutines.soundPlay,
-    playbackRoutines.soundProgress,
-    playbackRoutines.soundStop,
-    soundRoutines.edit,
-    soundRoutines.register
-  ],
+  providedBy: [soundRoutines.edit, soundRoutines.register],
   on: {
+    [playbackRoutines.soundEnd.SUCCESS]: update,
+    [playbackRoutines.soundPlay.SUCCESS]: update,
+    [playbackRoutines.soundProgress.SUCCESS]: update,
+    [playbackRoutines.soundStop.SUCCESS]: update,
     [soundRoutines.play.TRIGGER]: turnOn('playing'),
     [soundRoutines.play.FAILURE]: (state, action) => ({
       ...state,
