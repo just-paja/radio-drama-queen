@@ -97,6 +97,7 @@ export class Backend {
     msg.handleRequest(storyRoutines.remove, handlers.removeStory)
     msg.handleRequest(storyRoutines.rename, handlers.renameStory)
     msg.handleRequest(storyRoutines.save, handlers.saveStory)
+    msg.handleRequest(storyRoutines.update, handlers.updateStory)
     msg.handleRequest(workspaceRoutines.load, handlers.getState)
     msg.handleRequest(uiRoutines.init, handlers.sendState)
   }

@@ -12,6 +12,18 @@ function getDriver (driver) {
   throw new Error(`Unsupported driver: ${driver}`)
 }
 
+function guessDriver (soundModule) {
+  if (!soundModule.driver) {
+    // Assume that we have only sound module URI
+    if (soundModule.url.indexOf('file://') === 0) {
+      return getDriver(DRIVER_LOCAL)
+    }
+    return getDriver(DRIVER_REMOTE)
+  }
+  return getDriver(soundModule.driver)
+}
+
 module.exports = {
-  getDriver
+  getDriver,
+  guessDriver
 }

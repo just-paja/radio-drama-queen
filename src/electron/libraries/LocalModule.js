@@ -11,6 +11,9 @@ const {
 
 class LocalModule extends SoundModule {
   static readLibrary (config, payload) {
+    if (payload.url) {
+      return this.readModule(config, payload)
+    }
     return this.readModule(config, {
       url: `file://${payload.directory}`
     })

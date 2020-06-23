@@ -3,6 +3,7 @@ import { createEntityStore } from 'redux-entity-store'
 import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { soundRoutines } from './actions'
 import { playbackRoutines } from '../playback/actions'
+import { uiRoutines } from '../ui/actions'
 
 function update (state, action) {
   return {
@@ -27,6 +28,7 @@ export const soundStore = createEntityStore({
     valid: false
   },
   providedBy: [soundRoutines.edit, soundRoutines.register],
+  clearedBy: [uiRoutines.purge],
   on: {
     [playbackRoutines.soundEnd.SUCCESS]: update,
     [playbackRoutines.soundPlay.SUCCESS]: update,

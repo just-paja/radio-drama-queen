@@ -1,6 +1,7 @@
 import { createEntityStore } from 'redux-entity-store'
 import { fetchFailure, turnOff, turnOn } from 'react-saga-rest'
 import { moduleRoutines } from './actions'
+import { uiRoutines } from '../ui/actions'
 
 export const moduleStore = createEntityStore({
   name: 'modules',
@@ -21,6 +22,7 @@ export const moduleStore = createEntityStore({
     }
   ],
   providedBy: [moduleRoutines.load, moduleRoutines.register],
+  clearedBy: [uiRoutines.purge],
   on: {
     [moduleRoutines.load.FAILURE]: fetchFailure,
     [moduleRoutines.load.FULFILL]: turnOff('loading'),

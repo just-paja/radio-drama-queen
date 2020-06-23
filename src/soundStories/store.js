@@ -10,7 +10,8 @@ export const storyStore = createEntityStore({
     storyRoutines.list,
     storyRoutines.load,
     storyRoutines.rename,
-    storyRoutines.save
+    storyRoutines.save,
+    storyRoutines.update
   ],
   deletedBy: [storyRoutines.remove]
 })

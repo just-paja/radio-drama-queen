@@ -1,11 +1,11 @@
-const { getDriver } = require('../libraries')
+const { guessDriver } = require('../libraries')
 
 function readLibrary (config, payload) {
-  return getDriver(payload.driver).readLibrary(config, payload)
+  return guessDriver(payload).readLibrary(config, payload)
 }
 
 function readModule (config, payload) {
-  return getDriver(payload.driver).readModule(config, payload)
+  return guessDriver(payload).readModule(config, payload)
 }
 
 module.exports = {

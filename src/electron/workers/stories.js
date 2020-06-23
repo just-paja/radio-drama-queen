@@ -10,14 +10,14 @@ function storyUuidToFilePath (root, uuid) {
   return jetpack.path(root, `${uuid}.json`)
 }
 
-function listStories (config) {
+function listStories (app) {
   return jetpack
-    .listAsync(config.paths.stories)
+    .listAsync(app.paths.stories)
     .then(files => (files ? files.map(fileToStoryUuid) : []))
-    .then(uuids => Promise.all(uuids.map(uuid => readStory(config, uuid))))
+    .then(uuids => Promise.all(uuids.map(uuid => readStory(app, uuid))))
 }
 
-function readStory (config, uuid) {
+function readStory (app, uuid) {
   if (!uuid) {
     return Promise.reject(
       new Error('Cannot read story. You must provide story uuid!')
@@ -25,29 +25,36 @@ function readStory (config, uuid) {
   }
 
   return jetpack
-    .readAsync(storyUuidToFilePath(config.paths.stories, uuid), 'buffer')
+    .readAsync(storyUuidToFilePath(app.paths.stories, uuid), 'buffer')
     .then(text => ({ ...JSON.parse(text), uuid }))
 }
 
-function removeStory (config, uuid) {
+function removeStory (app, uuid) {
   return jetpack
-    .removeAsync(storyUuidToFilePath(config.paths.stories, uuid))
+    .removeAsync(storyUuidToFilePath(app.paths.stories, uuid))
     .then(() => uuid)
 }
 
-function renameStory (config, { uuid, name }) {
-  return readStory(config, uuid).then(data =>
-    saveStory({
-      ...data,
-      name: name
-    })
-  )
+async function renameStory (app, { uuid, name }) {
+  const story = await readStory(app, uuid)
+  return await saveStory(app, {
+    ...story,
+    name
+  })
 }
 
-function saveStory (config, story) {
+async function updateStory (app, { uuid, ...patch }) {
+  const story = await readStory(app, uuid)
+  return await saveStory(app, {
+    ...story,
+    ...patch
+  })
+}
+
+function saveStory (app, story) {
   const data = story.uuid ? story : { ...story, uuid: generateUuid() }
   return jetpack
-    .writeAsync(storyUuidToFilePath(config.paths.stories, data.uuid), data)
+    .writeAsync(storyUuidToFilePath(app.paths.stories, data.uuid), data)
     .then(() => data)
 }
 
@@ -56,5 +63,6 @@ module.exports = {
   readStory,
   removeStory,
   renameStory,
-  saveStory
+  saveStory,
+  updateStory
 }
