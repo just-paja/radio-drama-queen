@@ -9,6 +9,7 @@ import VolumeToggleButton from './VolumeToggleButton'
 import { categoryRoutines } from '../actions'
 import { Classes } from '../../proptypes'
 import { connect } from 'react-redux'
+import { playbackRoutines } from '../../playback/actions'
 import { withStyles } from '@material-ui/core/styles'
 import {
   getCategoryExclusiveStatus,
@@ -128,9 +129,9 @@ const mapDispatchToProps = {
   onExclusiveOn: categoryRoutines.exclusiveOn,
   onLoopOff: categoryRoutines.loopOff,
   onLoopOn: categoryRoutines.loopOn,
-  onMute: categoryRoutines.mute,
+  onMute: playbackRoutines.setMuteOn,
   onStop: categoryRoutines.stop,
-  onUnmute: categoryRoutines.unmute,
+  onUnmute: playbackRoutines.setMuteOff,
   onVolumeChange: categoryRoutines.setVolume
 }
 

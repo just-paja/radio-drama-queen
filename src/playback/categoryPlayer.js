@@ -9,7 +9,9 @@ export class CategoryPlayer {
   exclusive = false
   group = new Group()
   loop = false
+  muted = false
   requestHandlers = {}
+  savedVolume = 0
   sounds = {}
   uuid = null
 
@@ -21,6 +23,7 @@ export class CategoryPlayer {
     return {
       exclusive: this.exclusive,
       loop: this.loop,
+      muted: this.muted,
       sounds: Object.keys(this.sounds),
       uuid: this.uuid,
       volume: this.group.volume
@@ -131,7 +134,8 @@ export function startPlayer () {
 
   player.handleRequest(playbackRoutines.setVolume, async function (action) {
     this.group.volume = action.payload.volume
-    return action.payload
+    this.muted = false
+    return this.getState()
   })
 
   player.handleRequest(
@@ -190,6 +194,19 @@ export function startPlayer () {
 
   player.handleRequest(playbackRoutines.setLoopOff, async function () {
     this.loop = false
+    return this.getState()
+  })
+
+  player.handleRequest(playbackRoutines.setMuteOn, async function () {
+    this.savedVolume = this.group.volume
+    this.group.volume = 0
+    this.muted = true
+    return this.getState()
+  })
+
+  player.handleRequest(playbackRoutines.setMuteOff, async function () {
+    this.muted = false
+    this.group.volume = this.savedVolume
     return this.getState()
   })
 
