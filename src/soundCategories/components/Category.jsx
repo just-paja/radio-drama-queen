@@ -178,6 +178,8 @@ class CategoryComponent extends React.PureComponent {
     const nextPosition = this.focusedIndex + 1
     if (nextPosition < sounds.length) {
       this.focusSoundIndex(nextPosition)
+    } else {
+      this.handleFocus()
     }
   }
 
