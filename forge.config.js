@@ -34,6 +34,8 @@ allowModule('fluent-ffmpeg')
 allowModule('fs-jetpack')
 allowModule('node-fetch')
 allowModule('tmp-promise')
+allowModule('winston')
+allowModule('logform')
 
 module.exports = {
   main: '.webpack/main',

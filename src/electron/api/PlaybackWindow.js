@@ -19,6 +19,7 @@ export class PlaybackWindow {
     this.categoryUuid = categoryUuid
     this.queue = []
     this.sounds = []
+    this.logger = this.app.logger.child({ client: this.categoryUuid })
   }
 
   closeWindow () {
@@ -68,10 +69,9 @@ export class PlaybackWindow {
 
   request (routine, payload) {
     const operation = generateUuid()
-    this.window.webContents.send(
-      'backendSays',
-      routine.request({ ...payload, operation })
-    )
+    const action = routine.request({ ...payload, operation })
+    this.logger.debug(action)
+    this.window.webContents.send('backendSays', action)
     return this.waitFor(operation).then(result => {
       if (result.type === routine.FAILURE) {
         throw routine.payload

@@ -16,11 +16,11 @@ const { uiRoutines } = require('../../ui/actions')
 const { workspaceRoutines } = require('../../soundWorkspaces/actions')
 
 export class Backend {
-  constructor (mainWindow, development) {
+  constructor (mainWindow, logger) {
     this.config = {}
-    this.development = development
     this.mainWindow = mainWindow
     this.playbackWindows = {}
+    this.logger = logger
   }
 
   get state () {
@@ -141,8 +141,8 @@ export class Backend {
   }
 }
 
-export function startBackend (mainWindow, development) {
-  const app = new Backend(mainWindow, development)
+export function startBackend (mainWindow, logger) {
+  const app = new Backend(mainWindow, logger)
   app.start()
   return app
 }

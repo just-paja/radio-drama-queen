@@ -6,12 +6,14 @@ class BackendMessenger {
     this.app = app
     this.listeners = []
     this.sendMessage = this.sendMessage.bind(this)
+    this.logger = this.app.logger.child({ client: 'main' })
     this.subscribeToIpc()
   }
 
   async handleIncomingAction (action) {
+    this.logger.debug(action)
     if (action.type.includes('FAILURE')) {
-      console.log('in', action.type, JSON.stringify(action))
+      this.logger.error(action)
     }
     this.app.store.dispatch(action)
     const matchingListeners = this.listeners.filter(listener =>
@@ -31,8 +33,7 @@ class BackendMessenger {
 
   sendMessage (action) {
     if (action.type.includes('FAILURE')) {
-      console.error('out', action.type, JSON.stringify(action, undefined, 2))
-      console.error(action.payload)
+      this.logger.error(action)
     }
     this.app.dispatch(action)
     this.app.mainWindow.webContents.send(
