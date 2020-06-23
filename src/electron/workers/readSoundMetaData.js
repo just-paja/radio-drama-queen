@@ -114,6 +114,7 @@ function readSoundMetaData (config, soundData) {
         duration: data.format.duration,
         format: normalizeFormat(data.format.codec),
         name: normalizeName(soundData, data),
+        position: 0,
         tags: normalizeTags(data)
       }
     })
