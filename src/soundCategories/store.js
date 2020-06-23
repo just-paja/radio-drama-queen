@@ -18,7 +18,6 @@ function updateParam (param) {
 }
 
 function update (state, action) {
-  console.log(state, action)
   return { ...state, ...action.payload }
 }
 

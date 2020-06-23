@@ -190,7 +190,6 @@ const mapDispatchToProps = {
 
 function submitSoundList (focusedCategory, onSubmit) {
   return function (values) {
-    console.log(values)
     if (values && values.sounds && values.sounds.length) {
       return onSubmit(values.sounds.map(sound => ({
         uuid: focusedCategory,
