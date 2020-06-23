@@ -34,6 +34,7 @@ export const soundStore = createEntityStore({
     [playbackRoutines.soundPlay.SUCCESS]: update,
     [playbackRoutines.soundProgress.SUCCESS]: update,
     [playbackRoutines.soundStop.SUCCESS]: update,
+    [playbackRoutines.soundAdd.SUCCESS]: turnOff('loading'),
     [soundRoutines.play.TRIGGER]: turnOn('playing'),
     [soundRoutines.play.FAILURE]: (state, action) => ({
       ...state,
