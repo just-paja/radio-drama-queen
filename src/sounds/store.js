@@ -16,11 +16,13 @@ export const soundStore = createEntityStore({
   hasManyToMany: ['tags'],
   identSource: 'cachePath',
   initialState: {
+    duration: 0,
     loading: false,
     loop: false,
     name: '',
     path: '',
     playing: false,
+    position: 0,
     tags: [],
     valid: false
   },

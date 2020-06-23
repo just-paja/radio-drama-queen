@@ -3,6 +3,7 @@ import MultiBackend from 'react-dnd-multi-backend'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import { uiRoutines } from './ui/actions'
 import { DragDropContextProvider } from 'react-dnd'
 import { OpenLibraryDialog } from './soundLibraries/components'
 import { Provider } from 'react-redux'
@@ -49,6 +50,10 @@ const ThemedApp = withStyles(styles)(({ classes }) => (
 ))
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.store.dispatch(uiRoutines.init())
+  }
+
   render () {
     return (
       <ThemeProvider theme={theme}>

@@ -12,6 +12,7 @@ const { PATH_WORKERS } = require('../paths')
 const { PlaybackWindow } = require('./PlaybackWindow')
 const { soundRoutines } = require('../../sounds/actions')
 const { storyRoutines } = require('../../soundStories/actions')
+const { uiRoutines } = require('../../ui/actions')
 const { workspaceRoutines } = require('../../soundWorkspaces/actions')
 
 export class Backend {
@@ -97,6 +98,7 @@ export class Backend {
     msg.handleRequest(storyRoutines.rename, handlers.renameStory)
     msg.handleRequest(storyRoutines.save, handlers.saveStory)
     msg.handleRequest(workspaceRoutines.load, handlers.getState)
+    msg.handleRequest(uiRoutines.init, handlers.sendState)
   }
 
   createPlaybackWindow (category, board) {
