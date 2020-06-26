@@ -141,6 +141,9 @@ export function startPlayer () {
   player.handleRequest(
     playbackRoutines.soundPlay,
     requireSound(async function (action, sound) {
+      if (this.exclusive) {
+        this.group.stop()
+      }
       sound.play()
       return action.payload
     })
